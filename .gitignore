@@ -1,0 +1,9 @@
+cub3d
+cubed
+**/*.swp
+**/*.swo
+**/*.so
+**/*.o
+**/*.a
+**/obj/
+.DS_Store

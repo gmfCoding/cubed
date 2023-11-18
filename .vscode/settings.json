@@ -1,0 +1,10 @@
+{
+	"files.associations": {
+		"cubed.h": "c",
+		"vectormath.h": "c",
+		"vector.h": "c",
+		"texture.h": "c",
+		"mlx.h": "c",
+		"state.h": "c"
+	}
+}
