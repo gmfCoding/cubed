@@ -26,6 +26,8 @@ typedef struct s_texture
 	int		endian;
 }				t_texture;
 
+
+void	pixel_set_s(t_texture data, int x, int y, int color);
 void	pixel_set(t_texture data, int x, int y, int color);
 int	pixel_get(t_texture data, int x, int y);
 void	texture_draw_line(t_texture data, t_vec2 start, t_vec2 end, int colour);

@@ -15,6 +15,14 @@
 		"vector": "c",
 		"string_view": "c",
 		"initializer_list": "c",
-		"optimised.h": "c"
+		"optimised.h": "c",
+		"cmath": "c",
+		"input.h": "c",
+		"math.h": "c",
+		"stdio.h": "c",
+		"vector_base.h": "c",
+		"vector2i.h": "c",
+		"error.h": "c",
+		"libft.h": "c"
 	}
 }

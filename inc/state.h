@@ -12,5 +12,8 @@ struct s_game
 	t_texture rt0;
 
 	t_vec2 mouse;
+	t_vec2 pos;
+
+	int debug;
 };
 #endif

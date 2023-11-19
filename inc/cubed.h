@@ -2,6 +2,7 @@
 # define CUBED_H
 # include <inttypes.h>
 
+#include "extra/optimised.h"
 # include "texture.h"
 # include "state.h"
 # include "render.h"

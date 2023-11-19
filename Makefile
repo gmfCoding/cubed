@@ -1,13 +1,18 @@
 SRCSF =	main.c \
-		texture.c \
-		vector_math_extra.c \
-		vector_math.c \
-		vector.c \
-		texture_util.c \
+		texture/texture.c \
+		texture/pixel.c \
+		texture/texture_util.c \
+		vector/vector2_math_extra.c \
+		vector/vector2_math.c \
+		vector/vector2.c \
+		vector/vector2i_math_extra.c \
+		vector/vector2i_math.c \
+		vector/vector2i.c \
 		render/render_util.c \
 		render/loop.c \
 		render/line.c \
-		util/time.c
+		util/time.c \
+		cerror.c
 
 INCSF = cubed.h
 
@@ -48,14 +53,30 @@ LIB-L = $(patsubst %,-L$(DIRLIB)/%, $(dir $(LIBSF)))
 
 CC = cc
 
-WFLAGS =-Wall -Werror -Wextra
-DFLAGS =-O1 -g3 -fsanitize=address
+WFLAGS =#-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I)  -MMD -MP
-CFLAGS =$(DFLAGS) $(XCFLAGS) $(WFLAGS) 
-LDFLAGS =$(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
+CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
+LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
 PGFLAGS = #-pg
-ifeq ($(DEBUG),1)
-DFLAGS += -g -fsanitize=address
+OPFLAG = -O4
+
+# REMOVE BEFORE EVAL
+ifeq ($(DEBUG), )
+$(warning USING DEFAULT DEBUG FLAGS (REMOVE BEFORE EVAL))
+DEBUG =1
+OPFLAG =-O0
+endif
+
+# DEBUG LEVEL 1
+ifeq ($(shell test $(DEBUG) -ge 1; echo $$?),0)
+	DFLAGS += -g3 -fsanitize=address
+endif
+ifeq ($(shell test $(DEBUG) -ge 2; echo $$?),0)
+	PGFLAGS = -pg
+endif
+
+ifeq ($(EXTRA),1)
+CPPFLAGS += -D EXTRA
 endif
 
 ifneq ($(OS),Linux) 

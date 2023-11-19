@@ -31,20 +31,3 @@ t_texture	texture_load(void *mlx, char *path)
 	t.data = mlx_get_data_addr(t.img, &t.bpp, &t.line_size, &t.endian);
 	return (t);
 }
-
-__attribute__((always_inline))
-inline void	pixel_set(t_texture data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data.data + (y * data.line_size + x * (data.bpp / 8));
-	*(unsigned int *)dst = color;
-}
-
-int	pixel_get(t_texture data, int x, int y)
-{
-	char	*dst;
-
-	dst = data.data + (y * data.line_size + x * (data.bpp / 8));
-	return (*(int *)dst);
-}
