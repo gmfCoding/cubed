@@ -11,10 +11,11 @@ int main(int argc, char **argv)
 	t_game	game;
 	game = (t_game){0};
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, RES_WIDTH, RES_HEIGHT, "cub3d");
-	game.rt0 = texture_create(game.mlx, RES_WIDTH, RES_HEIGHT);\
+	game.win = mlx_new_window(game.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+	game.rt0 = texture_create(game.mlx, SCR_WIDTH, SCR_HEIGHT);\
 
-	pixel_set(game.rt0, RES_WIDTH/2, RES_HEIGHT/2, 0xff0000);
+	pixel_set(game.rt0, SCR_WIDTH/2, SCR_HEIGHT/2, 0xff0000);
 	texture_draw(&game, game.rt0, v2new(0,0));
+	mlx_loop_hook(game.mlx, (void *)render, &game);
 	mlx_loop(game.mlx);
 }

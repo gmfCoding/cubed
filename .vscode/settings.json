@@ -5,6 +5,8 @@
 		"vector.h": "c",
 		"texture.h": "c",
 		"mlx.h": "c",
-		"state.h": "c"
+		"state.h": "c",
+		"inttypes.h": "c",
+		"render_utils.h": "c"
 	}
 }

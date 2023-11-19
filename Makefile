@@ -4,7 +4,8 @@ SRCSF =	main.c \
 		vector_math.c \
 		vector.c \
 		texture_util.c \
-		render/render_util.c
+		render/render_util.c \
+		render/loop.c \
 
 INCSF = cubed.h
 

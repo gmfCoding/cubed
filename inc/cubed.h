@@ -4,10 +4,13 @@
 
 # include "texture.h"
 # include "state.h"
-# include "render_utils.h"
+# include "render.h"
 
-# define RES_WIDTH 1280
-# define RES_HEIGHT 720
+# define SCR_WIDTH  800
+# define SCR_HEIGHT 800
+
+# define RT0_WIDTH SCR_WIDTH
+# define RT0_HEIGHT SCR_HEIGHT
 
 # define MAX_DEPTHS 5
 # define MAX_TEX_BF 4
