@@ -28,6 +28,8 @@ typedef struct s_texture
 
 void	pixel_set(t_texture data, int x, int y, int color);
 int	pixel_get(t_texture data, int x, int y);
+void	texture_draw_line(t_texture data, t_vec2 start, t_vec2 end, int colour);
+void	texture_draw_square(t_texture data, t_vec2 start, t_vec2 width, int colour);
 
 
 t_texture	texture_create(void *mlx, int width, int height);

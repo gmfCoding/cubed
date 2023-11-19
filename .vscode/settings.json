@@ -7,6 +7,14 @@
 		"mlx.h": "c",
 		"state.h": "c",
 		"inttypes.h": "c",
-		"render_utils.h": "c"
+		"render_utils.h": "c",
+		"array": "c",
+		"deque": "c",
+		"string": "c",
+		"unordered_map": "c",
+		"vector": "c",
+		"string_view": "c",
+		"initializer_list": "c",
+		"optimised.h": "c"
 	}
 }

@@ -10,5 +10,7 @@ struct s_game
 	void *win;
 
 	t_texture rt0;
+
+	t_vec2 mouse;
 };
 #endif

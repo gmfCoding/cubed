@@ -6,6 +6,8 @@ SRCSF =	main.c \
 		texture_util.c \
 		render/render_util.c \
 		render/loop.c \
+		render/line.c \
+		util/time.c
 
 INCSF = cubed.h
 
@@ -40,20 +42,20 @@ LIBS = $(patsubst %.a,$(DIRLIB)/%.a, $(LIBSF))
 INCS = $(patsubst %.h,$(DIRINC)/%.h, $(INCSF))
 DEPS = $(OBJS:.o=.d)
 
-LIB-I = $(patsubst %,-I%,$(dir $(LIBS)))
+LIB-I = $(patsubst %,-I%,$(dir $(LIBS))) -I$(DIRLIB)
 LIB-l = $(subst lib,-l,$(basename $(notdir $(LIBSF))))
 LIB-L = $(patsubst %,-L$(DIRLIB)/%, $(dir $(LIBSF)))
 
 CC = cc
 
-WFLAGS = -Wall -Werror -Wextra
-CPPFLAGS = -I$(DIRINC) $(LIB-I) -MMD -MP
-CFLAGS = $(XCFLAGS) $(WFLAGS) 
-LDFLAGS = $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
-
+WFLAGS =-Wall -Werror -Wextra
+DFLAGS =-O1 -g3 -fsanitize=address
+CPPFLAGS =-I$(DIRINC) $(LIB-I)  -MMD -MP
+CFLAGS =$(DFLAGS) $(XCFLAGS) $(WFLAGS) 
+LDFLAGS =$(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
+PGFLAGS = #-pg
 ifeq ($(DEBUG),1)
-CFLAGS += -g -fsanitize=address
-LDFLAGS += -g -fsanitize=address
+DFLAGS += -g -fsanitize=address
 endif
 
 ifneq ($(OS),Linux) 
@@ -69,14 +71,14 @@ all: $(NAME)
 # OBJ TO PROJECT
 $(NAME): $(LIBS) $(OBJS)
 	-@printf "${BLUE}"
-	$(CC) $(OBJS) $(LDFLAGS) -o $@
+	$(CC) $(PGFLAGS) $(OBJS) $(LDFLAGS) -o $@
 	-@printf "${NC}"
 
 # SOURCE TO OBJ
 $(OBJS): $(DIROBJ)%.o : $(DIRSRC)%.c $(INCS) | $(DIROBJ)
 	-@mkdir -p $(dir $@)
 	-@printf "${GREEN}"
-	-$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
+	-$(CC) $(PGFLAGS) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
 	-@printf "${NC}"
 
 # CLEANING

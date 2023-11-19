@@ -32,7 +32,8 @@ t_texture	texture_load(void *mlx, char *path)
 	return (t);
 }
 
-void	pixel_set(t_texture data, int x, int y, int color)
+__attribute__((always_inline))
+inline void	pixel_set(t_texture data, int x, int y, int color)
 {
 	char	*dst;
 

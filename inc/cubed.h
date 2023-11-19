@@ -6,8 +6,8 @@
 # include "state.h"
 # include "render.h"
 
-# define SCR_WIDTH  800
-# define SCR_HEIGHT 800
+# define SCR_WIDTH  960
+# define SCR_HEIGHT 960
 
 # define RT0_WIDTH SCR_WIDTH
 # define RT0_HEIGHT SCR_HEIGHT
@@ -70,4 +70,7 @@ struct s_map
 	uint8_t		height;
 
 };
+
+/* util/time.c */
+int64_t	time_get_ms(void);
 #endif

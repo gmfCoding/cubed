@@ -18,7 +18,7 @@
 #  define KEY_COMMA 44
 #  define KEY_PERIOD 46
 #  define KEY_MINUS 45
-#  define KEY_PLUS 65513
+#  define KEY_PLUS 65513 /* 61 ?*/
 #  define KEY_FSLASH 47
 #  define KEY_BSLASH 65513
 #  define KEY_0 48
@@ -32,7 +32,6 @@
 #  define KEY_8 56
 #  define KEY_9 57
 #  define KEY_SEMICOLON 59
-#  define KEY_PLUS 61
 #  define KEY_TILDA 96
 #  define KEY_SQBLEFT 91
 #  define KEY_SQBRIGHT 93
@@ -108,6 +107,14 @@
 #  define KEY_F11 65480
 #  define KEY_F12 65481
 
+
+
+#  define MB_LEFT 1
+#  define MB_RIGHT 2
+#  define MB_MIDDLE 3
+#  define MB_SCRLUP 4
+#  define MB_SCRLDW 5
+
 # else
 #  define KEY_ESC 53
 #  define KEY_1 18
@@ -166,8 +173,4 @@
 #  define KEY_RSHIFT 258
 #  define KEY_RCTRL 269
 # endif
-
-# include "state.h"
-
-int	on_input(int key, t_gamestate *state);
 #endif 
