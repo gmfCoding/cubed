@@ -118,16 +118,16 @@ re: fclean all
 # Dependencies
 -include $(DEPS)
 
-$(LIBFT):
-	make -s -C $(dir $(LIBFT)) all bonus
+$(DIRLIB)/$(LIBFT):
+	make -s -C $(dir $@) all bonus
 
-$(LIBGNL):
-	make -s -C $(dir $(LIBGNL)) all bonus
+$(DIRLIB)/$(LIBGNL):
+	make -s -C $(dir $@) all
 
-$(LIBMLX):
-	make -s -C $(dir $(LIBMLX))
+$(DIRLIB)/$(LIBMLX):
+	make -s -C $(dir $@)
 
-$(LIBMLX_SO): $(LIBMLX)
+$(DIRLIB)/$(LIBMLX_SO): $(LIBMLX)
 	cp $(DIRMLX)/libmlx.so ./libmlx.so
 
 # Folders
