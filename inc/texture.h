@@ -33,6 +33,8 @@ int	pixel_get(t_texture data, int x, int y);
 void	texture_draw_line(t_texture data, t_vec2 start, t_vec2 end, int colour);
 void	texture_draw_square(t_texture data, t_vec2 start, t_vec2 width, int colour);
 
+void    texture_blit(t_texture src, t_texture dst, t_vec2 pos);
+void    texture_clear(t_texture src);
 
 t_texture	texture_create(void *mlx, int width, int height);
 

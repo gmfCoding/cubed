@@ -18,3 +18,43 @@ void    texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
 {
 	mlx_put_image_to_window(gs->mlx, gs->win, tex.img, pos.x, pos.y);
 }
+
+// Copies pixel data from one texture to another
+void    texture_blit(t_texture src, t_texture dst, t_vec2 pos)
+{
+	int x;
+	int y;
+
+	y = -1;
+	while (++y < src.height)
+	{
+		x = -1;
+		while (++x < src.width)
+		{
+			int color = pixel_get(src, x, y);
+			if (color >> 24 && 0xFF > 0)
+				pixel_set_s(dst, pos.x + x, pos.y + y, color);
+		}
+	}
+}
+
+#include <string.h>
+// Copies pixel data from one texture to another
+void    texture_clear(t_texture src)
+{
+	// FORBIDDEN
+	memset(src.data, 0, (src.bpp / 8) * src.width * src.height);
+}
+
+void texture_debug_view(t_game *game, int view, t_texture tex, t_vec2 pos)
+{
+	if (view >= MAX_DEBUG_VIEWS)
+		return;
+	if (game->views[view].rt.img == NULL)
+	{
+		game->views[view].win = mlx_new_window(game->mlx, tex.width, tex.height, "DEBUG VIEW");
+		game->views[view].rt = texture_create(game->mlx, tex.width, tex.height);
+	}
+	texture_blit(tex, game->views[view].rt, pos);
+	mlx_put_image_to_window(game->mlx, game->views[view].win, game->views[view].rt.img, 0, 0);
+}

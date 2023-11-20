@@ -3,14 +3,47 @@
 # python xpm saver 0.3.0
 # python Pillow
 
+if [[ "$@" =~ '--help' ]]
+then
+	(echo -e "Asset refresh:
+	./refresh.sh [-hu]
+
+	Converts all PNG files found in ../assets/source to XPM files in ../assets
+
+	Dependencies: (auto fetcjed)
+		Python3.8+
+		pip3
+		Python.PIL: pip install Pillow
+		XPM: pip install git+https://github.com/gmfCoding/xpm_argb.git@master
+		 ^ This is a fork of PyPI:xpm that supports more features
+
+	--help
+		displays this help message.
+
+	-u --update
+		Updates the python xpm module (no automatic way)
+	")
+	exit;
+fi
+
+UPDATE=0
+while [[ $#>0 ]]; do
+	case "$1" in 
+		'-u'|'--update')
+			UPDATE=1
+			shift 1
+			continue
+	esac
+	break
+done
+
 python3 -c "import PIL"
 if [[ $? -ne 0 ]]; then
 	pip3 install Pillow
 fi
 
-python3 -c "import xpm"
-if [[ $? -ne 0 ]]; then
-	pip3 install xpm
+if [[ $? -ne 0 ]] | [[ $UPDATE == 1 ]]; then
+	pip3 install git+https://github.com/gmfCoding/xpm_argb.git@master
 fi
 
 OWD=$(pwd)
@@ -27,6 +60,7 @@ BLUE="\033[0;34m"
 BCYAN="\033[1;36m"
 CYAN="\033[0;36m"
 NC="\033[0m"
+
 
 FILES=$(find ../assets/source/ -type f -name "*.png" )
 for filename in $FILES; do

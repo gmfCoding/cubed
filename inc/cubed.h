@@ -21,24 +21,29 @@
 # define MAP_MAX_Y MAP_MAX_XY
 
 typedef struct s_vec2f t_vec2f;
-typedef struct s_hitpoint t_hitpoint;
 typedef struct s_cellinfo t_cellinfo;
 
 typedef uint8_t t_cellheight;
 
-struct s_vec2f
-{
-	float	x;
-	float	y;
-};
 
+
+/**
+ * @param depth Distance from the normal plane
+ * @param dist Distance from the start
+ * @param minX The smallest height of the ray
+ * @param minY The largest height of the ray
+*/
+typedef struct s_hitpoint t_hitpoint;
 struct s_hitpoint
 {
 	float depth;
+	float dist;
 	float minX;
 	float minY;
+	int side;
 };
 
+typedef struct s_rayinfo t_rayinfo;
 struct s_rayinfo
 {
 	t_hitpoint	depths[MAX_DEPTHS];
