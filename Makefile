@@ -35,7 +35,7 @@ LIBGNL = gnl/libgnl.a
 ifeq ($(OS),Linux)
 LIBMLX = mlx-linux/libmlx.a
 else
-LIBMLX = mlx-linux/libmlx.a
+LIBMLX = mlx/libmlx.a
 endif
 
 LIBSF = $(LIBFT) $(LIBGNL) $(LIBMLX)
