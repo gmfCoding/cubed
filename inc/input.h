@@ -12,6 +12,12 @@
 #ifndef INPUT_H
 # define INPUT_H
 
+#  define MB_LEFT 1
+#  define MB_RIGHT 2
+#  define MB_MIDDLE 3
+#  define MB_SCRLUP 4
+#  define MB_SCRLDW 5
+
 # ifdef KEYMAP_LINUX
 #  define KEY_SPACE 32
 #  define KEY_APOSTROPH 39
@@ -106,14 +112,6 @@
 #  define KEY_F10 65479
 #  define KEY_F11 65480
 #  define KEY_F12 65481
-
-
-
-#  define MB_LEFT 1
-#  define MB_RIGHT 2
-#  define MB_MIDDLE 3
-#  define MB_SCRLUP 4
-#  define MB_SCRLDW 5
 
 # else
 #  define KEY_ESC 53
