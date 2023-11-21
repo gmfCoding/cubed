@@ -47,7 +47,7 @@ if [[ $? -ne 0 ]] | [[ $UPDATE == 1 ]]; then
 fi
 
 OWD=$(pwd)
-cd $(dirname $(realpath $0))
+cd $(cd $(dirname $0); pwd -P)
 
 BGREEN="\033[1;32m"
 GREEN="\033[0;32m"

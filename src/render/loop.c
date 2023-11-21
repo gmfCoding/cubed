@@ -85,10 +85,10 @@ t_rayinfo raycast(int *map, t_vec2 start, t_vec2 dir)
 	dda.check = (t_vec2i){start.x, start.y};
 	dda.delta.x = 1e30;
 	if (dda.delta.x != 0)
-		dda.delta.x = 1.0 / fabs(dir.x);
+		dda.delta.x =  fabs(1.0 / dir.x);
 	dda.delta.y = 1e30;
 	if (dda.delta.y != 0)
-		dda.delta.y = 1.0 / fabs(dir.y);
+		dda.delta.y =  fabs(1.0 / dir.y);
 	//dda.delta = (t_vec2){sqrt(1 + dir.y / dir.x * dir.y / dir.x), sqrt(1 + dir.x / dir.y * dir.x / dir.y)};
 	if (dir.x < 0)
 	{
@@ -98,7 +98,7 @@ t_rayinfo raycast(int *map, t_vec2 start, t_vec2 dir)
 	else
 	{
 		dda.step.x = 1;
-		dda.side.x = (dda.check.x + 1 - start.x) * dda.delta.x;
+		dda.side.x = (dda.check.x + 1.0 - start.x) * dda.delta.x;
 	}
 	if (dir.y < 0)
 	{
@@ -108,7 +108,7 @@ t_rayinfo raycast(int *map, t_vec2 start, t_vec2 dir)
 	else
 	{
 		dda.step.y = 1;
-		dda.side.y = (dda.check.y + 1 - start.y) * dda.delta.y;
+		dda.side.y = (dda.check.y + 1.0 - start.y) * dda.delta.y;
 	}
 	while (dist < MAX_RAYCAST_DIST)
 	{
@@ -180,7 +180,7 @@ void	on_mouse(int key, int x, int y, t_game *game)
 	(void)x;
 	(void)y;
 	t_vec2 coord = screen_to_map(game->mouse);
-	if (key == MB_LEFT)
+	if (key == KEY_F)
 	{
 		game->debug = 1;
 		t_rayinfo ray = raycast(map, game->pos, coord);
@@ -208,6 +208,7 @@ void	on_key_press(int key, t_game *game)
 void	render(t_game *game)
 {
 	texture_clear(game->rt0);
+
 	//static t_vec2 start = {0,0};
 	static bool init = false;
 	static t_texture overlay;
@@ -227,6 +228,7 @@ void	render(t_game *game)
 		}
 		init = 1;
 	}
+	texture_clear(overlay);
 
 	const int cell_width = SCR_WIDTH / MAP_WIDTH;
 	const int cell_height = SCR_HEIGHT / MAP_HEIGHT;
@@ -258,7 +260,7 @@ void	render(t_game *game)
 		float y = sin(lAng + angle);
 		t_vec2 dir = v2new(x, y);
 		t_rayinfo ray = raycast(map, game->pos, dir);
-		t_vec2 intersect = v2add(game->pos, v2muls(dir, ray.depths[0].dist));
+		t_vec2 intersect = v2add(game->pos, v2muls(dir, ray.depths[0].depth));
 		texture_draw_square(overlay, map_to_screen(intersect), v2new(5,5), R_ALPHA | 0xffff00);
 
 		//Calculate height of line to draw on screen
@@ -278,7 +280,7 @@ void	render(t_game *game)
 			int col = 0xff;
 			if (ray.depths[0].side)
 				col = 0xff00;
-			pixel_set_s(game->rt0, i, c, R_ALPHA | col);
+			pixel_set_s(game->rt0, i, c, /*R_ALPHA |*/ col);
 		}
 		// pixel_set_s(game->rt0, i, 51, dist * 0xff * 100);
 		// pixel_set_s(game->rt0, i, 52, dist * 0xff * 100);
@@ -296,12 +298,14 @@ void	render(t_game *game)
 				t_vec2 cell = map_to_screen(v2new(x ,y));
 				if (map[map_index(x, y)] > 0)
 					texture_draw_square(overlay, cell, v2new(cell_width, cell_height), map[map_index(x, y)]);
+				else
+					texture_draw_square(overlay, cell, v2new(cell_width, cell_height), 00);
 			}
 		}
 	}
-	texture_draw_line(overlay, game->mouse, map_to_screen(game->pos), R_ALPHA | 0xffff0000);
-	texture_draw_square(overlay, map_to_screen(game->pos), v2new(5,5), R_ALPHA |  0xffff0000);
-	texture_blit(game->tex, overlay, v2new(0,0));
+	texture_draw_line(overlay, game->mouse, map_to_screen(game->pos), R_ALPHA | 0xff0000);
+	texture_draw_square(overlay, map_to_screen(game->pos), v2new(5,5), R_ALPHA |  0xff0000);
+	//texture_blit(game->tex, overlay, v2new(0,0));
 	//texture_blit(overlay, game->rt0, v2new(0,0));
 	//texture_clear(overlay);
 	//texture_draw_square(game->rt0, map_to_screen(intersect), v2new(5,5), 0xff0000);
