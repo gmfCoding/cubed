@@ -14,7 +14,7 @@ __attribute__((always_inline))
 inline void	pixel_set_s(t_texture data, int x, int y, int color)
 {
 	char	*dst;
-	if (x < 0 || y < 0 || x > data.width || y > data.height)
+	if (x < 0 || y < 0 || x >= data.width || y >= data.height)
 		return ;
 	dst = data.data + (y * data.line_size + x * (data.bpp / 8));
 	*(unsigned int *)dst = color;
