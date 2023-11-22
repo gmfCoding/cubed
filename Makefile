@@ -1,4 +1,4 @@
-SRCSF =	main.c \
+SRCSF = $(TEST) \
 		texture/texture.c \
 		texture/pixel.c \
 		texture/texture_util.c \
@@ -14,6 +14,7 @@ SRCSF =	main.c \
 		util/time.c \
 		cerror.c \
 		dda_simple.c \
+		input.c \
 
 INCSF = cubed.h
 

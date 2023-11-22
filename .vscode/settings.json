@@ -24,6 +24,8 @@
 		"vector2i.h": "c",
 		"error.h": "c",
 		"libft.h": "c",
-		"render.h": "c"
+		"render.h": "c",
+		"stdbool.h": "c",
+		"keys.h": "c"
 	}
 }
