@@ -14,7 +14,9 @@ SRCSF = $(TEST) \
 		util/time.c \
 		cerror.c \
 		dda_simple.c \
-		input.c \
+		input/input.c \
+		input/input_hooks.c \
+		input/input_setup.c \
 
 INCSF = cubed.h
 

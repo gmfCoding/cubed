@@ -17,6 +17,7 @@
 #  define MB_SCRLDW		0x00FF0005
 
 # ifdef KEYMAP_LINUX
+#  define KEY_REG_MAX	127
 #  define KEY_SPACE		32
 #  define KEY_APOSTROPH	39
 #  define KEY_COMMA		44
@@ -112,6 +113,7 @@
 #  define KEY_F12		65481
 
 # else
+#  define KEY_REG_MAX	269
 #  define KEY_ESC		53
 #  define KEY_1			18
 #  define KEY_2			19

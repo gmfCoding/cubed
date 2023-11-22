@@ -20,6 +20,8 @@
 // 	mlx_loop(mlx);
 // }
 
+
+
 int main(int argc, char **argv)
 {
 	(void)argc;
