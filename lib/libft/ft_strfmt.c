@@ -37,7 +37,6 @@ static void	get_append(char **format, va_list *list, char **tmp)
 	else
 		*tmp[0] = **format;
 }
-
 char	*ft_strfmt(char *fmt, ...)
 {
 	va_list		list;
@@ -60,5 +59,6 @@ char	*ft_strfmt(char *fmt, ...)
 			free(append);
 		fmt++;
 	}
+	va_end(list);
 	return (buffer);
 }

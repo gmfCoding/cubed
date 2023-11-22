@@ -22,6 +22,7 @@ SRCS = 	ft_strlen.c		\
 		ft_strnstr.c	\
 		ft_calloc.c		\
 		ft_strdup.c		\
+		ft_strfmt.c		\
 		$(SRCS2)		\
 
 SRCS2 = ft_substr.c		\
@@ -52,7 +53,7 @@ SRCSB =	ft_lstnew.c			\
 NAME = libft.a
 OBJDIR = obj/
 CC = clang
-FLAGS = $(DFLAGS) -Wall -Wextra -Werror
+FLAGS = $(DFLAGS) -Wall -Wextra -Werror -fsanitize=address -g3
 
 # OBJECT FILES
 OBJ := $(patsubst %.c, $(OBJDIR)%.o, $(SRCS))

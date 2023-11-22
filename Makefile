@@ -12,7 +12,8 @@ SRCSF =	main.c \
 		render/loop.c \
 		render/line.c \
 		util/time.c \
-		cerror.c
+		cerror.c \
+		dda_simple.c \
 
 INCSF = cubed.h
 

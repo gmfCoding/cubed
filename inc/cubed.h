@@ -2,7 +2,7 @@
 # define CUBED_H
 # include <inttypes.h>
 
-#include "extra/optimised.h"
+//#include "extra/optimised.h"
 # include "texture.h"
 # include "state.h"
 # include "render.h"
@@ -20,12 +20,13 @@
 # define MAP_MAX_X MAP_MAX_XY
 # define MAP_MAX_Y MAP_MAX_XY
 
+# define TARGET_FRAME_RATE 60.0
+# define R_TFR TARGET_FRAME_RATE
+
 typedef struct s_vec2f t_vec2f;
 typedef struct s_cellinfo t_cellinfo;
 
 typedef uint8_t t_cellheight;
-
-
 
 /**
  * @param depth Distance from the normal plane
@@ -40,6 +41,8 @@ struct s_hitpoint
 	float dist;
 	float minX;
 	float minY;
+	int x;
+	int y;
 	int side;
 };
 

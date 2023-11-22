@@ -23,6 +23,7 @@
 		"vector_base.h": "c",
 		"vector2i.h": "c",
 		"error.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"render.h": "c"
 	}
 }

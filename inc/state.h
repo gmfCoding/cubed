@@ -12,21 +12,37 @@ struct s_debug_texture
 	t_texture rt;
 };
 
+typedef struct s_player t_player;
+
+struct s_player
+{
+	t_vec2 pos;
+	t_vec2 dir;
+	t_vec2 plane;
+
+	double moveSpeed;
+	double rotSpeed;
+};
+
 struct s_game
 {
 	void *mlx;
 	void *win;
 
 	t_texture rt0;
-	t_texture tex;
+	t_texture rt1;
+
 	t_vec2 mouse;
 	t_vec2 pos;
 
 	t_debug_texture views[MAX_DEBUG_VIEWS];
 	int view_count;
 
-	int debug;
+	t_player	player;
 };
 
-void texture_debug_view(t_game *game, int view, t_texture tex, t_vec2 pos);
+void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);
+void texture_draw_debug_view(t_game *game, int view);
+t_texture texture_get_debug_view(t_game *game, int view);
+
 #endif

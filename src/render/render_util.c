@@ -46,15 +46,32 @@ void    texture_clear(t_texture src)
 	memset(src.data, 0, (src.bpp / 8) * src.width * src.height);
 }
 
-void texture_debug_view(t_game *game, int view, t_texture tex, t_vec2 pos)
+t_texture texture_get_debug_view(t_game *game, int view)
 {
-	if (view >= MAX_DEBUG_VIEWS)
-		return;
 	if (game->views[view].rt.img == NULL)
 	{
-		game->views[view].win = mlx_new_window(game->mlx, tex.width, tex.height, "DEBUG VIEW");
-		game->views[view].rt = texture_create(game->mlx, tex.width, tex.height);
-	}
-	texture_blit(tex, game->views[view].rt, pos);
+		game->views[view].win = mlx_new_window(game->mlx, game->rt0.width, game->rt0.height, "DEBUG VIEW");
+		game->views[view].rt = texture_create(game->mlx, game->rt0.width, game->rt0.height);
+	} 
+	return game->views[view].rt;
+}
+
+void texture_draw_debug_view(t_game *game, int view)
+{
+	t_texture rt;
+
+	if (view >= MAX_DEBUG_VIEWS)
+		return ;
+	mlx_put_image_to_window(game->mlx, game->views[view].win, game->views[view].rt.img, 0, 0);
+}
+
+void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos)
+{
+	t_texture rt;
+
+	if (view >= MAX_DEBUG_VIEWS)
+		return ;
+	rt = texture_get_debug_view(game, view);
+	texture_blit(tex, rt, pos);
 	mlx_put_image_to_window(game->mlx, game->views[view].win, game->views[view].rt.img, 0, 0);
 }
