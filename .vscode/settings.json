@@ -26,6 +26,7 @@
 		"libft.h": "c",
 		"render.h": "c",
 		"stdbool.h": "c",
-		"keys.h": "c"
+		"keys.h": "c",
+		"types.h": "c"
 	}
 }

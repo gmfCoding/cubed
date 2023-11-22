@@ -1,9 +1,14 @@
+# ifndef KEYS_H
 # define KEYS_H
 
 #include <stdbool.h>
 
 # define KEY_MB_MASK	0x00FF0000
 # define KEY_CMD_MASK	0x0000FF00
+
+# define KEY_MASK_PRESS	0b1 // Has it been pressed?
+# define KEY_MASK_PREV	0b10 // Was it held on the previous frame?
+# define KEY_MASK_RELEASE 0b100 // Has it been released?
 
 #  define MB_LEFT		0x00FF0001
 #  define MB_RIGHT		0x00FF0002

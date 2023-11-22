@@ -18,6 +18,10 @@ SRCSF = $(TEST) \
 
 INCSF = cubed.h
 
+ifndef $(TEST)
+TEST=main.c
+endif
+
 ifndef $(OS)
 OS := $(shell uname)
 endif
