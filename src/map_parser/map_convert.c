@@ -260,22 +260,81 @@ int	map_tiles_surround(t_map *map, char *content, int index)
 	return (i);
 }
 
+int	map_check_player(char *content)
+{
+	int	i;
+	int	count;
 
+	i = 0;
+	count = 0;
+	while (content[i])
+	{
+		if (content[i] == 'N' || content[i] == 'S')
+			count++;
+		if (content[i] == 'E' || content[i] == 'W')
+			count++;
+		i++;
+	}
+	return (count);
+}
 
-void	map_check_errors(t_map *map, t_list *raw_map_file)
+int	map_check_invalid_char(char *content)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (content[i])
+	{
+		if (content[i] != 'N' && content[i] != 'S' && \
+			content[i] != 'E' && content[i] != 'W' && \
+			content[i] != '0' && content[i] != '1' && \
+			content[i] != ' ' && content[i] != '\n')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+void	map_check_err(t_map *map_temp, t_map *map, t_list *temp, t_list *raw_map_file)
 {
 	t_list	*curr;
-	t_map	map_temp;
-	int		index;
-	index = 0;
-	curr = raw_map_file;
-	int lines = (intptr_t)curr->content;
-	curr = curr->next;
+	int	count_players;
+	int	count_invalid_char;
 
-	while (curr != NULL && map_starting_point((char *)curr->content) == 1)
+	count_players = 0;
+	count_invalid_char = 0;
+	curr = temp;
+	while (curr != NULL && curr->content != NULL)
 	{
+		count_players += map_check_player((char *)curr->content);
+		count_invalid_char += map_check_invalid_char((char *)curr->content);
 		curr = curr->next;
 	}
+	if (count_players > 1 || count_players < 1)
+		printf("incorrect player count\n");
+	if (count_invalid_char > 0)
+		printf("incorrect char in map");
+	//TODO add flooffill checkhere make a return fucntion and handle errors
+}
+
+
+void	map_check_setup(t_map *map, t_list *raw_map_file)
+{
+	t_list	*curr;
+	t_list	*temp;
+	t_map	map_temp;
+	int		index;
+	int		lines;
+
+	curr = raw_map_file;
+	lines = (intptr_t)curr->content;
+	index = 0;
+	curr = curr->next;
+	while (curr != NULL && map_starting_point((char *)curr->content) == 1)
+		curr = curr->next;
+	temp = curr;
 	map_temp.width = (map_width_size(curr) + 2);
 	map_temp.height = (map_height_size(curr) + 2);
 	while (index < map_temp.width)
@@ -287,8 +346,8 @@ void	map_check_errors(t_map *map, t_list *raw_map_file)
 	}
 	while (++index < ((map_temp.width * map_temp.height) + map_temp.width))
 		map_temp.tiles[index].type = get_tiletype(' ');
-	printf("MAPWIDTH%d  MAPHEIGHT%d  \n", map_temp.width, map_temp.height);
 	print_map(&map_temp);
+	map_check_err(&map_temp, map, temp, raw_map_file);
 }
 
 t_map	map_init(t_map *map, t_list *raw_map_file)
@@ -312,7 +371,7 @@ t_map	map_init(t_map *map, t_list *raw_map_file)
 		printf("%s", (char *)curr->content);
 		curr = curr->next;
 	}
-	map_check_errors(map, raw_map_file);
+	map_check_setup(map, raw_map_file);
 	return (*map);
 }
 
