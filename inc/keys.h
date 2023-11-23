@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:10:21 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/23 21:17:17 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/23 21:19:18 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@
 #  define KEY_NP_PERIOD	65439
 #  define KEY_NP_EQUAL	0
 # else
-#  define KEY_REG_MAX	269
+#  define KEY_REG_MAX	272
 #  define KEY_SPACE		49
 #  define KEY_APOSTROPH	39
 #  define KEY_COMMA		43
