@@ -15,7 +15,12 @@
 # define DEG2RAD 0.01745329251993888888888888888889
 # define RAD2DEG 57.2957795131
 
-#define R_ALPHA 0xff000000
+# ifdef __linux__
+#  define R_ALPHA 0xff000000
+# else
+#  define R_ALPHA 0x00000000
+#endif
+
 #define R_RED   0x00ff0000
 #define R_GREEN 0x0000ff00
 #define R_BLUE  0x000000ff
@@ -169,7 +174,7 @@ void	on_mouse(int key, int x, int y, t_game *game)
 	(void)game;
 }
 
-void	on_key_press(int key, t_game *game)
+void	player_controls(t_game *game)
 {
 	t_player *const player = &game->player;
 	double oldDirX;
@@ -177,21 +182,21 @@ void	on_key_press(int key, t_game *game)
 
 	oldDirX = player->dir.x;
 	oldPlaneX = player->plane.x;
-	if (key == KEY_W)
+	if (input_keyheld(game, KEY_W))
 	{
 		if (map[map_index((int)(player->pos.x + player->dir.x * player->moveSpeed),(int)player->pos.y)] == false)
 			player->pos.x += player->dir.x * player->moveSpeed;
 		if (map[map_index((int)player->pos.x,(int)(player->pos.y + player->dir.y * player->moveSpeed))] == false)
 			player->pos.y += player->dir.y * player->moveSpeed;
 	}
-	if (key == KEY_S)
+	if (input_keyheld(game, KEY_S))
 	{
 		if (map[map_index((int)(player->pos.x - player->dir.x * player->moveSpeed),(int)player->pos.y)] == false)
 			player->pos.x -= player->dir.x * player->moveSpeed;
 		if (map[map_index((int)player->pos.x,(int)(player->pos.y - player->dir.y * player->moveSpeed))] == false)
 			player->pos.y -= player->dir.y * player->moveSpeed;
 	}
-	if (key == KEY_A)
+	if (input_keyheld(game, KEY_A))
 	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(-player->rotSpeed) - player->dir.y * sin(-player->rotSpeed);
@@ -199,7 +204,7 @@ void	on_key_press(int key, t_game *game)
 		player->plane.x = player->plane.x * cos(-player->rotSpeed) - player->plane.y * sin(-player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(-player->rotSpeed) + player->plane.y * cos(-player->rotSpeed);
 	}
-	if (key == KEY_D)
+	if (input_keyheld(game, KEY_D))
 	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(player->rotSpeed) - player->dir.y * sin(player->rotSpeed);
@@ -229,6 +234,10 @@ void render_map_view(t_game *game)
 
 void	render(t_game *game)
 {
+	player_controls(game);
+
+	input_process(game);
+
 	texture_clear(game->rt0); // Window 1
 	texture_clear(game->rt1); // Window 2
 

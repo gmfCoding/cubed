@@ -6,10 +6,11 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 00:52:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/23 21:39:22 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/23 22:08:21 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <mlx.h>
 #include "state.h"
 #include "input.h"
 

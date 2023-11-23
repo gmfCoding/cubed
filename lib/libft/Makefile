@@ -53,7 +53,7 @@ SRCSB =	ft_lstnew.c			\
 NAME = libft.a
 OBJDIR = obj/
 CC = clang
-FLAGS = $(DFLAGS) -Wall -Wextra -Werror -fsanitize=address -g3
+FLAGS = $(DFLAGS) -Wall -Wextra -Werror
 
 # OBJECT FILES
 OBJ := $(patsubst %.c, $(OBJDIR)%.o, $(SRCS))

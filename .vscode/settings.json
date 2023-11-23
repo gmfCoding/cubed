@@ -27,6 +27,7 @@
 		"render.h": "c",
 		"stdbool.h": "c",
 		"keys.h": "c",
-		"types.h": "c"
+		"types.h": "c",
+		"__node_handle": "c"
 	}
 }

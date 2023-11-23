@@ -20,14 +20,12 @@
 // 	mlx_loop(mlx);
 // }
 
-
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
+	t_game	game;
+
 	(void)argc;
 	(void)argv;
-	t_game	game;
-	
 	game = (t_game){0};
 	game.mlx = mlx_init();
 	game.rt0 = texture_create(game.mlx, SCR_WIDTH, SCR_HEIGHT);
@@ -37,14 +35,10 @@ int main(int argc, char **argv)
 	game.player.pos = v2new(2, 2);
 	game.player.dir = v2new(1, 0);
 	game.player.plane = v2new(0, 0.66);
-	game.player.moveSpeed = 1 / R_TFR * 5.0; // the constant value is in squares/second
-	game.player.rotSpeed = 1 / R_TFR * 3.0;  // the constant value is in radians/second
+	game.player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
+	game.player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
 
+	input_setup(&game);
 	mlx_loop_hook(game.mlx, (void *)render, &game);
-	mlx_hook(game.win, 6, (1L<<6), (void *)on_mouse_move, &game);
-	mlx_hook(game.win, 2, (1L<<0), (void *)on_key_press, &game);
-	mlx_do_key_autorepeaton(game.mlx); // change to off when we implement the input system
-
-	mlx_mouse_hook(game.win, (void *)on_mouse, &game);
 	mlx_loop(game.mlx);
 }
