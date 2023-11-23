@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/21 22:00:01 by kmordaun         ###   ########.fr       */
+/*   Updated: 2023/11/23 21:48:56 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,27 @@ typedef enum	e_tiletype
 	FLOOR,
 	WALL,
 	EMPTY,
+	INVALID
 }				t_tiletype;
 
-typedef struct s_cellinfo
+typedef struct	s_tile
 {
-	char type; // 1 or 0?
-}				t_cellinfo;
+	t_tiletype	type; // 1 or 0?
+}				t_tile;
 
 typedef struct	s_map
 {
-	t_cellinfo	cells[MAP_MAX_X * MAP_MAX_Y];
+	t_tile	tiles[MAP_MAX_X * MAP_MAX_Y];
 	t_vec2		s_pos;
 	uint8_t		width;
 	uint8_t		height;
 	float		s_angle;
 	int			color_ceiling;
 	int			color_floor;
-	char*           texture_n_wall;
-        char*           texture_s_wall;
-        char*           texture_w_wall;
-        char*           texture_e_wall;
-
+	char*		texture_n_wall;
+	char*		texture_s_wall;
+	char*		texture_w_wall;
+	char*		texture_e_wall;
 }				t_map;
 
 typedef struct	s_world
@@ -73,7 +73,6 @@ typedef struct	s_world
 	//t_entity	map_entities[MAX_ENTITIES];
 	//int ent_count;
 }				t_world;
-
 
 typedef enum	e_mapissue
 {
@@ -117,7 +116,6 @@ char *const    g_mapsymbols[] = {
 	"S ",
 	"F ",
 	"C ",
-	NULL
 };
 //if(ft_strcmp(".cub", ft_strrchr(filePath, ".")) == 0)
 
@@ -125,12 +123,13 @@ int	map_starting_point(char *content)
 {
 	int	i;
 	char	temp[3];
-
+	
 	i = -1;
 	strncpy(temp, content, 2);
 	temp[2] = '\0';
-	while (g_mapsymbols[++i] != NULL)
+	while (++i < sizeof(g_mapsymbols) / 8)
 	{
+		//if (strncmp(g_mapsymbols[i], content, strlen(g_mapsymbols[i])))
 		if (strcmp(g_mapsymbols[i], temp) == 0)
 			return (1);
 	//	printf("%s\n", g_mapsymbols[i]);
@@ -173,35 +172,148 @@ int	map_width_size(t_list *curr)
 	while (curr != NULL && curr->content != NULL)
 	{
 		if (strlen((char *)curr->content) > i)
-			i = strlen((char *)curr->content);
+		{
+			if (((char *)curr->content)[strlen((char *)curr->content)] == '\n')
+				i = strlen((char *)curr->content) - 1;
+			else
+				i = strlen((char *)curr->content);
+		}
 		curr = curr->next;
 	}
 
+	return (i-1);
+}
+
+int	map_height_size(t_list *curr)
+{
+	int i;
+
+	i = 0;
+	while (curr != NULL && curr->content != NULL)
+	{
+		i++;
+		curr = curr->next;
+	}
 	return (i);
 }
 
-t_map	map_init(t_map map, t_list *raw_map_file)
+t_tiletype get_tiletype(char c)
+{
+	if (c == '0')
+		return (FLOOR);
+	else if (c == '1')
+		return (WALL);
+	else
+		return (EMPTY);
+}
+
+int	map_tiles(t_map *map, char *content, int index)
+{
+	int	i;
+
+	i = 0;
+	while (i < map->width)
+	{
+		if (content[i] == '\0' || content[i] == '\n')
+			while(i < map->width)
+				map->tiles[index + i++].type = get_tiletype(' ');
+		else
+		{
+			map->tiles[index + i].type = get_tiletype(content[i]);
+			i++;
+		}
+	}
+	return (i);
+}
+
+void	print_map(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < (map->width * map->height))
+	{
+		if (i % map->width == 0)
+			printf("\n");
+		printf("%d", map->tiles[i].type);
+		i++;
+	}
+}
+
+int	map_tiles_surround(t_map *map, char *content, int index)
+{
+	int	i;
+
+	i = 0;
+	map->tiles[index].type = get_tiletype(' ');
+	while (i < (map->width))
+	{
+		if (content[i] == '\0' || content[i] == '\n')
+			while(i < map->width)
+				map->tiles[(index + 1) + i++].type = get_tiletype(' ');
+		else
+		{
+			map->tiles[(index + 1) + i].type = get_tiletype(content[i]);
+			i++;
+		}
+	}
+	return (i);
+}
+
+
+
+void	map_check_errors(t_map *map, t_list *raw_map_file)
 {
 	t_list	*curr;
-	
+	t_map	map_temp;
+	int		index;
+	index = 0;
 	curr = raw_map_file;
 	int lines = (intptr_t)curr->content;
 	curr = curr->next;
+
 	while (curr != NULL && map_starting_point((char *)curr->content) == 1)
+	{
 		curr = curr->next;
-	replace_tabs(curr);
-	map.width = map_width_size(curr);
-	printf("%d\n", map.width);
+	}
+	map_temp.width = (map_width_size(curr) + 2);
+	map_temp.height = (map_height_size(curr) + 2);
+	while (index < map_temp.width)
+		map_temp.tiles[index++].type = get_tiletype(' ');
 	while (curr != NULL && curr->content != NULL)
 	{
-		//populatemap
+		index += map_tiles_surround(&map_temp, (char *)curr->content, index);
+		curr = curr->next;
+	}
+	while (++index < ((map_temp.width * map_temp.height) + map_temp.width))
+		map_temp.tiles[index].type = get_tiletype(' ');
+	printf("MAPWIDTH%d  MAPHEIGHT%d  \n", map_temp.width, map_temp.height);
+	print_map(&map_temp);
+}
+
+t_map	map_init(t_map *map, t_list *raw_map_file)
+{
+	t_list	*curr;
+	int		index;
+
+	index = 0;
+	curr = raw_map_file;
+	int lines = (intptr_t)curr->content;
+	curr = curr->next;
+	replace_tabs(curr);
+	while (curr != NULL && map_starting_point((char *)curr->content) == 1)
+		curr = curr->next;
+	map->width = map_width_size(curr);
+	map->height = map_height_size(curr);
+	printf("MAPWIDTH%d  MAPHEIGHT%d  \n", map->width, map->height);
+	while (curr != NULL && curr->content != NULL)
+	{
+		index += map_tiles(map, (char *)curr->content, index);
 		printf("%s", (char *)curr->content);
 		curr = curr->next;
-			
 	}
-
-	
-	return (map);
+	map_check_errors(map, raw_map_file);
+	return (*map);
 }
 
 t_map	map_parse(int argc, char **argv)//get the map done first
@@ -215,9 +327,7 @@ t_map	map_parse(int argc, char **argv)//get the map done first
 		raw_map_file = ft_lst_readfile(argv[1]);
 	else
 		exit(2);
-	map = map_init(map, raw_map_file);
-
-
+	map = map_init(&map, raw_map_file);
 	return (map);
 }
 
@@ -226,6 +336,7 @@ t_world	world_preset(int argc, char **argv)
 	t_world	world;
 
 	world.map = map_parse(argc, argv);
+	print_map(&world.map);
 
 	return (world);
 }
