@@ -1,20 +1,32 @@
-# ifndef KEYS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keys.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/23 21:10:21 by clovell           #+#    #+#             */
+/*   Updated: 2023/11/23 21:17:17 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef KEYS_H
 # define KEYS_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 # define KEY_MB_MASK	0x00FF0000
 # define KEY_CMD_MASK	0x0000FF00
 
-# define KEY_MASK_PRESS	0b1 // Has it been pressed?
-# define KEY_MASK_PREV	0b10 // Was it held on the previous frame?
-# define KEY_MASK_RELEASE 0b100 // Has it been released?
+# define KEY_MASK_PRESS     0b1 // Has it been pressed?
+# define KEY_MASK_PREV      0b10 // Was it held on the previous frame?
+# define KEY_MASK_RELEASE   0b100 // Has it been released?
 
-#  define MB_LEFT		0x00FF0001
-#  define MB_RIGHT		0x00FF0002
-#  define MB_MIDDLE		0x00FF0003
-#  define MB_SCRLUP		0x00FF0004
-#  define MB_SCRLDW		0x00FF0005
+# define MB_LEFT		0x00FF0001
+# define MB_RIGHT		0x00FF0002
+# define MB_MIDDLE		0x00FF0003
+# define MB_SCRLUP		0x00FF0004
+# define MB_SCRLDW		0x00FF0005
 
 # ifdef __linux__
 #  define KEY_REG_MAX	127
@@ -115,8 +127,6 @@
 #  define KEY_INS		65379
 
 #  define KEY_SCRLCK	65407
-
-
 
 #  define KEY_NP_LOCK   65407 /* TODO: is it the same as scroll? */
 #  define KEY_NP_1		65436
@@ -256,7 +266,7 @@
 #  define KEY_NP_EQUAL	81
 # endif
 
-void key_get_mapkey(const int **array, int *size);
-void        key_get_mapstr(const char ***array, int *size, bool name);
+void		key_get_mapkey(const int **array, int *size);
+void        key_get_mapstr(const char *const **array, int *size, bool name);
 const char  *key_get_keystr(int key, bool name);
 #endif

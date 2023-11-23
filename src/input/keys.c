@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keys.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/23 21:16:03 by clovell           #+#    #+#             */
+/*   Updated: 2023/11/23 21:16:56 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stddef.h>
 #include "keys.h"
+#define MAPVAL_DEL "\033[1C\b"
 
-const int	g_keymapkey[] = {
+const int			g_keymapkey[] = {
 	KEY_SPACE,
 	KEY_APOSTROPH,
 	KEY_COMMA,
@@ -106,8 +119,6 @@ const int	g_keymapkey[] = {
 	KEY_NP_PERIOD,
 	0,
 };
-
-# define MAPVAL_DEL "\033[1C\b"
 
 const char *const	g_keymapval[] = {
 	"  ",
@@ -321,14 +332,14 @@ const char *const	g_keymapname[] = {
 	"KEY_INVALID",
 };
 
-void key_get_mapkey(const int **array, int *size)
+void	key_get_mapkey(const int **array, int *size)
 {
 	if (size != NULL)
 		*size = sizeof(g_keymapkey) / sizeof(*g_keymapkey);
 	*array = g_keymapkey;
 }
 
-void        key_get_mapstr(const char ***array, int *size, bool name)
+void	key_get_mapstr(const char *const **array, int *size, bool name)
 {
 	if (name)
 	{
@@ -346,7 +357,7 @@ void        key_get_mapstr(const char ***array, int *size, bool name)
 
 int	key_get_index(int key)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < sizeof(g_keymapkey) / sizeof(*g_keymapkey))
@@ -359,7 +370,8 @@ int	key_get_index(int key)
 
 const char	*key_get_keystr(int key, bool name)
 {
-	const char	*const *map;
+	const char *const	*map;
+
 	key_get_mapstr(&map, NULL, name);
 	return (map[key_get_index(key)]);
 }

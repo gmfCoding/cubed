@@ -25,7 +25,7 @@ bool	input_keyheld(t_game *game, int key)
 	uint8_t	*state;
 
 	state = input_get_state(game, &key);
-	return ((state[key] & KEY_MASK_PRESS == KEY_MASK_PRESS) || \
+	return ((state[key] & KEY_MASK_PRESS) == KEY_MASK_PRESS || \
 	((state[key] & KEY_MASK_RELEASE) != KEY_MASK_RELEASE &&\
 	 (state[key] & KEY_MASK_PREV) == KEY_MASK_PREV));
 }
