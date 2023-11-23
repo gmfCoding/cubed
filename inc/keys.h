@@ -16,7 +16,7 @@
 #  define MB_SCRLUP		0x00FF0004
 #  define MB_SCRLDW		0x00FF0005
 
-# ifdef __LINUX__
+# ifdef __linux__
 #  define KEY_REG_MAX	127
 #  define KEY_SPACE		32
 #  define KEY_APOSTROPH	39
@@ -25,7 +25,7 @@
 #  define KEY_MINUS		45
 #  define KEY_EQUALS	61
 #  define KEY_FSLASH	47
-#  define KEY_BSLASH	97
+#  define KEY_BSLASH	92
 #  define KEY_0			48
 #  define KEY_1			49
 #  define KEY_2			50
@@ -50,7 +50,7 @@
 #  define KEY_G			103
 #  define KEY_H			104
 #  define KEY_I			105
-#  define KEY_J			107
+#  define KEY_J			106
 #  define KEY_K			108
 #  define KEY_L			108
 #  define KEY_M			109
@@ -103,6 +103,7 @@
 #  define KEY_F10		65479
 #  define KEY_F11		65480
 #  define KEY_F12		65481
+#  define KEY_F14       65483
 
 /* UNVERIFIED */
 #  define KEY_MENU		65383
@@ -115,6 +116,25 @@
 
 #  define KEY_SCRLCK	65407
 
+
+
+#  define KEY_NP_LOCK   65407 /* TODO: is it the same as scroll? */
+#  define KEY_NP_1		65436
+#  define KEY_NP_2		65433
+#  define KEY_NP_3		65435
+#  define KEY_NP_4		65430
+#  define KEY_NP_5		65437
+#  define KEY_NP_6		65432
+#  define KEY_NP_7		65429
+#  define KEY_NP_8		65431
+#  define KEY_NP_9		65434
+#  define KEY_NP_0		65438
+#  define KEY_NP_DIV	65455
+#  define KEY_NP_ADD	65451
+#  define KEY_NP_MULT	65450
+#  define KEY_NP_SUB	65453
+#  define KEY_NP_ENTER	65421
+#  define KEY_NP_DEL	65439
 # else
 #  define KEY_REG_MAX	269
 #  define KEY_SPACE		49
@@ -202,7 +222,7 @@
 #  define KEY_F10		109
 #  define KEY_F11		103
 #  define KEY_F12		111
-#  define MAC_KEY_F14   107
+#  define KEY_F14       107
 
 #  define KEY_MENU		KEY_F9
 #  define KEY_HOME		115
@@ -213,8 +233,25 @@
 #  define KEY_INS		114 
 
 /* F14 REMAP (N/A)*/
-#  define KEY_SCRLCK	MAC_KEY_F14
+#  define KEY_SCRLCK	KEY_F14
 
+#  define KEY_NP_LOCK   0
+#  define KEY_NP_1		0
+#  define KEY_NP_2		0
+#  define KEY_NP_3		0
+#  define KEY_NP_4		0
+#  define KEY_NP_5		0
+#  define KEY_NP_6		0
+#  define KEY_NP_7		0
+#  define KEY_NP_8		0
+#  define KEY_NP_9		0
+#  define KEY_NP_0		0
+#  define KEY_NP_DIV	0
+#  define KEY_NP_ADD	0
+#  define KEY_NP_MULT	0
+#  define KEY_NP_SUB	0
+#  define KEY_NP_ENTER	0
+#  define KEY_NP_DEL	0
 
 # endif
 
