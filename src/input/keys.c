@@ -86,7 +86,6 @@ const int	g_keymapkey[] = {
 	KEY_END,
 	KEY_INS,
 	KEY_SCRLCK,
-	0,
 	KEY_NP_LOCK,
 	KEY_NP_1,
 	KEY_NP_2,
@@ -102,8 +101,10 @@ const int	g_keymapkey[] = {
 	KEY_NP_ADD,
 	KEY_NP_MULT,
 	KEY_NP_SUB,
+	KEY_NP_EQUAL,
 	KEY_NP_ENTER,
-	KEY_NP_DEL,
+	KEY_NP_PERIOD,
+	0,
 };
 
 # define MAPVAL_DEL "\033[1C\b"
@@ -193,7 +194,6 @@ const char *const	g_keymapval[] = {
 	"",
 	"",
 	"",
-	"", // INVALID
 	"",
 	"1",
 	"2",
@@ -209,8 +209,10 @@ const char *const	g_keymapval[] = {
 	"+",
 	"*",
 	"-",
+	"="
 	"\e",
 	MAPVAL_DEL,
+	"",
 };
 
 const char *const	g_keymapname[] = {
@@ -298,7 +300,6 @@ const char *const	g_keymapname[] = {
 	"KEY_END",
 	"KEY_INS",
 	"KEY_SCRLCK",
-	"KEY_INVALID",
 	"KEY_NP_LOCK",
 	"KEY_NP_1",
 	"KEY_NP_2",
@@ -314,18 +315,20 @@ const char *const	g_keymapname[] = {
 	"KEY_NP_ADD",
 	"KEY_NP_MULT",
 	"KEY_NP_SUB",
+	"KEY_NP_EQUAL",
 	"KEY_NP_ENTER",
-	"KEY_NP_DEL",
+	"KEY_NP_PERIOD",
+	"KEY_INVALID",
 };
 
-void key_get_mapkey(int **array, int *size)
+void key_get_mapkey(const int **array, int *size)
 {
 	if (size != NULL)
 		*size = sizeof(g_keymapkey) / sizeof(*g_keymapkey);
 	*array = g_keymapkey;
 }
 
-void key_get_mapstr(char ***array, int *size, bool name)
+void        key_get_mapstr(const char ***array, int *size, bool name)
 {
 	if (name)
 	{
@@ -356,7 +359,7 @@ int	key_get_index(int key)
 
 const char	*key_get_keystr(int key, bool name)
 {
-	char	**map;
+	const char	*const *map;
 	key_get_mapstr(&map, NULL, name);
 	return (map[key_get_index(key)]);
 }

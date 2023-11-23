@@ -134,7 +134,8 @@
 #  define KEY_NP_MULT	65450
 #  define KEY_NP_SUB	65453
 #  define KEY_NP_ENTER	65421
-#  define KEY_NP_DEL	65439
+#  define KEY_NP_PERIOD	65439
+#  define KEY_NP_EQUAL	0
 # else
 #  define KEY_REG_MAX	269
 #  define KEY_SPACE		49
@@ -235,27 +236,27 @@
 /* F14 REMAP (N/A)*/
 #  define KEY_SCRLCK	KEY_F14
 
-#  define KEY_NP_LOCK   0
-#  define KEY_NP_1		0
-#  define KEY_NP_2		0
-#  define KEY_NP_3		0
-#  define KEY_NP_4		0
-#  define KEY_NP_5		0
-#  define KEY_NP_6		0
-#  define KEY_NP_7		0
-#  define KEY_NP_8		0
-#  define KEY_NP_9		0
-#  define KEY_NP_0		0
-#  define KEY_NP_DIV	0
-#  define KEY_NP_ADD	0
-#  define KEY_NP_MULT	0
-#  define KEY_NP_SUB	0
-#  define KEY_NP_ENTER	0
-#  define KEY_NP_DEL	0
-
+#  define KEY_NP_LOCK   71 // CLEAR
+#  define KEY_NP_1		83
+#  define KEY_NP_2		84
+#  define KEY_NP_3		85
+#  define KEY_NP_4		86
+#  define KEY_NP_5		87
+#  define KEY_NP_6		88
+#  define KEY_NP_7		89
+#  define KEY_NP_8		91
+#  define KEY_NP_9		92
+#  define KEY_NP_0		82
+#  define KEY_NP_DIV	75
+#  define KEY_NP_ADD	69
+#  define KEY_NP_MULT	67
+#  define KEY_NP_SUB	78
+#  define KEY_NP_ENTER	76
+#  define KEY_NP_PERIOD	65
+#  define KEY_NP_EQUAL	81
 # endif
 
-void        key_get_mapkey(int **array, int *size);
-void        key_get_mapstr(char ***array, int *size, bool name);
+void key_get_mapkey(const int **array, int *size);
+void        key_get_mapstr(const char ***array, int *size, bool name);
 const char  *key_get_keystr(int key, bool name);
 #endif
