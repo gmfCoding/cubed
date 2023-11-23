@@ -23,9 +23,9 @@
 #  define KEY_COMMA		44
 #  define KEY_PERIOD	46
 #  define KEY_MINUS		45
-#  define KEY_PLUS		65513 /* 61 ?*/
+#  define KEY_EQUALS	61
 #  define KEY_FSLASH	47
-#  define KEY_BSLASH	65513
+#  define KEY_BSLASH	97
 #  define KEY_0			48
 #  define KEY_1			49
 #  define KEY_2			50
@@ -85,20 +85,12 @@
 #  define KEY_DEL		65535
 
 #  define KEY_ESC		65307
-#  define KEY_MENU		65383
-#  define KEY_HOME		65360
 
 #  define KEY_LARROW	65361
 #  define KEY_UARROW	65362
 #  define KEY_RARROW	65363
 #  define KEY_DARROW	65364
 
-#  define KEY_PGUP		65365
-#  define KEY_PGDW		65366
-#  define KEY_END		65367
-#  define KEY_INS		65379
-
-#  define KEY_SCRLCK	65407
 #  define KEY_F1		65470
 #  define KEY_F2		65471
 #  define KEY_F3		65472
@@ -111,6 +103,17 @@
 #  define KEY_F10		65479
 #  define KEY_F11		65480
 #  define KEY_F12		65481
+
+/* UNVERIFIED */
+#  define KEY_MENU		65383
+#  define KEY_HOME		65360
+
+#  define KEY_PGUP		65365
+#  define KEY_PGDW		65366
+#  define KEY_END		65367
+#  define KEY_INS		65379
+
+#  define KEY_SCRLCK	65407
 
 # else
 #  define KEY_REG_MAX	269
