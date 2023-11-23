@@ -16,7 +16,7 @@
 #  define MB_SCRLUP		0x00FF0004
 #  define MB_SCRLDW		0x00FF0005
 
-# ifdef KEYMAP_LINUX
+# ifdef __LINUX__
 #  define KEY_REG_MAX	127
 #  define KEY_SPACE		32
 #  define KEY_APOSTROPH	39
@@ -117,7 +117,15 @@
 
 # else
 #  define KEY_REG_MAX	269
-#  define KEY_ESC		53
+#  define KEY_SPACE		49
+#  define KEY_APOSTROPH	39
+#  define KEY_COMMA		43
+#  define KEY_PERIOD	47
+#  define KEY_MINUS		27
+#  define KEY_EQUALS	24
+#  define KEY_FSLASH	44
+#  define KEY_BSLASH	42
+#  define KEY_0			29
 #  define KEY_1			18
 #  define KEY_2			19
 #  define KEY_3			20
@@ -127,52 +135,90 @@
 #  define KEY_7			26
 #  define KEY_8			28
 #  define KEY_9			25
-#  define KEY_0			29
-
-#  define KEY_MINUS		27
-#  define KEY_PLUS		24
-#  define KEY_BACKSPACE	51
-#  define KEY_TAB		48
-#  define KEY_Q			12
-#  define KEY_W			13
-#  define KEY_E			14
-#  define KEY_R			15
-#  define KEY_T			17
-#  define KEY_Y			16
-#  define KEY_U			32
-#  define KEY_I			34
-#  define KEY_O			31
-#  define KEY_P			35
-#  define KEY_A			0
-#  define KEY_S			1
-#  define KEY_D			2
-#  define KEY_F			3
-#  define KEY_G			5
-#  define KEY_H			4
-#  define KEY_J			38
-#  define KEY_K			40
-#  define KEY_L			37
-#  define KEY_SEMICOLON 41
-#  define KEY_APOSTROPH 39
-#  define KEY_Z			6
-#  define KEY_X			7
-#  define KEY_C			8
-#  define KEY_V			9
-#  define KEY_B			11
-#  define KEY_N			45
-#  define KEY_M			46
-#  define KEY_COMMA		43
-#  define KEY_PERIOD	47
-#  define KEY_FSLASH	44
-#  define KEY_SPACE		49
+#  define KEY_SEMICOLON	41
 #  define KEY_TILDA		50
 #  define KEY_SQBLEFT	33
 #  define KEY_SQBRIGHT	30
+#  define KEY_TAB		48
+#  define KEY_A			0
+#  define KEY_B			11
+#  define KEY_C			8
+#  define KEY_D			2
+#  define KEY_E			14
+#  define KEY_F			3
+#  define KEY_G			5
+#  define KEY_H			4
+#  define KEY_I			34
+#  define KEY_J			38
+#  define KEY_K			40
+#  define KEY_L			37
+#  define KEY_M			46
+#  define KEY_N			45
+#  define KEY_O			31
+#  define KEY_P			35
+#  define KEY_Q			12
+#  define KEY_R			15
+#  define KEY_S			1
+#  define KEY_T			17
+#  define KEY_U			32
+#  define KEY_V			9
+#  define KEY_W			13
+#  define KEY_X			7
+#  define KEY_Y			16
+#  define KEY_Z			6
+
+#  define KEY_BACKSPACE	51
 #  define KEY_ENTER		36
+
 #  define KEY_LCTRL		256
+#  define KEY_RCTRL		269
+
+#  define KEY_CAPS		272
+
 #  define KEY_LSHIFT	257
 #  define KEY_RSHIFT	258
-#  define KEY_RCTRL		269
+
+#  define KEY_LALT		261
+#  define KEY_RALT		262
+
+#  define KEY_DEL		117
+
+#  define KEY_ESC		53
+
+#  define KEY_LARROW	123
+#  define KEY_UARROW	126
+#  define KEY_RARROW	124
+#  define KEY_DARROW	125
+
+#  define KEY_F1		122
+#  define KEY_F2		120
+#  define KEY_F3		99
+#  define KEY_F4		118
+#  define KEY_F5		96
+#  define KEY_F6		97
+#  define KEY_F7		98
+#  define KEY_F8		100
+#  define KEY_F9		101
+#  define KEY_F10		109
+#  define KEY_F11		103
+#  define KEY_F12		111
+#  define MAC_KEY_F14   107
+
+#  define KEY_MENU		KEY_F9
+#  define KEY_HOME		115
+#  define KEY_PGUP		116
+#  define KEY_PGDW		121
+#  define KEY_END		119
+/* HELP KEY REMAP (N/A)*/
+#  define KEY_INS		114 
+
+/* F14 REMAP (N/A)*/
+#  define KEY_SCRLCK	MAC_KEY_F14
+
+
 # endif
 
+void        key_get_mapkey(int **array, int *size);
+void        key_get_mapstr(char ***array, int *size, bool name);
+const char  *key_get_keystr(int key, bool name);
 #endif

@@ -17,6 +17,7 @@ SRCSF = $(TEST) \
 		input/input.c \
 		input/input_hooks.c \
 		input/input_setup.c \
+		input/keys.c \
 
 INCSF = cubed.h
 
@@ -91,7 +92,6 @@ ifneq ($(OS),Linux)
 LDFLAGS += -framework OpenGL -framework AppKit 
 else 
 LDFLAGS += -lX11 -lXext
-CPPFLAGS += -DKEYMAP_LINUX
 endif
 
 # RULES

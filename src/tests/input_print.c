@@ -1,6 +1,7 @@
 #include <mlx.h>
 #include <stddef.h>
 #include <stdio.h>
+#include "input.h"
 
 enum {
 	ON_KEYDOWN = 2,
@@ -14,7 +15,7 @@ enum {
 
 void    input_print_key_press(int key, void *ctx)
 {
-    printf("pressed:%d\n", key);
+    printf("pressed:%d (%s)\n", key, key_get_keystr(key, true));
 }
 
 void    input_print_mouse_press(int button, int x, int y, void *ctx)
