@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
+/*   Updated: 2023/11/22 20:58:52 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STATE_H
 # define STATE_H
+#include "input.h"
 #include "texture.h"
 
 typedef struct s_game t_game;
@@ -23,6 +36,7 @@ struct s_player
 	double moveSpeed;
 	double rotSpeed;
 };
+typedef struct s_inputctx t_inputctx;
 
 struct s_game
 {
@@ -39,6 +53,8 @@ struct s_game
 	int view_count;
 
 	t_player	player;
+
+	t_inputctx input;
 };
 
 void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);

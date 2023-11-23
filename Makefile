@@ -1,4 +1,4 @@
-SRCSF =	main.c \
+SRCSF = $(TEST) \
 		texture/texture.c \
 		texture/pixel.c \
 		texture/texture_util.c \
@@ -14,8 +14,16 @@ SRCSF =	main.c \
 		util/time.c \
 		cerror.c \
 		dda_simple.c \
+		input/input.c \
+		input/input_hooks.c \
+		input/input_setup.c \
+		input/keys.c \
 
 INCSF = cubed.h
+
+ifndef $(TEST)
+TEST=main.c
+endif
 
 ifndef $(OS)
 OS := $(shell uname)
@@ -84,7 +92,6 @@ ifneq ($(OS),Linux)
 LDFLAGS += -framework OpenGL -framework AppKit 
 else 
 LDFLAGS += -lX11 -lXext
-CPPFLAGS += -DKEYMAP_LINUX
 endif
 
 # RULES
