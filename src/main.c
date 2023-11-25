@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
+/*   Updated: 2023/11/25 19:54:08 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <mlx.h>
 #include <stdio.h>
 
@@ -27,10 +39,10 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	game = (t_game){0};
-	game.mlx = mlx_init();
-	game.rt0 = texture_create(game.mlx, SCR_WIDTH, SCR_HEIGHT);
+	game.app.mlx = mlx_init();
+	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt1 = texture_get_debug_view(&game, 1);
-	game.win = mlx_new_window(game.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
 
 	game.player.pos = v2new(2, 2);
 	game.player.dir = v2new(1, 0);
@@ -38,7 +50,7 @@ int	main(int argc, char **argv)
 	game.player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
 	game.player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
 
-	input_setup(game.mlx, game.win, &game.input);
-	mlx_loop_hook(game.mlx, (void *)render, &game);
-	mlx_loop(game.mlx);
+	input_setup(game.app.mlx, game.app.win, &game.input);
+	mlx_loop_hook(game.app.mlx, (void *)render, &game);
+	mlx_loop(game.app.mlx);
 }

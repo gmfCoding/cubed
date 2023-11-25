@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   loop.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
+/*   Updated: 2023/11/25 19:50:05 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -32,13 +44,14 @@
 
 #include "libft.h"
 # define MAX_RAYCAST_DIST 100
-void measure_frame_rate(t_game *game)
+
+void measure_frame_rate(t_app app)
 {
 	static int64_t timeprev = 0;
 	static char *fps = NULL;
 	
 	fps = ft_strfmt("fps: %d",  (int) (1.0 / ((time_get_ms() - timeprev) / 1000.0)));
-	mlx_string_put(game->mlx, game->win, 0, 10, 0x00FF00, fps);
+	mlx_string_put(app.mlx, app.win, 0, 10, 0x00FF00, fps);
 	free(fps);
 	// AUTO EXIT AFTER 4 SECONDS (used for GMON)
 	// static int64_t time;
@@ -273,5 +286,5 @@ void	render(t_game *game)
 	texture_draw_line(game->rt1, map_to_screen(game->player.pos), v2add(map_to_screen(game->player.pos), v2muls(game->player.plane,  50)), R_ALPHA | 0x00ff);
 	texture_draw(game, game->rt0, v2new(0,0));
 	texture_draw_debug_view(game, 1);
-	measure_frame_rate(game);
+	measure_frame_rate(game->app);
 }

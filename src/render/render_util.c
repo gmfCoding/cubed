@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/22 20:47:24 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/25 19:50:49 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -16,7 +16,7 @@
 
 void    texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
 {
-	mlx_put_image_to_window(gs->mlx, gs->win, tex.img, pos.x, pos.y);
+	mlx_put_image_to_window(gs->app.mlx, gs->app.win, tex.img, pos.x, pos.y);
 }
 
 // Copies pixel data from one texture to another
@@ -50,8 +50,8 @@ t_texture texture_get_debug_view(t_game *game, int view)
 {
 	if (game->views[view].rt.img == NULL)
 	{
-		game->views[view].win = mlx_new_window(game->mlx, game->rt0.width, game->rt0.height, "DEBUG VIEW");
-		game->views[view].rt = texture_create(game->mlx, game->rt0.width, game->rt0.height);
+		game->views[view].win = mlx_new_window(game->app.mlx, game->rt0.width, game->rt0.height, "DEBUG VIEW");
+		game->views[view].rt = texture_create(game->app.mlx, game->rt0.width, game->rt0.height);
 	} 
 	return game->views[view].rt;
 }
@@ -62,7 +62,7 @@ void texture_draw_debug_view(t_game *game, int view)
 
 	if (view >= MAX_DEBUG_VIEWS)
 		return ;
-	mlx_put_image_to_window(game->mlx, game->views[view].win, game->views[view].rt.img, 0, 0);
+	mlx_put_image_to_window(game->app.mlx, game->views[view].win, game->views[view].rt.img, 0, 0);
 }
 
 void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos)
@@ -73,5 +73,5 @@ void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos)
 		return ;
 	rt = texture_get_debug_view(game, view);
 	texture_blit(tex, rt, pos);
-	mlx_put_image_to_window(game->mlx, game->views[view].win, game->views[view].rt.img, 0, 0);
+	mlx_put_image_to_window(game->app.mlx, game->views[view].win, game->views[view].rt.img, 0, 0);
 }

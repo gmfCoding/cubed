@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/22 20:58:52 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/25 19:49:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,16 @@ struct s_player
 };
 typedef struct s_inputctx t_inputctx;
 
-struct s_game
+typedef struct s_app t_app;
+struct s_app
 {
 	void *mlx;
 	void *win;
+};
 
+struct s_game
+{
+	t_app	app;
 	t_texture rt0;
 	t_texture rt1;
 
