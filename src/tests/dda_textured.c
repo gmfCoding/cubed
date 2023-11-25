@@ -307,7 +307,7 @@ int main(int argc, char **argv)
 	game.dirX = -1;
 	game.dirY = 0; // initial direction vector
 	game.planeX = 0;
-	game.planeY = 0.9;				   // the 2d raycaster version of camera plane
+	game.planeY = 0.5;				   // the 2d raycaster version of camera plane
 	game.moveSpeed = 1.0 / 60.0 * 5.0; // the constant value is in squares/second
 	game.rotSpeed = 1.0 / 60.0 * 3.0;  // the constant value is in radians/second
 	generate_textures(&game);
