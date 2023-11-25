@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/23 21:48:56 by kmordaun         ###   ########.fr       */
+/*   Updated: 2023/11/25 22:12:35 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ char *const    g_mapsymbols[] = {
 	"F ",
 	"C ",
 };
-//if(ft_strcmp(".cub", ft_strrchr(filePath, ".")) == 0)
 
 int	map_starting_point(char *content)
 {
@@ -297,7 +296,25 @@ int	map_check_invalid_char(char *content)
 	return (count);
 }
 
-void	map_check_err(t_map *map_temp, t_map *map, t_list *temp, t_list *raw_map_file)
+int	map_check_surrounded(t_map *map_temp, int pos)
+{
+	if (pos >= 0 && pos <= (map_temp->width * map_temp->height) && map_temp->tiles[pos].type != WALL && map_temp->tiles[pos].type != EMPTY)
+		return (1);//can return and print char position and tile type? and handle exit funtion here
+	if (!(pos >= 0 && pos <= (map_temp->width * map_temp->height)) || map_temp->tiles[pos].type == WALL)
+		return (0);
+	if (map_temp->tiles[pos].type == EMPTY)
+		map_temp->tiles[pos].type = WALL;
+	if (map_check_surrounded(map_temp, pos - map_temp->width) == 1)
+		return (1);
+	if (map_check_surrounded(map_temp, pos + map_temp->width) == 1)
+		return (1);
+	if (map_check_surrounded(map_temp, pos - 1) == 1)
+		return (1);
+	if (map_check_surrounded(map_temp, pos + 1) == 1)
+		return (1);
+	return (0);
+}
+void	map_check_err(t_map *map_temp, t_list *temp, t_list *raw_map_file, char *map_str)
 {
 	t_list	*curr;
 	int	count_players;
@@ -315,25 +332,20 @@ void	map_check_err(t_map *map_temp, t_map *map, t_list *temp, t_list *raw_map_fi
 	if (count_players > 1 || count_players < 1)
 		printf("incorrect player count\n");
 	if (count_invalid_char > 0)
-		printf("incorrect char in map");
-	//TODO add flooffill checkhere make a return fucntion and handle errors
+		printf("incorrect char in map\n");
+	if (map_check_surrounded(map_temp, 0) == 1)
+		printf("boarder_not_valid\n");
+	if (strcmp(".cub", ft_strrchr(map_str, '.')) != 0)
+		printf("incorrect file type\n");
 }
 
-
-void	map_check_setup(t_map *map, t_list *raw_map_file)
+void	map_check_setup(t_list *curr, t_list *raw_map_file, char *map_str)
 {
-	t_list	*curr;
 	t_list	*temp;
 	t_map	map_temp;
 	int		index;
-	int		lines;
 
-	curr = raw_map_file;
-	lines = (intptr_t)curr->content;
 	index = 0;
-	curr = curr->next;
-	while (curr != NULL && map_starting_point((char *)curr->content) == 1)
-		curr = curr->next;
 	temp = curr;
 	map_temp.width = (map_width_size(curr) + 2);
 	map_temp.height = (map_height_size(curr) + 2);
@@ -346,15 +358,20 @@ void	map_check_setup(t_map *map, t_list *raw_map_file)
 	}
 	while (++index < ((map_temp.width * map_temp.height) + map_temp.width))
 		map_temp.tiles[index].type = get_tiletype(' ');
-	print_map(&map_temp);
-	map_check_err(&map_temp, map, temp, raw_map_file);
+	print_map(&map_temp);//dont need this
+	printf("\n");
+	map_check_err(&map_temp, temp, raw_map_file, map_str);
 }
 
-t_map	map_init(t_map *map, t_list *raw_map_file)
+t_map	map_init(t_map *map, char *map_str)
 {
 	t_list	*curr;
+	t_list	*raw_map_file;
 	int		index;
 
+	raw_map_file = ft_lst_readfile(map_str);
+	if (raw_map_file == NULL)
+		exit(2);
 	index = 0;
 	curr = raw_map_file;
 	int lines = (intptr_t)curr->content;
@@ -362,31 +379,31 @@ t_map	map_init(t_map *map, t_list *raw_map_file)
 	replace_tabs(curr);
 	while (curr != NULL && map_starting_point((char *)curr->content) == 1)
 		curr = curr->next;
+	map_check_setup(curr, raw_map_file, map_str);
 	map->width = map_width_size(curr);
 	map->height = map_height_size(curr);
-	printf("MAPWIDTH%d  MAPHEIGHT%d  \n", map->width, map->height);
 	while (curr != NULL && curr->content != NULL)
 	{
 		index += map_tiles(map, (char *)curr->content, index);
 		printf("%s", (char *)curr->content);
 		curr = curr->next;
 	}
-	map_check_setup(map, raw_map_file);
 	return (*map);
 }
 
 t_map	map_parse(int argc, char **argv)//get the map done first
 {
 	t_map	map;
-	t_list	*raw_map_file;
+	char	*map_str;
+
 
 	if (argc == 1)
-		raw_map_file = ft_lst_readfile("map1.cub");
+		map_str = "map1.cub";
 	else if (argc == 2)
-		raw_map_file = ft_lst_readfile(argv[1]);
+		map_str = argv[1];
 	else
 		exit(2);
-	map = map_init(&map, raw_map_file);
+	map = map_init(&map, map_str);
 	return (map);
 }
 
