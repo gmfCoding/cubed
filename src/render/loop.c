@@ -182,21 +182,21 @@ void	player_controls(t_game *game)
 
 	oldDirX = player->dir.x;
 	oldPlaneX = player->plane.x;
-	if (input_keyheld(game, KEY_W))
+	if (input_keyheld(&game->input, KEY_W))
 	{
 		if (map[map_index((int)(player->pos.x + player->dir.x * player->moveSpeed),(int)player->pos.y)] == false)
 			player->pos.x += player->dir.x * player->moveSpeed;
 		if (map[map_index((int)player->pos.x,(int)(player->pos.y + player->dir.y * player->moveSpeed))] == false)
 			player->pos.y += player->dir.y * player->moveSpeed;
 	}
-	if (input_keyheld(game, KEY_S))
+	if (input_keyheld(&game->input, KEY_S))
 	{
 		if (map[map_index((int)(player->pos.x - player->dir.x * player->moveSpeed),(int)player->pos.y)] == false)
 			player->pos.x -= player->dir.x * player->moveSpeed;
 		if (map[map_index((int)player->pos.x,(int)(player->pos.y - player->dir.y * player->moveSpeed))] == false)
 			player->pos.y -= player->dir.y * player->moveSpeed;
 	}
-	if (input_keyheld(game, KEY_A))
+	if (input_keyheld(&game->input, KEY_A))
 	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(-player->rotSpeed) - player->dir.y * sin(-player->rotSpeed);
@@ -204,7 +204,7 @@ void	player_controls(t_game *game)
 		player->plane.x = player->plane.x * cos(-player->rotSpeed) - player->plane.y * sin(-player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(-player->rotSpeed) + player->plane.y * cos(-player->rotSpeed);
 	}
-	if (input_keyheld(game, KEY_D))
+	if (input_keyheld(&game->input, KEY_D))
 	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(player->rotSpeed) - player->dir.y * sin(player->rotSpeed);
@@ -236,7 +236,7 @@ void	render(t_game *game)
 {
 	player_controls(game);
 
-	input_process(game);
+	input_process(&game->input);
 
 	texture_clear(game->rt0); // Window 1
 	texture_clear(game->rt1); // Window 2

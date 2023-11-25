@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 00:52:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/23 22:08:21 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/25 19:31:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ enum {
 	DESTROY = 17
 };
 
-void	input_setup(t_game *game)
+void	input_setup(void *mlx, void *win, t_inputctx *input)
 {
-	game->input = (t_inputctx){0};
-	mlx_hook(game->win, KDOWN, (1L << 0), (void *)input_cb_key_press, game);
-	mlx_hook(game->win, KUP, (1L << 1), (void *)input_cb_key_release, game);
-	mlx_hook(game->win, MDOWN, (1L << 2), (void *)input_cb_mouse_press, game);
-	mlx_hook(game->win, MUP, (1L << 3), (void *)input_cb_mouse_release, game);
-	mlx_hook(game->win, MMOVE, (1L << 6), (void *)input_cb_mouse_move, game);
-	mlx_do_key_autorepeatoff(game->mlx);
+	*input = (t_inputctx){0};
+	mlx_hook(win, KDOWN, (1L << 0), (void *)input_cb_key_press, input);
+	mlx_hook(win, KUP, (1L << 1), (void *)input_cb_key_release, input);
+	mlx_hook(win, MDOWN, (1L << 2), (void *)input_cb_mouse_press, input);
+	mlx_hook(win, MUP, (1L << 3), (void *)input_cb_mouse_release, input);
+	mlx_hook(win, MMOVE, (1L << 6), (void *)input_cb_mouse_move, input);
+	mlx_do_key_autorepeatoff(mlx);
 }

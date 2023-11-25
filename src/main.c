@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	game.player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
 	game.player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
 
-	input_setup(&game);
+	input_setup(game.mlx, game.win, &game.input);
 	mlx_loop_hook(game.mlx, (void *)render, &game);
 	mlx_loop(game.mlx);
 }
