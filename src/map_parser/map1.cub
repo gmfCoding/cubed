@@ -1,9 +1,13 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
-F 220,100,0
-C 225,30,0
+NO ./fake_wall_texture.txt
+
+SO ./fake_wall_texture.txt
+   
+WE ./fake_wall_texture.txt
+EA ./fake_wall_texture.txt
+F 225,100,0
+C 223,20,0
+
+
         1111111111111111111111111
         1000000000110000000000001
         1011000001110000000000001
