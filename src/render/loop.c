@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:50:05 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/27 19:16:54 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,61 @@ void measure_frame_rate(t_app app)
 	timeprev = time_get_ms();
 }
 
+void draw_debug_info(t_game *game)
+{
+	static int64_t timeprev = 0;
+	const char *debugstr[] = {
+		ft_strfmt("fps: %d", (int) (1.0 / ((time_get_ms() - timeprev) / 1000.0))),
+		ft_strfmt("pos:(%f,%f)", (double)game->player.pos.x, (double)game->player.pos.y),
+		ft_strfmt("dir:(%f,%f)", (double)game->player.dir.x, (double)game->player.dir.y),
+		ft_strfmt("plane:(%f,%f)", (double)game->player.plane.x, (double)game->player.plane.y),
+	};
+	int i;
+
+	i = -1;
+	while (++i < sizeof(debugstr) / sizeof(*debugstr))
+	{
+		mlx_string_put(game->app.mlx, game->app.win, 0, i * 12 + 12, 0xFFFFFF, debugstr[i]);
+		free(debugstr[i]);
+	}
+	timeprev = time_get_ms();
+}
+
 bool inside(int x, int y, int maxX, int maxY)
 {
 	return (x >= 0 && y >= 0 && x < maxX && y < maxY);
 }
 
-# define MAP_WIDTH 6
-# define MAP_HEIGHT 6
-int map[MAP_WIDTH * MAP_HEIGHT] = 
+# define MAP_WIDTH 24
+# define MAP_HEIGHT 24
+
+int map[MAP_WIDTH * MAP_HEIGHT]=
 {
-	1,1,1,1,1,1,
-	1,0,0,0,0,1,
-	1,0,0,0,0,1,
-	1,0,1,1,0,1,
-	1,0,0,0,0,1,
-	1,1,1,1,1,1,
+4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 8, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4, 
+4, 0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 4, 
+4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 5, 0, 0, 4, 
+4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 4, 
+4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4, 
+4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 
+4, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4, 
+4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4, 
+4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 4, 4, 0, 4, 4, 4, 4, 4, 4, 
+4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 0, 6, 6, 6, 6, 6, 1, 
+4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
+4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 6, 6, 0, 6, 6, 6, 1, 
+4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 2, 
+4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2, 
+4, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2, 
+7, 7, 0, 0, 7, 7, 7, 7, 0, 7, 7, 7, 6, 0, 6, 2, 0, 5, 0, 5, 0, 5, 0, 2, 
+7, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2, 
+7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2, 
+7, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 3, 
+7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 3, 
+7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 0, 0, 0, 0, 0, 3, 
+7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 3, 
+7, 7, 7, 7, 7, 7, 1, 8, 1, 8, 1, 1, 6, 4, 6, 3, 2, 2, 2, 2, 2, 2, 2, 3, 
+
 };
 
 int	map_index(int x, int y)
@@ -175,18 +215,6 @@ t_vec2	map_to_screen(t_vec2 map)
 	return (t_vec2){map.x * SCR_WIDTH / (float)MAP_WIDTH, map.y * SCR_HEIGHT / (float)MAP_HEIGHT};
 }
 
-void	on_mouse_move(int x, int y, t_game *game)
-{
-	game->mouse = v2new(x, y);
-}
-
-void	on_mouse(int key, int x, int y, t_game *game)
-{
-	(void)x;
-	(void)y;
-	(void)game;
-}
-
 void	player_controls(t_game *game)
 {
 	t_player *const player = &game->player;
@@ -209,7 +237,7 @@ void	player_controls(t_game *game)
 		if (map[map_index((int)player->pos.x,(int)(player->pos.y - player->dir.y * player->moveSpeed))] == false)
 			player->pos.y -= player->dir.y * player->moveSpeed;
 	}
-	if (input_keyheld(&game->input, KEY_A))
+	if (input_keyheld(&game->input, KEY_D))
 	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(-player->rotSpeed) - player->dir.y * sin(-player->rotSpeed);
@@ -217,7 +245,7 @@ void	player_controls(t_game *game)
 		player->plane.x = player->plane.x * cos(-player->rotSpeed) - player->plane.y * sin(-player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(-player->rotSpeed) + player->plane.y * cos(-player->rotSpeed);
 	}
-	if (input_keyheld(&game->input, KEY_D))
+	if (input_keyheld(&game->input, KEY_A))
 	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(player->rotSpeed) - player->dir.y * sin(player->rotSpeed);
@@ -261,10 +289,23 @@ void	render(t_game *game)
 		double cameraX = 2 * i / (double)SCR_WIDTH - 1;
 		t_vec2 dir = v2add(game->player.dir, v2muls(game->player.plane, cameraX));
 		t_rayinfo ray = raycast(map, game->player.pos, dir);
-		t_vec2 intersect = v2add(game->player.pos, v2muls(dir, ray.depths[0].depth));
-		//Calculate height of line to draw on screen
-		int lineHeight = (int)(SCR_HEIGHT / ray.depths[0].depth);
-		//calculate lowest and highest pixel to fill in current stripe
+		t_hitpoint first = ray.depths[0];
+		
+		t_vec2 intersect = v2add(game->player.pos, v2muls(dir, first.depth));
+		int texId = map[first.x + MAP_WIDTH * first.y] - 1;
+
+		double wallX = wallX = game->player.pos.x + first.depth * dir.x;
+		if (first.side == 0)
+			wallX = game->player.pos.y + first.depth * dir.y;
+		wallX -= floor(wallX);
+		
+		int uvX = (int)(wallX * (double)WALL_TEX_SIZE);
+		if (first.side == 0 && dir.x > 0)
+			uvX = WALL_TEX_SIZE - uvX - 1;
+		if (first.side == 1 && dir.y < 0)
+			uvX = WALL_TEX_SIZE - uvX - 1;
+			
+		int lineHeight = (int)(SCR_HEIGHT / first.depth);
 		int drawStart = -lineHeight / 2 + SCR_HEIGHT / 2;
 		if(drawStart < 0)
 			drawStart = 0;
@@ -272,19 +313,29 @@ void	render(t_game *game)
 		if(drawEnd >= SCR_HEIGHT)
 			drawEnd = SCR_HEIGHT - 1;
 		int c = drawStart - 1;
+
+		double step = 1.0 * WALL_TEX_SIZE / lineHeight;
+		double uvY = (drawStart - SCR_HEIGHT / 2 + lineHeight / 2) * step;
+		static bool did = false;
 		while (++c < drawEnd)
 		{
-			int col = 0xff;
-			if (ray.depths[0].side)
-				col = 0xff00;
+			int texY = (int)uvY & (WALL_TEX_SIZE - 1);
+			int col = pixel_get(game->textures[texId], uvX, texY);
+			uvY += step;
+			if (first.side == 1)
+				col = (col >> 1) & 8355711;
 			pixel_set_s(game->rt0, i, c, R_ALPHA | col);
 		}
+		did = true;
 		i++;
 		texture_draw_square(game->rt1, map_to_screen(intersect), v2new(5,5), R_ALPHA | 0xff0000);
 	}
+	
 	texture_draw_square(game->rt1, map_to_screen(game->player.pos), v2new(5,5), R_ALPHA | 0xff);
 	texture_draw_line(game->rt1, map_to_screen(game->player.pos), v2add(map_to_screen(game->player.pos), v2muls(game->player.plane,  50)), R_ALPHA | 0x00ff);
 	texture_draw(game, game->rt0, v2new(0,0));
+
+
 	texture_draw_debug_view(game, 1);
-	measure_frame_rate(game->app);
+	draw_debug_info(game);
 }

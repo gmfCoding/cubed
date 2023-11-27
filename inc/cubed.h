@@ -10,6 +10,8 @@
 # define SCR_WIDTH  960
 # define SCR_HEIGHT 960
 
+#define WALL_TEX_SIZE 64
+
 # define RT0_WIDTH SCR_WIDTH
 # define RT0_HEIGHT SCR_HEIGHT
 

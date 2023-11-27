@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:49:08 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/25 20:39:06 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ struct s_game
 	int view_count;
 
 	t_player	player;
+	t_texture textures[8];
 
 	t_inputctx input;
 };

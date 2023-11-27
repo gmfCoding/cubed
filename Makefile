@@ -126,13 +126,13 @@ re: fclean all
 -include $(DEPS)
 
 $(DIRLIB)/$(LIBFT):
-	make -s -C $(dir $@) all bonus
+	make -s -C $(dir $@) all bonus DFLAGS="$(DFLAGS)"
 
 $(DIRLIB)/$(LIBGNL):
-	make -s -C $(dir $@) all
+	make -s -C $(dir $@) all DFLAGS="$(DFLAGS)"
 
 $(DIRLIB)/$(LIBMLX):
-	make -s -C $(dir $@)
+	make -s -C $(dir $@) DFLAGS="$(DFLAGS)"
 
 $(DIRLIB)/$(LIBMLX_SO): $(LIBMLX)
 	cp $(DIRMLX)/libmlx.so ./libmlx.so
