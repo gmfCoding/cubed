@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/25 22:12:35 by kmordaun         ###   ########.fr       */
+/*   Updated: 2023/11/27 17:47:06 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 #define MAP_MAX_X MAP_MAX_XY
 #define MAP_MAX_Y MAP_MAX_XY
 typedef float	t_vecd;
+
+//((t_ex_action)g_mapsymbols[i])(str + (mod_strlen(mapsymbols[i]) + 1) , world, map);
+//
+
 typedef struct s_vec2
 {
 	t_vecd	x;
@@ -50,8 +54,6 @@ typedef enum	e_tiletype
 	INVALID
 }				t_tiletype;
 
-
-
 typedef enum	e_modtype
 {
 	NORTH_TEXTURE,
@@ -61,7 +63,6 @@ typedef enum	e_modtype
 	FLOOR_COLOR,
 	CEILING_COLOR,
 }				t_modtype;
-
 
 typedef struct	s_tile
 {
@@ -84,10 +85,6 @@ typedef struct	s_map
 	float		s_angle;
 	int			color_ceiling;
 	int			color_floor;
-	char*		texture_n_wall;
-	char*		texture_s_wall;
-	char*		texture_w_wall;
-	char*		texture_e_wall;
 }				t_map;
 
 typedef struct	s_player
@@ -123,12 +120,41 @@ char *const    g_mapsymbols[] = {
 	"SO",
 	"WE",
 	"EA",
-	"S ",
-	"F ",
-	"C ",
+	"F",
+	"C",
 };
 
-int    ft_lstremove(t_list **lst, t_list *target, void (*del)(void*))
+void	fn_NO(char *content, int mod_pos, t_world *world, t_map *map);
+void	fn_SO(char *content, int mod_pos, t_world *world, t_map *map);
+void	fn_WE(char *content, int mod_pos, t_world *world, t_map *map);
+void	fn_EA(char *content, int mod_pos, t_world *world, t_map *map);
+void	fn_F(char *content, int mod_pos, t_world *world, t_map *map);
+void	fn_C(char *content, int mod_pos, t_world *world, t_map *map);
+
+typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
+
+t_ex_action const    g_mapfuncs[] = {
+     &fn_NO,
+     &fn_SO,
+     &fn_WE,
+     &fn_EA,
+     &fn_F,
+     &fn_C,
+};
+
+
+
+int	mod_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i] != '\0' && str[i] != '\n')
+		i++;
+	return (i);
+}
+
+int	ft_lstremove(t_list **lst, t_list *target, void (*del)(void*))
 {
 	while (*lst != NULL)
 	{
@@ -176,6 +202,23 @@ int	ft_isspace(int c)
 	return (0);
 }
 
+void remove_spaces(char *str)
+{
+	int i;
+
+
+	if (str == NULL)
+		return ;
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	memmove(str, str + i, ft_strlen(str) - i + 1);
+	i = ft_strlen(str) - 1;
+	while (i >= 0 && ft_isspace(str[i]))
+		i--;
+	str[i + 1] = '\0';
+}
+
 int	is_empty_line(const char *line)
 {
 	int	i;
@@ -202,10 +245,11 @@ int	map_skip_over_modifiers(char *content)
 	temp[2] = '\0';
 	while (++i < sizeof(g_mapsymbols) / 8)
 	{
-		//if (strncmp(g_mapsymbols[i], content, strlen(g_mapsymbols[i])))
-		if (strcmp(g_mapsymbols[i], temp) == 0)
+		if (strncmp(g_mapsymbols[i], content, mod_strlen(g_mapsymbols[i])) == 0)
 			return (1);
-	//	printf("%s\n", g_mapsymbols[i]);
+//		if (strcmp(g_mapsymbols[i], temp) == 0)
+//			return (1);
+//		printf("%s\n", g_mapsymbols[i]);
 	}
 	return (0);
 }
@@ -585,11 +629,11 @@ void	player_pos_setup(t_list *curr, t_player *player)
 	int	x;
 	int	y;
 
-	x = -1;
 	y = 0;
 	while (curr != NULL && curr->content != NULL)
 	{
 		str = (char *)curr->content;
+		x = -1;
 		while (str[++x] != '\n' && str[x] != '\0')
 		{
 			if (str[x] == 'N' || str[x] == 'S' || str[x] == 'E' || str[x] == 'W')
@@ -613,12 +657,64 @@ t_player	player_setup(t_list *curr, t_world *world)
 	player.rotSpeed = 0.001;
 	return (player);
 }
+void	fn_NO(char *content, int mod_pos, t_world *world, t_map *map)
+{
+	(void)world;
+	map->mods[mod_pos].type = NORTH_TEXTURE;
+	map->mods[mod_pos].content = content;
+}
+void	fn_SO(char *content, int mod_pos, t_world *world, t_map *map)
+{
+	(void)world;
+	map->mods[mod_pos].type = SOUTH_TEXTURE;
+	map->mods[mod_pos].content = content;
+}
+void	fn_WE(char *content, int mod_pos, t_world *world, t_map *map)
+{
+	(void)world;
+	map->mods[mod_pos].type = WEST_TEXTURE;
+	map->mods[mod_pos].content = content;
+}
+void	fn_EA(char *content, int mod_pos, t_world *world, t_map *map)
+{
+	(void)world;
+	map->mods[mod_pos].type = EAST_TEXTURE;
+	map->mods[mod_pos].content = content;
+}
+void	fn_F(char *content, int mod_pos, t_world *world, t_map *map)
+{
+	(void)world;
+	map->mods[mod_pos].type = FLOOR_COLOR;
+	map->mods[mod_pos].content = content;
+}
+void	fn_C(char *content, int mod_pos, t_world *world, t_map *map)
+{
+	(void)world;
+	map->mods[mod_pos].type = CEILING_COLOR;
+	map->mods[mod_pos].content = content;
+}
 
 void	map_modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 {
+	t_list	*curr;
+	char	*str;
+	int		i;
+	int		mod_pos;
 
-
-//do similar checks to want we already did with the element checker but we wanna call into functions
+	mod_pos = 0;
+	curr = raw_map_file;
+	while (curr != NULL && curr->content != NULL)
+	{
+		str = (char *)curr->content;
+		remove_spaces(str);
+		i = -1;
+		while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
+		{
+			if (strncmp(g_mapsymbols[i], str, mod_strlen(g_mapsymbols[i])) == 0)
+				((t_ex_action)g_mapfuncs[i])(str + (mod_strlen(g_mapsymbols[i]) + 1), mod_pos++, world, map);
+		}
+		curr = curr->next;
+	}
 }
 
 t_map	map_init(t_map *map, char *map_str, t_world *world)
