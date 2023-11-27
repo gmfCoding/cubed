@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/27 17:47:06 by kmordaun         ###   ########.fr       */
+/*   Updated: 2023/11/27 18:24:33 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,13 @@ t_ex_action const    g_mapfuncs[] = {
      &fn_C,
 };
 
+//header stuff^^^^
 
 
+
+
+
+//utilsVV
 int	mod_strlen(const char *str)
 {
 	int	i;
@@ -234,15 +239,18 @@ int	is_empty_line(const char *line)
 	}
 	return (1);
 }
+//standard utils^^
+
+//map utilsVV
 
 int	map_skip_over_modifiers(char *content)
 {
 	int	i;
-	char	temp[3];
+//	char	temp[3];
 	
 	i = -1;
-	strncpy(temp, content, 2);
-	temp[2] = '\0';
+//	strncpy(temp, content, 2);
+//	temp[2] = '\0';
 	while (++i < sizeof(g_mapsymbols) / 8)
 	{
 		if (strncmp(g_mapsymbols[i], content, mod_strlen(g_mapsymbols[i])) == 0)
@@ -295,6 +303,48 @@ void	replace_tabs(t_list *curr)
 	}
 }
 
+void	map_print(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < (map->width * map->height))
+	{
+		if (i % map->width == 0)
+			printf("\n");
+		printf("%d", map->tiles[i].type);
+		i++;
+	}
+}
+
+void	remove_empty_lines(t_list **raw_map_file)
+{
+	t_list	*curr;
+	t_list	*temp;
+
+	int lines = (intptr_t)raw_map_file[0]->content;
+	*raw_map_file = raw_map_file[0]->next;
+	curr = *raw_map_file;
+	while(curr != NULL && curr->next != NULL) 
+	{
+		if (map_starting_tile((char *)curr->content) == 1)
+			break ;
+		if (is_empty_line(curr->next->content) == 1)
+		{
+			temp = curr->next;
+			curr->next = temp->next;
+			ft_lstdelone(temp, free);
+		}
+		else
+			curr = curr->next;
+	}
+}
+
+
+//map utils^^
+
+//map size
+
 int	map_width_size(t_list *curr)
 {
 	int i;
@@ -327,6 +377,9 @@ int	map_height_size(t_list *curr)
 	}
 	return (i);
 }
+// map size^^
+
+//map tiles VV and boarder
 
 t_tiletype get_tiletype(char c)
 {
@@ -357,19 +410,6 @@ int	map_tiles(t_map *map, char *content, int index)
 	return (i);
 }
 
-void	map_print(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < (map->width * map->height))
-	{
-		if (i % map->width == 0)
-			printf("\n");
-		printf("%d", map->tiles[i].type);
-		i++;
-	}
-}
 
 int	map_tiles_surround(t_map *map, char *content, int index)
 {
@@ -390,6 +430,9 @@ int	map_tiles_surround(t_map *map, char *content, int index)
 	}
 	return (i);
 }
+
+
+//map checkers VV
 
 int	map_check_player(char *content)
 {
@@ -446,6 +489,10 @@ int	map_check_surrounded(t_map *map_temp, int pos)
 		return (1);
 	return (0);
 }
+
+//map checker ^^
+
+// map element checker VV
 
 int	map_check_element_colors(char *str)
 {
@@ -521,6 +568,11 @@ int	map_check_elements(t_list *raw_map_files)
 	return (0);
 }
 
+//map element_checker ^^
+
+
+//can be apart of other map checker fucntionVV
+
 void	map_check_err(t_map *map_temp, t_list *temp, t_list *raw_map_file, char *map_str)
 {
 	t_list	*curr;
@@ -574,30 +626,10 @@ void	map_check_setup(t_list *curr, t_list *raw_map_file, char *map_str)
 	map_check_err(&map_temp, temp, raw_map_file, map_str);
 }
 
+//can be apart of other map checker above ^^
 
+//player setup VV
 
-void	remove_empty_lines(t_list **raw_map_file)
-{
-	t_list	*curr;
-	t_list	*temp;
-
-	int lines = (intptr_t)raw_map_file[0]->content;
-	*raw_map_file = raw_map_file[0]->next;
-	curr = *raw_map_file;
-	while(curr != NULL && curr->next != NULL) 
-	{
-		if (map_starting_tile((char *)curr->content) == 1)
-			break ;
-		if (is_empty_line(curr->next->content) == 1)
-		{
-			temp = curr->next;
-			curr->next = temp->next;
-			ft_lstdelone(temp, free);
-		}
-		else
-			curr = curr->next;
-	}
-}
 
 void	player_rot_setup(char rot, t_player *player)
 {
@@ -657,6 +689,10 @@ t_player	player_setup(t_list *curr, t_world *world)
 	player.rotSpeed = 0.001;
 	return (player);
 }
+//player setup ^^
+
+// texture ptr function
+
 void	fn_NO(char *content, int mod_pos, t_world *world, t_map *map)
 {
 	(void)world;
@@ -681,6 +717,10 @@ void	fn_EA(char *content, int mod_pos, t_world *world, t_map *map)
 	map->mods[mod_pos].type = EAST_TEXTURE;
 	map->mods[mod_pos].content = content;
 }
+//map_textur ptr func
+
+//map_color ptr func
+
 void	fn_F(char *content, int mod_pos, t_world *world, t_map *map)
 {
 	(void)world;
@@ -693,6 +733,9 @@ void	fn_C(char *content, int mod_pos, t_world *world, t_map *map)
 	map->mods[mod_pos].type = CEILING_COLOR;
 	map->mods[mod_pos].content = content;
 }
+//map_color ptr func^^
+
+//modifiers setupVV
 
 void	map_modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 {
@@ -717,6 +760,10 @@ void	map_modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 	}
 }
 
+//modifiers setup^^
+
+
+//the rest can stay
 t_map	map_init(t_map *map, char *map_str, t_world *world)
 {
 	t_list	*curr;
