@@ -81,6 +81,7 @@ void generate_textures(t_game *game)
 	game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
 
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -97,12 +98,9 @@ int	main(int argc, char **argv)
 	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
 	generate_textures(&game);
-	// game.player.pos = v2new(22, 11.5);
-	// game.player.dir = v2new(-1, 0);
-	// game.player.plane = v2new(0, 0.5);
-	game.player.pos = v2new(3, 16.5);
-	game.player.dir = v2new(1, 0);
-	game.player.plane = v2new(0, -0.5);
+	game.player.pos = v2new(22, 11.5);
+	game.player.dir = v2new(-1, 0);
+	game.player.plane = v2new(0, 0.5);
 	game.player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
 	game.player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
 	input_setup(game.app.mlx, game.app.win, &game.input);

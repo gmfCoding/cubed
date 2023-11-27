@@ -29,6 +29,7 @@
 		"keys.h": "c",
 		"types.h": "c",
 		"__node_handle": "c",
+<<<<<<< HEAD
 		"*.tcc": "c",
 		"fcntl.h": "c",
 		"unistd.h": "c",
@@ -42,5 +43,8 @@
 		"map.h": "c",
 		"errno.h": "c",
 		"get_next_line.h": "c"
+=======
+		"*.tcc": "c"
+>>>>>>> 16a74a2 (Add wall textures to core raycast implementation)
 	}
 }

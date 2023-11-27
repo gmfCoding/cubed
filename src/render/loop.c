@@ -236,7 +236,7 @@ t_vec2	map_to_screen(t_vec2 map)
 	map.y * R_HEIGHT / (float)MAP_HEIGHT});
 }
 
-void player_controls(t_game *game)
+void	player_controls(t_game *game)
 {
 	t_player *const player = &game->player;
 	double oldDirX;
