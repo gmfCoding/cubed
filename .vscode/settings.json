@@ -29,6 +29,8 @@
 		"keys.h": "c",
 		"types.h": "c",
 		"__node_handle": "c",
-		"*.tcc": "c"
+		"*.tcc": "c",
+		"fcntl.h": "c",
+		"unistd.h": "c"
 	}
 }
