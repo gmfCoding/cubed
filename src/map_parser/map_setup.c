@@ -22,7 +22,7 @@ char *const    g_mapsymbols[G_MAPTABLE_LEN] = {
 	"C",
 };
 
-t_ex_action const    g_mapfuncs[G_MAPTABLE_LEN] = {
+t_ex_action const    g_mapfuncs[] = {
      &fn_NO,
      &fn_SO,
      &fn_WE,

@@ -1,5 +1,6 @@
 #include "cubed.h"
 
+
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 {
 	t_list	*curr;
@@ -22,3 +23,18 @@ void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		curr = curr->next;
 	}
 }
+
+int	map_skip_over_modifiers(char *content)
+{
+	int	i;
+
+	i = -1;
+	while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
+	{
+		if (ft_strncmp(g_mapsymbols[i], content, mod_strlen(g_mapsymbols[i])) == 0)
+			return (1);
+	}
+	return (0);
+}
+
+

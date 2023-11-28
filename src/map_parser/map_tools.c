@@ -1,29 +1,10 @@
-#include "cubed.h"
 
-int	map_skip_over_modifiers(char *content)
-{
-	int	i;
-//	char	temp[3];
-	
-	i = -1;
-//	strncpy(temp, content, 2);
-//	temp[2] = '\0';
-	while (++i < sizeof(g_mapsymbols) / 8)
-	{
-		if (ft_strncmp(g_mapsymbols[i], content, mod_strlen(g_mapsymbols[i])) == 0)
-			return (1);
-//		if (strcmp(g_mapsymbols[i], temp) == 0)
-//			return (1);
-//		printf("%s\n", g_mapsymbols[i]);
-	}
-	return (0);
-}
+#include "cubed.h"
 
 int	map_starting_tile(char *content)
 {
 	int	i;
 	
-//	if (!content)
 	i = 0;
 	while (ft_isspace(content[i]))
 		i++;
@@ -31,7 +12,6 @@ int	map_starting_tile(char *content)
 		return (1);
 	return (0);
 }
-
 
 void	replace_tabs(t_list *curr)
 {
@@ -74,13 +54,11 @@ void	map_print(t_map *map)
 	}
 }
 
-
 void	remove_empty_lines(t_list **raw_map_file)
 {
 	t_list	*curr;
 	t_list	*temp;
 
-//	int lines = (intptr_t)raw_map_file[0]->content;
 	temp = *raw_map_file;
 	*raw_map_file = temp->next;
 	free(temp);
@@ -99,3 +77,17 @@ void	remove_empty_lines(t_list **raw_map_file)
 			curr = curr->next;
 	}
 }
+/*
+int	map_skip_over_modifiers(char *content)
+{
+	int	i;
+
+	i = -1;
+	while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
+	{
+		if (ft_strncmp(g_mapsymbols[i], content, mod_strlen(g_mapsymbols[i])) == 0)
+			return (1);
+	}
+	return (0);
+}
+*/

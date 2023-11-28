@@ -89,7 +89,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 	t_world	world;
 	world = world_preset(argc, argv, &world);
-
+	map_print(&world.map);
 	game = (t_game){0};
 	game.app.mlx = mlx_init();
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
