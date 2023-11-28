@@ -12,7 +12,6 @@
 
 #include "cubed.h"
 
-
 char *const    g_mapsymbols[G_MAPTABLE_LEN] = {
 	"NO",
 	"SO",

@@ -63,6 +63,10 @@ typedef struct	s_world
 	//int ent_count;
 }				t_world;
 
+typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
+
+
+
 void	fn_NO(char *content, int mod_pos, t_world *world, t_map *map);
 void	fn_SO(char *content, int mod_pos, t_world *world, t_map *map);
 void	fn_WE(char *content, int mod_pos, t_world *world, t_map *map);
@@ -72,9 +76,7 @@ void	fn_C(char *content, int mod_pos, t_world *world, t_map *map);
 
 
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
-
 extern char *const    g_mapsymbols[G_MAPTABLE_LEN];
-
 extern t_ex_action const    g_mapfuncs[G_MAPTABLE_LEN];
 
 t_player	player_setup(t_list *curr, t_world *world);

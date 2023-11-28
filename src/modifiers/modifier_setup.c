@@ -23,7 +23,7 @@ void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		curr = curr->next;
 	}
 }
-
+/*
 int	map_skip_over_modifiers(char *content)
 {
 	int	i;
@@ -36,5 +36,5 @@ int	map_skip_over_modifiers(char *content)
 	}
 	return (0);
 }
-
+*/
 
