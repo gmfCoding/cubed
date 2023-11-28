@@ -37,6 +37,7 @@ struct s_player
 	double moveSpeed;
 	double rotSpeed;
 };
+
 typedef struct s_inputctx t_inputctx;
 
 typedef struct s_app t_app;

@@ -37,6 +37,10 @@
 		"string.h": "c",
 		"random": "c",
 		"keysym.h": "c",
-		"keysymdef.h": "c"
+		"keysymdef.h": "c",
+		"system_error": "c",
+		"map.h": "c",
+		"errno.h": "c",
+		"get_next_line.h": "c"
 	}
 }

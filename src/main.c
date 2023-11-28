@@ -32,6 +32,14 @@
 // 	mlx_loop(mlx);
 // }
 
+t_world	world_preset(int argc, char **argv, t_world *world)
+{
+	//world->map = map_parse(argc, argv, world);
+	if (argc - 1 >= 1)
+		world->map = map_parse(argc, argv, world);
+	return (*world);
+}
+
 void generate_textures(t_game *game)
 {
 	 game->textures[0] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
@@ -79,6 +87,9 @@ int	main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
+	t_world	world;
+	world = world_preset(argc, argv, &world);
+
 	game = (t_game){0};
 	game.app.mlx = mlx_init();
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
@@ -94,7 +105,6 @@ int	main(int argc, char **argv)
 	game.player.plane = v2new(0, -0.5);
 	game.player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
 	game.player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
-
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);

@@ -5,6 +5,16 @@
 //#include "extra/optimised.h"
 # include "texture.h"
 # include "render.h"
+# include "map.h"
+# include "libft.h"
+# include "get_next_line.h"
+
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <stddef.h>
+# include <errno.h>
 
 #define PI 3.141592653589
 
@@ -13,11 +23,14 @@
 # define RAD2DEG 57.2957795131
 
 # define MAX_RAYCAST_DIST 100
+# define MAX_DEPTHS 5
+# define MAX_TEX_BF 4
+
 
 typedef struct s_vec2f t_vec2f;
-typedef struct s_cellinfo t_cellinfo;
+//typedef struct s_cellinfo t_cellinfo;
 
-typedef uint8_t t_cellheight;
+//typedef uint8_t t_cellheight;
 
 typedef union u_texid t_texid;
 
@@ -25,7 +38,7 @@ union u_texid
 {
 	int8_t : MAX_TEX_BF;
 };
-
+/*
 struct s_cellinfo
 {
 	t_cellheight	height;
@@ -45,6 +58,16 @@ struct s_map
 	uint8_t		height;
 
 };
+*/
+
+typedef enum	e_mapissue
+{
+		MAP_VALID,
+		MAP_INVALID_CHAR,
+		MAP_NOSTART,
+		MAP_MISSINGTEXTURE,
+		MAP_BADFILETYPE,
+}		t_mapissue;
 
 
 /* util/time.c */
