@@ -36,6 +36,8 @@ int main(int argc, char **argv)
 
 	t_world	world;
 	world = world_preset(argc, argv, &world);
+	map_print(&world.map);
+
 /*//undo this after testing
 	game = (t_game){0};
 	game.mlx = mlx_init();

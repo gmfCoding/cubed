@@ -39,7 +39,6 @@ void	deallocate_list(t_list **raw_map_file)
 	curr = *raw_map_file;
 	while (curr != NULL)
 	{
-		printf("harrr\n");
 		temp = curr;
 		curr = curr->next;
 		free(temp->content);
@@ -69,6 +68,7 @@ t_list	*ft_lst_readfile(const char *path)
 	}
 	close (fd);
 	next->next = ft_lstnew(NULL);
+
 	return (first);
 }
 
@@ -85,7 +85,8 @@ t_map	map_init(t_map *map, char *map_str, t_world *world)
 	remove_empty_lines(&raw_map_file);
 	replace_tabs(raw_map_file);
 	curr = raw_map_file;
-	while (curr != NULL && map_skip_over_modifiers((char *)curr->content) == 1)
+
+	while (curr != NULL && map_starting_tile((char *)curr->content) == 0)
 		curr = curr->next;
 	map_check_setup(curr, raw_map_file, map_str);
 	map->width = map_width_size(curr);
@@ -98,6 +99,7 @@ t_map	map_init(t_map *map, char *map_str, t_world *world)
 	}
 	modifier_setup(raw_map_file, map, world);
 	deallocate_list(&raw_map_file);
+
 	return (*map);
 }
 
@@ -105,9 +107,8 @@ t_map	map_parse(int argc, char **argv, t_world *world)
 {
 	t_map	map;
 	char	*map_str;
-
 	if (argc == 1)
-		map_str = "/assets/maps/map1.cub";
+		map_str = "assets/maps/map1.cub";
 	else if (argc == 2)
 		map_str = argv[1];
 	else
