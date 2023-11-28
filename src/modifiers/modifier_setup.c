@@ -1,24 +1,5 @@
 #include "cubed.h"
 
-
-char *const    g_mapsymbols[MAP_SYMBOL_LEN] = {
-	"NO",
-	"SO",
-	"WE",
-	"EA",
-	"F",
-	"C",
-};
-
-t_ex_action const    g_mapfuncs[MAP_SYMBOL_LEN] = {
-     &fn_NO,
-     &fn_SO,
-     &fn_WE,
-     &fn_EA,
-     &fn_F,
-     &fn_C,
-};
-
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 {
 	t_list	*curr;
