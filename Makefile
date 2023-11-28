@@ -12,7 +12,20 @@ SRCSF =	main.c \
 		render/loop.c \
 		render/line.c \
 		util/time.c \
-		cerror.c
+		util/string_utils.c \
+		cerror.c \
+		map_parser/map_setup.c \
+		map_parser/map_dimensions.c \
+		map_parser/map_tile_processing.c \
+		map_parser/map_tools.c \
+		map_parser/map_checker_tile.c \
+		map_parser/map_checker_element.c \
+		modifiers/modifier_setup.c \
+		modifiers/mod_func_cardinal_texture.c \
+		modifiers/mod_func_floor_ceiling_color.c \
+		entities/player_setup.c \
+
+		
 
 INCSF = cubed.h
 

@@ -1,13 +1,9 @@
-NO ./fake_wall_texture.txt
-
-SO ./fake_wall_texture.txt
-   
-WE ./fake_wall_texture.txt
-EA ./fake_wall_texture.txt
+NO ./assets/debug.xpm
+SO ./assets/debug.xpm
+WE ./assets/debug.xpm
+EA ./assets/debug.xpm
 F 225,100,0
 C 223,20,0
-
-
         1111111111111111111111111
         1000000000110000000000001
         1011000001110000000000001

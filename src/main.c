@@ -20,11 +20,23 @@
 // 	mlx_loop(mlx);
 // }
 
+t_world	world_preset(int argc, char **argv, t_world *world)
+{
+	world->map = map_parse(argc, argv, world);
+	return (*world);
+}
+
+
 int main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
 	t_game	game;
+	printf("BEGIN\n\n");
+
+	t_world	world;
+	world = world_preset(argc, argv, &world);
+/*//undo this after testing
 	game = (t_game){0};
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
@@ -41,4 +53,5 @@ int main(int argc, char **argv)
 
 	mlx_mouse_hook(game.win, (void *)on_mouse, &game);
 	mlx_loop(game.mlx);
+*/
 }
