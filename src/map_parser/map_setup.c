@@ -6,11 +6,30 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/27 18:24:33 by kmordaun         ###   ########.fr       */
+/*   Updated: 2023/11/28 20:34:39 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
+
+
+char *const    g_mapsymbols[] = {
+	"NO",
+	"SO",
+	"WE",
+	"EA",
+	"F",
+	"C",
+};
+
+t_ex_action const    g_mapfuncs[] = {
+     &fn_NO,
+     &fn_SO,
+     &fn_WE,
+     &fn_EA,
+     &fn_F,
+     &fn_C,
+};
 
 void	deallocate_list(t_list **raw_map_file)
 {
