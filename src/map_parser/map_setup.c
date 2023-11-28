@@ -12,25 +12,6 @@
 
 #include "cubed.h"
 
-
-char *const    g_mapsymbols[] = {
-	"NO",
-	"SO",
-	"WE",
-	"EA",
-	"F",
-	"C",
-};
-
-t_ex_action const    g_mapfuncs[] = {
-     &fn_NO,
-     &fn_SO,
-     &fn_WE,
-     &fn_EA,
-     &fn_F,
-     &fn_C,
-};
-
 void	deallocate_list(t_list **raw_map_file)
 {
 	t_list	*curr;

@@ -72,6 +72,10 @@ typedef struct	s_world
 	//int ent_count;
 }				t_world;
 
+typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
+
+
+
 void	fn_NO(char *content, int mod_pos, t_world *world, t_map *map);
 void	fn_SO(char *content, int mod_pos, t_world *world, t_map *map);
 void	fn_WE(char *content, int mod_pos, t_world *world, t_map *map);
@@ -79,8 +83,6 @@ void	fn_EA(char *content, int mod_pos, t_world *world, t_map *map);
 void	fn_F(char *content, int mod_pos, t_world *world, t_map *map);
 void	fn_C(char *content, int mod_pos, t_world *world, t_map *map);
 
-
-typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
 
 
 t_player	player_setup(t_list *curr, t_world *world);
