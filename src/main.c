@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:54:08 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/29 17:00:58 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,25 @@
 // 	mlx_loop(mlx);
 // }
 
+
+t_world	world_preset(int argc, char **argv, t_world *world)
+{
+	world->map = map_parse(argc, argv, world);
+	return (*world);
+}
+
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
 
 	(void)argc;
 	(void)argv;
+
+	t_world	world;
+	world = world_preset(argc, argv, &world);
+//	map_print(&world.map);
+
 	game = (t_game){0};
 	game.app.mlx = mlx_init();
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
@@ -53,4 +66,5 @@ int	main(int argc, char **argv)
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);
+
 }

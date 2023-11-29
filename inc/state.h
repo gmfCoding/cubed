@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:49:08 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/29 16:59:50 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ struct s_player
 	double moveSpeed;
 	double rotSpeed;
 };
+
 typedef struct s_inputctx t_inputctx;
 
 typedef struct s_app t_app;
