@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_setup.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
+/*   Updated: 2023/11/29 13:57:10 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cubed.h"
 
@@ -28,8 +39,8 @@ void	player_rot_setup(char rot, t_player *player)
 void	player_pos_setup(t_list *curr, t_player *player)
 {
 	char	*str;
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 
 	y = 0;
 	while (curr != NULL && curr->content != NULL)
@@ -38,7 +49,8 @@ void	player_pos_setup(t_list *curr, t_player *player)
 		x = -1;
 		while (str[++x] != '\n' && str[x] != '\0')
 		{
-			if (str[x] == 'N' || str[x] == 'S' || str[x] == 'E' || str[x] == 'W')
+			if (str[x] == 'N' || str[x] == 'S' \
+				|| str[x] == 'E' || str[x] == 'W')
 			{
 				player_rot_setup(str[x], player);
 				player->pos.x = x;
@@ -52,11 +64,10 @@ void	player_pos_setup(t_list *curr, t_player *player)
 
 t_player	player_setup(t_list *curr, t_world *world)
 {
-	t_player player;
+	t_player	player;
 
 	player_pos_setup(curr, &player);
 	player.moveSpeed = 0.05;
 	player.rotSpeed = 0.001;
 	return (player);
 }
-

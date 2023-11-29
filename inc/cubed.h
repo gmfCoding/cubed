@@ -60,16 +60,6 @@ struct s_map
 };
 */
 
-typedef enum	e_mapissue
-{
-		MAP_VALID,
-		MAP_INVALID_CHAR,
-		MAP_NOSTART,
-		MAP_MISSINGTEXTURE,
-		MAP_BADFILETYPE,
-}		t_mapissue;
-
-
 /* util/time.c */
 int64_t	time_get_ms(void);
 #endif

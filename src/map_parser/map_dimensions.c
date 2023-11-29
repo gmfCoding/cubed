@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_setup.c                                        :+:      :+:    :+:   */
+/*   map_dimensions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/27 18:24:33 by kmordaun         ###   ########.fr       */
+/*   Created: 2023/11/29 14:11:56 by kmordaun          #+#    #+#             */
+/*   Updated: 2023/11/29 14:16:22 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,28 @@
 
 int	map_width_size(t_list *curr)
 {
-	int i;
+	int		i;
+	char	*str;
 
 	i = 0;
 	while (curr != NULL && curr->content != NULL)
 	{
-		if (ft_strlen((char *)curr->content) > i)
+		str = (char *)curr->content;
+		if (ft_strlen(str) > i)
 		{
-			if (((char *)curr->content)[ft_strlen((char *)curr->content)] == '\n')
-				i = ft_strlen((char *)curr->content) - 1;
+			if (str[ft_strlen(str)] == '\n')
+				i = ft_strlen(str) - 1;
 			else
-				i = ft_strlen((char *)curr->content);
+				i = ft_strlen(str);
 		}
 		curr = curr->next;
 	}
-
-	return (i-1);
+	return (i - 1);
 }
 
 int	map_height_size(t_list *curr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (curr != NULL && curr->content != NULL)

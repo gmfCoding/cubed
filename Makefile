@@ -17,6 +17,7 @@ SRCSF = $(TEST) \
 		input/input_hooks.c \
 		input/input_setup.c \
 		input/keys.c \
+		util/error_handler.c \
 		util/string_utils.c \
 		cerror.c \
 		map_parser/map_setup.c \

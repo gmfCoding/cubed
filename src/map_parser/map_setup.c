@@ -6,29 +6,11 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/28 20:34:39 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/29 14:20:04 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
-
-char *const    g_mapsymbols[G_MAPTABLE_LEN] = {
-	"NO",
-	"SO",
-	"WE",
-	"EA",
-	"F",
-	"C",
-};
-
-t_ex_action const    g_mapfuncs[] = {
-     &fn_NO,
-     &fn_SO,
-     &fn_WE,
-     &fn_EA,
-     &fn_F,
-     &fn_C,
-};
 
 void	deallocate_list(t_list **raw_map_file)
 {
@@ -78,13 +60,13 @@ t_map	map_init(t_map *map, char *map_str, t_world *world)
 	int		index;
 
 	raw_map_file = ft_lst_readfile(map_str);
-	if (raw_map_file == NULL)
-		exit(2);//returnrapper here
+	if ((int)raw_map_file->content <= 1 || raw_map_file == NULL)
+		error_return("File Invalid", 1, 1, NULL);
 	index = 0;
 	remove_empty_lines(&raw_map_file);
 	replace_tabs(raw_map_file);
 	curr = raw_map_file;
-	while (curr != NULL && map_skip_over_modifiers((char *)curr->content) == 1)
+	while (curr != NULL && map_starting_tile((char *)curr->content) == 0)
 		curr = curr->next;
 	map_check_setup(curr, raw_map_file, map_str);
 	map->width = map_width_size(curr);

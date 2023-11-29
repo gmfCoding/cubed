@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_checker_tile.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/29 14:01:10 by kmordaun          #+#    #+#             */
+/*   Updated: 2023/11/29 16:09:28 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cubed.h"
 
@@ -38,11 +49,15 @@ int	map_check_invalid_char(char *content)
 	return (count);
 }
 
+/*flood fill */
 int	map_check_surrounded(t_map *map_temp, int pos)
 {
-	if (pos >= 0 && pos <= (map_temp->width * map_temp->height) && map_temp->tiles[pos].type != WALL && map_temp->tiles[pos].type != EMPTY)
-		return (1);//can return and print char position and tile type? and handle exit funtion here
-	if (!(pos >= 0 && pos <= (map_temp->width * map_temp->height)) || map_temp->tiles[pos].type == WALL)
+	if (pos >= 0 && pos <= (map_temp->width * map_temp->height) \
+			&& map_temp->tiles[pos].type != WALL \
+			&& map_temp->tiles[pos].type != EMPTY)
+		return (1);
+	if (!(pos >= 0 && pos <= (map_temp->width * map_temp->height)) \
+		|| map_temp->tiles[pos].type == WALL)
 		return (0);
 	if (map_temp->tiles[pos].type == EMPTY)
 		map_temp->tiles[pos].type = WALL;
@@ -57,33 +72,33 @@ int	map_check_surrounded(t_map *map_temp, int pos)
 	return (0);
 }
 
-void	map_check_err(t_map *map_temp, t_list *temp, t_list *raw_map_file, char *map_str)
+void	map_check_err(t_map *map_temp, t_list *temp, \
+		t_list *raw_map_file, char *map_str)
 {
-	t_list	*curr;
-	int	count_players;
-	int	count_invalid_char;
+	const t_list	*curr = temp;
+	int		count_players;
+	int		count_invalid_char;
 
 	count_players = 0;
 	count_invalid_char = 0;
-	curr = temp;
 	while (curr != NULL && curr->content != NULL)
 	{
-		if (is_empty_line((char *)curr->content) && ((char *)curr->content)[0] != ' ')
-			printf("empty line in map\n");
+		if (is_line((char *)curr->content) && ((char *)curr->content)[0] != ' ')
+			error_return(":Invalid Line In Map", 1, 1, &raw_map_file);
 		count_players += map_check_player((char *)curr->content);
 		count_invalid_char += map_check_invalid_char((char *)curr->content);
 		curr = curr->next;
 	}
 	if (map_check_elements(raw_map_file) == 1)
-		printf("element format incorrect\n");//replace with error handler
+		error_return(":Invalid Element", 1, 0, &raw_map_file);
 	if (count_players > 1 || count_players < 1)
-		printf("incorrect player count\n");
+		error_return(":Invalid Player Count", 1, 1, &raw_map_file);
 	if (count_invalid_char > 0)
-		printf("incorrect char in map\n");
+		error_return(":Invalid Character", 1, 1, &raw_map_file);
 	if (map_check_surrounded(map_temp, 0) == 1)
-		printf("boarder_not_valid\n");
+		error_return(":Invalid Boarder", 1, 1, &raw_map_file);
 	if (ft_strcmp(".cub", ft_strrchr(map_str, '.')) != 0)
-		printf("incorrect file type\n");
+		error_return(":Invalid File Type", 1, 1, &raw_map_file);
 }
 
 void	map_check_setup(t_list *curr, t_list *raw_map_file, char *map_str)
@@ -105,7 +120,5 @@ void	map_check_setup(t_list *curr, t_list *raw_map_file, char *map_str)
 	}
 	while (++index < ((map_temp.width * map_temp.height) + map_temp.width))
 		map_temp.tiles[index].type = get_tiletype(' ');
-//	map_print(&map_temp);//dont need this
-//	printf("\n");
 	map_check_err(&map_temp, temp, raw_map_file, map_str);
 }
