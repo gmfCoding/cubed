@@ -1,43 +1,40 @@
 # SOURCE FILES
-SRCS = 	get_next_line.c \
+SRCS = get_next_line.c \
 		get_next_line_utils.c
 
 # TARGET NAME AND VARIBLES
 NAME = libgnl.a
-
 OBJDIR = obj/
 CC = cc
-WFLAGS = -Wall -Wextra -Werror
-CFLAGS = $(WFLAGS) $(DFLAGS)
-
-$(info $(CFLAGS))
-
+FLAGS = $(DFLAGS) -Wall -Wextra -Werror
 
 # OBJECT FILES
-OBJ = $(patsubst %.c,$(OBJDIR)%.o, $(SRCS))
+OBJ := $(patsubst %.c, $(OBJDIR)%.o, $(SRCS))
+BONUS_OBJ := $(patsubst %.c, $(OBJDIR)%.o, $(SRCSB))
 
+# ANY
 all: $(NAME)
+
+# CLEAN
+re: fclean all
+
+fclean: clean
+	rm -f $(NAME)
+
+clean:
+	rm -rf $(OBJDIR)
 
 # BUILD LIBRARY
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
-	@echo "ar rcs $(NAME) ...\nget_next_line libary generated!"
+	@echo "ar rcs $(NAME) ..."
+	@echo "Libft libary generated!"
 
-# COMPILE SOURCES
-$(OBJDIR)%.o: %.c get_next_line.h 
+# COMPILE
+$(OBJDIR)%.o : %.c libft.h
 	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-	@echo "Compiled: $<"
+	$(CC) $(FLAGS) -c $< -o $@
 
-# CLEANING
-re: fclean all
-
-fclean: clean
-	@echo "Full clean!"
-	@-rm -f $(NAME)
-
-clean:
-	@-rm -rf $(OBJDIR)
-
-.PHONY: clean fclean $(NAME) all re
-
+bonus: $(BONUS_OBJ)
+	@ar r $(NAME) $(BONUS_OBJ)
+	@echo "Libft bonus content generated!"

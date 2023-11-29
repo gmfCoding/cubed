@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   state.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
+/*   Updated: 2023/11/29 16:59:50 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STATE_H
 # define STATE_H
+#include "input.h"
 #include "texture.h"
 
 typedef struct s_game t_game;
@@ -12,21 +25,46 @@ struct s_debug_texture
 	t_texture rt;
 };
 
-struct s_game
+typedef struct s_player t_player;
+
+struct s_player
+{
+	t_vec2 pos;
+	t_vec2 dir;
+	t_vec2 plane;
+
+	double moveSpeed;
+	double rotSpeed;
+};
+
+typedef struct s_inputctx t_inputctx;
+
+typedef struct s_app t_app;
+struct s_app
 {
 	void *mlx;
 	void *win;
+};
 
+struct s_game
+{
+	t_app	app;
 	t_texture rt0;
-	t_texture tex;
+	t_texture rt1;
+
 	t_vec2 mouse;
 	t_vec2 pos;
 
 	t_debug_texture views[MAX_DEBUG_VIEWS];
 	int view_count;
 
-	int debug;
+	t_player	player;
+
+	t_inputctx input;
 };
 
-void texture_debug_view(t_game *game, int view, t_texture tex, t_vec2 pos);
+void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);
+void texture_draw_debug_view(t_game *game, int view);
+t_texture texture_get_debug_view(t_game *game, int view);
+
 #endif

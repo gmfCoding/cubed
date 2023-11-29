@@ -1,4 +1,4 @@
-SRCSF =	main.c \
+SRCSF = $(TEST) \
 		texture/texture.c \
 		texture/pixel.c \
 		texture/texture_util.c \
@@ -14,7 +14,6 @@ SRCSF =	main.c \
 		util/time.c \
 		util/error_handler.c \
 		util/string_utils.c \
-		cerror.c \
 		map_parser/map_setup.c \
 		map_parser/map_dimensions.c \
 		map_parser/map_tile_processing.c \
@@ -25,10 +24,17 @@ SRCSF =	main.c \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_floor_ceiling_color.c \
 		entities/player_setup.c \
-
-		
+		input/input.c \
+		input/input_hooks.c \
+		input/input_setup.c \
+		input/keys.c \
+		cerror.c \
 
 INCSF = cubed.h
+
+ifndef $(TEST)
+TEST=main.c
+endif
 
 ifndef $(OS)
 OS := $(shell uname)
@@ -97,7 +103,6 @@ ifneq ($(OS),Linux)
 LDFLAGS += -framework OpenGL -framework AppKit 
 else 
 LDFLAGS += -lX11 -lXext
-CPPFLAGS += -DKEYMAP_LINUX
 endif
 
 # RULES

@@ -63,16 +63,6 @@ typedef struct	s_map
 	int			color_floor;
 }				t_map;
 
-typedef struct	s_player
-{
-	t_vec2	pos;
-	t_vec2	dir;
-	t_vec2	plane;
-
-	double	moveSpeed;
-	double	rotSpeed;
-}		t_player;
-
 typedef struct	s_world
 {
 	t_map		map;

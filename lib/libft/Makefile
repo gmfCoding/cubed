@@ -22,6 +22,7 @@ SRCS = 	ft_strlen.c		\
 		ft_strnstr.c	\
 		ft_calloc.c		\
 		ft_strdup.c		\
+		ft_strfmt.c		\
 		$(SRCS2)		\
 
 SRCS2 = ft_substr.c		\
