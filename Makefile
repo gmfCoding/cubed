@@ -12,6 +12,7 @@ SRCSF =	main.c \
 		render/loop.c \
 		render/line.c \
 		util/time.c \
+		util/error_handler.c \
 		util/string_utils.c \
 		cerror.c \
 		map_parser/map_setup.c \

@@ -1,8 +1,18 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_tile_processing.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/29 14:20:24 by kmordaun          #+#    #+#             */
+/*   Updated: 2023/11/29 14:43:13 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cubed.h"
 
-t_tiletype get_tiletype(char c)
+t_tiletype	get_tiletype(char c)
 {
 	if (c == '0')
 		return (FLOOR);
@@ -20,7 +30,7 @@ int	map_tiles(t_map *map, char *content, int index)
 	while (i < map->width)
 	{
 		if (content[i] == '\0' || content[i] == '\n')
-			while(i < map->width)
+			while (i < map->width)
 				map->tiles[index + i++].type = get_tiletype(' ');
 		else
 		{
@@ -31,7 +41,6 @@ int	map_tiles(t_map *map, char *content, int index)
 	return (i);
 }
 
-
 int	map_tiles_surround(t_map *map, char *content, int index)
 {
 	int	i;
@@ -41,7 +50,7 @@ int	map_tiles_surround(t_map *map, char *content, int index)
 	while (i < (map->width))
 	{
 		if (content[i] == '\0' || content[i] == '\n')
-			while(i < map->width)
+			while (i < map->width)
 				map->tiles[(index + 1) + i++].type = get_tiletype(' ');
 		else
 		{
@@ -51,4 +60,3 @@ int	map_tiles_surround(t_map *map, char *content, int index)
 	}
 	return (i);
 }
-
