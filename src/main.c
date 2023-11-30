@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/27 19:16:34 by clovell          ###   ########.fr       */
+/*   Updated: 2023/11/30 21:25:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@
 
 void generate_textures(t_game *game)
 {
-	game->textures[0] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[1] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[2] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[3] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[4] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[5] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[6] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[7] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
+	game->textures[0] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
+	game->textures[1] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
+	game->textures[2] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
+	game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
+	game->textures[4] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
+	game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
+	game->textures[6] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
+	game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
+	/*
 	// generate some textures
 	for (int x = 0; x < WALL_TEX_SIZE; x++)
 	{
@@ -62,6 +63,7 @@ void generate_textures(t_game *game)
 			pixel_set(game->textures[7], x, y, 128 + 256 * 128 + 65536 * 128); // flat grey texture
 		}
 	}
+	*/
 }
 
 int	main(int argc, char **argv)
