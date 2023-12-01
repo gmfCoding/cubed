@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:50:49 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/01 02:10:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -39,11 +39,22 @@ void    texture_blit(t_texture src, t_texture dst, t_vec2 pos)
 }
 
 #include <string.h>
-// Copies pixel data from one texture to another
 void    texture_clear(t_texture src)
 {
+	int x;
+	int y;
+
+	y = -1;
+	while (++y < src.height)
+	{
+		x = -1;
+		while (++x < src.width)
+		{
+			pixel_set(src, x, y, 0);
+		}
+	}
 	// FORBIDDEN
-	memset(src.data, 0, (src.bpp / 8) * src.width * src.height);
+	//memset(src.data, 0, (src.bpp / 8) * src.width * src.height);
 }
 
 t_texture texture_get_debug_view(t_game *game, int view)

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 20:39:06 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/01 01:32:40 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STATE_H
 #include "input.h"
 #include "texture.h"
+#include "ray.h"
 
 typedef struct s_game t_game;
 
@@ -47,20 +48,21 @@ struct s_app
 
 struct s_game
 {
-	t_app	app;
-	t_texture rt0;
-	t_texture rt1;
+	t_app			app;
+	t_texture		rt0;
+	t_texture		rt1;
 
-	t_vec2 mouse;
-	t_vec2 pos;
+	t_vec2			mouse;
+	t_vec2			pos;
 
-	t_debug_texture views[MAX_DEBUG_VIEWS];
-	int view_count;
+	t_debug_texture	views[MAX_DEBUG_VIEWS];
+	int				view_count;
 
-	t_player	player;
-	t_texture textures[8];
+	t_player		player;
+	t_texture		textures[8];
 
-	t_inputctx input;
+	t_inputctx		input;
+	t_rayinfo		half;
 };
 
 void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);
