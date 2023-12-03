@@ -12,17 +12,26 @@
 
 #include "cubed.h"
 
-void	mod_gen_f(char *content, int mod_pos, t_world *world, t_map *map)
+void	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 {
+	char	**f;
+
 	(void)world;
-	map->mods[mod_pos].type = FLOOR_COLOR;
-	map->mods[mod_pos].content = content;
+	map->mods[index].type = FLOOR_COLOR;
+	map->mods[index].content = ft_strdup(content);
+	f = ft_split(content, ',');
+	map->color_ceiling = (ft_atoi(f[0]) << 16) | (ft_atoi(f[1]) << 8) | ft_atoi(f[2]);
+	free_str_array(f);
 }
 
-void	mod_gen_c(char *content, int mod_pos, t_world *world, t_map *map)
+void	mod_gen_c(char *content, int index, t_world *world, t_map *map)
 {
-	(void)world;
-	map->mods[mod_pos].type = CEILING_COLOR;
-	map->mods[mod_pos].content = content;
-}
+	char	**c;
 
+	(void)world;
+	map->mods[index].type = CEILING_COLOR;
+	map->mods[index].content = ft_strdup(content);
+	c = ft_split(content, ',');
+	map->color_ceiling = (ft_atoi(c[0]) << 16) | (ft_atoi(c[1]) << 8) | ft_atoi(c[2]);
+	free_str_array(c);
+}

@@ -19,6 +19,7 @@ char *const			g_mapsymbols[] = {
 	"EA",
 	"F",
 	"C",
+	"DR",
 };
 
 t_ex_action const	g_mapfuncs[] = {
@@ -28,6 +29,7 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_ea,
 	&mod_gen_f,
 	&mod_gen_c,
+	&mod_gen_dr,
 };
 
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
@@ -35,9 +37,9 @@ void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 	t_list	*curr;
 	char	*str;
 	int		i;
-	int		mod_pos;
+	int		index;
 
-	mod_pos = 0;
+	index = 0;
 	curr = raw_map_file;
 	while (curr != NULL && curr->content != NULL)
 	{
@@ -49,7 +51,7 @@ void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 			if (ft_strncmp(g_mapsymbols[i], \
 					str, mod_strlen(g_mapsymbols[i])) == 0)
 				((t_ex_action)g_mapfuncs[i])(str + (mod_strlen(g_mapsymbols[i]) \
-					+ 1), mod_pos++, world, map);
+					+ 1), index++, world, map);
 		}
 		curr = curr->next;
 	}

@@ -66,15 +66,31 @@ void	map_print(t_map *map)
 	}
 }
 
+void	remove_int_from_list(t_list **raw_map_file)
+{
+	t_list	*temp;
+
+	if ((int)(*raw_map_file)->content <= 1)
+		error_return("File Empty", 1, 1, NULL);
+	temp = *raw_map_file;
+	*raw_map_file = temp->next;
+	free(temp);
+}
+
 void	remove_empty_lines(t_list **raw_map_file)
 {
 	t_list	*curr;
 	t_list	*temp;
 
-	temp = *raw_map_file;
-	*raw_map_file = temp->next;
-	free(temp);
+	remove_int_from_list(raw_map_file);
 	curr = *raw_map_file;
+	while (curr != NULL && is_line(curr->content) == 1)
+	{
+		temp = curr;
+		*raw_map_file = temp->next;
+		curr = curr->next;
+		ft_lstdelone(temp, free);
+	}
 	while (curr != NULL && curr->next != NULL)
 	{
 		if (map_starting_tile((char *)curr->content) == 1)

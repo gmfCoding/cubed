@@ -49,8 +49,9 @@ int	main(int argc, char **argv)
 
 	t_world	world;
 	world = world_preset(argc, argv, &world);
-//	map_print(&world.map);
-
+	map_print(&world.map);
+	free_content(&world);
+/*
 	game = (t_game){0};
 	game.app.mlx = mlx_init();
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
@@ -66,5 +67,5 @@ int	main(int argc, char **argv)
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);
-
+*/
 }

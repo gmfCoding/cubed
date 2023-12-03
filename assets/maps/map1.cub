@@ -3,7 +3,8 @@ SO ./assets/debug.xpm
 WE ./assets/debug.xpm
 EA ./assets/debug.xpm
 F 225,100,0
-C 223,20,0
+C 223,20,0 
+DR door01,/assets/debug.xpm,25,10,1,C,L,V
         1111111111111111111111111
         1000000000110000000000001
         1011000001110000000000001

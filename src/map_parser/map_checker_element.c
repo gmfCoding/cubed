@@ -73,6 +73,8 @@ int	map_check_elements(t_list *raw_map_files)
 		str = (char *)curr->content;
 		if (map_starting_tile(str) == 1)
 			break ;
+	//	if (!str[1])
+	//		return (error_with("Empty Char", 1, 1));
 		if (str[2] && str[1] != ' ' && str[2] != ' ')
 			return (1);
 		if (str[1] && (str[0] == 'C' || str[0] == 'F') && str[1] == ' ')

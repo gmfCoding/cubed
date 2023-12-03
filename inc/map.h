@@ -7,16 +7,20 @@
 # define TAB_SIZE 4
 # define FILE_TYPE ".xpm"
 # define MAP_MODIFICATION_SIZE 100
+# define MAX_ENTITIES 100
 # define MAP_MAX_XY 200
 # define MAP_MAX_X MAP_MAX_XY
 # define MAP_MAX_Y MAP_MAX_XY
+# define MAX_DOORS 50
+# define NAME_SIZE 50
 
 typedef enum	e_tiletype
 {
 	FLOOR,
 	WALL,
 	EMPTY,
-	INVALID
+	MODIFIED,
+	INVALID,
 }				t_tiletype;
 
 typedef enum	e_modtype
@@ -27,6 +31,7 @@ typedef enum	e_modtype
 	EAST_TEXTURE,
 	FLOOR_COLOR,
 	CEILING_COLOR,
+	DOOR,
 }				t_modtype;
 
 typedef enum e_mapissue
@@ -54,23 +59,40 @@ typedef struct	s_mod
 typedef struct	s_map
 {
 	t_tile	tiles[MAP_MAX_X * MAP_MAX_Y];
-	t_mod		mods[MAP_MODIFICATION_SIZE];
-	t_vec2		s_pos;
+	t_mod		mods[MAP_MODIFICATION_SIZE];//unsure if i should have this apart of map or world..
+	t_vec2		s_pos;//TODO this is for the player maybe dont need here
 	uint8_t		width;
 	uint8_t		height;
-	float		s_angle;
+	float		s_angle;//TODO maybe dont need this either
 	int			color_ceiling;
 	int			color_floor;
 }				t_map;
+
+typedef struct s_door
+{
+	char	name[NAME_SIZE];
+	t_vec2	pos;
+	int	speed;
+	bool	closed;
+	bool	locked;
+	bool	vertical;
+}		t_door;
+
+
+typedef struct	s_entity
+{
+	t_door	doors[MAX_DOORS];
+
+}		t_entity;
 
 typedef struct	s_world
 {
 	t_map		map;
 	t_player	player;
 
-	//t_entity	map_entities[MAX_ENTITIES];
+	t_entity	ent[MAX_ENTITIES];
 	//int ent_count;
-}				t_world;
+}			t_world;
 
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
 
@@ -95,15 +117,18 @@ void	remove_empty_lines(t_list **raw_map_file);
 t_tiletype get_tiletype(char c);
 
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
-void	mod_gen_no(char *content, int mod_pos, t_world *world, t_map *map);
-void	mod_gen_so(char *content, int mod_pos, t_world *world, t_map *map);
-void	mod_gen_we(char *content, int mod_pos, t_world *world, t_map *map);
-void	mod_gen_ea(char *content, int mod_pos, t_world *world, t_map *map);
-void	mod_gen_c(char *content, int mod_pos, t_world *world, t_map *map);
-void	mod_gen_f(char *content, int mod_pos, t_world *world, t_map *map);
+void	mod_gen_no(char *content, int index, t_world *world, t_map *map);
+void	mod_gen_so(char *content, int index, t_world *world, t_map *map);
+void	mod_gen_we(char *content, int index, t_world *world, t_map *map);
+void	mod_gen_ea(char *content, int index, t_world *world, t_map *map);
+void	mod_gen_c(char *content, int index, t_world *world, t_map *map);
+void	mod_gen_f(char *content, int index, t_world *world, t_map *map);
+void	mod_gen_dr(char *content, int index, t_world *world, t_map *map);
 
 int	mod_strlen(const char *str);
 int	ft_strcmp(char *s1, char *s2);
+void	free_str_array(char **str);
+void	free_content(t_world *world);
 int	ft_isspace(int c);
 void remove_spaces(char *str);
 int	is_line(const char *line);

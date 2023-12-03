@@ -59,7 +59,7 @@ t_map	map_init(t_map *map, char *map_str, t_world *world)
 	int		index;
 
 	raw_map_file = ft_lst_readfile(map_str);
-	if ((int)raw_map_file->content <= 1 || raw_map_file == NULL)
+	if (raw_map_file == NULL)
 		error_return("File Invalid", 1, 1, NULL);
 	index = 0;
 	remove_empty_lines(&raw_map_file);

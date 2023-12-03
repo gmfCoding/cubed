@@ -62,7 +62,9 @@ int	is_line(const char *line)
 	int	i;
 
 	if (!line)
+	{
 		return (1);
+	}
 	i = 0;
 	while (line[i])
 	{
