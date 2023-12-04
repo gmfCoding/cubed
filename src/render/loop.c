@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/27 19:16:54 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/04 16:33:26 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,36 +21,15 @@
 #include "texture.h"
 #include "vector2i.h"
 
-#define PI 3.141592653589
-
-// define DEG2RAD PI / 180.0
-# define DEG2RAD 0.01745329251993888888888888888889
-# define RAD2DEG 57.2957795131
-
-# ifdef __linux__
-#  define R_ALPHA 0xff000000
-# else
-#  define R_ALPHA 0x00000000
-#endif
-
-#define R_RED   0x00ff0000
-#define R_GREEN 0x0000ff00
-#define R_BLUE  0x000000ff
-
-#define OF_ALPHA 24
-#define OF_RED   16
-#define OF_GREEN 8
-#define OF_BLUE  0
-
 #include "libft.h"
-# define MAX_RAYCAST_DIST 100
 
-void measure_frame_rate(t_app app)
+void	measure_frame_rate(t_app app)
 {
-	static int64_t timeprev = 0;
-	static char *fps = NULL;
-	
-	fps = ft_strfmt("fps: %d",  (int) (1.0 / ((time_get_ms() - timeprev) / 1000.0)));
+	static int64_t	timeprev = 0;
+	static char		*fps = NULL;
+
+	fps = ft_strfmt("fps:%d", \
+	(int)(1.0 / ((time_get_ms() - timeprev) / 1000.0)));
 	mlx_string_put(app.mlx, app.win, 0, 10, 0x00FF00, fps);
 	free(fps);
 	// AUTO EXIT AFTER 4 SECONDS (used for GMON)
@@ -62,61 +41,90 @@ void measure_frame_rate(t_app app)
 	timeprev = time_get_ms();
 }
 
-void draw_debug_info(t_game *game)
+void	draw_debug_info(t_game *game)
 {
-	static int64_t timeprev = 0;
-	const char *debugstr[] = {
-		ft_strfmt("fps: %d", (int) (1.0 / ((time_get_ms() - timeprev) / 1000.0))),
-		ft_strfmt("pos:(%f,%f)", (double)game->player.pos.x, (double)game->player.pos.y),
-		ft_strfmt("dir:(%f,%f)", (double)game->player.dir.x, (double)game->player.dir.y),
-		ft_strfmt("plane:(%f,%f)", (double)game->player.plane.x, (double)game->player.plane.y),
+	t_player *const	player = &game->player;
+	static int64_t	timeprev = 0;
+	const char		*debugstr[] = {
+		ft_strfmt("fps:%d", (int)(1.0 / ((time_get_ms() - timeprev) / 1000.0))),
+		ft_strfmt("pos:(%f,%f)", (double)player->pos.x, (double)player->pos.y),
+		ft_strfmt("dir:(%f,%f)", (double)player->dir.x, (double)player->dir.y),
+		ft_strfmt("plane:(%f,%f)", \
+		(double)game->player.plane.x, (double)game->player.plane.y),
+		ft_strfmt("hits:(%d)", game->half.hits),
 	};
-	int i;
+	int				i;
 
 	i = -1;
 	while (++i < sizeof(debugstr) / sizeof(*debugstr))
 	{
-		mlx_string_put(game->app.mlx, game->app.win, 0, i * 12 + 12, 0xFFFFFF, debugstr[i]);
+		mlx_string_put(game->app.mlx, game->app.win, 0, \
+			i * 12 + 12, 0xFFFFFF, debugstr[i]);
 		free(debugstr[i]);
 	}
 	timeprev = time_get_ms();
 }
 
-bool inside(int x, int y, int maxX, int maxY)
+bool	inside(int x, int y, int maxX, int maxY)
 {
 	return (x >= 0 && y >= 0 && x < maxX && y < maxY);
 }
 
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
+#define MAP_WIDTH 24
+#define MAP_HEIGHT 24
 
-int map[MAP_WIDTH * MAP_HEIGHT]=
-{
-4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 8, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
-4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4, 
-4, 0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 4, 
-4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 5, 0, 0, 4, 
-4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 4, 
-4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4, 
-4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 
-4, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4, 
-4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4, 
-4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 4, 4, 0, 4, 4, 4, 4, 4, 4, 
-4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 0, 6, 6, 6, 6, 6, 1, 
-4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 6, 6, 0, 6, 6, 6, 1, 
-4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 2, 
-4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2, 
-4, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2, 
-7, 7, 0, 0, 7, 7, 7, 7, 0, 7, 7, 7, 6, 0, 6, 2, 0, 5, 0, 5, 0, 5, 0, 2, 
-7, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2, 
-7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2, 
-7, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 3, 
-7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 3, 
-7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 0, 0, 0, 0, 0, 3, 
-7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 3, 
-7, 7, 7, 7, 7, 7, 1, 8, 1, 8, 1, 1, 6, 4, 6, 3, 2, 2, 2, 2, 2, 2, 2, 3, 
+int map[MAP_WIDTH * MAP_HEIGHT] = {
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 1, 1, 1, 1, 1, 1, 2, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+	1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+	1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+	1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1,
+	1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+};
 
+int	texmap[MAP_WIDTH * MAP_HEIGHT] = {
+	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 8, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4,
+	4, 0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 4,
+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 5, 0, 0, 4,
+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 4,
+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4,
+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+	4, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4,
+	4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4,
+	4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 4, 4, 0, 4, 4, 4, 4, 4, 4,
+	4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 0, 6, 6, 6, 6, 6, 1,
+	4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 6, 6, 0, 6, 6, 6, 1,
+	4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 2,
+	4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2,
+	4, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2,
+	7, 7, 0, 0, 7, 7, 7, 7, 0, 7, 7, 7, 6, 0, 6, 2, 0, 5, 0, 5, 0, 5, 0, 2,
+	7, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2,
+	7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2,
+	7, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 3,
+	7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 3,
+	7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 0, 0, 0, 0, 0, 3,
+	7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 3,
+	7, 7, 7, 7, 7, 7, 1, 8, 1, 8, 1, 1, 6, 4, 6, 3, 2, 2, 2, 2, 2, 2, 2, 3,
 };
 
 int	map_index(int x, int y)
@@ -124,18 +132,17 @@ int	map_index(int x, int y)
 	return (x + y * MAP_WIDTH);
 }
 
-typedef struct s_dda t_dda;
-struct s_dda
+typedef struct s_dda
 {
-	t_vec2 delta;
-	t_vec2i map;
-	t_vec2i step;
-	t_vec2 side;
-};
+	t_vec2	delta;
+	t_vec2i	map;
+	t_vec2i	step;
+	t_vec2	side;
+}			t_dda;
 
-t_dda dda_calculate(t_vec2 start, t_vec2 dir)
+t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 {
-	t_dda dda;
+	t_dda	dda;
 
 	dda = (t_dda){0};
 	dda.map = (t_vec2i){start.x, start.y};
@@ -162,60 +169,74 @@ t_dda dda_calculate(t_vec2 start, t_vec2 dir)
 	return (dda);
 }
 
-int raycast_hit(t_hitpoint *hit, t_dda *dda)
+/* Preforms a raycast on the tile grid
+	RETURNS:
+	-1 if there were no hits
+	0 if there was a hit but no more
+	1 if there was a hit and potentially more
+*/
+int	raycast_hit(t_hitpoint *hit, t_dda *dda)
 {
 	while (1)
 	{
 		hit->side = dda->side.x >= dda->side.y;
 		if (dda->side.x < dda->side.y)
 		{
+			hit->depth = dda->side.x;
 			dda->side.x += dda->delta.x;
 			dda->map.x += dda->step.x;
 		}
 		else
 		{
+			hit->depth = dda->side.y;
 			dda->side.y += dda->delta.y;
 			dda->map.y += dda->step.y;
 		}
 		if (!inside(dda->map.x, dda->map.y, MAP_WIDTH, MAP_HEIGHT))
-			return -1;
+			return (-1);
 		if (map[map_index(dda->map.x, dda->map.y)] > 0)
 		{
-			hit->depth = (dda->side.y - dda->delta.y);
-			if (hit->side == 0)
-				hit->depth = (dda->side.x - dda->delta.x);
 			hit->x = dda->map.x;
 			hit->y = dda->map.y;
-			return 1;
+			return (map[map_index(dda->map.x, dda->map.y)] - 1);
 		}
 	}
+	return (-1);
 }
 
-t_rayinfo raycast(int *map, t_vec2 start, t_vec2 dir)
+t_rayinfo	raycast(int *map, t_vec2 start, t_vec2 dir)
 {
-	t_rayinfo	ray = {0};
-	t_dda		dda = {0};
+	t_rayinfo	ray;
+	t_dda		dda;
+	int			hit;
 
+	ray = (t_rayinfo){0};
+	dda = (t_dda){0};
 	dda = dda_calculate(start, dir);
 	while (ray.hits < MAX_DEPTHS)
 	{
-		raycast_hit(&ray.depths[ray.hits], &dda);
-		ray.hits++;
+		hit = raycast_hit(&ray.depths[ray.hits], &dda);
+		if (hit >= 0)
+			ray.hits++;
+		if (hit <= 0)
+			break ;
 	}
-	return ray;
+	return (ray);
 }
 
 t_vec2	screen_to_map(t_vec2 mouse)
 {
-	return (t_vec2){mouse.x / SCR_WIDTH * MAP_WIDTH, mouse.y / SCR_HEIGHT * MAP_HEIGHT};
+	return ((t_vec2){mouse.x / SCR_WIDTH * MAP_WIDTH, \
+	mouse.y / SCR_HEIGHT * MAP_HEIGHT});
 }
 
 t_vec2	map_to_screen(t_vec2 map)
 {
-	return (t_vec2){map.x * SCR_WIDTH / (float)MAP_WIDTH, map.y * SCR_HEIGHT / (float)MAP_HEIGHT};
+	return ((t_vec2){map.x * SCR_WIDTH / (float)MAP_WIDTH, \
+	map.y * SCR_HEIGHT / (float)MAP_HEIGHT});
 }
 
-void	player_controls(t_game *game)
+void player_controls(t_game *game)
 {
 	t_player *const player = &game->player;
 	double oldDirX;
@@ -225,16 +246,16 @@ void	player_controls(t_game *game)
 	oldPlaneX = player->plane.x;
 	if (input_keyheld(&game->input, KEY_W))
 	{
-		if (map[map_index((int)(player->pos.x + player->dir.x * player->moveSpeed),(int)player->pos.y)] == false)
+		if (map[map_index((int)(player->pos.x + player->dir.x * player->moveSpeed), (int)player->pos.y)] == false)
 			player->pos.x += player->dir.x * player->moveSpeed;
-		if (map[map_index((int)player->pos.x,(int)(player->pos.y + player->dir.y * player->moveSpeed))] == false)
+		if (map[map_index((int)player->pos.x, (int)(player->pos.y + player->dir.y * player->moveSpeed))] == false)
 			player->pos.y += player->dir.y * player->moveSpeed;
 	}
 	if (input_keyheld(&game->input, KEY_S))
 	{
-		if (map[map_index((int)(player->pos.x - player->dir.x * player->moveSpeed),(int)player->pos.y)] == false)
+		if (map[map_index((int)(player->pos.x - player->dir.x * player->moveSpeed), (int)player->pos.y)] == false)
 			player->pos.x -= player->dir.x * player->moveSpeed;
-		if (map[map_index((int)player->pos.x,(int)(player->pos.y - player->dir.y * player->moveSpeed))] == false)
+		if (map[map_index((int)player->pos.x, (int)(player->pos.y - player->dir.y * player->moveSpeed))] == false)
 			player->pos.y -= player->dir.y * player->moveSpeed;
 	}
 	if (input_keyheld(&game->input, KEY_D))
@@ -255,87 +276,184 @@ void	player_controls(t_game *game)
 	}
 }
 
-void render_map_view(t_game *game)
+void	render_map_view(t_game *game)
 {
-	const int cell_width = SCR_WIDTH / MAP_WIDTH;
-	const int cell_height = SCR_HEIGHT / MAP_HEIGHT;
-	int y = -1;
+	const int	cell_width = SCR_WIDTH / MAP_WIDTH;
+	const int	cell_height = SCR_HEIGHT / MAP_HEIGHT;
+	int			y;
+	int			x;
+	t_vec2		cell;
+
+	y = -1;
 	while (++y < MAP_HEIGHT)
 	{
-		int x = -1;
+		x = -1;
 		while (++x < MAP_WIDTH)
 		{
-			t_vec2 cell = map_to_screen(v2new(x ,y));
+			cell = map_to_screen(v2new(x, y));
 			if (map[map_index(x, y)] > 0)
-				texture_draw_square(texture_get_debug_view(game, 1), cell,\
-				 v2new(cell_width, cell_height), R_ALPHA | 0xffffff);
+				texture_draw_square(texture_get_debug_view(game, 1), cell, \
+					v2new(cell_width, cell_height), R_ALPHA | 0xffffff);
+		}
+	}
+}
+
+typedef struct s_vertical
+{
+	int			x;
+	double		camera_x;
+	t_vec2		dir;
+	t_rayinfo	ray;
+
+}			t_vertical;
+
+typedef struct s_column
+{
+	int		texture;
+	int		shaded;
+	double	sample_dy;
+	int		x;
+	t_vec2	uv;
+	t_vec2i	sample;
+	t_vec2i	range;
+}			t_column;
+
+t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
+{
+	t_column column;
+	int height;
+
+	column.texture = texmap[hit.x + MAP_WIDTH * hit.y] - 1;
+	column.uv.x = column.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+	if (hit.side == 0)
+		column.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
+	column.uv.x -= floor(column.uv.x);
+	column.sample.x = (int)(column.uv.x * (double)WALL_TEX_SIZE);
+	if (hit.side == 0 && vertical->dir.x > 0)
+		column.sample.x = WALL_TEX_SIZE - column.sample.x - 1;
+	if (hit.side == 1 && vertical->dir.y < 0)
+		column.sample.x = WALL_TEX_SIZE - column.sample.x - 1;
+	height = (int)(SCR_HEIGHT / hit.depth);
+	column.range.s = -height / 2 + SCR_HEIGHT / 2;
+	if (column.range.s < 0)
+		column.range.s = 0;
+	column.range.e = height / 2 + SCR_HEIGHT / 2;
+	if (column.range.e >= SCR_HEIGHT)
+		column.range.e = SCR_HEIGHT - 1;
+	column.sample_dy = 1.0 * WALL_TEX_SIZE / height;
+	column.uv.y = (column.range.s - SCR_HEIGHT / 2 + height / 2) * column.sample_dy;
+	column.shaded = hit.side == 1;
+	return (column);
+}
+
+void	render_column(t_game *game, t_column column)
+{
+	int colour;
+	int y;
+	y = column.range.s;
+	while (++y < column.range.e)
+	{
+		column.sample.y = (int)column.uv.y & (WALL_TEX_SIZE - 1);
+		colour = pixel_get(game->textures[column.texture], column.sample.x, column.sample.y);
+		column.uv.y += column.sample_dy;
+		if (column.shaded == 1)
+			colour = (colour >> 1) & 0x7F7F7F;
+		pixel_set(game->rt0, column.x, y, R_ALPHA | colour);
+	}
+}
+
+void	render_vertical(t_game *game, t_vertical info)
+{
+	t_column col;
+	int d;
+
+	// d = info.ray.hits;
+	// while (--d >= 0)
+	d = -1;
+	while (++d < info.ray.hits)
+	{
+		col = calculate_column(game, &info, info.ray.depths[d]);
+		col.x = info.x;
+		render_column(game, col);
+	}
+}
+
+void	lodev_render_floor_vertical(t_game *game)
+{
+	int h = SCR_HEIGHT;
+	// FLOOR CASTING
+	for (int y = 0; y < h; y++)
+	{
+
+		t_vec2 rayDirLeft = v2sub(game->player.dir, game->player.plane);
+		t_vec2 rayDirRight = v2add(game->player.dir, game->player.plane);
+		t_vec2 rayDirDiff = v2sub(rayDirRight, rayDirLeft);
+
+		// TODO convert code
+		// Current y position compared to the center of the screen (the horizon)
+		int p = y - SCR_HEIGHT / 2;
+		// Vertical position of the camera.
+		float posZ = 0.5 * SCR_HEIGHT;
+
+		// Horizontal distance from the camera to the floor for the current row.
+		// 0.5 is the z position exactly in the middle between floor and ceiling.
+		float rowDistance = posZ / p;
+
+		// calculate the real world step vector we have to add for each x (parallel to camera plane)
+		// adding step by step avoids multiplications with a weight in the inner loop
+		float floorStepX = rowDistance * (rayDirDiff.x) / SCR_WIDTH;
+		float floorStepY = rowDistance * (rayDirDiff.y) / SCR_WIDTH;
+
+		// real world coordinates of the leftmost column. This will be updated as we step to the right.
+		float floorX = game->player.pos.x + rowDistance * rayDirLeft.x;
+		float floorY = game->player.pos.y + rowDistance * rayDirLeft.y;
+
+		for (int x = 0; x < SCR_WIDTH; ++x)
+		{
+			// the cell coord is simply got from the integer parts of floorX and floorY
+			int cellX = (int)(floorX);
+			int cellY = (int)(floorY);
+
+			// get the texture coordinate from the fractional part
+			int tx = (int)(WALL_TEX_SIZE * (floorX - cellX)) & (WALL_TEX_SIZE - 1);
+			int ty = (int)(WALL_TEX_SIZE * (floorY - cellY)) & (WALL_TEX_SIZE - 1);
+
+			floorX += floorStepX;
+			floorY += floorStepY;
+
+			// choose texture and draw the pixel
+			int32_t color;
+			// floor
+			color = pixel_get(game->textures[4], tx, ty);
+			color = (color >> 1) & 8355711; // make a bit darker
+			pixel_set(game->rt0, x, y, color);
+			// ceiling (symmetrical, at screenHeight - y - 1 instead of y)
+			color = pixel_get(game->textures[4], tx, ty);
+			color = (color >> 1) & 0x7F7F7F; // make a bit darker
+			pixel_set(game->rt0, x, SCR_HEIGHT - y - 1, color);
 		}
 	}
 }
 
 void	render(t_game *game)
 {
+	t_vertical	vert;
+
 	player_controls(game);
-
 	input_process(&game->input);
-
-	texture_clear(game->rt0); // Window 1
-	texture_clear(game->rt1); // Window 2
-
-	render_map_view(game); // Window 2 (later window 1)
-	int i = 0;
-	while (i < SCR_HEIGHT)
+	lodev_render_floor_vertical(game);
+	vert.x = -1;
+	while (++vert.x < SCR_HEIGHT)
 	{
-		double cameraX = 2 * i / (double)SCR_WIDTH - 1;
-		t_vec2 dir = v2add(game->player.dir, v2muls(game->player.plane, cameraX));
-		t_rayinfo ray = raycast(map, game->player.pos, dir);
-		t_hitpoint first = ray.depths[0];
-		
-		t_vec2 intersect = v2add(game->player.pos, v2muls(dir, first.depth));
-		int texId = map[first.x + MAP_WIDTH * first.y] - 1;
-
-		double wallX = wallX = game->player.pos.x + first.depth * dir.x;
-		if (first.side == 0)
-			wallX = game->player.pos.y + first.depth * dir.y;
-		wallX -= floor(wallX);
-		
-		int uvX = (int)(wallX * (double)WALL_TEX_SIZE);
-		if (first.side == 0 && dir.x > 0)
-			uvX = WALL_TEX_SIZE - uvX - 1;
-		if (first.side == 1 && dir.y < 0)
-			uvX = WALL_TEX_SIZE - uvX - 1;
-			
-		int lineHeight = (int)(SCR_HEIGHT / first.depth);
-		int drawStart = -lineHeight / 2 + SCR_HEIGHT / 2;
-		if(drawStart < 0)
-			drawStart = 0;
-		int drawEnd = lineHeight / 2 + SCR_HEIGHT / 2;
-		if(drawEnd >= SCR_HEIGHT)
-			drawEnd = SCR_HEIGHT - 1;
-		int c = drawStart - 1;
-
-		double step = 1.0 * WALL_TEX_SIZE / lineHeight;
-		double uvY = (drawStart - SCR_HEIGHT / 2 + lineHeight / 2) * step;
-		static bool did = false;
-		while (++c < drawEnd)
-		{
-			int texY = (int)uvY & (WALL_TEX_SIZE - 1);
-			int col = pixel_get(game->textures[texId], uvX, texY);
-			uvY += step;
-			if (first.side == 1)
-				col = (col >> 1) & 8355711;
-			pixel_set_s(game->rt0, i, c, R_ALPHA | col);
-		}
-		did = true;
-		i++;
-		texture_draw_square(game->rt1, map_to_screen(intersect), v2new(5,5), R_ALPHA | 0xff0000);
+		vert.camera_x = 2 * vert.x / (double)SCR_WIDTH - 1;
+		vert.dir = v2add(game->player.dir, \
+		v2muls(game->player.plane, vert.camera_x));
+		vert.ray = raycast(map, game->player.pos, vert.dir);
+		if (vert.x == SCR_HEIGHT / 2)
+			game->half = vert.ray;
+		render_vertical(game, vert);
 	}
-	
-	texture_draw_square(game->rt1, map_to_screen(game->player.pos), v2new(5,5), R_ALPHA | 0xff);
-	texture_draw_line(game->rt1, map_to_screen(game->player.pos), v2add(map_to_screen(game->player.pos), v2muls(game->player.plane,  50)), R_ALPHA | 0x00ff);
-	texture_draw(game, game->rt0, v2new(0,0));
-
-
-	texture_draw_debug_view(game, 1);
+	texture_draw(game, game->rt0, v2new(0, 0));
+	//texture_draw_debug_view(game, 1);
 	draw_debug_info(game);
 }

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/30 21:25:47 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/04 16:11:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,36 +34,43 @@
 
 void generate_textures(t_game *game)
 {
-	game->textures[0] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[1] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[2] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[4] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[6] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
-	game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");//WALL_TEX_SIZE, WALL_TEX_SIZE);
-	/*
-	// generate some textures
-	for (int x = 0; x < WALL_TEX_SIZE; x++)
-	{
-		for (int y = 0; y < WALL_TEX_SIZE; y++)
-		{
-			int xorcolor = (x * 256 / WALL_TEX_SIZE) ^ (y * 256 / WALL_TEX_SIZE);
-			// int xcolor = x * 256 / texWidth;
-			int ycolor = y * 256 / WALL_TEX_SIZE;
-			int xycolor = y * 128 / WALL_TEX_SIZE + x * 128 / WALL_TEX_SIZE;
-			pixel_set(game->textures[0], x, y, 65536 * 254 * (x != y && x != WALL_TEX_SIZE - y));  // flat red texture with black cross
-			pixel_set(game->textures[1], x, y, xycolor + 256 * xycolor + 65536 * xycolor);	  // sloped greyscale
-			pixel_set(game->textures[2], x, y, 256 * xycolor + 65536 * xycolor);			  // sloped yellow gradient
-			pixel_set(game->textures[3], x, y, xorcolor + 256 * xorcolor + 65536 * xorcolor); // xor greyscale
-			pixel_set(game->textures[4], x, y, 256 * xorcolor);								  // xor green
-			// pixel_set(game->textures[5], x, y, 65536 * 192 * (x % 16 && y % 16)); //red bricks
-			pixel_set(game->textures[5], x, y, (int)(x / 64.0 * 255) << 8 | (int)(y / 64.0 * 255) << 16);
-			pixel_set(game->textures[6], x, y, 65536 * ycolor);				   // red gradient
-			pixel_set(game->textures[7], x, y, 128 + 256 * 128 + 65536 * 128); // flat grey texture
-		}
-	}
-	*/
+	 game->textures[0] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
+	// game->textures[1] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
+	// game->textures[2] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
+	// game->textures[3] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
+	// game->textures[4] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
+	// game->textures[5] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
+	// game->textures[6] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
+	// game->textures[7] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
+	// // generate some textures
+	// for (int x = 0; x < WALL_TEX_SIZE; x++)
+	// {
+	// 	for (int y = 0; y < WALL_TEX_SIZE; y++)
+	// 	{
+	// 		int xorcolor = (x * 256 / WALL_TEX_SIZE) ^ (y * 256 / WALL_TEX_SIZE);
+	// 		// int xcolor = x * 256 / texWidth;
+	// 		int ycolor = y * 256 / WALL_TEX_SIZE;
+	// 		int xycolor = y * 128 / WALL_TEX_SIZE + x * 128 / WALL_TEX_SIZE;
+	// 		pixel_set(game->textures[0], x, y, 65536 * 254 * (x != y && x != WALL_TEX_SIZE - y));  // flat red texture with black cross
+	// 		pixel_set(game->textures[1], x, y, xycolor + 256 * xycolor + 65536 * xycolor);	  // sloped greyscale
+	// 		pixel_set(game->textures[2], x, y, 256 * xycolor + 65536 * xycolor);			  // sloped yellow gradient
+	// 		pixel_set(game->textures[3], x, y, xorcolor + 256 * xorcolor + 65536 * xorcolor); // xor greyscale
+	// 		pixel_set(game->textures[4], x, y, 256 * xorcolor);								  // xor green
+	// 		// pixel_set(game->textures[5], x, y, 65536 * 192 * (x % 16 && y % 16)); //red bricks
+	// 		pixel_set(game->textures[5], x, y, (int)(x / 64.0 * 255) << 8 | (int)(y / 64.0 * 255) << 16);
+	// 		pixel_set(game->textures[6], x, y, 65536 * ycolor);				   // red gradient
+	// 		pixel_set(game->textures[7], x, y, 128 + 256 * 128 + 65536 * 128); // flat grey texture
+	// 	}
+	// }
+	
+	game->textures[0] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[1] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[2] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[4] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
+	game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[6] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
 
 int	main(int argc, char **argv)
