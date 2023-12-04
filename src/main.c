@@ -49,7 +49,10 @@ int	main(int argc, char **argv)
 
 	t_world	world;
 	world = world_preset(argc, argv, &world);
+	printf("%s  %s  %f  %f  %d  %d\n", world.ent->keys[0].name, world.ent->keys[0].doorname, world.ent->keys[0].pos.x, \
+		       	world.ent->keys[0].pos.y, world.ent->keys[0].auto_open, world.ent->keys[0].collected);
 	map_print(&world.map);
+
 	free_content(&world);
 /*
 	game = (t_game){0};

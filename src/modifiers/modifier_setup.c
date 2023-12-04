@@ -20,6 +20,7 @@ char *const			g_mapsymbols[] = {
 	"F",
 	"C",
 	"DR",
+	"KE",
 };
 
 t_ex_action const	g_mapfuncs[] = {
@@ -30,6 +31,7 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_f,
 	&mod_gen_c,
 	&mod_gen_dr,
+	&mod_gen_ke,
 };
 
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)

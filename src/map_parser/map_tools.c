@@ -70,7 +70,7 @@ void	remove_int_from_list(t_list **raw_map_file)
 {
 	t_list	*temp;
 
-	if ((int)(*raw_map_file)->content <= 1)
+	if ((intptr_t)(*raw_map_file)->content <= 1)
 		error_return("File Empty", 1, 1, NULL);
 	temp = *raw_map_file;
 	*raw_map_file = temp->next;

@@ -7,11 +7,10 @@
 # define TAB_SIZE 4
 # define FILE_TYPE ".xpm"
 # define MAP_MODIFICATION_SIZE 100
-# define MAX_ENTITIES 100
+# define MAX_ENT 100 
 # define MAP_MAX_XY 200
 # define MAP_MAX_X MAP_MAX_XY
 # define MAP_MAX_Y MAP_MAX_XY
-# define MAX_DOORS 50
 # define NAME_SIZE 50
 
 typedef enum	e_tiletype
@@ -68,6 +67,15 @@ typedef struct	s_map
 	int			color_floor;
 }				t_map;
 
+typedef struct s_key
+{
+	char	name[NAME_SIZE];
+	char	doorname[NAME_SIZE];
+	t_vec2	pos;
+	bool	auto_open;
+	bool	collected;
+}		t_key;
+
 typedef struct s_door
 {
 	char	name[NAME_SIZE];
@@ -81,7 +89,8 @@ typedef struct s_door
 
 typedef struct	s_entity
 {
-	t_door	doors[MAX_DOORS];
+	t_door	doors[MAX_ENT];
+	t_key	keys[MAX_ENT];
 
 }		t_entity;
 
@@ -89,9 +98,8 @@ typedef struct	s_world
 {
 	t_map		map;
 	t_player	player;
+	t_entity	ent[MAX_ENT];
 
-	t_entity	ent[MAX_ENTITIES];
-	//int ent_count;
 }			t_world;
 
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
@@ -124,6 +132,8 @@ void	mod_gen_ea(char *content, int index, t_world *world, t_map *map);
 void	mod_gen_c(char *content, int index, t_world *world, t_map *map);
 void	mod_gen_f(char *content, int index, t_world *world, t_map *map);
 void	mod_gen_dr(char *content, int index, t_world *world, t_map *map);
+void	mod_gen_ke(char *content, int index, t_world *world, t_map *map);
+
 
 int	mod_strlen(const char *str);
 int	ft_strcmp(char *s1, char *s2);
