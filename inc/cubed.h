@@ -22,14 +22,32 @@
 # define DEG2RAD 0.01745329251993888888888888888889
 # define RAD2DEG 57.2957795131
 
-# define RT0_WIDTH SCR_WIDTH
-# define RT0_HEIGHT SCR_HEIGHT
+# ifdef __linux__
+#  define R_ALPHA 0xff000000
+#  else
+#  define R_ALPHA 0x00000000
+# endif
 
+<<<<<<< HEAD
 # define MAX_RAYCAST_DIST 100
 # define MAX_DEPTHS 5
 # define MAX_TEX_BF 4
+=======
+# define R_RED   0x00ff0000
+# define R_GREEN 0x0000ff00
+# define R_BLUE  0x000000ff
+>>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 
+# define OF_ALPHA 24
+# define OF_RED   16
+# define OF_GREEN 8
+# define OF_BLUE  0
 
+<<<<<<< HEAD
+=======
+# define MAX_RAYCAST_DIST 100
+
+>>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 typedef struct s_vec2f t_vec2f;
 //typedef struct s_cellinfo t_cellinfo;
 
@@ -62,6 +80,7 @@ struct s_map
 
 };
 */
+
 
 /* util/time.c */
 int64_t	time_get_ms(void);

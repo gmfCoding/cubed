@@ -77,7 +77,11 @@ void generate_textures(t_game *game)
 	game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");
 	game->textures[4] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
 	game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");
+<<<<<<< HEAD
 	game->textures[6] = texture_load(game->app.mlx, "assets/window.xpm");
+=======
+	game->textures[6] = texture_load(game->app.mlx, "assets/wall.xpm");
+>>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 	game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
 

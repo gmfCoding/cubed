@@ -6,7 +6,11 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/12/13 17:37:56 by clovell          ###   ########.fr       */
+=======
+/*   Updated: 2023/12/01 02:10:13 by clovell          ###   ########.fr       */
+>>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -48,6 +52,7 @@ void	texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
 //     unsigned char    a = ((first & M_APLHA) >> OF_ALPHA);
 // 	float			i = a * (1.0f/255.0f);
 
+<<<<<<< HEAD
 //     r = r * i + (((second & M_RED) >> OF_RED)) * (1.0 - i);
 //     g = g * i + (((second & M_GREEN) >> OF_GREEN)) * (1.0 - i);
 //     b = b * i + (((second & M_BLUE) >> OF_BLUE)) * (1.0 - i);
@@ -77,6 +82,25 @@ int	colour_blend(int first, int second)
 	f[1] = f[1] * a + s[1] * (1.0 - a);
 	f[2] = f[2] * a + s[2] * (1.0 - a);
 	return (((int *)f)[0]);
+=======
+#include <string.h>
+void    texture_clear(t_texture src)
+{
+	int x;
+	int y;
+
+	y = -1;
+	while (++y < src.height)
+	{
+		x = -1;
+		while (++x < src.width)
+		{
+			pixel_set(src, x, y, 0);
+		}
+	}
+	// FORBIDDEN
+	//memset(src.data, 0, (src.bpp / 8) * src.width * src.height);
+>>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 }
 
 t_texture texture_get_debug_view(t_game *game, int view)
