@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 16:34:56 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/04 16:34:57 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/04 16:41:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "texture.h"
@@ -28,7 +28,7 @@ inline void	pixel_set_s(t_texture data, int x, int y, int color)
 
 	if (x < 0 || y < 0 || x >= data.width || y >= data.height)
 		return ;
-	dst = data.data + (y * data.line_size + x * 4);
+	dst = data.data + (y * data.line_size + x * (data.bpp / 8));
 	*(unsigned int *)dst = color;
 }
 
