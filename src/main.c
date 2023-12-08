@@ -33,10 +33,9 @@
 // }
 
 
-t_world	world_preset(int argc, char **argv, t_world *world)
+void	world_preset(int argc, char **argv, t_game *game)
 {
-	world->map = map_parse(argc, argv, world);
-	return (*world);
+	game->world.map = map_parse(argc, argv, game);
 }
 
 
@@ -47,13 +46,15 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	t_world	world;
-	world = world_preset(argc, argv, &world);
-	printf("%s  %s  %f  %f  %d  %d\n", world.ent->keys[0].name, world.ent->keys[0].doorname, world.ent->keys[0].pos.x, \
-		       	world.ent->keys[0].pos.y, world.ent->keys[0].auto_open, world.ent->keys[0].collected);
-	map_print(&world.map);
 
-	free_content(&world);
+	world_preset(argc, argv, &game);
+	printf("%s  %s  %f  %f  %d  %d\n", game.world.ent->keys[0].name, game.world.ent->keys[0].doorname, game.world.ent->keys[0].pos.x, \
+		       	game.world.ent->keys[0].pos.y, game.world.ent->keys[0].auto_open, game.world.ent->keys[0].collected);
+	map_print(&game.world.map);
+
+	free_content(&game);
+
+			
 /*
 	game = (t_game){0};
 	game.app.mlx = mlx_init();

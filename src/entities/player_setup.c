@@ -62,7 +62,7 @@ void	player_pos_setup(t_list *curr, t_player *player)
 	}
 }
 
-t_player	player_setup(t_list *curr, t_world *world)
+t_player	player_setup(t_list *curr)
 {
 	t_player	player;
 

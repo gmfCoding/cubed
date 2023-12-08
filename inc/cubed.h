@@ -4,9 +4,10 @@
 
 //#include "extra/optimised.h"
 # include "texture.h"
+# include "map.h"
+
 # include "state.h"
 # include "render.h"
-# include "map.h"
 # include "libft.h"
 # include "get_next_line.h"
 

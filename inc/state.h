@@ -12,9 +12,11 @@
 
 #ifndef STATE_H
 # define STATE_H
+
 #include "input.h"
 #include "texture.h"
-
+#include "map.h"
+typedef struct s_world t_world;
 typedef struct s_game t_game;
 
 #define MAX_DEBUG_VIEWS 10
@@ -46,6 +48,7 @@ struct s_app
 	void *win;
 };
 
+//typedef struct s_world t_world;
 struct s_game
 {
 	t_app	app;
@@ -54,10 +57,10 @@ struct s_game
 
 	t_vec2 mouse;
 	t_vec2 pos;
-
+//	t_world	world;
 	t_debug_texture views[MAX_DEBUG_VIEWS];
 	int view_count;
-
+	t_world		world;
 	t_player	player;
 
 	t_inputctx input;

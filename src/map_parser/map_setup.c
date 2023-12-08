@@ -52,7 +52,7 @@ t_list	*ft_lst_readfile(const char *path)
 	return (first);
 }
 
-t_map	map_init(t_map *map, char *map_str, t_world *world)
+t_map	map_init(t_map *map, char *map_str, t_game *game)
 {
 	t_list	*curr;
 	t_list	*raw_map_file;
@@ -70,18 +70,18 @@ t_map	map_init(t_map *map, char *map_str, t_world *world)
 	map_check_setup(curr, raw_map_file, map_str);
 	map->width = map_width_size(curr);
 	map->height = map_height_size(curr);
-	world->player = player_setup(curr, world);
+	game->player = player_setup(curr);
 	while (curr != NULL && curr->content != NULL)
 	{
 		index += map_tiles(map, (char *)curr->content, index);
 		curr = curr->next;
 	}
-	modifier_setup(raw_map_file, map, world);
+	modifier_setup(raw_map_file, map, &game->world);
 	deallocate_list(&raw_map_file);
 	return (*map);
 }
 
-t_map	map_parse(int argc, char **argv, t_world *world)
+t_map	map_parse(int argc, char **argv, t_game *game)
 {
 	t_map	map;
 	char	*map_str;
@@ -92,6 +92,6 @@ t_map	map_parse(int argc, char **argv, t_world *world)
 		map_str = argv[1];
 	else
 		exit(2);
-	map = map_init(&map, map_str, world);
+	map = map_init(&map, map_str, game);
 	return (map);
 }

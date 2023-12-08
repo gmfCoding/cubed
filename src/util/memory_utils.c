@@ -15,11 +15,11 @@ void	free_str_array(char **str)
 	free(str);
 }
 
-void	free_content(t_world *world)
+void	free_content(t_game *game)
 {
 	int	i;
 
 	i = -1;
-	while(world->map.mods[++i].content != NULL)
-		free(world->map.mods[i].content);
+	while(game->world.map.mods[++i].content != NULL)
+		free(game->world.map.mods[i].content);
 }
