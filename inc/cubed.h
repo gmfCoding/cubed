@@ -12,21 +12,6 @@
 # define DEG2RAD 0.01745329251993888888888888888889
 # define RAD2DEG 57.2957795131
 
-# ifdef __linux__
-#  define R_ALPHA 0xff000000
-#  else
-#  define R_ALPHA 0x00000000
-# endif
-
-# define R_RED   0x00ff0000
-# define R_GREEN 0x0000ff00
-# define R_BLUE  0x000000ff
-
-# define OF_ALPHA 24
-# define OF_RED   16
-# define OF_GREEN 8
-# define OF_BLUE  0
-
 # define MAX_RAYCAST_DIST 100
 
 typedef struct s_vec2f t_vec2f;

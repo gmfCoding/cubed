@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/01 02:10:13 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/10 20:48:36 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -14,16 +14,33 @@
 #include "texture.h"
 #include "state.h"
 
-void    texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
+void	texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
 {
 	mlx_put_image_to_window(gs->app.mlx, gs->app.win, tex.img, pos.x, pos.y);
 }
 
-// Copies pixel data from one texture to another
-void    texture_blit(t_texture src, t_texture dst, t_vec2 pos)
+
+
+static int	col_blend(int first, int second)
 {
-	int x;
-	int y;
+	uint8_t *const	f = (uint8_t*)&first;
+	uint8_t *const	s = (uint8_t*)&second;
+	double			a;
+
+	a = (f[3] / 255.0);
+	f[0] = f[0] * a + s[0] * (1.0 - a);
+	f[1] = f[1] * a + s[1] * (1.0 - a);
+	f[2] = f[2] * a + s[2] * (1.0 - a);
+	return (((int *)f)[0]);
+}
+
+// Copies pixel data from one texture to another
+void	texture_blit(t_texture src, t_texture dst, t_vec2 pos)
+{
+	int		x;
+	int		y;
+	float	a;
+	int		col;
 
 	y = -1;
 	while (++y < src.height)
@@ -31,18 +48,18 @@ void    texture_blit(t_texture src, t_texture dst, t_vec2 pos)
 		x = -1;
 		while (++x < src.width)
 		{
-			int color = pixel_get(src, x, y);
-			if (color >> 24 && 0xFF > 0)
-				pixel_set_s(dst, pos.x + x, pos.y + y, color);
+			col = col_blend(pixel_get_s(src, x, y), \
+				pixel_get_s(dst, pos.x + x, pos.y + y));
+			pixel_set_s(dst, pos.x + x, pos.y + y, col);
 		}
 	}
 }
 
 #include <string.h>
-void    texture_clear(t_texture src)
+void	texture_clear(t_texture src)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = -1;
 	while (++y < src.height)
@@ -50,7 +67,7 @@ void    texture_clear(t_texture src)
 		x = -1;
 		while (++x < src.width)
 		{
-			pixel_set(src, x, y, 0);
+			pixel_set(src, x, y, R_ALPHA);
 		}
 	}
 	// FORBIDDEN

@@ -31,6 +31,10 @@
 		"__node_handle": "c",
 		"*.tcc": "c",
 		"fcntl.h": "c",
-		"unistd.h": "c"
+		"unistd.h": "c",
+		"vector2.h": "c",
+		"mlx_int.h": "c",
+		"string.h": "c",
+		"random": "c"
 	}
 }
