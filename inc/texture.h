@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:13:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/10 20:33:25 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/10 22:12:17 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ typedef struct s_texture
 // 	uint8_t b;
 // 	uint8_t a;
 // } t_col;
+
+int		colour_blend(int first, int second);
 
 void	pixel_set_s(t_texture data, int x, int y, int color);
 void	pixel_set(t_texture data, int x, int y, int color);

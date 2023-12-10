@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/04 16:11:19 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/10 21:31:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void generate_textures(t_game *game)
 	game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");
 	game->textures[4] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
 	game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[6] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[6] = texture_load(game->app.mlx, "assets/window.xpm");
 	game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
 

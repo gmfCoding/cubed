@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/10 20:48:36 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/10 21:36:28 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -19,9 +19,7 @@ void	texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
 	mlx_put_image_to_window(gs->app.mlx, gs->app.win, tex.img, pos.x, pos.y);
 }
 
-
-
-static int	col_blend(int first, int second)
+int	colour_blend(int first, int second)
 {
 	uint8_t *const	f = (uint8_t*)&first;
 	uint8_t *const	s = (uint8_t*)&second;
@@ -48,7 +46,7 @@ void	texture_blit(t_texture src, t_texture dst, t_vec2 pos)
 		x = -1;
 		while (++x < src.width)
 		{
-			col = col_blend(pixel_get_s(src, x, y), \
+			col = colour_blend(pixel_get_s(src, x, y), \
 				pixel_get_s(dst, pos.x + x, pos.y + y));
 			pixel_set_s(dst, pos.x + x, pos.y + y, col);
 		}
