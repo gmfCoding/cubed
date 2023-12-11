@@ -253,7 +253,7 @@ void	render(t_game *game)
 
 	texture_clear(game->rt0); // Window 1
 	texture_clear(game->rt1); // Window 2
-
+	
 	render_map_view(game); // Window 2 (later window 1)
 	int i = 0;
 	while (i < SCR_HEIGHT)
@@ -285,6 +285,10 @@ void	render(t_game *game)
 	texture_draw_square(game->rt1, map_to_screen(game->player.pos), v2new(5,5), R_ALPHA | 0xff);
 	texture_draw_line(game->rt1, map_to_screen(game->player.pos), v2add(map_to_screen(game->player.pos), v2muls(game->player.plane,  50)), R_ALPHA | 0x00ff);
 	texture_draw(game, game->rt0, v2new(0,0));
-	texture_draw_debug_view(game, 1);
+//	texture_draw_debug_view(game, 1);
+	if (game->five_light.run_game == true)
+		five_lights(game);
+
 	measure_frame_rate(game->app);
+
 }

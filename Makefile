@@ -31,6 +31,7 @@ SRCSF = $(TEST) \
 		input/input_setup.c \
 		input/keys.c \
 		cerror.c \
+		mgame_five_lights.c \
 
 INCSF = cubed.h
 

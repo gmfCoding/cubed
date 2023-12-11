@@ -92,4 +92,6 @@ struct s_map
 
 /* util/time.c */
 int64_t	time_get_ms(void);
+int fl_mouse_hook(int button, int x, int y, t_game *game);
+void	five_lights_Setup(t_game *game);
 #endif
