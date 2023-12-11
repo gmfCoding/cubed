@@ -225,7 +225,9 @@ void	fl_up_state_set_green(t_game *game, int index)
 		return ;
 	}
 	if (game->five_light.state[index] != 0)
+	{
 		return(fl_reset_game(game));
+	}
 	else
 	{
 		game->five_light.state[index] = 4; 
@@ -309,7 +311,9 @@ void	fl_down_state_set_green(t_game *game, int index)
 		return ;
 	}
 	if (game->five_light.state[index] != 0)
+	{
 		return(fl_reset_game(game));
+	}
 	else
 	{
 		game->five_light.state[index] = 4;
@@ -337,7 +341,11 @@ void	fl_down_state_set_redgreen(t_game *game, int index)
 			return ;
 		}
 		if (game->five_light.state[index] != 0)
+		{
+
+
 			return (fl_reset_game(game));
+		}
 		else
 		{
 			game->five_light.state[index] = 4; 
@@ -351,8 +359,11 @@ void	fl_gather_down_state(t_game *game, int index)
 {
 	index++;
 	index = fl_skip_down_empty_state(game, index);
+	
 	if (index == 9)
+	{
 		return (fl_reset_game(game));
+	}
 	if (game->five_light.state[index] >= 4 && game->five_light.state[index] <= 6)
 	{
 		fl_down_state_set_green(game, index);
@@ -363,7 +374,10 @@ void	fl_gather_down_state(t_game *game, int index)
 		index++;
 		index = fl_skip_down_empty_state(game, index);
 		if (index == 9)
+		{
+
 			return (fl_reset_game(game));
+		}
 		fl_down_state_set_redgreen(game, index);
 		return ;
 	}
@@ -392,8 +406,9 @@ void	fl_pass_state_rules(t_game *game, int click_state)
 	index = click_state%10;
 	if (game->five_light.state[index] >= 1 && game->five_light.state[index] <= 3)
 		return ;
-	if (click_state == 10 || click_state == 29 || click_state == 11 || click_state == 28 || click_state == 12 || click_state == 27)
+	if (click_state == 10 || click_state == 29 || click_state == 11 || click_state == 28)// || click_state == 12 || click_state == 27)
 	{
+		printf("are we here\n");
 		fl_reset_game(game);
 		return ;
 	}
