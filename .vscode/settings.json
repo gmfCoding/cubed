@@ -35,6 +35,8 @@
 		"vector2.h": "c",
 		"mlx_int.h": "c",
 		"string.h": "c",
-		"random": "c"
+		"random": "c",
+		"keysym.h": "c",
+		"keysymdef.h": "c"
 	}
 }

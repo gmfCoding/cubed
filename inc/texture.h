@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:13:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/10 22:12:17 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/13 13:11:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 typedef struct s_texture
 {
 	void	*img;
-	char	*data;
+	int		*data;
 	int		width;
 	int		height;
 	int		bpp;

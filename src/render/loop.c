@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/10 22:06:39 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/13 15:17:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,27 +276,6 @@ void player_controls(t_game *game)
 	}
 }
 
-void	render_map_view(t_game *game)
-{
-	const int	cell_width = SCR_WIDTH / MAP_WIDTH;
-	const int	cell_height = SCR_HEIGHT / MAP_HEIGHT;
-	int			y;
-	int			x;
-	t_vec2		cell;
-
-	y = -1;
-	while (++y < MAP_HEIGHT)
-	{
-		x = -1;
-		while (++x < MAP_WIDTH)
-		{
-			cell = map_to_screen(v2new(x, y));
-			if (map[map_index(x, y)] > 0)
-				texture_draw_square(texture_get_debug_view(game, 1), cell, \
-					v2new(cell_width, cell_height), R_ALPHA | 0xffffff);
-		}
-	}
-}
 
 typedef struct s_vertical
 {
@@ -320,61 +299,62 @@ typedef struct s_column
 
 t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 {
-	t_column column;
-	int height;
+	t_column	col;
+	int			height;
 
-	column.texture = texmap[hit.x + MAP_WIDTH * hit.y] - 1;
-	column.uv.x = column.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+	col.texture = texmap[hit.x + MAP_WIDTH * hit.y] - 1;
+	col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
 	if (hit.side == 0)
-		column.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
-	column.uv.x -= floor(column.uv.x);
-	column.sample.x = (int)(column.uv.x * (double)WALL_TEX_SIZE);
+		col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
+	col.uv.x -= floor(col.uv.x);
+	col.sample.x = (int)(col.uv.x * (double)WALL_TEX_SIZE);
 	if (hit.side == 0 && vertical->dir.x > 0)
-		column.sample.x = WALL_TEX_SIZE - column.sample.x - 1;
+		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
 	if (hit.side == 1 && vertical->dir.y < 0)
-		column.sample.x = WALL_TEX_SIZE - column.sample.x - 1;
+		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
 	height = (int)(SCR_HEIGHT / hit.depth);
-	column.range.s = -height / 2 + SCR_HEIGHT / 2;
-	if (column.range.s < 0)
-		column.range.s = 0;
-	column.range.e = height / 2 + SCR_HEIGHT / 2;
-	if (column.range.e >= SCR_HEIGHT)
-		column.range.e = SCR_HEIGHT - 1;
-	column.sample_dy = 1.0 * WALL_TEX_SIZE / height;
-	column.uv.y = (column.range.s - SCR_HEIGHT / 2 + height / 2) * column.sample_dy;
-	column.shaded = hit.side == 1;
-	return (column);
+	col.range.s = -height / 2 + SCR_HEIGHT / 2;
+	if (col.range.s < 0)
+		col.range.s = 0;
+	col.range.e = height / 2 + SCR_HEIGHT / 2;
+	if (col.range.e >= SCR_HEIGHT)
+		col.range.e = SCR_HEIGHT - 1;
+	col.sample_dy = 1.0 * WALL_TEX_SIZE / height;
+	col.uv.y = (col.range.s - SCR_HEIGHT / 2 + height / 2) * col.sample_dy;
+	col.shaded = hit.side == 1;
+	return (col);
 }
 
-void	render_column(t_game *game, t_column column)
+void	render_column(t_game *game, t_column col)
 {
-	int f;
-	int s;
-	int y;
+	int	f;
+	int	s;
+	int	y;
 
-	y = column.range.s;
-	while (++y < column.range.e)
+	y = col.range.s;
+	while (++y < col.range.e)
 	{
-		column.sample.y = (int)column.uv.y & (WALL_TEX_SIZE - 1);
-		f = pixel_get(game->textures[column.texture], column.sample.x, column.sample.y);
-		s = pixel_get(game->rt0, column.x, y);
-		f = colour_blend(f, s);
-		column.uv.y += column.sample_dy;
-		if (column.shaded == 1)
+		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
+		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
+		if ((f & M_APLHA) != R_ALPHA)
+		{
+			s = pixel_get(game->rt0, col.x, y);
+			f = colour_blend(f, s);
+		}
+		col.uv.y += col.sample_dy;
+		if (col.shaded == 1)
 			f = (f >> 1) & 0x7F7F7F;
-		pixel_set(game->rt0, column.x, y, R_ALPHA | f);
+		pixel_set(game->rt0, col.x, y, R_ALPHA | f);
 	}
 }
 
 void	render_vertical(t_game *game, t_vertical info)
 {
-	t_column col;
-	int d;
+	t_column	col;
+	int			d;
 
 	d = info.ray.hits;
 	while (--d >= 0)
-	// d = -1;
-	// while (++d < info.ray.hits)
 	{
 		col = calculate_column(game, &info, info.ray.depths[d]);
 		col.x = info.x;
@@ -442,7 +422,9 @@ void	lodev_render_floor_vertical(t_game *game)
 void	render(t_game *game)
 {
 	t_vertical	vert;
+	// static int frames = 0;
 
+	// frames++;
 	player_controls(game);
 	input_process(&game->input);
 	lodev_render_floor_vertical(game);
@@ -458,6 +440,8 @@ void	render(t_game *game)
 		render_vertical(game, vert);
 	}
 	texture_draw(game, game->rt0, v2new(0, 0));
+	// if (frames > 100)
+	// 	exit(0);
 	//texture_draw_debug_view(game, 1);
 	draw_debug_info(game);
 }

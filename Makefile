@@ -62,25 +62,26 @@ LIB-L = $(patsubst %,-L$(DIRLIB)/%, $(dir $(LIBSF)))
 CC = cc
 
 WFLAGS =#-Wall -Werror -Wextra
-CPPFLAGS =-I$(DIRINC) $(LIB-I)  -MMD -MP
+CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
 PGFLAGS = #-pg
-OPFLAG = -O4
+OPFLAG = -O3
 
 # REMOVE BEFORE EVAL
 ifeq ($(DEBUG), )
 $(warning USING DEFAULT DEBUG FLAGS (REMOVE BEFORE EVAL))
-DEBUG =0
-OPFLAG =-O0
+DEBUG =fsan,g3
+OPFLAG =-Ofast
 endif
-
-# DEBUG LEVEL 1
-ifeq ($(shell test $(DEBUG) -ge 1; echo $$?),0)
-	DFLAGS += -g3 -fsanitize=address
+ifneq ($(DEBUG),)
+	DFLAGS += -g3
 endif
-ifeq ($(shell test $(DEBUG) -ge 2; echo $$?),0)
-	PGFLAGS = -pg
+ifneq (,$(findstring fsan,$(DEBUG)))
+	DFLAGS += -fsanitize=address
+endif
+ifneq (,$(findstring gmon,$(DEBUG)))
+	DFLAGS += -pg
 endif
 
 ifeq ($(EXTRA),1)
