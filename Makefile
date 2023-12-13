@@ -79,18 +79,10 @@ CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
 OPFLAG = -Ofast
-
-<<<<<<< HEAD
 OPTS = $(OPT)
+
 ifneq (,$(findstring def,$(OPTS)))
 OPTS = fsan,debug
-=======
-# REMOVE BEFORE EVAL
-ifeq ($(DEBUG), )
-$(warning USING DEFAULT DEBUG FLAGS (REMOVE BEFORE EVAL))
-DEBUG =0
-OPFLAG =-O0
->>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 endif
 ifneq (,$(findstring debug,$(OPTS)))
 	OPFLAG = -O0

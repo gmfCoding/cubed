@@ -9,7 +9,6 @@
 // Screen resolution Y
 # define SCR_HEIGHT 960
 
-<<<<<<< HEAD
 #define R_SCALE 1
 
 // Render resolution X
@@ -18,8 +17,6 @@
 # define R_HEIGHT (SCR_HEIGHT/R_SCALE)
 
 
-=======
->>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 # define RT0_WIDTH SCR_WIDTH
 # define RT0_HEIGHT SCR_HEIGHT
 

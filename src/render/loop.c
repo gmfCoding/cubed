@@ -6,11 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2023/12/13 17:48:08 by clovell          ###   ########.fr       */
-=======
-/*   Updated: 2023/12/04 16:33:26 by clovell          ###   ########.fr       */
->>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +90,6 @@ int map[MAP_WIDTH * MAP_HEIGHT] = {
 	1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
 	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
 	1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-<<<<<<< HEAD
 	1, 2, 0, 0, 2, 2, 2, 2, 0, 2, 2, 2, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1,
 	1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
 	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -102,20 +97,10 @@ int map[MAP_WIDTH * MAP_HEIGHT] = {
 	1, 0, 0, 0, 0, 2, 2, 0, 2, 0, 2, 2, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1,
 	1, 0, 0, 0, 0, 2, 2, 0, 2, 0, 2, 2, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
 	1, 0, 0, 0, 0, 2, 2, 0, 2, 0, 2, 2, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1,
-=======
-	1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
-	1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1,
-	1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1,
->>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 };
 
 int	texmap[MAP_WIDTH * MAP_HEIGHT] = {
-<<<<<<< HEAD
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 1,
 	1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 1,
@@ -140,32 +125,6 @@ int	texmap[MAP_WIDTH * MAP_HEIGHT] = {
 	1, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 0, 0, 0, 0, 0, 1,
 	1, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-=======
-	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 8, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4,
-	4, 0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 4,
-	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 5, 0, 0, 4,
-	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 4,
-	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4,
-	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-	4, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4,
-	4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 4,
-	4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 4, 4, 0, 4, 4, 4, 4, 4, 4,
-	4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 0, 6, 6, 6, 6, 6, 1,
-	4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-	4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 6, 6, 0, 6, 6, 6, 1,
-	4, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 2,
-	4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2,
-	4, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2,
-	7, 7, 0, 0, 7, 7, 7, 7, 0, 7, 7, 7, 6, 0, 6, 2, 0, 5, 0, 5, 0, 5, 0, 2,
-	7, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2,
-	7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 2,
-	7, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 3,
-	7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 3,
-	7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 0, 0, 0, 0, 0, 3,
-	7, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 3,
-	7, 7, 7, 7, 7, 7, 1, 8, 1, 8, 1, 1, 6, 4, 6, 3, 2, 2, 2, 2, 2, 2, 2, 3,
->>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 };
 
 int	map_index(int x, int y)
@@ -267,24 +226,14 @@ t_rayinfo	raycast(int *map, t_vec2 start, t_vec2 dir)
 
 t_vec2	screen_to_map(t_vec2 mouse)
 {
-<<<<<<< HEAD
 	return ((t_vec2){mouse.x / R_WIDTH * MAP_WIDTH, \
 	mouse.y / R_HEIGHT * MAP_HEIGHT});
-=======
-	return ((t_vec2){mouse.x / SCR_WIDTH * MAP_WIDTH, \
-	mouse.y / SCR_HEIGHT * MAP_HEIGHT});
->>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 }
 
 t_vec2	map_to_screen(t_vec2 map)
 {
-<<<<<<< HEAD
 	return ((t_vec2){map.x * R_WIDTH / (float)MAP_WIDTH, \
 	map.y * R_HEIGHT / (float)MAP_HEIGHT});
-=======
-	return ((t_vec2){map.x * SCR_WIDTH / (float)MAP_WIDTH, \
-	map.y * SCR_HEIGHT / (float)MAP_HEIGHT});
->>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 }
 
 void player_controls(t_game *game)
@@ -327,72 +276,7 @@ void player_controls(t_game *game)
 	}
 }
 
-<<<<<<< HEAD
 
-typedef struct s_vertical
-{
-	int			x;
-	double		camera_x;
-	t_vec2		dir;
-	t_rayinfo	ray;
-
-}			t_vertical;
-
-typedef struct s_column
-{
-	int		texture;
-	int		shaded;
-	double	sample_dy;
-	int		x;
-	t_vec2	uv;
-	t_vec2i	sample;
-	t_vec2i	range;
-}			t_column;
-
-t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
-{
-	t_column	col;
-	int			height;
-
-	col.texture = texmap[hit.x + MAP_WIDTH * hit.y] - 1;
-	col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
-	if (hit.side == 0)
-		col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
-	col.uv.x -= floor(col.uv.x);
-	col.sample.x = (int)(col.uv.x * (double)WALL_TEX_SIZE);
-	if (hit.side == 0 && vertical->dir.x > 0)
-		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
-	if (hit.side == 1 && vertical->dir.y < 0)
-		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
-	height = (int)(R_HEIGHT / hit.depth);
-	col.range.s = -height / 2 + R_HEIGHT / 2;
-	if (col.range.s < 0)
-		col.range.s = 0;
-	col.range.e = height / 2 + R_HEIGHT / 2;
-	if (col.range.e >= R_HEIGHT)
-		col.range.e = R_HEIGHT - 1;
-	col.sample_dy = 1.0 * WALL_TEX_SIZE / height;
-	col.uv.y = (col.range.s - R_HEIGHT / 2 + height / 2) * col.sample_dy;
-	col.shaded = hit.side == 1;
-	return (col);
-}
-
-void	render_column(t_game *game, t_column col)
-{
-	int	f;
-	int	s;
-	int	y;
-
-	y = col.range.s;
-	while (++y < col.range.e)
-	{
-		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
-		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
-		if ((f & M_APLHA) != R_ALPHA)
-		{
-			s = pixel_get(game->rt1, col.x, y);
-			f = colour_blend(f, s);
-=======
 void	render_map_view(t_game *game)
 {
 	const int	cell_width = SCR_WIDTH / MAP_WIDTH;
@@ -463,92 +347,21 @@ t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 	return (column);
 }
 
-void	render_column(t_game *game, t_column column)
+void	render_column(t_game *game, t_column col)
 {
-	int colour;
-	int y;
-	y = column.range.s;
-	while (++y < column.range.e)
+	int	f;
+	int	s;
+	int	y;
+
+	y = col.range.s;
+	while (++y < col.range.e)
 	{
-		column.sample.y = (int)column.uv.y & (WALL_TEX_SIZE - 1);
-		colour = pixel_get(game->textures[column.texture], column.sample.x, column.sample.y);
-		column.uv.y += column.sample_dy;
-		if (column.shaded == 1)
-			colour = (colour >> 1) & 0x7F7F7F;
-		pixel_set(game->rt0, column.x, y, R_ALPHA | colour);
-	}
-}
-
-void	render_vertical(t_game *game, t_vertical info)
-{
-	t_column col;
-	int d;
-
-	// d = info.ray.hits;
-	// while (--d >= 0)
-	d = -1;
-	while (++d < info.ray.hits)
-	{
-		col = calculate_column(game, &info, info.ray.depths[d]);
-		col.x = info.x;
-		render_column(game, col);
-	}
-}
-
-void	lodev_render_floor_vertical(t_game *game)
-{
-	int h = SCR_HEIGHT;
-	// FLOOR CASTING
-	for (int y = 0; y < h; y++)
-	{
-
-		t_vec2 rayDirLeft = v2sub(game->player.dir, game->player.plane);
-		t_vec2 rayDirRight = v2add(game->player.dir, game->player.plane);
-		t_vec2 rayDirDiff = v2sub(rayDirRight, rayDirLeft);
-
-		// TODO convert code
-		// Current y position compared to the center of the screen (the horizon)
-		int p = y - SCR_HEIGHT / 2;
-		// Vertical position of the camera.
-		float posZ = 0.5 * SCR_HEIGHT;
-
-		// Horizontal distance from the camera to the floor for the current row.
-		// 0.5 is the z position exactly in the middle between floor and ceiling.
-		float rowDistance = posZ / p;
-
-		// calculate the real world step vector we have to add for each x (parallel to camera plane)
-		// adding step by step avoids multiplications with a weight in the inner loop
-		float floorStepX = rowDistance * (rayDirDiff.x) / SCR_WIDTH;
-		float floorStepY = rowDistance * (rayDirDiff.y) / SCR_WIDTH;
-
-		// real world coordinates of the leftmost column. This will be updated as we step to the right.
-		float floorX = game->player.pos.x + rowDistance * rayDirLeft.x;
-		float floorY = game->player.pos.y + rowDistance * rayDirLeft.y;
-
-		for (int x = 0; x < SCR_WIDTH; ++x)
+		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
+		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
+		if ((f & M_APLHA) != R_ALPHA)
 		{
-			// the cell coord is simply got from the integer parts of floorX and floorY
-			int cellX = (int)(floorX);
-			int cellY = (int)(floorY);
-
-			// get the texture coordinate from the fractional part
-			int tx = (int)(WALL_TEX_SIZE * (floorX - cellX)) & (WALL_TEX_SIZE - 1);
-			int ty = (int)(WALL_TEX_SIZE * (floorY - cellY)) & (WALL_TEX_SIZE - 1);
-
-			floorX += floorStepX;
-			floorY += floorStepY;
-
-			// choose texture and draw the pixel
-			int32_t color;
-			// floor
-			color = pixel_get(game->textures[4], tx, ty);
-			color = (color >> 1) & 8355711; // make a bit darker
-			pixel_set(game->rt0, x, y, color);
-			// ceiling (symmetrical, at screenHeight - y - 1 instead of y)
-			color = pixel_get(game->textures[4], tx, ty);
-			color = (color >> 1) & 0x7F7F7F; // make a bit darker
-			pixel_set(game->rt0, x, SCR_HEIGHT - y - 1, color);
->>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
+			s = pixel_get(game->rt1, col.x, y);
+			f = colour_blend(f, s);
 		}
 		col.uv.y += col.sample_dy;
 		if (col.shaded == 1)
@@ -556,6 +369,7 @@ void	lodev_render_floor_vertical(t_game *game)
 		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
 	}
 }
+
 
 void	render_vertical(t_game *game, t_vertical info)
 {
@@ -577,7 +391,6 @@ void	render(t_game *game)
 
 	player_controls(game);
 	input_process(&game->input);
-<<<<<<< HEAD
 	render_floor(game);
 	vert.x = -1;
 	while (++vert.x < R_HEIGHT)
@@ -590,23 +403,7 @@ void	render(t_game *game)
 			game->half = vert.ray;
 		render_vertical(game, vert);
 	}
-	//texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
-	texture_draw(game, game->rt1, v2new(0, 0));
-=======
-	lodev_render_floor_vertical(game);
-	vert.x = -1;
-	while (++vert.x < SCR_HEIGHT)
-	{
-		vert.camera_x = 2 * vert.x / (double)SCR_WIDTH - 1;
-		vert.dir = v2add(game->player.dir, \
-		v2muls(game->player.plane, vert.camera_x));
-		vert.ray = raycast(map, game->player.pos, vert.dir);
-		if (vert.x == SCR_HEIGHT / 2)
-			game->half = vert.ray;
-		render_vertical(game, vert);
-	}
+	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 	texture_draw(game, game->rt0, v2new(0, 0));
-	//texture_draw_debug_view(game, 1);
->>>>>>> d8df9dc (Add verbatim impl of floor/ceiling textures from lodev.org)
 	draw_debug_info(game);
 }
