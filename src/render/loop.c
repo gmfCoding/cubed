@@ -362,72 +362,13 @@ void	render_vertical(t_game *game, t_vertical info)
 	}
 }
 
-void	lodev_render_floor_vertical(t_game *game)
-{
-	int h = SCR_HEIGHT;
-	// FLOOR CASTING
-	for (int y = 0; y < h; y++)
-	{
-
-		t_vec2 rayDirLeft = v2sub(game->player.dir, game->player.plane);
-		t_vec2 rayDirRight = v2add(game->player.dir, game->player.plane);
-		t_vec2 rayDirDiff = v2sub(rayDirRight, rayDirLeft);
-
-		// TODO convert code
-		// Current y position compared to the center of the screen (the horizon)
-		int p = y - SCR_HEIGHT / 2;
-		// Vertical position of the camera.
-		float posZ = 0.5 * SCR_HEIGHT;
-
-		// Horizontal distance from the camera to the floor for the current row.
-		// 0.5 is the z position exactly in the middle between floor and ceiling.
-		float rowDistance = posZ / p;
-
-		// calculate the real world step vector we have to add for each x (parallel to camera plane)
-		// adding step by step avoids multiplications with a weight in the inner loop
-		float floorStepX = rowDistance * (rayDirDiff.x) / SCR_WIDTH;
-		float floorStepY = rowDistance * (rayDirDiff.y) / SCR_WIDTH;
-
-		// real world coordinates of the leftmost column. This will be updated as we step to the right.
-		float floorX = game->player.pos.x + rowDistance * rayDirLeft.x;
-		float floorY = game->player.pos.y + rowDistance * rayDirLeft.y;
-
-		for (int x = 0; x < SCR_WIDTH; ++x)
-		{
-			// the cell coord is simply got from the integer parts of floorX and floorY
-			int cellX = (int)(floorX);
-			int cellY = (int)(floorY);
-
-			// get the texture coordinate from the fractional part
-			int tx = (int)(WALL_TEX_SIZE * (floorX - cellX)) & (WALL_TEX_SIZE - 1);
-			int ty = (int)(WALL_TEX_SIZE * (floorY - cellY)) & (WALL_TEX_SIZE - 1);
-
-			floorX += floorStepX;
-			floorY += floorStepY;
-
-			// choose texture and draw the pixel
-			int32_t color;
-			// floor
-			color = pixel_get(game->textures[4], tx, ty);
-			color = (color >> 1) & 8355711; // make a bit darker
-			pixel_set(game->rt0, x, y, color);
-			// ceiling (symmetrical, at screenHeight - y - 1 instead of y)
-			color = pixel_get(game->textures[4], tx, ty);
-			color = (color >> 1) & 0x7F7F7F; // make a bit darker
-			pixel_set(game->rt0, x, SCR_HEIGHT - y - 1, color);
-		}
-	}
-}
-
 void	render(t_game *game)
 {
 	t_vertical	vert;
-	// static int frames = 0;
 
-	// frames++;
 	player_controls(game);
 	input_process(&game->input);
-	lodev_render_floor_vertical(game);
+	render_floor(game);
 	vert.x = -1;
 	while (++vert.x < SCR_HEIGHT)
 	{
@@ -440,8 +381,5 @@ void	render(t_game *game)
 		render_vertical(game, vert);
 	}
 	texture_draw(game, game->rt0, v2new(0, 0));
-	// if (frames > 100)
-	// 	exit(0);
-	//texture_draw_debug_view(game, 1);
 	draw_debug_info(game);
 }

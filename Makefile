@@ -10,6 +10,7 @@ SRCSF = $(TEST) \
 		vector/vector2i.c \
 		render/render_util.c \
 		render/loop.c \
+		render/floor_render.c \
 		render/line.c \
 		util/time.c \
 		cerror.c \
@@ -65,23 +66,21 @@ WFLAGS =#-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
-PGFLAGS = #-pg
-OPFLAG = -O3
+OPFLAG = -Ofast
 
-# REMOVE BEFORE EVAL
-ifeq ($(DEBUG), )
-$(warning USING DEFAULT DEBUG FLAGS (REMOVE BEFORE EVAL))
-DEBUG =fsan,g3
-OPFLAG =-Ofast
+OPTS = $(OPT)
+ifneq (,$(findstring def,$(OPTS)))
+OPTS = fsan,debug
 endif
-ifneq ($(DEBUG),)
+ifneq (,$(findstring debug,$(OPTS)))
+	OPFLAG = -O0
 	DFLAGS += -g3
 endif
-ifneq (,$(findstring fsan,$(DEBUG)))
+ifneq (,$(findstring fsan,$(OPTS)))
 	DFLAGS += -fsanitize=address
 endif
-ifneq (,$(findstring gmon,$(DEBUG)))
-	DFLAGS += -pg
+ifneq (,$(findstring gmon,$(OPTS)))
+	PGFLAGS += -pg
 endif
 
 ifeq ($(EXTRA),1)
