@@ -9,6 +9,14 @@
 // Screen resolution Y
 # define SCR_HEIGHT 960
 
+#define R_SCALE 1
+
+// Render resolution X
+# define R_WIDTH (SCR_WIDTH/R_SCALE)
+// Render resolution Y
+# define R_HEIGHT (SCR_HEIGHT/R_SCALE)
+
+
 # define RT0_WIDTH SCR_WIDTH
 # define RT0_HEIGHT SCR_HEIGHT
 

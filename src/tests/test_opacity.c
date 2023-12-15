@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 18:29:39 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/10 21:01:02 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/13 17:24:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -100,13 +100,13 @@ int	main(void)
 	test = (t_test_opacity){0};
 	*game = (t_game){0};
 	game->app.mlx = mlx_init();
-	game->rt0 = texture_create(game->app.mlx, SCR_WIDTH, SCR_HEIGHT);
-	game->app.win = mlx_new_window(game->app.mlx, SCR_WIDTH, SCR_HEIGHT, NAME);
+	game->rt0 = texture_create(game->app.mlx, R_WIDTH, R_HEIGHT);
+	game->app.win = mlx_new_window(game->app.mlx, R_WIDTH, R_HEIGHT, NAME);
 	i = -1;
 	while (++i < LEN_WIDGET)
 	{
 		test.widgets[i].tex = texture_load(game->app.mlx, g_widget_textures[i]);
-		test.widgets[i].pos = v2new(i * ((double)SCR_WIDTH / LEN_WIDGET), 0);
+		test.widgets[i].pos = v2new(i * ((double)R_WIDTH / LEN_WIDGET), 0);
 	}
 	input_setup(game->app.mlx, game->app.win, &game->input);
 	mlx_loop_hook(game->app.mlx, (void *)update, &test);

@@ -160,10 +160,10 @@ void render2(t_game2 *game)
 {
 	dda_controls(game);
 	texture_clear(game->rt0);
-	for (int x = 0; x < SCR_WIDTH; x++)
+	for (int x = 0; x < R_WIDTH; x++)
 	{
 		// calculate ray position and direction
-		double cameraX = 2 * x / (double)SCR_WIDTH - 1; // x-coordinate in camera space
+		double cameraX = 2 * x / (double)R_WIDTH - 1; // x-coordinate in camera space
 		double rayDirX = game->dirX + game->planeX * cameraX;
 		double rayDirY = game->dirY + game->planeY * cameraX;
 
@@ -253,18 +253,18 @@ void render2(t_game2 *game)
 			texX = texWidth - texX - 1;
 
 		// Calculate height of line to draw on screen
-		int lineHeight = (int)(SCR_HEIGHT / perpWallDist);
+		int lineHeight = (int)(R_HEIGHT / perpWallDist);
 
 		// calculate lowest and highest pixel to fill in current stripe
-		int drawStart = -lineHeight / 2 + SCR_HEIGHT / 2;
+		int drawStart = -lineHeight / 2 + R_HEIGHT / 2;
 		if (drawStart < 0)
 			drawStart = 0;
-		int drawEnd = lineHeight / 2 + SCR_HEIGHT / 2;
-		if (drawEnd >= SCR_HEIGHT)
-			drawEnd = SCR_HEIGHT - 1;
+		int drawEnd = lineHeight / 2 + R_HEIGHT / 2;
+		if (drawEnd >= R_HEIGHT)
+			drawEnd = R_HEIGHT - 1;
 		double step = 1.0 * texHeight / lineHeight;
 		// Starting texture coordinate
-		double texPos = (drawStart - SCR_HEIGHT / 2 + lineHeight / 2) * step;
+		double texPos = (drawStart - R_HEIGHT / 2 + lineHeight / 2) * step;
 		for (int y = drawStart; y < drawEnd; y++)
 		{
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
@@ -299,8 +299,8 @@ int main(int argc, char **argv)
 	t_game2 game;
 	game = (t_game2){0};
 	game.app.mlx = mlx_init();
-	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
-	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
+	game.app.win = mlx_new_window(game.app.mlx, R_WIDTH, R_HEIGHT, "cub3d");
+	game.rt0 = texture_create(game.app.mlx, R_WIDTH, R_HEIGHT);
 
 	game.posX = 22;
 	game.posY = 11.5; // x and y start position

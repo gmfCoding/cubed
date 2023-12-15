@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 12:52:21 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/13 17:35:57 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ int	main(int argc, char **argv)
 	(void)argv;
 	game = (t_game){0};
 	game.app.mlx = mlx_init();
+	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
-	game.rt1 = texture_get_debug_view(&game, 1);
+	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
 	generate_textures(&game);
 	// game.player.pos = v2new(22, 11.5);

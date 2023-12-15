@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/01 01:32:40 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/13 17:35:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ struct s_game
 	t_app			app;
 	t_texture		rt0;
 	t_texture		rt1;
+	t_texture		rt2;
 
 	t_vec2			mouse;
 	t_vec2			pos;

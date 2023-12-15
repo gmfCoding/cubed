@@ -6,10 +6,11 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 15:43:18 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/13 17:37:56 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
+#include <stddef.h>
 #include "vector2.h"
 #include "texture.h"
 #include "state.h"
@@ -76,46 +77,6 @@ int	colour_blend(int first, int second)
 	f[1] = f[1] * a + s[1] * (1.0 - a);
 	f[2] = f[2] * a + s[2] * (1.0 - a);
 	return (((int *)f)[0]);
-}
-
-// Copies pixel data from one texture to another
-void	texture_blit(t_texture src, t_texture dst, t_vec2 pos)
-{
-	int		x;
-	int		y;
-	float	a;
-	int		col;
-
-	y = -1;
-	while (++y < src.height)
-	{
-		x = -1;
-		while (++x < src.width)
-		{
-			col = colour_blend(pixel_get_s(src, x, y), \
-				pixel_get_s(dst, pos.x + x, pos.y + y));
-			pixel_set_s(dst, pos.x + x, pos.y + y, col);
-		}
-	}
-}
-
-#include <string.h>
-void	texture_clear(t_texture src)
-{
-	int	x;
-	int	y;
-
-	y = -1;
-	while (++y < src.height)
-	{
-		x = -1;
-		while (++x < src.width)
-		{
-			pixel_set(src, x, y, R_ALPHA);
-		}
-	}
-	// FORBIDDEN
-	//memset(src.data, 0, (src.bpp / 8) * src.width * src.height);
 }
 
 t_texture texture_get_debug_view(t_game *game, int view)

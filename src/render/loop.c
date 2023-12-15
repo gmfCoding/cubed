@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 15:17:29 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/13 17:48:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,14 +226,14 @@ t_rayinfo	raycast(int *map, t_vec2 start, t_vec2 dir)
 
 t_vec2	screen_to_map(t_vec2 mouse)
 {
-	return ((t_vec2){mouse.x / SCR_WIDTH * MAP_WIDTH, \
-	mouse.y / SCR_HEIGHT * MAP_HEIGHT});
+	return ((t_vec2){mouse.x / R_WIDTH * MAP_WIDTH, \
+	mouse.y / R_HEIGHT * MAP_HEIGHT});
 }
 
 t_vec2	map_to_screen(t_vec2 map)
 {
-	return ((t_vec2){map.x * SCR_WIDTH / (float)MAP_WIDTH, \
-	map.y * SCR_HEIGHT / (float)MAP_HEIGHT});
+	return ((t_vec2){map.x * R_WIDTH / (float)MAP_WIDTH, \
+	map.y * R_HEIGHT / (float)MAP_HEIGHT});
 }
 
 void player_controls(t_game *game)
@@ -312,15 +312,15 @@ t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
 	if (hit.side == 1 && vertical->dir.y < 0)
 		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
-	height = (int)(SCR_HEIGHT / hit.depth);
-	col.range.s = -height / 2 + SCR_HEIGHT / 2;
+	height = (int)(R_HEIGHT / hit.depth);
+	col.range.s = -height / 2 + R_HEIGHT / 2;
 	if (col.range.s < 0)
 		col.range.s = 0;
-	col.range.e = height / 2 + SCR_HEIGHT / 2;
-	if (col.range.e >= SCR_HEIGHT)
-		col.range.e = SCR_HEIGHT - 1;
+	col.range.e = height / 2 + R_HEIGHT / 2;
+	if (col.range.e >= R_HEIGHT)
+		col.range.e = R_HEIGHT - 1;
 	col.sample_dy = 1.0 * WALL_TEX_SIZE / height;
-	col.uv.y = (col.range.s - SCR_HEIGHT / 2 + height / 2) * col.sample_dy;
+	col.uv.y = (col.range.s - R_HEIGHT / 2 + height / 2) * col.sample_dy;
 	col.shaded = hit.side == 1;
 	return (col);
 }
@@ -338,13 +338,13 @@ void	render_column(t_game *game, t_column col)
 		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
 		if ((f & M_APLHA) != R_ALPHA)
 		{
-			s = pixel_get(game->rt0, col.x, y);
+			s = pixel_get(game->rt1, col.x, y);
 			f = colour_blend(f, s);
 		}
 		col.uv.y += col.sample_dy;
 		if (col.shaded == 1)
 			f = (f >> 1) & 0x7F7F7F;
-		pixel_set(game->rt0, col.x, y, R_ALPHA | f);
+		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
 	}
 }
 
@@ -370,16 +370,17 @@ void	render(t_game *game)
 	input_process(&game->input);
 	render_floor(game);
 	vert.x = -1;
-	while (++vert.x < SCR_HEIGHT)
+	while (++vert.x < R_HEIGHT)
 	{
-		vert.camera_x = 2 * vert.x / (double)SCR_WIDTH - 1;
+		vert.camera_x = 2 * vert.x / (double)R_WIDTH - 1;
 		vert.dir = v2add(game->player.dir, \
 		v2muls(game->player.plane, vert.camera_x));
 		vert.ray = raycast(map, game->player.pos, vert.dir);
-		if (vert.x == SCR_HEIGHT / 2)
+		if (vert.x == R_HEIGHT / 2)
 			game->half = vert.ray;
 		render_vertical(game, vert);
 	}
-	texture_draw(game, game->rt0, v2new(0, 0));
+	//texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
+	texture_draw(game, game->rt1, v2new(0, 0));
 	draw_debug_info(game);
 }
