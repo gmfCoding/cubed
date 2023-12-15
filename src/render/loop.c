@@ -321,30 +321,30 @@ typedef struct s_column
 
 t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 {
-	t_column column;
+	t_column col;
 	int height;
 
-	column.texture = texmap[hit.x + MAP_WIDTH * hit.y] - 1;
-	column.uv.x = column.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+	col.texture = texmap[hit.x + MAP_WIDTH * hit.y] - 1;
+	col.uv.x = col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
 	if (hit.side == 0)
-		column.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
-	column.uv.x -= floor(column.uv.x);
-	column.sample.x = (int)(column.uv.x * (double)WALL_TEX_SIZE);
+		col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
+	col.uv.x -= floor(col.uv.x);
+	col.sample.x = (int)(col.uv.x * (double)WALL_TEX_SIZE);
 	if (hit.side == 0 && vertical->dir.x > 0)
-		column.sample.x = WALL_TEX_SIZE - column.sample.x - 1;
+		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
 	if (hit.side == 1 && vertical->dir.y < 0)
-		column.sample.x = WALL_TEX_SIZE - column.sample.x - 1;
-	height = (int)(SCR_HEIGHT / hit.depth);
-	column.range.s = -height / 2 + SCR_HEIGHT / 2;
-	if (column.range.s < 0)
-		column.range.s = 0;
-	column.range.e = height / 2 + SCR_HEIGHT / 2;
-	if (column.range.e >= SCR_HEIGHT)
-		column.range.e = SCR_HEIGHT - 1;
-	column.sample_dy = 1.0 * WALL_TEX_SIZE / height;
-	column.uv.y = (column.range.s - SCR_HEIGHT / 2 + height / 2) * column.sample_dy;
-	column.shaded = hit.side == 1;
-	return (column);
+		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
+	height = (int)(R_HEIGHT / hit.depth);
+	col.range.s = -height / 2 + R_HEIGHT / 2;
+	if (col.range.s < 0)
+		col.range.s = 0;
+	col.range.e = height / 2 + R_HEIGHT / 2;
+	if (col.range.e >= R_HEIGHT)
+		col.range.e = R_HEIGHT - 1;
+	col.sample_dy = 1.0 * WALL_TEX_SIZE / height;
+	col.uv.y = (col.range.s - R_HEIGHT / 2 + height / 2) * col.sample_dy;
+	col.shaded = hit.side == 1;
+	return (col);
 }
 
 void	render_column(t_game *game, t_column col)
