@@ -38,37 +38,25 @@ void	fl_images(t_game *game)
 	game->five_light.lights_img[4]= mlx_xpm_file_to_image(game->app.mlx, "assets/five_lights/fl_brokenlight.xpm", &width, &height);
 }
 
+void	destroy_five_lights_images(void *mlx, t_mgame *five_light)
+{
+	int	i;
 
-/*
-typedef struct s_mgame
-{i
-	bool	run_game;
-	bool	enabled;
-	bool	broken;
-	bool	show_assistance;
-	void	*assistance_img;
-	void	*back_img;
-	void	*switch_s_img[8];
-	void	*lights_img[5];
-	void	*power;
-	void	*reset;
-
-
-	void	*power_light;
-	void	*lever_up_anim[5];
-	void	*lever_down_anim[5];
-	int	state[10];
-	int	pos_x[10];
-	int	pos_y;
-	int	click_spots[10][6];
-	int	clickables[3][4];	
-
-	int	g_light_count;
-
-}	t_mgame;
-*/
-
-
+	i = -1;
+	while(++i <= 7)
+		mlx_destroy_image(mlx, five_light->switch_s_img[i]);
+	i = -1;
+	while(++i <= 2)
+		mlx_destroy_image(mlx, five_light->assistance_img[i]);
+	i = -1;
+	while(++i <= 4)
+		mlx_destroy_image(mlx, five_light->lights_img[i]);
+	mlx_destroy_image(mlx, five_light->win_img[0]);
+	mlx_destroy_image(mlx, five_light->win_img[1]);
+	mlx_destroy_image(mlx, five_light->back_img);
+	mlx_destroy_image(mlx, five_light->reset_img);
+	mlx_destroy_image(mlx, five_light->power_img);
+}
 
 void	fl_click_points(t_game *game)
 {
@@ -98,7 +86,6 @@ void	fl_click_points(t_game *game)
 	game->five_light.clickables[2][3] = PANEL_POS_Y + 369;
 }
 
-//run from main
 void	five_lights_Setup(t_game *game)
 {
 	int	i;
@@ -225,9 +212,7 @@ void	fl_up_state_set_green(t_game *game, int index)
 		return ;
 	}
 	if (game->five_light.state[index] != 0)
-	{
 		return(fl_reset_game(game));
-	}
 	else
 	{
 		game->five_light.state[index] = 4; 
@@ -287,12 +272,6 @@ void	fl_gather_up_state(t_game *game, int index)
 	}
 }
 
-
-
-
-
-
-
 int	fl_skip_down_empty_state(t_game *game, int index)
 {
 	while (index < 9 && game->five_light.state[index] >= 1 && game->five_light.state[index] <= 3)
@@ -311,9 +290,7 @@ void	fl_down_state_set_green(t_game *game, int index)
 		return ;
 	}
 	if (game->five_light.state[index] != 0)
-	{
 		return(fl_reset_game(game));
-	}
 	else
 	{
 		game->five_light.state[index] = 4;
@@ -341,11 +318,7 @@ void	fl_down_state_set_redgreen(t_game *game, int index)
 			return ;
 		}
 		if (game->five_light.state[index] != 0)
-		{
-
-
 			return (fl_reset_game(game));
-		}
 		else
 		{
 			game->five_light.state[index] = 4; 
@@ -359,11 +332,8 @@ void	fl_gather_down_state(t_game *game, int index)
 {
 	index++;
 	index = fl_skip_down_empty_state(game, index);
-	
 	if (index == 9)
-	{
 		return (fl_reset_game(game));
-	}
 	if (game->five_light.state[index] >= 4 && game->five_light.state[index] <= 6)
 	{
 		fl_down_state_set_green(game, index);
@@ -408,7 +378,6 @@ void	fl_pass_state_rules(t_game *game, int click_state)
 		return ;
 	if (click_state == 10 || click_state == 29 || click_state == 11 || click_state == 28)// || click_state == 12 || click_state == 27)
 	{
-		printf("are we here\n");
 		fl_reset_game(game);
 		return ;
 	}
@@ -418,9 +387,7 @@ void	fl_pass_state_rules(t_game *game, int click_state)
 		return ;
 	}
 	if (game->five_light.state[index] == 0)
-	{
 		fl_change_state(game, click_state, index);
-	}
 }
 
 void	fl_show_help_menu(t_game *game)
@@ -433,7 +400,10 @@ void	fl_leave_mgame(t_game *game)
 {
 	fl_reset_game(game);
 	game->five_light.run_game = false;
-	//gonna have to free all images here or can do it when game ends
+	destroy_five_lights_images(game->app.mlx, &game->five_light);//either free here or at and of game call it,
+								     // but if we wanna run the minigame again and
+								     // use the same we will have to call setup again
+								     // for images
 }
 
 void	fl_assign_state(t_game *game, int click_state)
@@ -470,7 +440,6 @@ int fl_mouse_hook(int button, int x, int y, t_game *game)
 	int	click_state;
 
 //	printf("Mouse click - Button: %d, X: %d, Y: %d\n", button, x, y);
-//	printf("enabled = %d and show assisatnce = %d\n", game->five_light.enabled, game->five_light.show_assistance);
 	if (game->five_light.enabled == true && button == 1)
 	{
 		click_state = fl_we_clicked(game, x, y);
@@ -483,7 +452,6 @@ int fl_mouse_hook(int button, int x, int y, t_game *game)
 			game->five_light.enabled = false;
 
 		}	
-		printf("clickstate = %d\n", click_state);
 	}
 	else if (button == 1 && game->five_light.show_assistance == true)
 	{
