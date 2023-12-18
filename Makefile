@@ -26,6 +26,7 @@ SRCSF = $(TEST) \
 		map_parser/map_tools.c \
 		map_parser/map_checker_tile.c \
 		map_parser/map_checker_element.c \
+		map_parser/map_default_map.c \
 		modifiers/modifier_setup.c \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_floor_ceiling_color.c \

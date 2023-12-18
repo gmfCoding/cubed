@@ -35,6 +35,8 @@ int	map_tiles(t_map *map, char *content, int index)
 		else
 		{
 			map->tiles[index + i].type = get_tiletype(content[i]);
+			map->tiles[index + i].vis = 0;
+			map->tiles[index + i].tex = 0;
 			i++;
 		}
 	}

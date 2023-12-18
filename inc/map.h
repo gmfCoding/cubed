@@ -44,6 +44,8 @@ typedef enum e_mapissue
 typedef struct	s_tile
 {
 	t_tiletype	type;
+	uint8_t		tex;
+	bool		vis: 1;
 }				t_tile;
 
 typedef struct	s_mod
@@ -54,7 +56,7 @@ typedef struct	s_mod
 
 typedef struct	s_map
 {
-	t_tile	tiles[MAP_MAX_X * MAP_MAX_Y];
+	t_tile		tiles[MAP_MAX_X * MAP_MAX_Y];
 	t_mod		mods[MAP_MODIFICATION_SIZE];
 	t_vec2		s_pos;
 	uint8_t		width;
@@ -75,9 +77,6 @@ typedef struct	s_world
 }				t_world;
 
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
-
-
-
 
 
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
@@ -116,4 +115,7 @@ int error_return(char *msg, int exit_code, int print_error, t_list **free_me);
 int error_with(char *msg, int value, int print_error);
 void	deallocate_list(t_list **raw_map_file);
 
+
+
+void map_default_map_init(t_world *world);
 #endif

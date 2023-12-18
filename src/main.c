@@ -34,9 +34,10 @@
 
 t_world	world_preset(int argc, char **argv, t_world *world)
 {
-	//world->map = map_parse(argc, argv, world);
 	if (argc - 1 >= 1)
 		world->map = map_parse(argc, argv, world);
+	else
+		map_default_map_init(world);
 	return (*world);
 }
 
@@ -88,21 +89,23 @@ int	main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
-	t_world	world;
-	world = world_preset(argc, argv, &world);
-	map_print(&world.map);
 	game = (t_game){0};
+	game.world = malloc(sizeof(t_world));
+	*game.world = (t_world){0};
+	*game.world = world_preset(argc, argv, game.world);
+	game.player = game.world->player;
+	map_print(&game.world->map);
 	game.app.mlx = mlx_init();
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
 	generate_textures(&game);
-	game.player.pos = v2new(22, 11.5);
-	game.player.dir = v2new(-1, 0);
-	game.player.plane = v2new(0, 0.5);
-	game.player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
-	game.player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
+	// game.player.pos = v2new(22, 11.5);
+	// game.player.dir = v2new(-1, 0);
+	// game.player.plane = v2new(0, 0.5);
+	// game.player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
+	// game.player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);

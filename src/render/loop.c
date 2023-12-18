@@ -70,67 +70,10 @@ bool	inside(int x, int y, int maxX, int maxY)
 	return (x >= 0 && y >= 0 && x < maxX && y < maxY);
 }
 
-#define MAP_WIDTH 24
-#define MAP_HEIGHT 24
-
-int map[MAP_WIDTH * MAP_HEIGHT] = {
-	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 1, 1, 1, 1, 1, 1, 2, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
-	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
-	1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
-	1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
-	1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 2, 0, 0, 2, 2, 2, 2, 0, 2, 2, 2, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-	1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
-	1, 0, 0, 0, 0, 2, 2, 0, 2, 0, 2, 2, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1,
-	1, 0, 0, 0, 0, 2, 2, 0, 2, 0, 2, 2, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 2, 2, 0, 2, 0, 2, 2, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1,
-	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-};
-
-int	texmap[MAP_WIDTH * MAP_HEIGHT] = {
-	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 5, 0, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 6, 0, 6, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 4, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 4, 4, 0, 4, 4, 4, 4, 4, 1,
-	1, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 0, 6, 6, 6, 6, 6, 1,
-	1, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 6, 6, 6, 6, 0, 6, 6, 6, 1,
-	1, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 5, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 1,
-	1, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 5, 5, 5, 0, 5, 5, 5, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 7, 0, 0, 7, 7, 7, 7, 0, 7, 7, 7, 6, 0, 6, 2, 0, 5, 0, 5, 0, 5, 0, 1,
-	1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 6, 0, 6, 2, 2, 2, 2, 0, 2, 2, 2, 1,
-	1, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 1,
-	1, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 0, 0, 0, 0, 0, 1,
-	1, 0, 0, 0, 0, 7, 7, 0, 7, 0, 7, 7, 6, 0, 6, 3, 0, 0, 2, 0, 2, 0, 0, 1,
-	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-};
-
-int	map_index(int x, int y)
-{
-	return (x + y * MAP_WIDTH);
-}
+// int	map_index(int x, int y)
+// {
+// 	return (x + y * MAP_WIDTH);
+// }
 
 typedef struct s_dda
 {
@@ -169,14 +112,39 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 	return (dda);
 }
 
+
+// struct s_collider
+// {
+// 	bool type: 1;
+// 	union
+// 	{
+// 		void *entity;
+// 	};
+// };
+
+t_tile map_get_tile(t_map *map, int x, int y)
+{
+	t_tile tile = map->tiles[x + y * map->width];
+	return (tile);
+}
+
+t_tile *map_get_tile_ref(t_map *map, int x, int y)
+{
+	t_tile *tile = &map->tiles[x + y * map->width];
+	return (tile);
+}
+
 /* Preforms a raycast on the tile grid
 	RETURNS:
 	-1 if there were no hits
 	0 if there was a hit but no more
 	1 if there was a hit and potentially more
 */
-int	raycast_hit(t_hitpoint *hit, t_dda *dda)
+int	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 {
+	t_tile	*tile;
+	t_map *const	map = &game->world->map;
+
 	while (1)
 	{
 		hit->side = dda->side.x >= dda->side.y;
@@ -192,19 +160,20 @@ int	raycast_hit(t_hitpoint *hit, t_dda *dda)
 			dda->side.y += dda->delta.y;
 			dda->map.y += dda->step.y;
 		}
-		if (!inside(dda->map.x, dda->map.y, MAP_WIDTH, MAP_HEIGHT))
+		if (!inside(dda->map.x, dda->map.y, map->width, map->height))
 			return (-1);
-		if (map[map_index(dda->map.x, dda->map.y)] > 0)
+		tile = map_get_tile_ref(map, dda->map.x, dda->map.y);
+		if (tile->type == WALL)
 		{
 			hit->x = dda->map.x;
 			hit->y = dda->map.y;
-			return (map[map_index(dda->map.x, dda->map.y)] - 1);
+			return (tile->vis);
 		}
 	}
 	return (-1);
 }
 
-t_rayinfo	raycast(int *map, t_vec2 start, t_vec2 dir)
+t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 {
 	t_rayinfo	ray;
 	t_dda		dda;
@@ -215,7 +184,7 @@ t_rayinfo	raycast(int *map, t_vec2 start, t_vec2 dir)
 	dda = dda_calculate(start, dir);
 	while (ray.hits < MAX_DEPTHS)
 	{
-		hit = raycast_hit(&ray.depths[ray.hits], &dda);
+		hit = raycast_hit(game, &ray.depths[ray.hits], &dda);
 		if (hit >= 0)
 			ray.hits++;
 		if (hit <= 0)
@@ -224,17 +193,17 @@ t_rayinfo	raycast(int *map, t_vec2 start, t_vec2 dir)
 	return (ray);
 }
 
-t_vec2	screen_to_map(t_vec2 mouse)
-{
-	return ((t_vec2){mouse.x / R_WIDTH * MAP_WIDTH, \
-	mouse.y / R_HEIGHT * MAP_HEIGHT});
-}
+// t_vec2	screen_to_map(t_vec2 mouse)
+// {
+// 	return ((t_vec2){mouse.x / R_WIDTH * MAP_WIDTH, \
+// 	mouse.y / R_HEIGHT * MAP_HEIGHT});
+// }
 
-t_vec2	map_to_screen(t_vec2 map)
-{
-	return ((t_vec2){map.x * R_WIDTH / (float)MAP_WIDTH, \
-	map.y * R_HEIGHT / (float)MAP_HEIGHT});
-}
+// t_vec2	map_to_screen(t_vec2 map)
+// {
+// 	return ((t_vec2){map.x * R_WIDTH / (float)MAP_WIDTH, \
+// 	map.y * R_HEIGHT / (float)MAP_HEIGHT});
+// }
 
 void player_controls(t_game *game)
 {
@@ -246,16 +215,20 @@ void player_controls(t_game *game)
 	oldPlaneX = player->plane.x;
 	if (input_keyheld(&game->input, KEY_W))
 	{
-		if (map[map_index((int)(player->pos.x + player->dir.x * player->moveSpeed), (int)player->pos.y)] == false)
+		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.x * player->moveSpeed), (int)player->pos.y);
+		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y + player->dir.y * player->moveSpeed));
+		if (horz->type == FLOOR)
 			player->pos.x += player->dir.x * player->moveSpeed;
-		if (map[map_index((int)player->pos.x, (int)(player->pos.y + player->dir.y * player->moveSpeed))] == false)
+		if (vert->type == FLOOR)
 			player->pos.y += player->dir.y * player->moveSpeed;
 	}
 	if (input_keyheld(&game->input, KEY_S))
 	{
-		if (map[map_index((int)(player->pos.x - player->dir.x * player->moveSpeed), (int)player->pos.y)] == false)
+		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x - player->dir.x * player->moveSpeed), (int)player->pos.y);
+		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.y * player->moveSpeed));
+		if (horz->type == FLOOR)
 			player->pos.x -= player->dir.x * player->moveSpeed;
-		if (map[map_index((int)player->pos.x, (int)(player->pos.y - player->dir.y * player->moveSpeed))] == false)
+		if (vert->type == FLOOR)
 			player->pos.y -= player->dir.y * player->moveSpeed;
 	}
 	if (input_keyheld(&game->input, KEY_D))
@@ -273,29 +246,6 @@ void player_controls(t_game *game)
 		player->dir.y = oldDirX * sin(player->rotSpeed) + player->dir.y * cos(player->rotSpeed);
 		player->plane.x = player->plane.x * cos(player->rotSpeed) - player->plane.y * sin(player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(player->rotSpeed) + player->plane.y * cos(player->rotSpeed);
-	}
-}
-
-
-void	render_map_view(t_game *game)
-{
-	const int	cell_width = SCR_WIDTH / MAP_WIDTH;
-	const int	cell_height = SCR_HEIGHT / MAP_HEIGHT;
-	int			y;
-	int			x;
-	t_vec2		cell;
-
-	y = -1;
-	while (++y < MAP_HEIGHT)
-	{
-		x = -1;
-		while (++x < MAP_WIDTH)
-		{
-			cell = map_to_screen(v2new(x, y));
-			if (map[map_index(x, y)] > 0)
-				texture_draw_square(texture_get_debug_view(game, 1), cell, \
-					v2new(cell_width, cell_height), R_ALPHA | 0xffffff);
-		}
 	}
 }
 
@@ -324,8 +274,8 @@ t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 	t_column col;
 	int height;
 
-	col.texture = texmap[hit.x + MAP_WIDTH * hit.y] - 1;
-	col.uv.x = col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+	col.texture = map_get_tile(&game->world->map, hit.x, hit.y).tex;
+	col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
 	if (hit.side == 0)
 		col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
 	col.uv.x -= floor(col.uv.x);
@@ -398,12 +348,12 @@ void	render(t_game *game)
 		vert.camera_x = 2 * vert.x / (double)R_WIDTH - 1;
 		vert.dir = v2add(game->player.dir, \
 		v2muls(game->player.plane, vert.camera_x));
-		vert.ray = raycast(map, game->player.pos, vert.dir);
+		vert.ray = raycast(game, game->player.pos, vert.dir);
 		if (vert.x == R_HEIGHT / 2)
 			game->half = vert.ray;
 		render_vertical(game, vert);
 	}
-	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
-	texture_draw(game, game->rt0, v2new(0, 0));
+	//texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
+	texture_draw(game, game->rt1, v2new(0, 0));
 	draw_debug_info(game);
 }

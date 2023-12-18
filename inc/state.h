@@ -47,6 +47,8 @@ struct s_app
 	void *win;
 };
 
+typedef struct s_world t_world;
+
 struct s_game
 {
 	t_app			app;
@@ -62,6 +64,7 @@ struct s_game
 
 	t_player		player;
 	t_texture		textures[8];
+	t_world			*world;
 
 	t_inputctx		input;
 	t_rayinfo		half;
