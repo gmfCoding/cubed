@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:50:05 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/13 17:48:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,36 +21,15 @@
 #include "texture.h"
 #include "vector2i.h"
 
-#define PI 3.141592653589
-
-// define DEG2RAD PI / 180.0
-# define DEG2RAD 0.01745329251993888888888888888889
-# define RAD2DEG 57.2957795131
-
-# ifdef __linux__
-#  define R_ALPHA 0xff000000
-# else
-#  define R_ALPHA 0x00000000
-#endif
-
-#define R_RED   0x00ff0000
-#define R_GREEN 0x0000ff00
-#define R_BLUE  0x000000ff
-
-#define OF_ALPHA 24
-#define OF_RED   16
-#define OF_GREEN 8
-#define OF_BLUE  0
-
 #include "libft.h"
-# define MAX_RAYCAST_DIST 100
 
-void measure_frame_rate(t_app app)
+void	measure_frame_rate(t_app app)
 {
-	static int64_t timeprev = 0;
-	static char *fps = NULL;
-	
-	fps = ft_strfmt("fps: %d",  (int) (1.0 / ((time_get_ms() - timeprev) / 1000.0)));
+	static int64_t	timeprev = 0;
+	static char		*fps = NULL;
+
+	fps = ft_strfmt("fps:%d", \
+	(int)(1.0 / ((time_get_ms() - timeprev) / 1000.0)));
 	mlx_string_put(app.mlx, app.win, 0, 10, 0x00FF00, fps);
 	free(fps);
 	// AUTO EXIT AFTER 4 SECONDS (used for GMON)
@@ -62,40 +41,51 @@ void measure_frame_rate(t_app app)
 	timeprev = time_get_ms();
 }
 
-bool inside(int x, int y, int maxX, int maxY)
+void	draw_debug_info(t_game *game)
+{
+	t_player *const	player = &game->player;
+	static int64_t	timeprev = 0;
+	const char		*debugstr[] = {
+		ft_strfmt("fps:%d", (int)(1.0 / ((time_get_ms() - timeprev) / 1000.0))),
+		ft_strfmt("pos:(%f,%f)", (double)player->pos.x, (double)player->pos.y),
+		ft_strfmt("dir:(%f,%f)", (double)player->dir.x, (double)player->dir.y),
+		ft_strfmt("plane:(%f,%f)", \
+		(double)game->player.plane.x, (double)game->player.plane.y),
+		ft_strfmt("hits:(%d)", game->half.hits),
+	};
+	int				i;
+
+	i = -1;
+	while (++i < sizeof(debugstr) / sizeof(*debugstr))
+	{
+		mlx_string_put(game->app.mlx, game->app.win, 0, \
+			i * 12 + 12, 0xFFFFFF, debugstr[i]);
+		free(debugstr[i]);
+	}
+	timeprev = time_get_ms();
+}
+
+bool	inside(int x, int y, int maxX, int maxY)
 {
 	return (x >= 0 && y >= 0 && x < maxX && y < maxY);
 }
 
-# define MAP_WIDTH 6
-# define MAP_HEIGHT 6
-int map[MAP_WIDTH * MAP_HEIGHT] = 
-{
-	1,1,1,1,1,1,
-	1,0,0,0,0,1,
-	1,0,0,0,0,1,
-	1,0,1,1,0,1,
-	1,0,0,0,0,1,
-	1,1,1,1,1,1,
-};
+// int	map_index(int x, int y)
+// {
+// 	return (x + y * MAP_WIDTH);
+// }
 
-int	map_index(int x, int y)
+typedef struct s_dda
 {
-	return (x + y * MAP_WIDTH);
-}
+	t_vec2	delta;
+	t_vec2i	map;
+	t_vec2i	step;
+	t_vec2	side;
+}			t_dda;
 
-typedef struct s_dda t_dda;
-struct s_dda
+t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 {
-	t_vec2 delta;
-	t_vec2i map;
-	t_vec2i step;
-	t_vec2 side;
-};
-
-t_dda dda_calculate(t_vec2 start, t_vec2 dir)
-{
-	t_dda dda;
+	t_dda	dda;
 
 	dda = (t_dda){0};
 	dda.map = (t_vec2i){start.x, start.y};
@@ -122,72 +112,100 @@ t_dda dda_calculate(t_vec2 start, t_vec2 dir)
 	return (dda);
 }
 
-int raycast_hit(t_hitpoint *hit, t_dda *dda)
+
+// struct s_collider
+// {
+// 	bool type: 1;
+// 	union
+// 	{
+// 		void *entity;
+// 	};
+// };
+
+t_tile map_get_tile(t_map *map, int x, int y)
 {
+	t_tile tile = map->tiles[x + y * map->width];
+	return (tile);
+}
+
+t_tile *map_get_tile_ref(t_map *map, int x, int y)
+{
+	t_tile *tile = &map->tiles[x + y * map->width];
+	return (tile);
+}
+
+/* Preforms a raycast on the tile grid
+	RETURNS:
+	-1 if there were no hits
+	0 if there was a hit but no more
+	1 if there was a hit and potentially more
+*/
+int	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
+{
+	t_tile	*tile;
+	t_map *const	map = &game->world->map;
+
 	while (1)
 	{
 		hit->side = dda->side.x >= dda->side.y;
 		if (dda->side.x < dda->side.y)
 		{
+			hit->depth = dda->side.x;
 			dda->side.x += dda->delta.x;
 			dda->map.x += dda->step.x;
 		}
 		else
 		{
+			hit->depth = dda->side.y;
 			dda->side.y += dda->delta.y;
 			dda->map.y += dda->step.y;
 		}
-		if (!inside(dda->map.x, dda->map.y, MAP_WIDTH, MAP_HEIGHT))
-			return -1;
-		if (map[map_index(dda->map.x, dda->map.y)] > 0)
+		if (!inside(dda->map.x, dda->map.y, map->width, map->height))
+			return (-1);
+		tile = map_get_tile_ref(map, dda->map.x, dda->map.y);
+		if (tile->type == WALL)
 		{
-			hit->depth = (dda->side.y - dda->delta.y);
-			if (hit->side == 0)
-				hit->depth = (dda->side.x - dda->delta.x);
 			hit->x = dda->map.x;
 			hit->y = dda->map.y;
-			return 1;
+			return (tile->vis);
 		}
 	}
+	return (-1);
 }
 
-t_rayinfo raycast(int *map, t_vec2 start, t_vec2 dir)
+t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 {
-	t_rayinfo	ray = {0};
-	t_dda		dda = {0};
+	t_rayinfo	ray;
+	t_dda		dda;
+	int			hit;
 
+	ray = (t_rayinfo){0};
+	dda = (t_dda){0};
 	dda = dda_calculate(start, dir);
 	while (ray.hits < MAX_DEPTHS)
 	{
-		raycast_hit(&ray.depths[ray.hits], &dda);
-		ray.hits++;
+		hit = raycast_hit(game, &ray.depths[ray.hits], &dda);
+		if (hit >= 0)
+			ray.hits++;
+		if (hit <= 0)
+			break ;
 	}
-	return ray;
+	return (ray);
 }
 
-t_vec2	screen_to_map(t_vec2 mouse)
-{
-	return (t_vec2){mouse.x / SCR_WIDTH * MAP_WIDTH, mouse.y / SCR_HEIGHT * MAP_HEIGHT};
-}
+// t_vec2	screen_to_map(t_vec2 mouse)
+// {
+// 	return ((t_vec2){mouse.x / R_WIDTH * MAP_WIDTH, \
+// 	mouse.y / R_HEIGHT * MAP_HEIGHT});
+// }
 
-t_vec2	map_to_screen(t_vec2 map)
-{
-	return (t_vec2){map.x * SCR_WIDTH / (float)MAP_WIDTH, map.y * SCR_HEIGHT / (float)MAP_HEIGHT};
-}
+// t_vec2	map_to_screen(t_vec2 map)
+// {
+// 	return ((t_vec2){map.x * R_WIDTH / (float)MAP_WIDTH, \
+// 	map.y * R_HEIGHT / (float)MAP_HEIGHT});
+// }
 
-void	on_mouse_move(int x, int y, t_game *game)
-{
-	game->mouse = v2new(x, y);
-}
-
-void	on_mouse(int key, int x, int y, t_game *game)
-{
-	(void)x;
-	(void)y;
-	(void)game;
-}
-
-void	player_controls(t_game *game)
+void player_controls(t_game *game)
 {
 	t_player *const player = &game->player;
 	double oldDirX;
@@ -197,19 +215,23 @@ void	player_controls(t_game *game)
 	oldPlaneX = player->plane.x;
 	if (input_keyheld(&game->input, KEY_W))
 	{
-		if (map[map_index((int)(player->pos.x + player->dir.x * player->moveSpeed),(int)player->pos.y)] == false)
+		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.x * player->moveSpeed), (int)player->pos.y);
+		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y + player->dir.y * player->moveSpeed));
+		if (horz->type == FLOOR)
 			player->pos.x += player->dir.x * player->moveSpeed;
-		if (map[map_index((int)player->pos.x,(int)(player->pos.y + player->dir.y * player->moveSpeed))] == false)
+		if (vert->type == FLOOR)
 			player->pos.y += player->dir.y * player->moveSpeed;
 	}
 	if (input_keyheld(&game->input, KEY_S))
 	{
-		if (map[map_index((int)(player->pos.x - player->dir.x * player->moveSpeed),(int)player->pos.y)] == false)
+		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x - player->dir.x * player->moveSpeed), (int)player->pos.y);
+		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.y * player->moveSpeed));
+		if (horz->type == FLOOR)
 			player->pos.x -= player->dir.x * player->moveSpeed;
-		if (map[map_index((int)player->pos.x,(int)(player->pos.y - player->dir.y * player->moveSpeed))] == false)
+		if (vert->type == FLOOR)
 			player->pos.y -= player->dir.y * player->moveSpeed;
 	}
-	if (input_keyheld(&game->input, KEY_A))
+	if (input_keyheld(&game->input, KEY_D))
 	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(-player->rotSpeed) - player->dir.y * sin(-player->rotSpeed);
@@ -217,7 +239,7 @@ void	player_controls(t_game *game)
 		player->plane.x = player->plane.x * cos(-player->rotSpeed) - player->plane.y * sin(-player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(-player->rotSpeed) + player->plane.y * cos(-player->rotSpeed);
 	}
-	if (input_keyheld(&game->input, KEY_D))
+	if (input_keyheld(&game->input, KEY_A))
 	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(player->rotSpeed) - player->dir.y * sin(player->rotSpeed);
@@ -227,64 +249,111 @@ void	player_controls(t_game *game)
 	}
 }
 
-void render_map_view(t_game *game)
+typedef struct s_vertical
 {
-	const int cell_width = SCR_WIDTH / MAP_WIDTH;
-	const int cell_height = SCR_HEIGHT / MAP_HEIGHT;
-	int y = -1;
-	while (++y < MAP_HEIGHT)
+	int			x;
+	double		camera_x;
+	t_vec2		dir;
+	t_rayinfo	ray;
+
+}			t_vertical;
+
+typedef struct s_column
+{
+	int		texture;
+	int		shaded;
+	double	sample_dy;
+	int		x;
+	t_vec2	uv;
+	t_vec2i	sample;
+	t_vec2i	range;
+}			t_column;
+
+t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
+{
+	t_column col;
+	int height;
+
+	col.texture = map_get_tile(&game->world->map, hit.x, hit.y).tex;
+	col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+	if (hit.side == 0)
+		col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
+	col.uv.x -= floor(col.uv.x);
+	col.sample.x = (int)(col.uv.x * (double)WALL_TEX_SIZE);
+	if (hit.side == 0 && vertical->dir.x > 0)
+		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
+	if (hit.side == 1 && vertical->dir.y < 0)
+		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
+	height = (int)(R_HEIGHT / hit.depth);
+	col.range.s = -height / 2 + R_HEIGHT / 2;
+	if (col.range.s < 0)
+		col.range.s = 0;
+	col.range.e = height / 2 + R_HEIGHT / 2;
+	if (col.range.e >= R_HEIGHT)
+		col.range.e = R_HEIGHT - 1;
+	col.sample_dy = 1.0 * WALL_TEX_SIZE / height;
+	col.uv.y = (col.range.s - R_HEIGHT / 2 + height / 2) * col.sample_dy;
+	col.shaded = hit.side == 1;
+	return (col);
+}
+
+void	render_column(t_game *game, t_column col)
+{
+	int	f;
+	int	s;
+	int	y;
+
+	y = col.range.s;
+	while (++y < col.range.e)
 	{
-		int x = -1;
-		while (++x < MAP_WIDTH)
+		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
+		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
+		if ((f & M_APLHA) != R_ALPHA)
 		{
-			t_vec2 cell = map_to_screen(v2new(x ,y));
-			if (map[map_index(x, y)] > 0)
-				texture_draw_square(texture_get_debug_view(game, 1), cell,\
-				 v2new(cell_width, cell_height), R_ALPHA | 0xffffff);
+			s = pixel_get(game->rt1, col.x, y);
+			f = colour_blend(f, s);
 		}
+		col.uv.y += col.sample_dy;
+		if (col.shaded == 1)
+			f = (f >> 1) & 0x7F7F7F;
+		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
+	}
+}
+
+
+void	render_vertical(t_game *game, t_vertical info)
+{
+	t_column	col;
+	int			d;
+
+	d = info.ray.hits;
+	while (--d >= 0)
+	{
+		col = calculate_column(game, &info, info.ray.depths[d]);
+		col.x = info.x;
+		render_column(game, col);
 	}
 }
 
 void	render(t_game *game)
 {
+	t_vertical	vert;
+
 	player_controls(game);
-
 	input_process(&game->input);
-
-	texture_clear(game->rt0); // Window 1
-	texture_clear(game->rt1); // Window 2
-
-	render_map_view(game); // Window 2 (later window 1)
-	int i = 0;
-	while (i < SCR_HEIGHT)
+	render_floor(game);
+	vert.x = -1;
+	while (++vert.x < R_HEIGHT)
 	{
-		double cameraX = 2 * i / (double)SCR_WIDTH - 1;
-		t_vec2 dir = v2add(game->player.dir, v2muls(game->player.plane, cameraX));
-		t_rayinfo ray = raycast(map, game->player.pos, dir);
-		t_vec2 intersect = v2add(game->player.pos, v2muls(dir, ray.depths[0].depth));
-		//Calculate height of line to draw on screen
-		int lineHeight = (int)(SCR_HEIGHT / ray.depths[0].depth);
-		//calculate lowest and highest pixel to fill in current stripe
-		int drawStart = -lineHeight / 2 + SCR_HEIGHT / 2;
-		if(drawStart < 0)
-			drawStart = 0;
-		int drawEnd = lineHeight / 2 + SCR_HEIGHT / 2;
-		if(drawEnd >= SCR_HEIGHT)
-			drawEnd = SCR_HEIGHT - 1;
-		int c = drawStart - 1;
-		while (++c < drawEnd)
-		{
-			int col = 0xff;
-			if (ray.depths[0].side)
-				col = 0xff00;
-			pixel_set_s(game->rt0, i, c, R_ALPHA | col);
-		}
-		i++;
-		texture_draw_square(game->rt1, map_to_screen(intersect), v2new(5,5), R_ALPHA | 0xff0000);
+		vert.camera_x = 2 * vert.x / (double)R_WIDTH - 1;
+		vert.dir = v2add(game->player.dir, \
+		v2muls(game->player.plane, vert.camera_x));
+		vert.ray = raycast(game, game->player.pos, vert.dir);
+		if (vert.x == R_HEIGHT / 2)
+			game->half = vert.ray;
+		render_vertical(game, vert);
 	}
-	texture_draw_square(game->rt1, map_to_screen(game->player.pos), v2new(5,5), R_ALPHA | 0xff);
-	texture_draw_line(game->rt1, map_to_screen(game->player.pos), v2add(map_to_screen(game->player.pos), v2muls(game->player.plane,  50)), R_ALPHA | 0x00ff);
-	texture_draw(game, game->rt0, v2new(0,0));
-	texture_draw_debug_view(game, 1);
-	measure_frame_rate(game->app);
+	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
+	texture_draw(game, game->rt0, v2new(0, 0));
+	draw_debug_info(game);
 }

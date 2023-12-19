@@ -10,6 +10,7 @@
 # define MAP_MAX_XY 200
 # define MAP_MAX_X MAP_MAX_XY
 # define MAP_MAX_Y MAP_MAX_XY
+# define G_MAPTABLE_LEN 6
 
 typedef enum	e_tiletype
 {
@@ -43,6 +44,8 @@ typedef enum e_mapissue
 typedef struct	s_tile
 {
 	t_tiletype	type;
+	uint8_t		tex;
+	bool		vis: 1;
 }				t_tile;
 
 typedef struct	s_mod
@@ -53,7 +56,7 @@ typedef struct	s_mod
 
 typedef struct	s_map
 {
-	t_tile	tiles[MAP_MAX_X * MAP_MAX_Y];
+	t_tile		tiles[MAP_MAX_X * MAP_MAX_Y];
 	t_mod		mods[MAP_MODIFICATION_SIZE];
 	t_vec2		s_pos;
 	uint8_t		width;
@@ -62,6 +65,7 @@ typedef struct	s_map
 	int			color_ceiling;
 	int			color_floor;
 }				t_map;
+
 
 typedef struct	s_world
 {
@@ -75,9 +79,9 @@ typedef struct	s_world
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
 
 
-
-
-
+typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
+extern char *const    g_mapsymbols[G_MAPTABLE_LEN];
+extern t_ex_action const    g_mapfuncs[G_MAPTABLE_LEN];
 
 t_player	player_setup(t_list *curr, t_world *world);
 int	map_width_size(t_list *curr);
@@ -111,4 +115,7 @@ int error_return(char *msg, int exit_code, int print_error, t_list **free_me);
 int error_with(char *msg, int value, int print_error);
 void	deallocate_list(t_list **raw_map_file);
 
+
+
+void map_default_map_init(t_world *world);
 #endif

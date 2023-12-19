@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   ft_lstremove.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 13:50:37 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 16:50:37 by clovell          ###   ########.fr       */
+/*   Created: 2023/03/14 16:33:25 by clovell           #+#    #+#             */
+/*   Updated: 2023/11/27 19:21:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef UTILS_H
-# define UTILS_H
-# include "vector2.h"
-# include "texture.h"
-# include "state.h"
+#include "libft.h"
 
-void    texture_draw(t_game *gs, t_texture tex, t_vec2 pos);
-
-void	on_key_press(int key, t_game *game);
-void	on_mouse(int key, int x, int y, t_game *game);
-void	on_mouse_move(int x, int y, t_game *game);
-
-void	render_floor(t_game *game);
-void	render(t_game *ctx);
-#endif
+int	ft_lstremove(t_list **lst, t_list *target, void (*del)(void*))
+{
+	while (*lst != NULL)
+	{
+		if (lst[0] == target)
+		{
+			lst[0] = target->next;
+			ft_lstdelone(target, del);
+			return (1);
+		}
+		lst = &lst[0]->next;
+	}
+	return (0);
+}

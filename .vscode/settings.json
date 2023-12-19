@@ -28,6 +28,23 @@
 		"stdbool.h": "c",
 		"keys.h": "c",
 		"types.h": "c",
-		"__node_handle": "c"
+		"__node_handle": "c",
+<<<<<<< HEAD
+		"*.tcc": "c",
+		"fcntl.h": "c",
+		"unistd.h": "c",
+		"vector2.h": "c",
+		"mlx_int.h": "c",
+		"string.h": "c",
+		"random": "c",
+		"keysym.h": "c",
+		"keysymdef.h": "c",
+		"system_error": "c",
+		"map.h": "c",
+		"errno.h": "c",
+		"get_next_line.h": "c"
+=======
+		"*.tcc": "c"
+>>>>>>> 16a74a2 (Add wall textures to core raycast implementation)
 	}
 }
