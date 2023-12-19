@@ -13,13 +13,8 @@ SRCSF = $(TEST) \
 		render/floor_render.c \
 		render/line.c \
 		util/time.c \
-		input/input.c \
-		input/input_hooks.c \
-		input/input_setup.c \
-		input/keys.c \
 		util/error_handler.c \
 		util/string_utils.c \
-		cerror.c \
 		map_parser/map_setup.c \
 		map_parser/map_dimensions.c \
 		map_parser/map_tile_processing.c \
@@ -31,6 +26,11 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_floor_ceiling_color.c \
 		entities/player_setup.c \
+		input/input.c \
+		input/input_hooks.c \
+		input/input_setup.c \
+		input/keys.c \
+		cerror.c \
 
 INCSF = cubed.h
 

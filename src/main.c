@@ -89,6 +89,11 @@ int	main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
+
+	t_world	world;
+	world = world_preset(argc, argv, &world);
+//	map_print(&world.map);
+
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
 	*game.world = (t_world){0};
@@ -104,4 +109,5 @@ int	main(int argc, char **argv)
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);
+
 }

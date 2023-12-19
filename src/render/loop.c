@@ -353,7 +353,7 @@ void	render(t_game *game)
 			game->half = vert.ray;
 		render_vertical(game, vert);
 	}
-	//texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
-	texture_draw(game, game->rt1, v2new(0, 0));
+	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
+	texture_draw(game, game->rt0, v2new(0, 0));
 	draw_debug_info(game);
 }

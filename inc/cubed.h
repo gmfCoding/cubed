@@ -40,7 +40,7 @@
 typedef struct s_vec2f t_vec2f;
 //typedef struct s_cellinfo t_cellinfo;
 
-//typedef uint8_t t_cellheight;
+typedef uint8_t t_cellheight;
 
 typedef union u_texid t_texid;
 

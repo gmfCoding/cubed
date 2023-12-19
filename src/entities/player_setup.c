@@ -67,9 +67,7 @@ t_player	player_setup(t_list *curr, t_world *world)
 	t_player	player;
 
 	player_pos_setup(curr, &player);
-	player.dir = v2new(-1, 0);
-	player.plane = v2new(0, 0.5);
-	player.moveSpeed = 1 / R_TFR * 2.0;
-	player.rotSpeed = 1 / R_TFR * 2.0;
+	player.moveSpeed = 0.05;
+	player.rotSpeed = 0.001;
 	return (player);
 }

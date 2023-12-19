@@ -20,7 +20,6 @@ void	deallocate_list(t_list **raw_map_file)
 	curr = *raw_map_file;
 	while (curr != NULL)
 	{
-		printf("harrr\n");
 		temp = curr;
 		curr = curr->next;
 		free(temp->content);
@@ -88,7 +87,7 @@ t_map	map_parse(int argc, char **argv, t_world *world)
 	char	*map_str;
 
 	if (argc == 1)
-		map_str = "/assets/maps/map1.cub";
+		map_str = "assets/maps/map1.cub";
 	else if (argc == 2)
 		map_str = argv[1];
 	else
