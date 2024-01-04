@@ -1,51 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector2.h                                          :+:      :+:    :+:   */
+/*   vector3.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/04 01:17:14 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/04 01:16:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef VECTOR2_H
-# define VECTOR2_H
+#ifndef VECTOR3_H
+# define VECTOR3_H
 
 typedef double	t_vecd;
 
-typedef struct s_vec2
+typedef struct s_vec3
 {
 	t_vecd	x;
 	t_vecd	y;
-}				t_vec2;
+	t_vecd	z;
+}				t_vec3;
 
-t_vec2	v2new(t_vecd x, t_vecd y);
+t_vec3	v3new(t_vecd x, t_vecd y, t_vecd z);
 
 /* Adds a vector to another */
-t_vec2	v2add(t_vec2 f, t_vec2 s);
+t_vec3	v3add(t_vec3 f, t_vec3 s);
 
 /* Subtracts a vector from another */
-t_vec2	v2sub(t_vec2 f, t_vec2 s);
+t_vec3	v3sub(t_vec3 f, t_vec3 s);
 
-/* Inverts the components of a vector, essentially reversing the direction. */
-t_vec2	v2inv(t_vec2 s);
+/* Reverse the components of a vector, essentially reversing the direction. */
+t_vec3	v3rev(t_vec3 s);
 
 /* Multiplies a vector by another */
-t_vec2	v2mulv(t_vec2 f, t_vec2 s);
+t_vec3	v3mulv(t_vec3 f, t_vec3 s);
 
 /* Scales the size of a vector by s */
-t_vec2	v2muls(t_vec2 f, t_vecd s);
+t_vec3	v3muls(t_vec3 f, t_vecd s);
 
 /* Return the squared magnitude of a vector */
-t_vecd	v2sqrmag(t_vec2 vec);
+t_vecd	v3sqrmag(t_vec3 vec);
 
 /* Returns the magnitude of a vector */
-t_vecd	v2mag(t_vec2 vec);
+t_vecd	v3mag(t_vec3 vec);
 
 /* Returns a normalised (length of 1) copy of a vector */
-t_vec2	v2norm(t_vec2 vec);
+t_vec3	v3norm(t_vec3 vec);
 
-/* Returns the determinate (perp cross product)*/
-t_vecd v2det(t_vec2 a, t_vec2 b);
+/* Returns cross product of two vectors */
+t_vec3 v3cross(t_vec3 a, t_vec3 b);
+
+/* Returns dpt product of two vectors */
+t_vecd	v3dot(t_vec3 a, t_vec3 b);
+
+/* Returns component wise division c = c / s */
+t_vec3	v3divs(t_vec3 f, t_vecd s);
+
+/* Returns component-wise inverse division c = s / c */
+t_vec3	v3sdiv(t_vecd s, t_vec3 f);
+
+/* Returns component-wise inverse c = 1 / c */
+t_vec3	v3inv(t_vec3 f);
 #endif

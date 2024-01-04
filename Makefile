@@ -8,6 +8,11 @@ SRCSF = $(TEST) \
 		vector/vector2i_math_extra.c \
 		vector/vector2i_math.c \
 		vector/vector2i.c \
+		vector/vector3_math_extra.c \
+		vector/vector3_math.c \
+		vector/vector3_math_div.c \
+		vector/vector3.c \
+		vector/vector_conv.c \
 		render/render_util.c \
 		render/loop.c \
 		render/floor_render.c \
@@ -30,6 +35,12 @@ SRCSF = $(TEST) \
 		input/input_hooks.c \
 		input/input_setup.c \
 		input/keys.c \
+		task/task.c \
+		task/orbit.c \
+		task/orbit/anom_extra.c \
+		task/orbit/anompure.c \
+		task/orbit/keplercart.c \
+		task/orbit/orbit_prop.c \
 		cerror.c \
 
 INCSF = cubed.h
