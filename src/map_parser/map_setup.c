@@ -10,48 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "state.h"
+#include "map.h"
 
-void	deallocate_list(t_list **raw_map_file)
-{
-	t_list	*curr;
-	t_list	*temp;
-
-	curr = *raw_map_file;
-	while (curr != NULL)
-	{
-		temp = curr;
-		curr = curr->next;
-		free(temp->content);
-		free(temp);
-	}
-}
-
-t_list	*ft_lst_readfile(const char *path)
-{
-	t_list	*first;
-	t_list	*next;
-	char	*line;
-	int		fd;
-
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	first = ft_lstnew((void *)0);
-	next = first;
-	line = get_next_line(fd);
-	while (line)
-	{
-		next->next = ft_lstnew(line);
-		next = next->next;
-		(first->content)++;
-		line = get_next_line(fd);
-	}
-	close (fd);
-	next->next = ft_lstnew(NULL);
-	return (first);
-}
-
+/*
+ * creates a link_list and checks if the map file is read
+ * removes empty lines and replaces tabs with spaces
+ * skips over modifiers in the list and checks map content is
+ * correctly formatted initializes map and players start postion
+ * calls setup modifiers and deallocates same link_list
+ * the content is str_dup and if freed at a later point
+ */
 t_map	map_init(t_map *map, char *map_str, t_game *game)
 {
 	t_list	*curr;
@@ -81,6 +50,13 @@ t_map	map_init(t_map *map, char *map_str, t_game *game)
 	return (*map);
 }
 
+/*
+ * this fuction chooses where to get the map content 
+ * currently if there is only 1 argument it will call
+ * a default map but will need to change this if there
+ * is map selection from splash/title screen and pass
+ * the mapstr or a map number to this fuction
+ */
 t_map	map_parse(int argc, char **argv, t_game *game)
 {
 	t_map	map;

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "map.h"
 
 int	mod_strlen(const char *str)
 {
@@ -57,7 +57,7 @@ void	remove_spaces(char *str)
 	str[i + 1] = '\0';
 }
 
-int	is_line(const char *line)
+int	is_empty_line(const char *line)
 {
 	int	i;
 

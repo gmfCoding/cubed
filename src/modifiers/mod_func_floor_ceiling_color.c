@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "map.h"
 
 void	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 {

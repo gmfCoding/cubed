@@ -1,10 +1,15 @@
 #ifndef MAP_H
 # define MAP_H
 
-#include <stdbool.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdbool.h>
+# include <inttypes.h>
+# include <stdlib.h>
+# include <stdio.h>
 
+# include <vector2.h>
 # include "libft.h"
-
 # define TAB_SIZE 4
 # define FILE_TYPE ".xpm"
 # define MAP_MODIFICATION_SIZE 100
@@ -97,7 +102,9 @@ typedef struct	s_entity
 	t_key	keys[MAX_ENT];
 
 }		t_entity;
+
 typedef struct s_player t_player;
+
 typedef struct	s_world
 {
 	t_map		map;
@@ -107,11 +114,6 @@ typedef struct	s_world
 }			t_world;
 
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
-
-
-
-
-
 
 t_player	player_setup(t_list *curr);
 int	map_width_size(t_list *curr);
@@ -138,16 +140,16 @@ void	mod_gen_f(char *content, int index, t_world *world, t_map *map);
 void	mod_gen_dr(char *content, int index, t_world *world, t_map *map);
 void	mod_gen_ke(char *content, int index, t_world *world, t_map *map);
 
-
+t_list	*ft_lst_readfile(const char *path);
 int	mod_strlen(const char *str);
 int	ft_strcmp(char *s1, char *s2);
 void	free_str_array(char **str);
 void	free_content(t_game *game);
 int	ft_isspace(int c);
-void remove_spaces(char *str);
-int	is_line(const char *line);
-int error_return(char *msg, int exit_code, int print_error, t_list **free_me);
-int error_with(char *msg, int value, int print_error);
+void	remove_spaces(char *str);
+int	is_empty_line(const char *line);
+int	error_return(char *msg, int exit_code, int print_error, t_list **free_me);
+int	error_with(char *msg, int value, int print_error);
 void	deallocate_list(t_list **raw_map_file);
 
 #endif

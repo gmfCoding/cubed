@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "map.h"
 
 /*NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED,VERTICLE */
 void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
