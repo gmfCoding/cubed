@@ -12,7 +12,7 @@
 
 #include "map.h"
 
-/*NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED,VERTICLE */
+/*NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED*/
 void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
 {
 	static int	dr_count = 0;
@@ -31,7 +31,6 @@ void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
 	world->ent->doors[dr_count].speed = ft_atoi(dr[4]);
 	world->ent->doors[dr_count].closed = (dr[5][0] == 'C') ? true : false;
 	world->ent->doors[dr_count].locked = (dr[6][0] == 'L') ? true : false;
-	world->ent->doors[dr_count].vertical = (dr[7][0] == 'V') ? true : false;
 	map->tiles[ft_atoi(dr[3]) * map->width + ft_atoi(dr[2]) -1].type = DOOR;
 	free_str_array(dr);
 }
