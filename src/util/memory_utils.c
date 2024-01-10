@@ -26,8 +26,8 @@ void	free_content(t_game *game)
 	int	i;
 
 	i = -1;
-	while(game->world.map.mods[++i].content != NULL)
-		free(game->world.map.mods[i].content);
+	while(game->world->map.mods[++i].content != NULL)
+		free(game->world->map.mods[i].content);
 }
 
 /*

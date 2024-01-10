@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.h"
-
+//#include "map.h"
+#include "cubed.h"
 /*
  * ADD MODIFIERS 
  * here is where you can add modifiers or anything addition to the game
