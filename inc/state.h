@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/29 16:59:50 by kmordaun         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:35:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 
 #include "input.h"
 #include "texture.h"
+/*D
 #include "map.h"
 typedef struct s_world t_world;
+*/
+#include "ray.h"
+
 typedef struct s_game t_game;
 
 #define MAX_DEBUG_VIEWS 10
@@ -48,13 +52,20 @@ struct s_app
 	void *win;
 };
 
+/*
 //typedef struct s_world t_world;
+*/
+typedef struct s_world t_world;
+
+
 struct s_game
 {
-	t_app	app;
-	t_texture rt0;
-	t_texture rt1;
+	t_app			app;
+	t_texture		rt0;
+	t_texture		rt1;
+	t_texture		rt2;
 
+/*
 	t_vec2 mouse;
 	t_vec2 pos;
 //	t_world	world;
@@ -62,8 +73,19 @@ struct s_game
 	int view_count;
 	t_world		world;
 	t_player	player;
+*/
+	t_vec2			mouse;
+	t_vec2			pos;
 
-	t_inputctx input;
+	t_debug_texture	views[MAX_DEBUG_VIEWS];
+	int				view_count;
+
+	t_player		player;
+	t_texture		textures[8];
+	t_world			*world;
+
+	t_inputctx		input;
+	t_rayinfo		half;
 };
 
 void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);

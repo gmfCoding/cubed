@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   line.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/19 12:27:00 by clovell           #+#    #+#             */
+/*   Updated: 2023/12/01 00:09:17 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include <math.h>
 #include "texture.h"
 #include "vector2.h"
@@ -19,12 +30,12 @@
 // 		end->y = maxY - 1;
 // }
 
-static void bres_line_low(t_texture data, t_vec2 start, t_vec2 end, int colour)
+static void	bres_line_low(t_texture dst, t_vec2 start, t_vec2 end, int colour)
 {
 	t_vec2	pos;
 	t_vec2	dv;
 	int		yi;
-	int		D;
+	int		error;
 
 	//bres_clip(&start, &end, data.width, data.height);
 	dv = v2sub(end, start);
@@ -33,28 +44,27 @@ static void bres_line_low(t_texture data, t_vec2 start, t_vec2 end, int colour)
 		yi = -1;
 	if (dv.y < 0)
 		dv.y = -dv.y;
-	D = (2 * dv.y) - dv.x;
+	error = (2 * dv.y) - dv.x;
 	pos = start;
 	while (pos.x <= end.x)
 	{
-		if (pos.x >= 0 && pos.x < data.width && pos.y >= 0 && pos.y < data.height)
-			pixel_set(data, (int)pos.x, (int)pos.y, colour);
-		if (D > 0)
+		pixel_set_s(dst, (int)pos.x, (int)pos.y, colour);
+		if (error > 0)
 			pos.y = pos.y + yi;
-		if (D > 0)
-			D = D + (2 * (dv.y - dv.x));
+		if (error > 0)
+			error = error + (2 * (dv.y - dv.x));
 		else
-			D = D + 2 * dv.y;
+			error = error + 2 * dv.y;
 		pos.x++;
 	}
 }
 
-static void bres_line_high(t_texture data, t_vec2 start, t_vec2 end, int colour)
+static void	bres_line_high(t_texture dst, t_vec2 start, t_vec2 end, int colour)
 {
 	t_vec2	pos;
 	t_vec2	dv;
 	int		xi;
-	int		D;
+	int		error;
 
 	//bres_clip(&start, &end, data.width, data.height);
 	dv = v2sub(end, start);
@@ -63,24 +73,22 @@ static void bres_line_high(t_texture data, t_vec2 start, t_vec2 end, int colour)
 		xi = -1;
 	if (dv.x < 0)
 		dv.x = -dv.x;
-	D = (2 * dv.x) - dv.y;
+	error = (2 * dv.x) - dv.y;
 	pos = start;
 	while (pos.y <= end.y)
 	{
-		// TODO instead of checking every pixel, squish the end and start to be within the screen, bres_clip.
-		if (pos.x >= 0 && pos.x < data.width && pos.y >= 0 && pos.y < data.height)
-			pixel_set(data, (int)pos.x, (int)pos.y, colour);
-		if (D > 0)
+		pixel_set_s(dst, (int)pos.x, (int)pos.y, colour);
+		if (error > 0)
 			pos.x = pos.x + xi;
-		if (D > 0)
-			D = D + (2 * (dv.x - dv.y));
+		if (error > 0)
+			error = error + (2 * (dv.x - dv.y));
 		else
-			D = D + 2 * dv.x;
+			error = error + 2 * dv.x;
 		pos.y++;
 	}
 }
 
-void texture_draw_line(t_texture data, t_vec2 start, t_vec2 end, int colour)
+void	texture_draw_line(t_texture data, t_vec2 start, t_vec2 end, int colour)
 {
 	if (fabs(end.y - start.y) < fabs(end.x - start.x))
 	{
@@ -98,10 +106,11 @@ void texture_draw_line(t_texture data, t_vec2 start, t_vec2 end, int colour)
 	}
 }
 
-void texture_draw_square(t_texture data, t_vec2 start, t_vec2 width, int colour)
+void	texture_draw_square(
+	t_texture dst, t_vec2 start, t_vec2 width, int colour)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = -1;
 	while (++y < width.y)
@@ -109,7 +118,7 @@ void texture_draw_square(t_texture data, t_vec2 start, t_vec2 width, int colour)
 		x = -1;
 		while (++x < width.x)
 		{
-			pixel_set_s(data, start.x + x, start.y + y, colour);
+			pixel_set_s(dst, start.x + x, start.y + y, colour);
 		}
 	}
 }

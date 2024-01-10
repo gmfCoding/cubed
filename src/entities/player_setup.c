@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_setup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 13:57:10 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:42:07 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ t_player	player_setup(t_list *curr)
 	t_player	player;
 
 	player_pos_setup(curr, &player);
-	player.moveSpeed = 0.05;
-	player.rotSpeed = 0.001;
+	player.plane = v2new(0.5,0);
+	player.moveSpeed = 1.0 / R_TFR * 2.0;
+	player.rotSpeed =  1.0 / R_TFR * 2.0;
 	return (player);
 }

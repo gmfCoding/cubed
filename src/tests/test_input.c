@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:41:09 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:42:27 by clovell          ###   ########.fr       */
+/*   Updated: 2023/12/13 17:24:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main(void)
 	
 	game = (t_game){0};
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+	game.win = mlx_new_window(game.mlx, R_WIDTH, R_HEIGHT, "cub3d");
 	game.input = (t_inputctx){0};
 
 	input_setup(&game);

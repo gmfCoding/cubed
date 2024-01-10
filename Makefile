@@ -10,6 +10,7 @@ SRCSF = $(TEST) \
 		vector/vector2i.c \
 		render/render_util.c \
 		render/loop.c \
+		render/floor_render.c \
 		render/line.c \
 		util/time.c \
 		util/error_handler.c \
@@ -21,6 +22,7 @@ SRCSF = $(TEST) \
 		map_parser/map_tools.c \
 		map_parser/map_checker_tile.c \
 		map_parser/map_checker_element.c \
+		map_parser/map_default_map.c \
 		modifiers/modifier_setup.c \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_floor_ceiling_color.c \
@@ -76,25 +78,24 @@ LIB-L = $(patsubst %,-L$(DIRLIB)/%, $(dir $(LIBSF)))
 CC = cc
 
 WFLAGS =#-Wall -Werror -Wextra
-CPPFLAGS =-I$(DIRINC) $(LIB-I)  -MMD -MP
+CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
-PGFLAGS = #-pg
-OPFLAG = -O4
+OPFLAG = -Ofast
+OPTS = $(OPT)
 
-# REMOVE BEFORE EVAL
-ifeq ($(DEBUG), )
-$(warning USING DEFAULT DEBUG FLAGS (REMOVE BEFORE EVAL))
-DEBUG =1
-OPFLAG =-O0
+ifneq (,$(findstring def,$(OPTS)))
+OPTS = fsan,debug
 endif
-
-# DEBUG LEVEL 1
-ifeq ($(shell test $(DEBUG) -ge 1; echo $$?),0)
-	DFLAGS += -g3 -fsanitize=address
+ifneq (,$(findstring debug,$(OPTS)))
+	OPFLAG = -O0
+	DFLAGS += -g3
 endif
-ifeq ($(shell test $(DEBUG) -ge 2; echo $$?),0)
-	PGFLAGS = -pg
+ifneq (,$(findstring fsan,$(OPTS)))
+	DFLAGS += -fsanitize=address
+endif
+ifneq (,$(findstring gmon,$(OPTS)))
+	PGFLAGS += -pg
 endif
 
 ifeq ($(EXTRA),1)
@@ -140,13 +141,13 @@ re: fclean all
 -include $(DEPS)
 
 $(DIRLIB)/$(LIBFT):
-	make -s -C $(dir $@) all bonus
+	make -s -C $(dir $@) all bonus DFLAGS="$(DFLAGS)"
 
 $(DIRLIB)/$(LIBGNL):
-	make -s -C $(dir $@) all
+	make -s -C $(dir $@) all DFLAGS="$(DFLAGS)"
 
 $(DIRLIB)/$(LIBMLX):
-	make -s -C $(dir $@)
+	make -s -C $(dir $@) DFLAGS="$(DFLAGS)"
 
 $(DIRLIB)/$(LIBMLX_SO): $(LIBMLX)
 	cp $(DIRMLX)/libmlx.so ./libmlx.so

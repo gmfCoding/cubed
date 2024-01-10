@@ -42,8 +42,9 @@ if [[ $? -ne 0 ]]; then
 	pip3 install Pillow
 fi
 
-if [[ $? -ne 0 ]] | [[ $UPDATE == 1 ]]; then
-	pip3 install git+https://github.com/gmfCoding/xpm_argb.git@master
+python3 -c "import xpm"
+if [[ $? -ne 0 ]] || [[ $UPDATE == 1 ]]; then
+	pip3 install --upgrade --force-reinstall git+https://github.com/gmfCoding/xpm_argb.git@master
 fi
 
 OWD=$(pwd)

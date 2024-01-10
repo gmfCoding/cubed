@@ -4,9 +4,12 @@
 
 //#include "extra/optimised.h"
 # include "texture.h"
+/*
 # include "map.h"
 # include "state.h"
+*/
 # include "render.h"
+# include "map.h"
 # include "libft.h"
 # include "get_next_line.h"
 
@@ -17,49 +20,31 @@
 # include <stddef.h>
 # include <errno.h>
 
-# define SCR_WIDTH  960
-# define SCR_HEIGHT 960
+#define PI 3.141592653589
 
-# define RT0_WIDTH SCR_WIDTH
-# define RT0_HEIGHT SCR_HEIGHT
+// define DEG2RAD PI / 180.0
+# define DEG2RAD 0.01745329251993888888888888888889
+# define RAD2DEG 57.2957795131
 
+# ifdef __linux__
+#  define R_ALPHA 0xff000000
+#  else
+#  define R_ALPHA 0x00000000
+# endif
+
+# define MAX_RAYCAST_DIST 100
 # define MAX_DEPTHS 5
 # define MAX_TEX_BF 4
 
-
-
-# define TARGET_FRAME_RATE 60.0
-# define R_TFR TARGET_FRAME_RATE
+# define OF_ALPHA 24
+# define OF_RED   16
+# define OF_GREEN 8
+# define OF_BLUE  0
 
 typedef struct s_vec2f t_vec2f;
 //typedef struct s_cellinfo t_cellinfo;
 
-//typedef uint8_t t_cellheight;
-
-/**
- * @param depth Distance from the normal plane
- * @param dist Distance from the start
- * @param minX The smallest height of the ray
- * @param minY The largest height of the ray
-*/
-typedef struct s_hitpoint t_hitpoint;
-struct s_hitpoint
-{
-	float depth;
-	float dist;
-	float minX;
-	float minY;
-	int x;
-	int y;
-	int side;
-};
-
-typedef struct s_rayinfo t_rayinfo;
-struct s_rayinfo
-{
-	t_hitpoint	depths[MAX_DEPTHS];
-	uint8_t		hits;
-};
+typedef uint8_t t_cellheight;
 
 typedef union u_texid t_texid;
 
@@ -88,6 +73,7 @@ struct s_map
 
 };
 */
+
 
 /* util/time.c */
 int64_t	time_get_ms(void);
