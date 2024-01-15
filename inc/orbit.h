@@ -11,6 +11,15 @@
 #define EA_MAX_ERROR 10e-13
 #define EA_MAX_ITER 100
 
+
+/// @brief Kepler element precision
+typedef enum e_elem_prec
+{
+	ELEM_NONE,
+	ELEM_EXACT,
+	ELEM_DERIVED,
+} t_kpep;
+
 typedef struct s_orb_body
 {
     double radius;
@@ -55,18 +64,18 @@ typedef struct s_kep_use
 	{
 		struct
 		{		
-			bool	sma : 1;
-			bool	apo : 1;
-			bool	per : 1;
-			bool	ecc : 1;
-			bool	aop : 1;
-			bool	lan : 1;
-			bool	inc : 1;
-			bool	mna : 1;
-			bool	ta : 1;
-			bool	ea : 1;
+			t_kpep	sma;
+			t_kpep	apo;
+			t_kpep	per;
+			t_kpep	ecc;
+			t_kpep	aop;
+			t_kpep	lan;
+			t_kpep	inc;
+			t_kpep	mna;
+			t_kpep	ta;
+			t_kpep	ea;
 		};
-		short	encoded;
+		t_kpep	encoded[10];
 	};
 }			t_kep_use;
 
@@ -109,7 +118,7 @@ double  orb_ea_to_ma(double ea, double ecc);
 double	orb_ma_to_ta(double ma, double ecc);
 double	orb_ta_to_ma(double ta, double ecc);
 
-void	kep_elem_set(t_kep_orb *kep, double value, t_kpe prop);
+void	kep_elem_set(t_kep_orb *kep, double value, t_kpe prop, t_kpep prec);
 void	kep_complete(t_kep_orb *kep);
 
 void    orb_cart_to_kepler(t_cart_orb cart, t_kep_orb *kep);

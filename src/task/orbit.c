@@ -12,5 +12,5 @@ int    task_orbit_setup(t_game *game, t_task *task)
 int    task_orbit_render(t_game *game, t_task *task)
 {
     t_task_orbit *t = (t_task_orbit*)task;
-    texture_draw(game, t->pro_btn.tex, t->pro_btn.pos);
+    texture_draw(game->app, t->pro_btn.tex, t->pro_btn.pos);
 }

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:48:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/05 01:36:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,6 +354,6 @@ void	render(t_game *game)
 		render_vertical(game, vert);
 	}
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
-	texture_draw(game, game->rt0, v2new(0, 0));
+	texture_draw(game->app, game->rt0, v2new(0, 0));
 	draw_debug_info(game);
 }

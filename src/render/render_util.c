@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:37:56 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/05 01:35:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -15,9 +15,9 @@
 #include "texture.h"
 #include "state.h"
 
-void	texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
+void	texture_draw(t_app app, t_texture tex, t_vec2 pos)
 {
-	mlx_put_image_to_window(gs->app.mlx, gs->app.win, tex.img, pos.x, pos.y);
+	mlx_put_image_to_window(app.mlx, app.win, tex.img, pos.x, pos.y);
 }
 
 // int	colour_blend(int first, int second)

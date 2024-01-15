@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 18:29:39 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:24:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/05 01:36:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -85,7 +85,7 @@ static void	update(t_test_opacity *test)
 	i = -1;
 	while (++i < LEN_WIDGET)
 		texture_blit(test->widgets[i].tex, game->rt0, test->widgets[i].pos);
-	texture_draw(game, game->rt0, v2new(0, 0));
+	texture_draw(game->app, game->rt0, v2new(0, 0));
 	input_process(&game->input);
 }
 
