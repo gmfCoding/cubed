@@ -1,4 +1,5 @@
 #include "map.h"
+#include "state.h"
 
 #define MAP_WIDTH 24
 #define MAP_HEIGHT 24
@@ -57,7 +58,7 @@ int	texmap[MAP_WIDTH * MAP_HEIGHT] = {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 };
 
-
+/*
 void map_default_map_init(t_world *world)
 {
 	int	x;
@@ -80,4 +81,29 @@ void map_default_map_init(t_world *world)
 	world->player.plane = v2new(0, 0.5);
 	world->player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
 	world->player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
+}
+*/
+
+void map_default_map_init(t_game *game)
+{
+	int	x;
+	int	y;
+	game->world->map.width = MAP_WIDTH;
+	game->world->map.height = MAP_HEIGHT;
+	y = -1;
+	while (++y < MAP_HEIGHT)
+	{
+		x = -1;
+		while (++x < MAP_WIDTH)
+		{
+			game->world->map.tiles[x + y * MAP_WIDTH].type = map[x + y * MAP_WIDTH] > 0;
+			game->world->map.tiles[x + y * MAP_WIDTH].vis = map[x + y * MAP_WIDTH] > 1;
+			game->world->map.tiles[x + y * MAP_WIDTH].tex = texmap[x + y * MAP_WIDTH] - 1;
+		}
+	}
+	game->player.pos = v2new(22, 11.5);
+	game->player.dir = v2new(-1, 0);
+	game->player.plane = v2new(0, 0.5);
+	game->player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
+	game->player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
 }

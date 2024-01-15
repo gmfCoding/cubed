@@ -4,9 +4,8 @@
 # define NAME_SIZE 50
 # define MAX_ENT 100 
 # include <stdbool.h>
-typedef struct s_world t_world;
+typedef struct	s_world t_world;
 typedef struct	s_map t_map;
-typedef struct s_world t_world;
 
 typedef enum	e_modtype
 {

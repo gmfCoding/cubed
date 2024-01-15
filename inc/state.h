@@ -13,6 +13,7 @@
 #ifndef STATE_H
 # define STATE_H
 
+#include "player.h"
 #include "input.h"
 #include "texture.h"
 /*D
@@ -30,7 +31,7 @@ struct s_debug_texture
 	void *win;
 	t_texture rt;
 };
-
+/*
 typedef struct s_player t_player;
 
 struct s_player
@@ -42,7 +43,7 @@ struct s_player
 	double moveSpeed;
 	double rotSpeed;
 };
-
+*/
 typedef struct s_inputctx t_inputctx;
 
 typedef struct s_app t_app;
