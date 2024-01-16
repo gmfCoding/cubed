@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "map.h"
+#include "state.h"
 
 void	player_rot_setup(char rot, t_player *player)
 {
@@ -62,7 +63,11 @@ void	player_pos_setup(t_list *curr, t_player *player)
 	}
 }
 
-t_player	player_setup(t_list *curr, t_world *world)
+/*
+ * the function is called within the map_setup.c
+ */
+/*
+t_player	player_setup(t_list *curr)
 {
 	t_player	player;
 
@@ -71,4 +76,15 @@ t_player	player_setup(t_list *curr, t_world *world)
 	player.moveSpeed = 1.0 / R_TFR * 2.0;
 	player.rotSpeed =  1.0 / R_TFR * 2.0;
 	return (player);
+}
+*/
+void	player_setup(t_list *curr, t_game *game)
+{
+//	t_player	player;
+
+	player_pos_setup(curr, &game->player);
+	game->player.plane = v2new(0.5,0);
+	game->player.moveSpeed = 1.0 / R_TFR * 2.0;
+	game->player.rotSpeed =  1.0 / R_TFR * 2.0;
+//	return (player);
 }

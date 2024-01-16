@@ -15,6 +15,7 @@ SRCSF = $(TEST) \
 		util/time.c \
 		util/error_handler.c \
 		util/string_utils.c \
+		util/memory_utils.c \
 		map_parser/map_setup.c \
 		map_parser/map_dimensions.c \
 		map_parser/map_tile_processing.c \
@@ -25,6 +26,7 @@ SRCSF = $(TEST) \
 		modifiers/modifier_setup.c \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_floor_ceiling_color.c \
+		modifiers/mod_func_door_setup.c \
 		entities/player_setup.c \
 		input/input.c \
 		input/input_hooks.c \

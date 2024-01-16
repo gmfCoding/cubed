@@ -12,6 +12,8 @@
 
 #ifndef STATE_H
 # define STATE_H
+
+#include "player.h"
 #include "input.h"
 #include "texture.h"
 #include "ray.h"
@@ -26,20 +28,7 @@ struct s_debug_texture
 	t_texture rt;
 };
 
-typedef struct s_player t_player;
-
-struct s_player
-{
-	t_vec2 pos;
-	t_vec2 dir;
-	t_vec2 plane;
-
-	double moveSpeed;
-	double rotSpeed;
-};
-
 typedef struct s_inputctx t_inputctx;
-
 typedef struct s_app t_app;
 struct s_app
 {
