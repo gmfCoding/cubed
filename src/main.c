@@ -41,17 +41,7 @@ void	world_preset(int argc, char **argv, t_game *game)
 	else
 		map_default_map_init(game);
 }
-/*
-t_world	world_preset(int argc, char **argv, t_world *world)
-{
-	if (argc - 1 >= 1)
-		world->map = map_parse(argc, argv, world);
-	else
-		map_default_map_init(world);
-	return (*world);
 
-}
-*/
 void generate_textures(t_game *game)
 {
 	 game->textures[0] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
@@ -98,32 +88,14 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	(void)argc;
-	(void)argv;
-
-
-//	map_print(&world.map);
-
-/*
-	world_preset(argc, argv, &game);
-	printf("%s  %s  %f  %f  %d  %d\n", game.world.ent->keys[0].name, game.world.ent->keys[0].doorname, game.world.ent->keys[0].pos.x, \
+//	printf("%s  %s  %f  %f  %d  %d\n", game.world.ent->keys[0].name, game.world.ent->keys[0].doorname, game.world.ent->keys[0].pos.x, \
 		       	game.world.ent->keys[0].pos.y, game.world.ent->keys[0].auto_open, game.world.ent->keys[0].collected);
-	map_print(&game.world.map);
+//	free_content(&game);
 
-	free_content(&game);
-*/
-//	world_preset(argc, argv, &game);	
-//	t_world world;
-//	world = world_preset(argc, argv, &world);
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
 	*game.world = (t_world){0};
-//	*game.world = world_preset(argc, argv, game.world);
 	world_preset(argc, argv, &game);
-
-
-//	game.player = game.world->player;
-//	game.player = game.player;
 	map_print(&game.world->map);
 	game.app.mlx = mlx_init();
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);

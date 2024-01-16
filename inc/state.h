@@ -16,10 +16,6 @@
 #include "player.h"
 #include "input.h"
 #include "texture.h"
-/*D
-#include "map.h"
-typedef struct s_world t_world;
-*/
 #include "ray.h"
 
 typedef struct s_game t_game;
@@ -31,21 +27,8 @@ struct s_debug_texture
 	void *win;
 	t_texture rt;
 };
-/*
-typedef struct s_player t_player;
 
-struct s_player
-{
-	t_vec2 pos;
-	t_vec2 dir;
-	t_vec2 plane;
-
-	double moveSpeed;
-	double rotSpeed;
-};
-*/
 typedef struct s_inputctx t_inputctx;
-
 typedef struct s_app t_app;
 struct s_app
 {
@@ -53,11 +36,7 @@ struct s_app
 	void *win;
 };
 
-/*
-//typedef struct s_world t_world;
-*/
 typedef struct s_world t_world;
-
 
 struct s_game
 {
@@ -66,15 +45,6 @@ struct s_game
 	t_texture		rt1;
 	t_texture		rt2;
 
-/*
-	t_vec2 mouse;
-	t_vec2 pos;
-//	t_world	world;
-	t_debug_texture views[MAX_DEBUG_VIEWS];
-	int view_count;
-	t_world		world;
-	t_player	player;
-*/
 	t_vec2			mouse;
 	t_vec2			pos;
 

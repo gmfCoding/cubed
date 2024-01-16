@@ -12,6 +12,9 @@
 
 #include "map.h"
 
+/*
+ * used for floor colour in RGB seperated by a colon "F 255,255,10"
+ */
 void	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 {
 	char	**f;
@@ -24,6 +27,9 @@ void	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 	free_str_array(f);
 }
 
+/*
+ * used for ceiling colour in RGB seperated by a colon "C 123,10,13"
+ */
 void	mod_gen_c(char *content, int index, t_world *world, t_map *map)
 {
 	char	**c;

@@ -21,7 +21,6 @@ void	free_str_array(char **str)
  * free all the elements that have been allocated for 
  * all have been str_dup from link_list
  */
-/*
 void	free_content(t_game *game)
 {
 	int	i;
@@ -30,19 +29,6 @@ void	free_content(t_game *game)
 	while(game->world->map.mods[++i].content != NULL)
 		free(game->world->map.mods[i].content);
 }
-*/
-void	free_content(t_game *game)
-{
-	int	i;
-
-	i = -1;
-	while(game->world->map.mods[++i].content != NULL)
-		free(game->world->map.mods[i].content);
-}
-
-
-
-
 
 /*
  * free all content from link list and the node of the list

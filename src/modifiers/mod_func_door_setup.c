@@ -12,7 +12,9 @@
 
 #include "map.h"
 
-/*NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED*/
+/*
+ * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
+ */
 void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
 {
 	static int	dr_count = 0;
@@ -35,7 +37,9 @@ void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
 	free_str_array(dr);
 }
 
-/*NAME,TEXTURE,ACCESSDOORNAMED,XPOS,YPOS,AUTOUNLOCKOPEN,GRABBEDBYPLAYER */
+/*
+ * NAME,TEXTURE,ACCESSDOORNAMED,XPOS,YPOS,AUTOUNLOCKOPEN,GRABBEDBYPLAYER 
+ */
 void	mod_gen_ke(char *content, int index, t_world *world, t_map *map)
 {
 	static int	ke_count = 0;
