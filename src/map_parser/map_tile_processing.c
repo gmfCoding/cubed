@@ -6,15 +6,15 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:20:24 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 14:43:13 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:20:54 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include "libft.h"
 #include "map.h"
 
 t_tiletype	get_tiletype(char c)
 {
-	if (c == '0')
+	if (c == '0')//ft_strchr("NESW", c) != NULL)
 		return (FLOOR);
 	else if (c == '1')
 		return (WALL);

@@ -30,7 +30,7 @@ typedef struct	s_tile
 {
 	t_tiletype	type;
 	uint8_t		tex;
-	bool		vis: 1;
+	int8_t		vis;
 }				t_tile;
 
 typedef struct	s_map

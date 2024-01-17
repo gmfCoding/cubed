@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 14:20:04 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:32:04 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,34 @@ t_map	map_init(t_map *map, char *map_str, t_game *game)
 	return (*map);
 }
 
+void	map_update_vis(t_map *map)
+{
+	t_tiletype type;
+	int	x;
+	int	y;
+	int index;
+
+	printf("Updating vis array\n");
+	y = -1;
+	while (++y < map->height)
+	{
+		x = -1;
+		while (++x < map->width)
+		{
+			index = x + y * map->width;
+			type = map->tiles[index].type;
+			if (type == WALL)
+				map->tiles[index].vis = 0;
+			else if (type == MODIFIED)
+				map->tiles[index].vis = 9;
+			else
+				map->tiles[index].vis = -1;
+			printf("%d", map->tiles[index].vis);
+		}
+		printf("\n");
+	}
+}
+
 /*
  * this fuction chooses where to get the map content 
  * currently if there is only 1 argument it will call
@@ -71,5 +99,6 @@ t_map	map_parse(int argc, char **argv, t_game *game)
 	else
 		exit(2);
 	map = map_init(&map, map_str, game);
+	map_update_vis(&map);
 	return (map);
 }

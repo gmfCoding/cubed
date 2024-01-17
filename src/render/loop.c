@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:48:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/17 18:38:41 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 		if (!inside(dda->map.x, dda->map.y, map->width, map->height))
 			return (-1);
 		tile = map_get_tile_ref(map, dda->map.x, dda->map.y);
-		if (tile->type == WALL)
+		if (tile->vis >= 0)
 		{
 			hit->x = dda->map.x;
 			hit->y = dda->map.y;
@@ -217,18 +217,18 @@ void player_controls(t_game *game)
 	{
 		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.x * player->moveSpeed), (int)player->pos.y);
 		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y + player->dir.y * player->moveSpeed));
-		if (horz->type == FLOOR)
+		if (horz->vis == -1)
 			player->pos.x += player->dir.x * player->moveSpeed;
-		if (vert->type == FLOOR)
+		if (vert->vis == -1)
 			player->pos.y += player->dir.y * player->moveSpeed;
 	}
 	if (input_keyheld(&game->input, KEY_S))
 	{
 		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x - player->dir.x * player->moveSpeed), (int)player->pos.y);
 		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.y * player->moveSpeed));
-		if (horz->type == FLOOR)
+		if (horz->vis == -1)
 			player->pos.x -= player->dir.x * player->moveSpeed;
-		if (vert->type == FLOOR)
+		if (vert->vis == -1)
 			player->pos.y -= player->dir.y * player->moveSpeed;
 	}
 	if (input_keyheld(&game->input, KEY_D))
@@ -241,11 +241,27 @@ void player_controls(t_game *game)
 	}
 	if (input_keyheld(&game->input, KEY_A))
 	{
+
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(player->rotSpeed) - player->dir.y * sin(player->rotSpeed);
 		player->dir.y = oldDirX * sin(player->rotSpeed) + player->dir.y * cos(player->rotSpeed);
 		player->plane.x = player->plane.x * cos(player->rotSpeed) - player->plane.y * sin(player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(player->rotSpeed) + player->plane.y * cos(player->rotSpeed);
+	}
+	if (input_keyheld(&game->input, KEY_E))
+	{
+
+		//t_vec2 mapPos = v2add(player->pos, player->dir);
+		t_vec2 mapPos = v2new(game->half.depths[0].x, game->half.depths[0].y);
+		//if (mapPos.x == game->world->ent[0].doors[0].pos.x && mapPos.y == game->world->ent[0].doors[0].pos.y)
+		{
+			game->world->map.tiles[(int)(mapPos.x + mapPos.y * game->world->map.width)].vis = -1;
+
+
+			write(1,"E\n",2);		
+			printf("%f,%f,\n", mapPos.x, mapPos.y);
+		}
+
 	}
 }
 

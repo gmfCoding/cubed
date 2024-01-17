@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/12/01 19:23:12 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:35:52 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
 	world->ent->doors[dr_count].speed = ft_atoi(dr[4]);
 	world->ent->doors[dr_count].closed = (dr[5][0] == 'C') ? true : false;
 	world->ent->doors[dr_count].locked = (dr[6][0] == 'L') ? true : false;
-	map->tiles[ft_atoi(dr[3]) * map->width + ft_atoi(dr[2]) -1].type = DOOR;
+	map->tiles[ft_atoi(dr[3]) * map->width + ft_atoi(dr[2]) -1].type = MODIFIED;
+	map->tiles[ft_atoi(dr[3]) * map->width + ft_atoi(dr[2]) -1].vis = 1;
+	map->tiles[ft_atoi(dr[3]) * map->width + ft_atoi(dr[2]) -1].tex = 6;
 	free_str_array(dr);
 }
 
