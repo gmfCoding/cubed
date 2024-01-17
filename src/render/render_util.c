@@ -68,6 +68,8 @@ void	texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
 // 	return (r << OF_RED | g << OF_GREEN | b << OF_BLUE | R_ALPHA);
 // }
 
+
+#ifdef __linux__
 int	colour_blend(int first, int second)
 {
 	uint8_t *const	f = (uint8_t*)&first;
@@ -79,6 +81,19 @@ int	colour_blend(int first, int second)
 	f[2] = f[2] * a + s[2] * (1.0 - a);
 	return (((int *)f)[0]);
 }
+# else
+int	colour_blend(int first, int second)
+{
+	uint8_t *const	f = (uint8_t*)&first;
+	uint8_t *const	s = (uint8_t*)&second;
+	const float		a = 1.0 - (f[3] * (1.0f / 255.0f));
+
+	f[0] = f[0] * a + s[0] * (1.0 - a);
+	f[1] = f[1] * a + s[1] * (1.0 - a);
+	f[2] = f[2] * a + s[2] * (1.0 - a);
+	return (((int *)f)[0]);
+}
+#endif
 
 t_texture texture_get_debug_view(t_game *game, int view)
 {

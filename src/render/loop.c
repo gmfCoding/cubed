@@ -316,6 +316,8 @@ void	render_column(t_game *game, t_column col)
 		col.uv.y += col.sample_dy;
 		if (col.shaded == 1)
 			f = (f >> 1) & 0x7F7F7F;
+		else
+			f = f & 0xFFFFFF;
 		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
 	}
 }

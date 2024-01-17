@@ -74,7 +74,7 @@ static void	update(t_test_opacity *test)
 	const t_vec2	mouse = v2new(game->input.mouse.x, game->input.mouse.y);
 	int				i;
 
-	texture_clear(game->rt0);
+	texture_clear(game->rt0, R_ALPHA);
 	if (input_keydown(&game->input, MB_LEFT))
 		test->selected = get_widget_cursor(test);
 	if (input_keyup(&game->input, MB_LEFT))

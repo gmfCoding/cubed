@@ -52,7 +52,7 @@ void	texture_blit_s(t_texture src, t_texture dst, t_vec2 pos, int scale)
 		{
 			col = colour_blend(pixel_get_s(src, x / scale, y / scale), \
 				pixel_get_s(dst, pos.x + x, pos.y + y));
-			pixel_set_s(dst, pos.x + x, pos.y + y, col);
+			pixel_set_s(dst, pos.x + x, pos.y + y, R_ALPHA | col);
 		}
 	}
 }
