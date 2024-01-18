@@ -16,6 +16,7 @@
 #include <math.h>
 #include <mlx.h>
 
+#include "mini_map.h"
 #include "input.h"
 #include "cubed.h"
 #include "texture.h"
@@ -373,5 +374,6 @@ void	render(t_game *game)
 	}
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 	texture_draw(game, game->rt0, v2new(0, 0));
+	draw_mini_map(game);
 	draw_debug_info(game);
 }
