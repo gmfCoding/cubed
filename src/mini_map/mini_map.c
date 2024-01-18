@@ -1,5 +1,6 @@
 #include "state.h"
 #include "mini_map.h"
+#include "map.h"
 #include <mlx.h>
 #include <stdlib.h>
 
@@ -189,40 +190,40 @@ void	*get_image(t_game *game, bool t, bool l, bool r, bool b)
 	int 	height;
 
 	if (t == false && l == false && r == false && b == false)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm19.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm19.xpm", &width, &height));
 	if (t == true && l == false && r == false && b == false)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm17.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm17.xpm", &width, &height));
 	if (t == false && l == true && r == false && b == false)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm18.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm18.xpm", &width, &height));
 	if (t == false && l == false && r == true && b == false)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm16.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm16.xpm", &width, &height));
 	if (t == false && l == false && r == false && b == true)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm15.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm15.xpm", &width, &height));
 	if (t == true && l == true && r == false && b == false)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm09.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm09.xpm", &width, &height));
 	if (t == true && l == false && r == true && b == false)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm08.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm08.xpm", &width, &height));
 	if (t == false && l == true && r == false && b == true)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm10.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm10.xpm", &width, &height));
 	if (t == false && l == false && r == true && b == true)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm07.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm07.xpm", &width, &height));
 	if (t == true && l == false && r == false && b == true)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm00.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm00.xpm", &width, &height));
 	if (t == false && l == true && r == true && b == false)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm01.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm01.xpm", &width, &height));
 
 	if (t == true && l == true && r == true && b == true)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm02.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm02.xpm", &width, &height));
 	if (t == false && l == true && r == true && b == true)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm06.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm06.xpm", &width, &height));
 	if (t == true && l == false && r == true && b == true)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm03.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm03.xpm", &width, &height));
 	if (t == true && l == true && r == false && b == true)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm05.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm05.xpm", &width, &height));
 	if (t == true && l == true && r == true && b == false)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm04.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm04.xpm", &width, &height));
 	if (t == true && l == true && r == true && b == true)
-		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mm02.xpm", &width, &height));
+		return(mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm02.xpm", &width, &height));
 	return(NULL);
 }
 
@@ -230,16 +231,16 @@ void	*set_img_surround(t_game *game, int pos)
 {
 
 	bool t=false,l=false,r=false,b=false;
-	
-	if(pos-mapX >= 0 && map1[pos-mapX] == 1)
+
+	if(pos-game->world->map.width >= 0 && game->world->map.tiles[pos-game->world->map.width].type == WALL)
 		t = true;
-	if(pos-1 >= 0 && map1[pos-1] == 1 && pos % mapX != 0)
+	if(pos-1 >= 0 && game->world->map.tiles[pos-1].type == WALL && pos % game->world->map.width != 0)
 		l = true;
-	if(pos+1 < (mapX*mapY) && map1[pos+1] == 1 && (pos + 1) % mapX != 0)
+	if(pos+1 < (game->world->map.width*game->world->map.height) && game->world->map.tiles[pos+1].type == WALL && (pos + 1) % game->world->map.width != 0)
 		r = true;
-	if(pos+mapX < (mapX*mapY) && map1[pos+mapX] == 1)
+	if(pos+game->world->map.width < (game->world->map.width*game->world->map.height) && game->world->map.tiles[pos+game->world->map.width].type == WALL)
 		b = true;
-	
+//	printf("here\n");	
 	return(get_image(game,t,l,r,b));
 
 }
@@ -257,7 +258,7 @@ int outside_map_circle(int x, int y)
 	return (1);
 
 }
-
+/*
 void draw_map2D(t_game *game)
 {
     int x, y;
@@ -282,6 +283,42 @@ void draw_map2D(t_game *game)
 			}
         	}
         }
+    }
+}
+*/
+void draw_map2D(t_game *game)
+{
+    int x, y;
+    int width, height;
+    void	*img;
+    int textureSize = 24;
+	int screenX;
+	int screenY;
+    for (y = 0; y < game->world->map.height; y++)
+    {
+
+
+        for (x = 0; x < game->world->map.width; x++)
+        {
+	       	screenX = x * mapSS + MAP_POS_X;
+            	screenY = y * mapSS + MAP_POS_Y;
+
+        	if (game->world->map.tiles[y * game->world->map.width + x].type == WALL)
+        	{
+
+			if (outside_map_circle(screenX-(game->player.pos.x*mapSS), screenY-(game->player.pos.y*mapSS)) == 1)
+			{
+		//		img = mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mm07.xpm", &width, &height);
+	
+	              		img = set_img_surround(game, y * game->world->map.width + x);
+				mlx_put_image_to_window(game->app.mlx, game->app.win, img, \
+					screenX-(game->player.pos.x*mapSS), screenY-(game->player.pos.y*mapSS));
+				//mlx_put_image_to_window(game->app.mlx, game->app.win, img, 200, 200);
+			
+			}
+
+        	}
+	}
     }
 }
 /*
@@ -310,8 +347,8 @@ void	draw_mini_map(t_game *game)
 	int	height;
 	void *img;
 
-//	img = mlx_xpm_file_to_image(game->app.mlx, "assets/mini/mmcase.xpm", &width, &height);
-//	mlx_put_image_to_window(game->app.mlx, game->app.win, img, MAP_POS_X-128, MAP_POS_Y-128);
+	img = mlx_xpm_file_to_image(game->app.mlx, "assets/mini_old/mmcase.xpm", &width, &height);
+	mlx_put_image_to_window(game->app.mlx, game->app.win, img, MAP_POS_X-128, MAP_POS_Y-128);
 
 	draw_map2D(game);
 	mlx_string_put (game->app.mlx, game->app.win, MAP_POS_X, MAP_POS_Y, 0x00ff00, "+");
