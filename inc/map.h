@@ -16,7 +16,6 @@
 # define MAP_MAX_X MAP_MAX_XY
 # define MAP_MAX_Y MAP_MAX_XY
 # define G_MAPTABLE_LEN 6
-
 typedef enum	e_tiletype
 {
 	FLOOR,

@@ -17,6 +17,7 @@
 #include "input.h"
 #include "texture.h"
 #include "ray.h"
+#include "mini_map.h"
 
 typedef struct s_game t_game;
 
@@ -37,6 +38,8 @@ struct s_app
 };
 
 typedef struct s_world t_world;
+typedef struct s_mmap t_mmap;
+
 
 struct s_game
 {
@@ -54,6 +57,7 @@ struct s_game
 	t_player		player;
 	t_texture		textures[8];
 	t_world			*world;
+	t_mmap			mmap;
 
 	t_inputctx		input;
 	t_rayinfo		half;

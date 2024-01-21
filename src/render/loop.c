@@ -373,7 +373,8 @@ void	render(t_game *game)
 		render_vertical(game, vert);
 	}
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
+//	mmap_draw(game->rt0, game->mmap->tiles, game->player.pos);
 	texture_draw(game, game->rt0, v2new(0, 0));
-	draw_mini_map(game);
+//	draw_mini_map(game);
 	draw_debug_info(game);
 }

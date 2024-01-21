@@ -27,7 +27,7 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_floor_ceiling_color.c \
 		modifiers/mod_func_door_setup.c \
-		mini_map/mini_map.c \
+		mini_map/mmap_setup.c \
 		entities/player_setup.c \
 		input/input.c \
 		input/input_hooks.c \

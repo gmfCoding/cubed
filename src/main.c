@@ -15,6 +15,7 @@
 
 #include "texture.h"
 #include "cubed.h"
+#include "mini_map.h"
 
 // int	main(int argc, char **argv)
 // {
@@ -97,13 +98,18 @@ int	main(int argc, char **argv)
 	*game.world = (t_world){0};
 	world_preset(argc, argv, &game);
 	map_print(&game.world->map);
+
 	game.app.mlx = mlx_init();
+	mmap_init(&game);
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+
 	generate_textures(&game);
+
 	input_setup(game.app.mlx, game.app.win, &game.input);
+
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);
 
