@@ -374,6 +374,8 @@ void	render(t_game *game)
 	}
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 //	mmap_draw(game->rt0, game->mmap->tiles, game->player.pos);
+	mmap_draw(game);
+//	texture_blit(game->mmap.mm_case, game->rt0, );
 	texture_draw(game, game->rt0, v2new(0, 0));
 //	draw_mini_map(game);
 	draw_debug_info(game);

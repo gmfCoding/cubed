@@ -1,8 +1,10 @@
 
 
 //mini_map set up stuff here VV
+
 #include "mini_map.h"
 #include "texture.h"
+#include "state.h"
 //mini_map setup stuff here ^^
 
 
@@ -54,7 +56,7 @@ int outside_map_circle(int x, int y)
 
 }
 
-void	mmap_draw(t_texture dst, t_mm_tile *tile, t_vec2 p_pos)
+void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos)
 {
 	int	i;
 	t_vec2 pos;
@@ -62,16 +64,24 @@ void	mmap_draw(t_texture dst, t_mm_tile *tile, t_vec2 p_pos)
 	i = -1;
 	while (tile[++i].img != NULL)
 	{
-		pos.x = tile[i].pos.x + p_pos.x * MAP_S;
-		pos.y = tile[i].pos.y + p_pos.y * MAP_S;
-		if (outside_map_circle(pos.x, pos.y) == 1)
-		{
+		pos.x = tile[i].pos.x - p_pos.x * MAP_S;
+		pos.y = tile[i].pos.y - p_pos.y * MAP_S;
+	//	if (outside_map_circle(pos.x, pos.y) == 1)
+	//	{
 			texture_blit(*(tile[i].img), dst, pos);
-		}
+	//	}
 	}
 }
 
+void	mmap_draw(t_game *game)
+{
+	t_vec2 pos;//can maybe store this in mmap struct
 
+	pos.x = MAP_POS_X;
+	pos.y = MAP_POS_Y;
+	mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos);
+	texture_blit(game->mmap.img_case, game->rt0, pos);
+}
 
 #include <stdio.h>
 #include <unistd.h>
@@ -81,36 +91,27 @@ void	mmap_draw(t_texture dst, t_mm_tile *tile, t_vec2 p_pos)
 
 void	mmap_init_img(t_game *game)
 {
-//	int width, height;
-//	void *img;
-
-
-//	game->mmap->img = mlx_xpm_file_to_image(game->app.mlx, "assets/minimap/mmcase.xpm", &width, &height);
-
-	game->mmap->img_case = texture_load(game->app.mlx, "assets/minimap/mmcase.xpm");
-	printf("we loaded img yay\n");
-/*
-	game->mmap->mm_img[0] = texture_load(game->app.mlx, "assets/minimap/mm00.xpm");
-	game->mmap->mm_img[1] = texture_load(game->app.mlx, "assets/minimap/mm01.xpm");
-	game->mmap->mm_img[2] = texture_load(game->app.mlx, "assets/minimap/mm02.xpm");
-	game->mmap->mm_img[3] = texture_load(game->app.mlx, "assets/minimap/mm03.xpm");
-	game->mmap->mm_img[4] = texture_load(game->app.mlx, "assets/minimap/mm04.xpm");
-	game->mmap->mm_img[5] = texture_load(game->app.mlx, "assets/minimap/mm05.xpm");
-	game->mmap->mm_img[6] = texture_load(game->app.mlx, "assets/minimap/mm06.xpm");
-	game->mmap->mm_img[7] = texture_load(game->app.mlx, "assets/minimap/mm07.xpm");
-	game->mmap->mm_img[8] = texture_load(game->app.mlx, "assets/minimap/mm08.xpm");
-	game->mmap->mm_img[9] = texture_load(game->app.mlx, "assets/minimap/mm09.xpm");
-	game->mmap->mm_img[10] = texture_load(game->app.mlx, "assets/minimap/mm10.xpm");
-	game->mmap->mm_img[11] = texture_load(game->app.mlx, "assets/minimap/mm11.xpm");
-	game->mmap->mm_img[12] = texture_load(game->app.mlx, "assets/minimap/mm12.xpm");
-	game->mmap->mm_img[13] = texture_load(game->app.mlx, "assets/minimap/mm13.xpm");
-	game->mmap->mm_img[14] = texture_load(game->app.mlx, "assets/minimap/mm14.xpm");
-	game->mmap->mm_img[15] = texture_load(game->app.mlx, "assets/minimap/mm15.xpm");
-	game->mmap->mm_img[16] = texture_load(game->app.mlx, "assets/minimap/mm16.xpm");
-	game->mmap->mm_img[17] = texture_load(game->app.mlx, "assets/minimap/mm17.xpm");
-	game->mmap->mm_img[18] = texture_load(game->app.mlx, "assets/minimap/mm18.xpm");
-	game->mmap->mm_img[19] = texture_load(game->app.mlx, "assets/minimap/mm19.xpm");
-*/
+	game->mmap.img_case = texture_load(game->app.mlx, "assets/minimap/mmcase.xpm");
+	game->mmap.mm_img[0] = texture_load(game->app.mlx, "assets/minimap/mm00.xpm");
+	game->mmap.mm_img[1] = texture_load(game->app.mlx, "assets/minimap/mm01.xpm");
+	game->mmap.mm_img[2] = texture_load(game->app.mlx, "assets/minimap/mm02.xpm");
+	game->mmap.mm_img[3] = texture_load(game->app.mlx, "assets/minimap/mm03.xpm");
+	game->mmap.mm_img[4] = texture_load(game->app.mlx, "assets/minimap/mm04.xpm");
+	game->mmap.mm_img[5] = texture_load(game->app.mlx, "assets/minimap/mm05.xpm");
+	game->mmap.mm_img[6] = texture_load(game->app.mlx, "assets/minimap/mm06.xpm");
+	game->mmap.mm_img[7] = texture_load(game->app.mlx, "assets/minimap/mm07.xpm");
+	game->mmap.mm_img[8] = texture_load(game->app.mlx, "assets/minimap/mm08.xpm");
+	game->mmap.mm_img[9] = texture_load(game->app.mlx, "assets/minimap/mm09.xpm");
+	game->mmap.mm_img[10] = texture_load(game->app.mlx, "assets/minimap/mm10.xpm");
+	game->mmap.mm_img[11] = texture_load(game->app.mlx, "assets/minimap/mm11.xpm");
+	game->mmap.mm_img[12] = texture_load(game->app.mlx, "assets/minimap/mm12.xpm");
+	game->mmap.mm_img[13] = texture_load(game->app.mlx, "assets/minimap/mm13.xpm");
+	game->mmap.mm_img[14] = texture_load(game->app.mlx, "assets/minimap/mm14.xpm");
+	game->mmap.mm_img[15] = texture_load(game->app.mlx, "assets/minimap/mm15.xpm");
+	game->mmap.mm_img[16] = texture_load(game->app.mlx, "assets/minimap/mm16.xpm");
+	game->mmap.mm_img[17] = texture_load(game->app.mlx, "assets/minimap/mm17.xpm");
+	game->mmap.mm_img[18] = texture_load(game->app.mlx, "assets/minimap/mm18.xpm");
+	game->mmap.mm_img[19] = texture_load(game->app.mlx, "assets/minimap/mm19.xpm");
 }
 
 int	mmap_img_number_2(bool t, bool l, bool r, bool b)
@@ -186,7 +187,7 @@ t_texture	*mmap_get_img(t_game *game, int pos)
 	int	index;
 
 	index = mmap_decide_img(game, pos);
-	return (&game->mmap->mm_img[index]);
+	return (&game->mmap.mm_img[index]);
 }
 
 
@@ -199,7 +200,6 @@ void	mmap_init(t_game *game)
 
 
 	mmap_init_img(game);
-	printf("here\n");
 	y = -1;
 	count = 0;
 	while (++y < game->world->map.height)
@@ -210,9 +210,9 @@ void	mmap_init(t_game *game)
 			index = x + y * game->world->map.width;
 			if (game->world->map.tiles[index].type == WALL)
 			{
-				game->mmap->tiles[count].img = mmap_get_img(game, index);
-				game->mmap->tiles[count].pos.x = x * MAP_S + MAP_POS_X;
-				game->mmap->tiles[count].pos.y = y * MAP_S + MAP_POS_Y;
+				game->mmap.tiles[count].img = mmap_get_img(game, index);
+				game->mmap.tiles[count].pos.x = x * MAP_S + MAP_POS_X + 128;
+				game->mmap.tiles[count].pos.y = y * MAP_S + MAP_POS_Y + 128;
 				count++;
 			}	
 		}
