@@ -42,21 +42,34 @@ void draw_map2D(t_game *game)
 */
 
 
-int outside_map_circle(int x, int y)
+void	mmap_input(t_game *game)
 {
-	if (x < MAP_POS_X-85 && y < MAP_POS_Y-85)
-		return (0);
-	if (x > MAP_POS_X+70 && y > MAP_POS_Y+70)
-		return (0);
-	if (x < MAP_POS_X-85 && y > MAP_POS_Y+70)
-		return (0);
-	if (x > MAP_POS_X+70 && y < MAP_POS_Y-85)
-		return (0);
-	return (1);
+	if (input_keydown(&game->input, KEY_M))
+	{
+		if(game->mmap.mm_small == true)
+		{
+			game->mmap.mm_big = true;
+			game->mmap.mm_small = false;
+		}
+		else
+		{
+			game->mmap.mm_big = false;
+			game->mmap.mm_small = true;
+		}
+	}
 
 }
 
-void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos)
+int	mmap_is_inside(int x, int y)
+{
+	t_vec2 tile_pos = v2new(x, y);
+	tile_pos = v2sub(tile_pos, v2new(MAP_POS_X, MAP_POS_Y));
+	if (v2mag(tile_pos) > (MAP_CASE * 0.91))
+		return (0);
+	return (1);
+}
+
+void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, bool draw_full)
 {
 	int	i;
 	t_vec2 pos;
@@ -66,10 +79,16 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos)
 	{
 		pos.x = tile[i].pos.x - p_pos.x * MAP_S;
 		pos.y = tile[i].pos.y - p_pos.y * MAP_S;
-	//	if (outside_map_circle(pos.x, pos.y) == 1)
-	//	{
+		if (draw_full)
+		{
+			pos.x = ((tile[i].pos.x - MAP_POS_X - MAP_CASE) + (SCR_WIDTH / 2)) - p_pos.x * MAP_S;
+			pos.y = ((tile[i].pos.y - MAP_POS_Y - MAP_CASE) + (SCR_HEIGHT / 2)) - p_pos.y * MAP_S;
+		}
+		if (draw_full || mmap_is_inside(pos.x - 116, pos.y - 115) == 1)
+		{
+		//	printf("%f,%f\n", pos.x, pos.y);
 			texture_blit(*(tile[i].img), dst, pos);
-	//	}
+		}
 	}
 }
 
@@ -79,8 +98,15 @@ void	mmap_draw(t_game *game)
 
 	pos.x = MAP_POS_X;
 	pos.y = MAP_POS_Y;
-	mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos);
-	texture_blit(game->mmap.img_case, game->rt0, pos);
+	if (game->mmap.mm_small == true)
+	{
+		mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos, false);
+		texture_blit(game->mmap.img_case, game->rt0, pos);
+	}
+	else if (game->mmap.mm_big == true)
+	{
+		mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos, true);
+	}
 }
 
 #include <stdio.h>
@@ -198,7 +224,8 @@ void	mmap_init(t_game *game)
 	int	index;
 	int	count;
 
-
+	game->mmap.mm_big = false;
+	game->mmap.mm_small = true;
 	mmap_init_img(game);
 	y = -1;
 	count = 0;
@@ -211,8 +238,8 @@ void	mmap_init(t_game *game)
 			if (game->world->map.tiles[index].type == WALL)
 			{
 				game->mmap.tiles[count].img = mmap_get_img(game, index);
-				game->mmap.tiles[count].pos.x = x * MAP_S + MAP_POS_X + 128;
-				game->mmap.tiles[count].pos.y = y * MAP_S + MAP_POS_Y + 128;
+				game->mmap.tiles[count].pos.x = x * MAP_S + MAP_POS_X + MAP_CASE;
+				game->mmap.tiles[count].pos.y = y * MAP_S + MAP_POS_Y + MAP_CASE;;
 				count++;
 			}	
 		}

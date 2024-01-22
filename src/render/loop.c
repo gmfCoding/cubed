@@ -264,6 +264,7 @@ void player_controls(t_game *game)
 		}
 
 	}
+	mmap_input(game);
 }
 
 typedef struct s_vertical

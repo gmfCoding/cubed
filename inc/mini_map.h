@@ -35,13 +35,13 @@ typedef struct s_mmap
 	void		*img;
 	t_texture	img_case;
 	t_mm_tile	tiles[MAP_MAX_X * MAP_MAX_Y];
-	int		mmap_size;
-
+	bool		mm_small;
+	bool		mm_big;
 }		t_mmap;
 
 void	mmap_init(t_game *game);
 
 void	mmap_draw(t_game *game);
-
+void	mmap_input(t_game *game);
 //void	draw_mini_map(t_game *game);
 #endif
