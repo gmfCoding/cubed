@@ -1,0 +1,19 @@
+/* XPM */
+static char* picture[] = {
+"13 13 3 1",
+" 	c #ff00ef0c",
+"X	c #ff04800a",
+"+	c #00000000",
+"+++       +++",
+"++         ++",
+"+   XXXXX   +",
+"   XXXXXXX   ",
+"  XXXXXXXXX  ",
+"  XXXXXXXXX  ",
+"  XXXXXXXXX  ",
+"  XXXXXXXXX  ",
+"  XXXXXXXXX  ",
+"   XXXXXXX   ",
+"+   XXXXX   +",
+"++         ++",
+"+++       +++"};

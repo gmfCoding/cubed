@@ -26,14 +26,16 @@ typedef struct s_mm_tile
 {
 	t_texture	*img;
 	t_vec2		pos;
+	bool		vis;
 
 }		t_mm_tile;
 
 typedef struct s_mmap
 {
 	t_texture	mm_img[20];
-	void		*img;
-	t_texture	img_case;
+	t_texture	img_case[4];
+	t_texture	img_pp;
+	t_texture	img_pr;
 	t_mm_tile	tiles[MAP_MAX_X * MAP_MAX_Y];
 	bool		mm_small;
 	bool		mm_big;
