@@ -21,6 +21,7 @@ SRCSF = $(TEST) \
 		util/time.c \
 		util/error_handler.c \
 		util/string_utils.c \
+		util/atan2.c \
 		map_parser/map_setup.c \
 		map_parser/map_dimensions.c \
 		map_parser/map_tile_processing.c \
