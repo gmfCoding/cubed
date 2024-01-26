@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   orbit.c                                            :+:      :+:    :+:   */
+/*   kep_properties.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 01:18:19 by clovell          ###   ########.fr       */
+/*   Created: 2024/01/26 22:57:23 by clovell           #+#    #+#             */
+/*   Updated: 2024/01/27 01:46:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "task.h"
-#include "render.h"
+#include "orbit.h"
+#include "cerror.h"
 
-int	task_orbit_setup(t_game *game, t_task *task)
+double	kep_time(t_kep_ang *ang)
 {
-	t_task_orbit *const	t = (t_task_orbit*)task;
-	printf("task_setup:%s", task->name);
-	t->pro_btn = (t_sprite){.pos = v2new(0, 0), .tex = texture_load(game->app.mlx, "assets/debug.xpm")};
-	return (0);
+	ft_asrt(ang == NULL, E_P E_F);
+	return (86400.0 * (ang->time - ang->s_0.time0));
 }
 
-int	task_orbit_render(t_game *game, t_task *task)
+double	kep_period(t_kep_path *path)
 {
-	return (0);
+	double	sma3;
+
+	ft_asrt(path == NULL, E_P E_F);
+	sma3 = (path->sma * path->sma * path->sma);
+	return (2 * M_PI * sqrt(sma3 / path->sgp_u) / 86400.0);
 }

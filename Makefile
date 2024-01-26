@@ -37,11 +37,17 @@ SRCSF = $(TEST) \
 		input/input_setup.c \
 		input/keys.c \
 		task/task.c \
+		task/orbit/ctok_position.c \
+		task/orbit/ctok_velocity.c \
+		task/orbit/ktoc_position.c \
+		task/orbit/ktoc_velocity.c \
+		task/orbit/kep_angle.c \
+		task/orbit/kep_properties.c \
+		task/orbit/transform.c \
+		task/orbit/render.c \
+		task/orbit/body.c \
+		task/orbit/task.c \
 		task/orbit.c \
-		task/orbit/anom_extra.c \
-		task/orbit/anompure.c \
-		task/orbit/keplercart.c \
-		task/orbit/orbit_prop.c \
 		cerror.c \
 
 INCSF = cubed.h

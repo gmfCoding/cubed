@@ -1,136 +1,96 @@
-#include <math.h>
-#include "vector3.h"
-#include "constants.h"
-#include <stdbool.h>
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   orbit.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
+/*   Updated: 2024/01/27 01:33:07 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef ORBIT_H
 # define ORBIT_H
 
-#define C_GRAV  6.67430e-11
-//#define C_GRAV  0.00001
-#define EA_MAX_ERROR 10e-13
-#define EA_MAX_ITER 100
+# include <math.h>
+# include "vector3.h"
+# include "constants.h"
+# include <stdbool.h>
+# include "orbit/orbit_data.h"
 
+# define KM_G  6.67430e-11
+# define KM_AU 1.496E11
 
-/// @brief Kepler element precision
-typedef enum e_elem_prec
-{
-	ELEM_NONE,
-	ELEM_EXACT,
-	ELEM_DERIVED,
-} t_kpep;
+# define EA_MAX_ERROR 10e-13
+# define EA_MAX_ITER 100
 
-typedef struct s_orb_body
-{
-    double radius;
-    double mass;
-    double grav;
-} t_orb_body;
+typedef struct s_texture t_texture;
 
-/*
-	Create a new orbital body definition
-	@param radius planet radius in meters
-	@param density density in kg/m3
+/*** task/orbit/kep_angle.c ***/
+
+/* Calculates the angular rate at which the mean anomally changes. */
+double			kep_mean_rate(t_kep_path *path);
+
+/* Returns mean anomaly.
+ 	An angle that describes the position along the orbit.
+	Remains linear throughout the orbit, limit of 0 -> 2 PI radians.
+	It has no geometric relation.
 */
-t_orb_body orb_body_create_rd(double radius, double density);
+double			kep_mean(t_kep_path *path, t_kep_ang *ang);
 
-/*
-	Create a new orbital body definition
-	@param radius planet radius in meters
-	@param density density in kg/m3
+/* Returns true anomaly.
+ 	An angle that describes the position along the orbit.
+	Rate throughout the orbit changes, limit of 0 -> 2 PI radians.
+	The angle from the foci (parent body) to the position.
 */
-t_orb_body orb_body_create_rm(double radius, double mass);
+double			kep_ta(t_kep_path *path, t_kep_ang *ang);
 
-typedef enum e_kep_elem
-{
-	KEP_SMA,
-	KEP_APO,
-	KEP_PER,
-	KEP_ECC,
-	KEP_AOP,
-	KEP_LAN,
-	KEP_INC,
-	KEP_MNA,
-	KEP_TA,
-	KEP_EA,
-	KEP_SMA2 = 1,
-	KEP_APO2 = 2,
-	KEP_PER2 = 4,
-	KEP_ECC2 = 8,
-	KEP_AOP2 = 16,
-	KEP_LAN2 = 32,
-	KEP_INC2 = 64,
-	KEP_MNA2 = 128,
-	KEP_TA2 = 256,
-	KEP_EA2 = 512
-} t_kpe;
+/* Returns eccentric anomaly.
+ 	An angle that describes the position along the orbit.
+	Rate throughout the orbit changes, limit of 0 -> 2 PI radians.
+	The angle from orbit (ellipse) center to the projected circular position.
+*/
+double			kep_anom_e(t_kep_path *path, t_kep_ang *ang);
 
-typedef struct s_kep_use
-{
-	union
-	{
-		struct
-		{		
-			t_kpep	sma;
-			t_kpep	apo;
-			t_kpep	per;
-			t_kpep	ecc;
-			t_kpep	aop;
-			t_kpep	lan;
-			t_kpep	inc;
-			t_kpep	mna;
-			t_kpep	ta;
-			t_kpep	ea;
-		};
-		t_kpep	encoded[10];
-	};
-}			t_kep_use;
+/* Sets the time sample of angular position parameters and updates them */
+double			kep_ang_set(t_kep_path *path, t_kep_ang *ang, double tn);
 
-typedef struct s_kep_oparam
-{
-	t_orb_body	parent;
-	t_orb_body	self;
-	t_kep_use	set;
-	double		sma;
+/*** task/orbit/body.c ***/
 
-	double		apo;
-	double		per;
+/* Returns a new body based on radius and density. */
+t_orb_body		orb_body_create_rd(double radius, double density);
 
-	double		ecc;
+/* Returns a new body based on radius and mass. */
+t_orb_body		orb_body_create_rm(double radius, double mass);
 
-	double		inc;
-	double		lan;
+/*** task/orbit/kep_properties.c ***/
 
-	double		aop;
-	double		mna;
+/* Returns the current time since epoch in seconds. */
+double			kep_time(t_kep_ang *ang);
 
-	double		radius;
-	double		distance;
-	double		ta;
-	double		ea;
-	double		mom;
-	t_kpe		prime_angle;
-	double		time;
-}	t_kep_orb;
+/* Returns the orbital period in seconds. */
+double			kep_period(t_kep_path *path);
 
-typedef struct s_cart_oparam
-{
-	t_orb_body parent;
-	t_orb_body self;
-	t_vec3 pos;
-	t_vec3 vel;
-} t_cart_orb;
+/*** task/orbit/ktoc_position.c ***/
 
-double  orb_ta_to_ea(double ta, double ecc);
-double  orb_ma_to_ea(double ma, double ecc);
-double  orb_ea_to_ta(double ea, double ecc);
-double  orb_ea_to_ma(double ea, double ecc);
-double	orb_ma_to_ta(double ma, double ecc);
-double	orb_ta_to_ma(double ta, double ecc);
+double			orb_radius(t_kep_path *path, t_kep_ang *ang);
 
-void	kep_elem_set(t_kep_orb *kep, double value, t_kpe prop, t_kpep prec);
-void	kep_complete(t_kep_orb *kep);
+void			orb_pos(t_kep_path *path, t_kep_ang *ang, t_vec3 *cart);
 
-void    orb_cart_to_kepler(t_cart_orb cart, t_kep_orb *kep);
-void    orb_kepler_to_cart(t_kep_orb kep, t_cart_orb *cart);
+void			orb_cart_pos(t_kep_path *p, t_kep_ang *a, t_orb_cart *c);
+
+/*** task/orbit/ktoc_velocity.c ***/
+double			orb_speed(t_kep_path *path, t_kep_ang *ang);
+
+void			orb_cart_vel(t_kep_path *p, t_kep_ang *a, t_orb_cart *c);
+
+/*** task/orbit/ctok_position.c ***/
+void			orb_cart_to_kep(t_orb_cart *c, t_kep_path *p, t_kep_ang *a);
+
+
+/*** task/orbit/render.c ***/
+
+void	orbit_path_render(t_kep_path *path, t_texture *rt);
+
+void	orbit_obj_render(t_orb_obj *obj, t_texture *rt);
 #endif

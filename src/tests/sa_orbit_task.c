@@ -9,22 +9,22 @@
 #define ARCS2DEG 0.000277778
 
 
-typedef struct s_button t_button;
-typedef struct s_ui_context t_ui_context;
-typedef void	(*uibtn_click_cb)(t_button *, t_ui_context *);
+typedef struct s_button		t_button;
+typedef struct s_ui_context	t_ui_context;
+typedef void				(*t_uibtn_click_cb)(t_button *, t_ui_context *);
 
 
-typedef struct s_button t_button;
+typedef struct s_button	t_button;
 struct s_button
 {
-	t_rect			rect;
-	t_texture		*texture;
-	int				colour;
-	void			*reference;
-	void			*context;
-	bool			repeat;
-	uibtn_click_cb	callback;
-	int				held;
+	t_rect				rect;
+	t_texture			*texture;
+	int					colour;
+	void				*reference;
+	void				*context;
+	bool				repeat;
+	t_uibtn_click_cb	callback;
+	int					held;
 };
 
 
@@ -35,49 +35,48 @@ struct s_ui_context
 	union {
 		struct s_buttons
 		{
-			t_button kep_prograde;	
-			t_button kep_retrograde;	
+			t_button	kep_prograde;	
+			t_button	kep_retrograde;	
 		} b;
-		t_button buttons[sizeof(struct s_buttons) / sizeof(t_button)]; 
+		t_button	buttons[sizeof(struct s_buttons) / sizeof(t_button)];
 	};
 };
 
 typedef struct s_sa_orbit_task
 {
-	t_kep_orb		kep;
-	t_cart_orb		cart;
+	t_orb_obj		obj0;
+	t_kep_path		obj_path;
+	t_orb_cart		cart;
 	t_orb_body		sun;
 	t_texture		rt0;
-	t_app 			app;
+	t_app			app;
 	t_ui_context	ui;
 	t_inputctx		input;
-} t_sa_orbit_task;
+}	t_sa_orbit_task;
 
-struct orbit_button_ctx
+struct s_orbit_button_ctx
 {
-	t_sa_orbit_task *task;
-	t_kep_orb		*kep;
+	t_sa_orbit_task	*task;
+	t_orb_obj		*kep;
 };
 
-void orbit_control_action(t_button *btn, t_ui_context *ctx)
+void	orbit_control_action(t_button *btn, t_ui_context *ctx)
 {
-	const t_sa_orbit_task *task = ctx->parent;
-	const char *mode = btn->reference;
-	t_cart_orb cart;
+	const t_sa_orbit_task	*task = ctx->parent;
+	const char				*mode = btn->reference;
+	t_orb_cart *const		cart = &task->obj0.cart;
 
 	printf("Applying thrust: %s\n", mode);
-	kep_complete(&task->kep);
-	orb_kepler_to_cart(task->kep, &cart);
-	printf("velocity: %f\n", v3mag(cart.vel));
+	orb_cart_vel(&task->obj0.path, &task->obj0.ang, cart);
+	printf("velocity: %f\n", v3mag(cart->vel));
 	if (mode[0] == '+')
-		cart.vel = v3muls(cart.vel, 1.001);
+		cart->vel = v3muls(cart->vel, 1.001);
 	else
-		cart.vel = v3muls(cart.vel, 1/1.001);
-	orb_cart_to_kepler(cart, &task->kep);
-	kep_complete(&task->kep);
+		cart->vel = v3muls(cart->vel, 1 / 1.001);
+	orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
 }
 
-void ui_setup(t_ui_context *ctx)
+void	ui_setup(t_ui_context *ctx)
 {
 	*ctx = (t_ui_context){0}; 
 	ctx->b.kep_retrograde = (t_button){
@@ -94,7 +93,7 @@ void ui_setup(t_ui_context *ctx)
 	};
 }
 
-t_rect rect_getbounded(t_rect rect)
+t_rect	rect_getbounded(t_rect rect)
 {
 	t_rect result;
 	result.pos = v2sub(rect.pos, v2divs(rect.size, 2));
@@ -102,40 +101,41 @@ t_rect rect_getbounded(t_rect rect)
 	return (result);
 }
 
-bool rect_contains_v2(t_rect rect, t_vec2 pos)
+bool	rect_contains_v2(t_rect rect, t_vec2 pos)
 {
 	return (pos.x >= rect.min.x && pos.y >= rect.min.y \
 	&& pos.x <= rect.max.x && pos.y <= rect.max.y);
 }
 
-void ui_process_draw( t_ui_context *ctx, t_inputctx *in, t_texture target)
+void	ui_process_draw( t_ui_context *ctx, t_inputctx *in, t_texture target)
 {
-	t_button *curr;
+	t_button	*curr;
 	t_rect		aabb;
-	int i;
-	int colour;
+	int			i;
+	int			col;
 
 	i = -1;
 	while (++i < sizeof(ctx->buttons) / sizeof(t_button))
 	{
 		curr = &ctx->buttons[i];
-		colour = curr->colour;
+		col = curr->colour;
 		aabb = curr->rect;
 		if (rect_contains_v2(aabb, v2itov2(in->mouse)))
 		{
-			colour = R_GREEN | R_ALPHA;
+			col = R_GREEN | R_ALPHA;
 			if (input_keyheld(in, MB_LEFT) && curr->callback != NULL)
 				curr->callback(curr, ctx);
 		}
-		texture_draw_line(target, aabb.min, aabb.max, colour);
-		texture_draw_line(target, aabb.min, v2new(aabb.min.x, aabb.max.y), colour);
-		texture_draw_line(target, aabb.min, v2new(aabb.max.x, aabb.min.y), colour);
-		texture_draw_line(target, aabb.max, v2new(aabb.max.x, aabb.min.y), colour);
-		texture_draw_line(target, aabb.max, v2new(aabb.min.x, aabb.max.y), colour);
+		texture_draw_line(target, aabb.min, aabb.max, col);
+		texture_draw_line(target, aabb.min, v2new(aabb.min.x, aabb.max.y), col);
+		texture_draw_line(target, aabb.min, v2new(aabb.max.x, aabb.min.y), col);
+		texture_draw_line(target, aabb.max, v2new(aabb.max.x, aabb.min.y), col);
+		texture_draw_line(target, aabb.max, v2new(aabb.min.x, aabb.max.y), col);
 	}
 }
 
 #define SEC_YEAR 3.154E7
+
 static void	l_draw_debug_info(t_sa_orbit_task *task)
 {
 	static int64_t	timeprev = 0;
@@ -154,44 +154,11 @@ static void	l_draw_debug_info(t_sa_orbit_task *task)
 	timeprev = time_get_ms();
 }
 
-t_vec3	orb_to_ndc(t_kep_orb kep, t_vec3 cart, t_vec3 offset, t_vecd scale)
+int	sa_task_orbit_process(t_sa_orbit_task *task)
 {
-	t_vec3	dev;
-	dev = v3divs(cart, kep.apo);
-	dev = v3add(dev, offset);
-	dev = v3muls(dev, scale);
-	return (dev);
-}
-
-int	orbit_render(t_sa_orbit_task *task)
-{
-	double t;
-	double ma;
-	double mam;
-	t_vec3	scr;
-	t_vec3	prev;
-	double period;
-
 	texture_clear(task->rt0, 0);
-	mam = sqrt(task->kep.parent.grav / (task->kep.sma * task->kep.sma * task->kep.sma));
-	ma = 45 * DEG2RAD;
-	t = 0;
-	period = 2 * PI * sqrt(task->kep.sma * task->kep.sma * task->kep.sma / task->kep.parent.grav);
-	printf("v3:%f\n", v3dot(task->cart.pos, task->cart.vel));
-	while (t < period + 1)
-	{
-		ma = mam * t;
-		kep_elem_set(&task->kep, ma, KEP_MNA, ELEM_EXACT);
-		kep_complete(&task->kep);
-		orb_kepler_to_cart(task->kep, &task->cart);
-		scr = orb_to_ndc(task->kep, task->cart.pos, v3new(1,1,0), 200);
-		if (t != 0)
-			texture_draw_line(task->rt0, v3tov2(prev), v3tov2(scr), R_RED | R_ALPHA);
-		prev = scr;
-		t += period / 36;
-	}
-	pixel_set_s(task->rt0, scr.x, scr.y, R_ALPHA | R_GREEN);
-	pixel_set_s(task->rt0, 200, 200, R_ALPHA | R_GREEN);
+	orbit_path_render(&task->obj0, &task->rt0);
+	orbit_obj_render(&task->obj0, &task->rt0);
 	usleep(16666);
 	ui_process_draw(&task->ui, &task->input, task->rt0);
 	texture_draw(task->app, task->rt0, v2new(0,0));
@@ -199,41 +166,37 @@ int	orbit_render(t_sa_orbit_task *task)
 	input_process(&task->input);
 }
 
-
 // void draw_element_controls(t_sa_orbit_task *task)
 // {
 // 	if (input_keydown())
 // }
 
-int main(void)
+int	main(void)
 {
-	t_sa_orbit_task task;
+	t_sa_orbit_task	task;
 
-	task.sun = orb_body_create_rm(6.96340e8, 1.9891E30);
-	task.kep = (t_kep_orb){0};
-	task.kep.parent = task.sun;
-	task.kep.self = orb_body_create_rm(6378100, 5.9722E24);
-	kep_elem_set(&task.kep, 1.00000011 * AU, KEP_SMA, ELEM_EXACT);
-	kep_elem_set(&task.kep, 0.516708617, KEP_ECC, ELEM_EXACT);
-	kep_elem_set(&task.kep, 45 * DEG2RAD, KEP_INC, ELEM_EXACT);
-	kep_elem_set(&task.kep, 0, KEP_LAN, ELEM_EXACT);
-	kep_elem_set(&task.kep, 0, KEP_TA, ELEM_EXACT);
-
-	kep_elem_set(&task.kep, 1.00000011 * AU, KEP_SMA, ELEM_EXACT);
-	kep_elem_set(&task.kep, 0.7167, KEP_ECC, ELEM_EXACT);
-	kep_elem_set(&task.kep, 1 * DEG2RAD, KEP_INC, ELEM_EXACT);
-	kep_elem_set(&task.kep, 0, KEP_LAN, ELEM_EXACT);
-	kep_elem_set(&task.kep, 0, KEP_TA, ELEM_EXACT);
-	kep_elem_set(&task.kep, 0 * DEG2RAD, KEP_AOP, ELEM_EXACT);
-	kep_complete(&task.kep);
-	orb_kepler_to_cart(task.kep, &task.cart);
+	task.obj0 = (t_orb_obj){0};
+	task.sun = orb_body_create_rm(6.96340e8, 1.9891e30);
+	//task.earth = orb_body_create_rm(6378100, 5.9722E24);
+	task.obj0.self = task.sun;
+	task.obj0.path.sma = 1.00000011 * KM_AU;
+	//task.obj0.path.ecc = 0.0;
+	task.obj0.path.ecc = 0.516708617;
+	task.obj0.path.inc = 0 * DEG2RAD;
+	//task.obj0.path.inc = 45 * DEG2RAD;
+	task.obj0.path.lan = 0 * KM_AU;
+	task.obj0.path.sgp_u = task.sun.u;
+	task.obj0.ang.s_0.mna0 = 0;
+	task.obj0.ang.s_0.time0 = 0;
+	task.obj0.ang.time = 0;
+	kep_ang_set(&task.obj0.path, &task.obj0.ang, 0);
 	task.app.mlx = mlx_init();
 	task.app.win = mlx_new_window(task.app.mlx, 400, 400, "ORBIT");
 	task.rt0 = texture_create(task.app.mlx, 400, 400);
 	input_setup(task.app.mlx, task.app.win, &task.input);
 	ui_setup(&task.ui);
 	task.ui.parent = &task;
-	mlx_loop_hook(task.app.mlx, &orbit_render, &task);
+	mlx_loop_hook(task.app.mlx, &sa_task_orbit_process, &task);
 	mlx_loop(task.app.mlx);
 	return (0);
 }
