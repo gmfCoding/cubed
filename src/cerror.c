@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 00:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/26 23:53:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:32:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_asrt(int cond, char *error)
 	if (!cond)
 		return ;
 	ft_putstr_fd(error, STDERR_FILENO);
-	exit((int)error);
+	exit(1);
 }
 
 static void	ft_putbacktrace(void);

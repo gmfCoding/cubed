@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/05 01:36:37 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:33:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	measure_frame_rate(t_app app)
 
 void	draw_debug_info(t_game *game)
 {
-	t_player *const	player = &game->player;
-	static int64_t	timeprev = 0;
-	const char		*debugstr[] = {
+	t_player *const		player = &game->player;
+	static int64_t		timeprev = 0;
+	char		*const	debugstr[] = {
 		ft_strfmt("fps:%d", (int)(1.0 / ((time_get_ms() - timeprev) / 1000.0))),
 		ft_strfmt("pos:(%f,%f)", (double)player->pos.x, (double)player->pos.y),
 		ft_strfmt("dir:(%f,%f)", (double)player->dir.x, (double)player->dir.y),
@@ -53,7 +53,7 @@ void	draw_debug_info(t_game *game)
 		(double)game->player.plane.x, (double)game->player.plane.y),
 		ft_strfmt("hits:(%d)", game->half.hits),
 	};
-	int				i;
+	int					i;
 
 	i = -1;
 	while (++i < sizeof(debugstr) / sizeof(*debugstr))
