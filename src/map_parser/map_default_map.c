@@ -77,7 +77,7 @@ void map_default_map_init(t_world *world)
 	}
 	world->player.pos = v2new(22, 11.5);
 	world->player.dir = v2new(-1, 0);
-	world->player.plane = v2new(0, 0.5);
+	world->player.plane = v2new(0, -0.5);
 	world->player.moveSpeed = 1 / R_TFR * 2.0; // the constant value is in squares/second
-	world->player.rotSpeed = 1 / R_TFR * 2.0;  // the constant value is in radians/second
+	world->player.rotSpeed = -1 / R_TFR * 2.0;  // the constant value is in radians/second
 }

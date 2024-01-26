@@ -32,7 +32,14 @@ typedef struct s_orb_body
 	@param radius planet radius in meters
 	@param density density in kg/m3
 */
-t_orb_body orb_body_create(double radius, double density);
+t_orb_body orb_body_create_rd(double radius, double density);
+
+/*
+	Create a new orbital body definition
+	@param radius planet radius in meters
+	@param density density in kg/m3
+*/
+t_orb_body orb_body_create_rm(double radius, double mass);
 
 typedef enum e_kep_elem
 {
@@ -81,7 +88,8 @@ typedef struct s_kep_use
 
 typedef struct s_kep_oparam
 {
-	t_orb_body	body;
+	t_orb_body	parent;
+	t_orb_body	self;
 	t_kep_use	set;
 	double		sma;
 
@@ -102,13 +110,15 @@ typedef struct s_kep_oparam
 	double		ea;
 	double		mom;
 	t_kpe		prime_angle;
+	double		time;
 }	t_kep_orb;
 
 typedef struct s_cart_oparam
 {
-	t_orb_body body;
-	t_vec3 position;
-	t_vec3 velocity;
+	t_orb_body parent;
+	t_orb_body self;
+	t_vec3 pos;
+	t_vec3 vel;
 } t_cart_orb;
 
 double  orb_ta_to_ea(double ta, double ecc);

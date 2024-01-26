@@ -1,4 +1,5 @@
 #include <math.h>
+
 #include "constants.h"
 #include "orbit.h"
 
@@ -18,7 +19,8 @@ double orb_ma_to_ea(double ma, double ecc)
 	if (ecc > 0.8)
 		target = PI;
 	error = target - ecc * sin(target) - ma;
-	while (abs(error) >= EA_MAX_ERROR && i < EA_MAX_ITER)
+	i = -1;
+	while (abs(error) >= EA_MAX_ERROR && ++i < EA_MAX_ITER)
 	{
 		prev = target;
 		target = prev - (error / 1.0 - ecc * cos(prev));

@@ -56,4 +56,11 @@ void kep_complete(t_kep_orb *kep)
 		kep_elem_set(kep, orb_ea_to_ma(kep->ea, kep->ecc), KEP_MNA, ed);
 	if (!kep->set.ta && kep->set.ea && kep->set.ecc)
 		kep_elem_set(kep, orb_ea_to_ta(kep->ea, kep->ecc), KEP_TA, ed);
+	kep->radius = kep->sma * (1 - kep->ecc * cos(kep->ea));
+	kep->mom = sqrt(kep->self.grav * kep->sma * (1 - kep->ecc * kep->ecc));
+}
+
+void	kep_elem_reset(t_kep_orb *kep)
+{
+	kep->set = (t_kep_use){0};
 }

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/10 18:39:20 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/24 22:24:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR2_H
@@ -48,4 +48,10 @@ t_vec2	v2norm(t_vec2 vec);
 
 /* Returns the determinate (perp cross product)*/
 t_vecd v2det(t_vec2 a, t_vec2 b);
+
+/* Returns component wise division c = c / s */
+t_vec2	v2divs(t_vec2 f, t_vecd s);
+
+/* Returns component-wise inverse division c = s / c */
+t_vec2	v2sdiv(t_vecd s, t_vec2 f);
 #endif

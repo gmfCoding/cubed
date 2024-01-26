@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:49:54 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/04 01:18:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/24 17:24:54 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "vector2.h"
@@ -26,15 +26,6 @@ t_vec2	v2sub(t_vec2 f, t_vec2 s)
 
 	vec.x = f.x - s.x;
 	vec.y = f.y - s.y;
-	return (vec);
-}
-
-t_vec2	v2inv(t_vec2 f)
-{
-	t_vec2	vec;
-
-	vec.x = -f.x;
-	vec.y = -f.y;
 	return (vec);
 }
 

@@ -3,6 +3,7 @@ SRCSF = $(TEST) \
 		texture/pixel.c \
 		texture/texture_util.c \
 		vector/vector2_math_extra.c \
+		vector/vector2_math_div.c \
 		vector/vector2_math.c \
 		vector/vector2.c \
 		vector/vector2i_math_extra.c \
@@ -90,7 +91,7 @@ WFLAGS =#-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
-OPFLAG = -Ofast
+OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2
 OPTS = $(OPT)
 
 ifneq (,$(findstring def,$(OPTS)))

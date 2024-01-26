@@ -6,11 +6,11 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:50:37 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/05 01:36:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/05 01:36:33 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef RENDER_H
+# define RENDER_H
 # include "vector2.h"
 # include "texture.h"
 # include "state.h"
