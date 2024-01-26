@@ -6,11 +6,12 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 01:18:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:32:30 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "task.h"
 #include "render.h"
+#include <stdio.h>
 
 int	task_orbit_setup(t_game *game, t_task *task)
 {

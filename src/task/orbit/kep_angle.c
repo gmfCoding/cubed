@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:54:35 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 01:50:42 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:29:16 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -41,7 +41,7 @@ double	kep_ta(t_kep_path *path, t_kep_ang *ang)
 
 }
 
-double	kep_ang_set(t_kep_path *path, t_kep_ang *ang, double tn)
+void	kep_ang_set(t_kep_path *path, t_kep_ang *ang, double tn)
 {
 	ft_asrt(path == NULL || ang == NULL, E_P E_F);
 	ang->time = tn;
@@ -52,24 +52,24 @@ double	kep_ang_set(t_kep_path *path, t_kep_ang *ang, double tn)
 
 double	kep_anom_e(t_kep_path *path, t_kep_ang *ang)
 {
-	double	target;
+	double	ea0;
+	double	ea1;
 	double	error;
-	double	prev;
 	int		i;
 
 	ft_asrt(path == NULL || ang == NULL, E_P E_F);
-	target = ang->mna;
+	ea1 = ang->mna;
 	if (path->ecc > 0.8)
-		target = M_PI;
-	error = target - path->ecc * sin(target) - ang->mna;
+		ea1 = M_PI;
+	error = ea1 - path->ecc * sin(ea1) - ang->mna;
 	i = -1;
 	while (fabs(error) >= EA_MAX_ERROR && ++i < EA_MAX_ITER)
 	{
-		prev = target;
-		target = prev - (error / 1.0 - path->ecc * cos(prev));
-		error = target - path->ecc * sin(target) - ang->mna;
+		ea0 = ea1;
+		ea1 = ea0 - (error / (1.0 - path->ecc * cos(ea0)));
+		error = ea1 - path->ecc * sin(ea1) - ang->mna;
 	}
-	return (target);
+	return (ea1);
 }
 
 // double kep_ang_step(t_kep_path *path, t_kep_ang *ang, double step)

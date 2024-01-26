@@ -19,7 +19,9 @@ void	orbit_path_render(t_kep_path *path, t_texture *rt)
 	t_vec3		pos;
 	t_vec3		prev;
 	double		period;
+	int i;
 
+	i = 0;
 	t = 0;
 	period = kep_period(path);
 	while (t < period + 1)
@@ -28,9 +30,12 @@ void	orbit_path_render(t_kep_path *path, t_texture *rt)
 		orb_pos(path, &ang, &pos);
 		pos = orb_to_ndc(path, pos, v3new(2, 2, 0), 100);
 		if (t != 0)
+		{
 			texture_draw_line(*rt, v3tov2(prev), v3tov2(pos), R_RED | R_ALPHA);
+		}
 		prev = pos;
 		t += period / 100;
+		i++;
 	}
 }
 

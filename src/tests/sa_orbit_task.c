@@ -13,7 +13,6 @@ typedef struct s_button		t_button;
 typedef struct s_ui_context	t_ui_context;
 typedef void				(*t_uibtn_click_cb)(t_button *, t_ui_context *);
 
-
 typedef struct s_button	t_button;
 struct s_button
 {
@@ -62,17 +61,23 @@ struct s_orbit_button_ctx
 
 void	orbit_control_action(t_button *btn, t_ui_context *ctx)
 {
-	const t_sa_orbit_task	*task = ctx->parent;
-	const char				*mode = btn->reference;
+	t_sa_orbit_task *const	task = ctx->parent;
+	char			*const	mode = btn->reference;
 	t_orb_cart *const		cart = &task->obj0.cart;
 
 	printf("Applying thrust: %s\n", mode);
 	orb_cart_vel(&task->obj0.path, &task->obj0.ang, cart);
 	printf("velocity: %f\n", v3mag(cart->vel));
 	if (mode[0] == '+')
+	{
+		kep_ang_set(&task->obj0.path, &task->obj0.ang, task->obj0.ang.time + 1);
 		cart->vel = v3muls(cart->vel, 1.001);
+	}
 	else
+	{
+		kep_ang_set(&task->obj0.path, &task->obj0.ang, task->obj0.ang.time - 1);
 		cart->vel = v3muls(cart->vel, 1 / 1.001);
+	}
 	orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
 }
 
@@ -139,7 +144,7 @@ void	ui_process_draw( t_ui_context *ctx, t_inputctx *in, t_texture target)
 static void	l_draw_debug_info(t_sa_orbit_task *task)
 {
 	static int64_t	timeprev = 0;
-	const char		*debugstr[] = {
+	char *const		debugstr[] = {
 		ft_strfmt("fps:%d", (int)(1.0 / ((time_get_ms() - timeprev) / 1000.0))),
 	};
 	int				i;
@@ -157,20 +162,20 @@ static void	l_draw_debug_info(t_sa_orbit_task *task)
 int	sa_task_orbit_process(t_sa_orbit_task *task)
 {
 	texture_clear(task->rt0, 0);
-	orbit_path_render(&task->obj0, &task->rt0);
+	orbit_path_render(&task->obj0.path, &task->rt0);
 	orbit_obj_render(&task->obj0, &task->rt0);
 	usleep(16666);
 	ui_process_draw(&task->ui, &task->input, task->rt0);
 	texture_draw(task->app, task->rt0, v2new(0,0));
 	l_draw_debug_info(task);
 	input_process(&task->input);
+	return (0);
 }
 
 // void draw_element_controls(t_sa_orbit_task *task)
 // {
 // 	if (input_keydown())
 // }
-
 int	main(void)
 {
 	t_sa_orbit_task	task;

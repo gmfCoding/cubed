@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 01:33:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:29:26 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -53,7 +53,7 @@ double			kep_ta(t_kep_path *path, t_kep_ang *ang);
 double			kep_anom_e(t_kep_path *path, t_kep_ang *ang);
 
 /* Sets the time sample of angular position parameters and updates them */
-double			kep_ang_set(t_kep_path *path, t_kep_ang *ang, double tn);
+void			kep_ang_set(t_kep_path *path, t_kep_ang *ang, double tn);
 
 /*** task/orbit/body.c ***/
 
