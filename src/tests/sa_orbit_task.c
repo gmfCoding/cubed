@@ -120,7 +120,7 @@ void	ui_process_draw( t_ui_context *ctx, t_inputctx *in, t_texture target)
 	int			col;
 
 	i = -1;
-	while (++i < sizeof(ctx->buttons) / sizeof(t_button))
+	while (++i < (int)(sizeof(ctx->buttons) / sizeof(t_button)))
 	{
 		curr = &ctx->buttons[i];
 		col = curr->colour;
@@ -150,7 +150,7 @@ static void	l_draw_debug_info(t_sa_orbit_task *task)
 	int				i;
 
 	i = -1;
-	while (++i < sizeof(debugstr) / sizeof(*debugstr))
+	while (++i < (int)(sizeof(debugstr) / sizeof(*debugstr)))
 	{
 		mlx_string_put(task->app.mlx, task->app.win, 0, \
 			i * 12 + 12, 0xFFFFFF, debugstr[i]);

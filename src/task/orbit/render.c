@@ -41,7 +41,6 @@ void	orbit_path_render(t_kep_path *path, t_texture *rt)
 
 void	orbit_obj_render(t_orb_obj *obj, t_texture *rt)
 {
-	double		t;
 	t_vec3		pos;
 
 	orb_pos(&obj->path, &obj->ang, &pos);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 05:33:41 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:41:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	draw_debug_info(t_game *game)
 	int					i;
 
 	i = -1;
-	while (++i < sizeof(debugstr) / sizeof(*debugstr))
+	while (++i < (int)(sizeof(debugstr) / sizeof(*debugstr)))
 	{
 		mlx_string_put(game->app.mlx, game->app.win, 0, \
 			i * 12 + 12, 0xFFFFFF, debugstr[i]);
@@ -88,7 +88,7 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 	t_dda	dda;
 
 	dda = (t_dda){0};
-	dda.map = (t_vec2i){start.x, start.y};
+	dda.map = (t_vec2i){{start.x}, {start.y}};
 	dda.delta.x = 1e30;
 	if (dda.delta.x != 0)
 		dda.delta.x = 1.0 / fabs(dir.x);

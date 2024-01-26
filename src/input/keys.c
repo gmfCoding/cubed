@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:16:03 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/23 21:16:56 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:45:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ const char *const	g_keymapval[] = {
 	"+",
 	"*",
 	"-",
-	"="
+	"=",
 	"\e",
 	MAPVAL_DEL,
 	"",
@@ -360,7 +360,7 @@ int	key_get_index(int key)
 	int	i;
 
 	i = -1;
-	while (++i < sizeof(g_keymapkey) / sizeof(*g_keymapkey))
+	while (++i < (int)(sizeof(g_keymapkey) / sizeof(*g_keymapkey)))
 	{
 		if (key == g_keymapkey[i])
 			return (i);

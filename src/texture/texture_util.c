@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:30:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:37:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:39:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "texture.h"
@@ -20,7 +20,6 @@ void	texture_blit(t_texture src, t_texture dst, t_vec2 pos)
 {
 	int		x;
 	int		y;
-	float	a;
 	int		col;
 
 	y = -1;
@@ -41,7 +40,6 @@ void	texture_blit_s(t_texture src, t_texture dst, t_vec2 pos, int scale)
 {
 	int		x;
 	int		y;
-	float	a;
 	int		col;
 
 	y = -1;

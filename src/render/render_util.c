@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/05 01:35:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:39:53 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -92,8 +92,6 @@ t_texture texture_get_debug_view(t_game *game, int view)
 
 void texture_draw_debug_view(t_game *game, int view)
 {
-	t_texture rt;
-
 	if (view >= MAX_DEBUG_VIEWS)
 		return ;
 	mlx_put_image_to_window(game->app.mlx, game->views[view].win, game->views[view].rt.img, 0, 0);
