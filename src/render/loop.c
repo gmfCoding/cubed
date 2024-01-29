@@ -251,8 +251,8 @@ void player_controls(t_game *game)
 		player->plane.x = player->plane.x * cos(player->rotSpeed) - player->plane.y * sin(player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(player->rotSpeed) + player->plane.y * cos(player->rotSpeed);
 	}
-	if (input_keydown(&game->input, KEY_E))
-	{
+//	if (input_keydown(&game->input, KEY_E))
+//	{
 		if (game->events_on == true)
 		{
 			event_interact(game);
@@ -271,7 +271,7 @@ void player_controls(t_game *game)
 */
 		}
 
-	}
+//	}
 	mmap_input(game);
 }
 
@@ -386,6 +386,7 @@ void	render(t_game *game)
 	mmap_draw(game);
 //	texture_blit(game->mmap.mm_case, game->rt0, );
 	texture_draw(game, game->rt0, v2new(0, 0));
+	event_display_ui(game);
 	draw_debug_info(game);
 	game->fpsc++;
 }

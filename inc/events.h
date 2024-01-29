@@ -9,7 +9,7 @@
 
 typedef struct	s_world t_world;
 typedef struct	s_map t_map;
-
+/*
 typedef enum	e_event_type
 {
 	DOOR_UNLOCKED_O,
@@ -23,10 +23,11 @@ typedef struct s_event
 	t_vec2		pos[9];
 	t_event_type	type;
 }		t_event;
-
-void	event_trigger(t_game *game, t_vec2 pos, t_event_type type);
+*/
+//void	event_trigger(t_game *game, t_vec2 pos, t_event_type type);
 void	event_player(t_game *game);
 void	event_interact(t_game *game);
+void	event_display_ui(t_game *game);
 /*
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
 void		mod_gen_no(char *content, int index, t_world *world, t_map *map);

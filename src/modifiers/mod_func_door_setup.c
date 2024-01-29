@@ -88,13 +88,13 @@ void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
 	world->ent_2[world->ent_count].state_1 = (dr[5][0] == 'C') ? true : false;
 	world->ent_2[world->ent_count].state_2 = (dr[6][0] == 'L') ? true : false;
 	world->ent_2[world->ent_count].state_3 = false;
+	if (dr[5][0] == 'C' && dr[6][0] == 'L')
+		world->ent_2[world->ent_count].type = DOOR_LOCKED;
+	if (dr[5][0] == 'C' && dr[6][0] != 'L')
+		world->ent_2[world->ent_count].type = DOOR_UNLOCKED;
+	if (dr[5][0] != 'C')
+		world->ent_2[world->ent_count].type = DOOR_OPEN;
 	world->ent_count++;
-	
-
-
-
-
-
 	free_str_array(dr);
 }
 

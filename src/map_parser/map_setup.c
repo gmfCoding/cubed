@@ -102,3 +102,5 @@ t_map	map_parse(int argc, char **argv, t_game *game)
 	map_update_vis(&map);
 	return (map);
 }
+
+

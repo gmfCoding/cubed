@@ -258,12 +258,18 @@ t_texture	*mmap_get_img(t_game *game, int pos)
 	return (&game->mmap.mm_img[index]);
 }
 
-t_texture	*mmap_get_door_img(t_game *game, int pos)
+t_texture	*mmap_get_door_img(t_game *game, int pos, int i)
 {
 	if (game->world->map.tiles[pos+1].type == FLOOR)
+	{
+		game->mmap.tiles[i].vertical = true;
 		return (&game->mmap.mm_img[13]);
+	}
 	else
+	{
+		game->mmap.tiles[i].vertical = false;
 		return (&game->mmap.mm_img[11]);
+	}
 }
 
 int	mmap_tile_assign(t_game *game, int i, int y)
@@ -287,7 +293,7 @@ int	mmap_tile_assign(t_game *game, int i, int y)
 		}
 		if (game->world->map.tiles[index].type == DOOR)
 		{
-			game->mmap.tiles[i].img = mmap_get_door_img(game, index);
+			game->mmap.tiles[i].img = mmap_get_door_img(game, index, i);
 			game->mmap.tiles[i].pos.x = x * MAP_S + MAP_POS_X + MAP_CASE;
 			game->mmap.tiles[i].pos.y = y * MAP_S + MAP_POS_Y + MAP_CASE;
 			game->mmap.tiles[i].ref = index;

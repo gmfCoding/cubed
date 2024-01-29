@@ -8,6 +8,7 @@ typedef struct	s_world t_world;
 typedef struct	s_map t_map;
 typedef struct	s_tile t_tile;
 typedef	struct	s_mm_tile t_mm_tile;
+//typedef struct	s_game t_game;
 
 typedef enum	e_modtype
 {
@@ -18,6 +19,18 @@ typedef enum	e_modtype
 	FLOOR_COLOR,
 	CEILING_COLOR,
 }				t_modtype;
+
+typedef enum	e_ent_type
+{
+	DOOR_OPEN,
+	DOOR_UNLOCKED,
+	DOOR_LOCKED,
+	KEY,
+	ALERT_MEDIUM,
+	ALERT_HIGH,
+	ALERT_OFF,
+	FIVE_LIGHTS,
+}		t_ent_type;
 
 typedef struct	s_mod
 {
@@ -45,6 +58,7 @@ typedef struct s_door
 
 typedef struct	s_entity_2
 {
+	t_ent_type	type;
 	char		name[NAME_SIZE];
 	char		ui_display_1[NAME_SIZE];
 	char		ui_display_2[NAME_SIZE];
@@ -66,6 +80,7 @@ typedef struct	s_entity
 
 }		t_entity;
 
+void	modifier_after(t_game *game);
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
 void		mod_gen_no(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_so(char *content, int index, t_world *world, t_map *map);
@@ -75,7 +90,8 @@ void		mod_gen_c(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_f(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_dr(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_ke(char *content, int index, t_world *world, t_map *map);
-
+void		mod_gen_mm(char *content, int index, t_world *world, t_map *map);
+void		mod_gen_al(char *content, int index, t_world *world, t_map *map);
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
 
 #endif

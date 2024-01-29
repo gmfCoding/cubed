@@ -28,7 +28,7 @@ typedef struct s_mm_tile
 	t_vec2		pos;
 	int16_t		ref;
 	bool		vis;
-
+	bool		vertical;
 }		t_mm_tile;
 
 typedef struct	s_mmap

@@ -61,6 +61,7 @@ struct s_game
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];
 	bool			events_on;
+	bool			display_ui;
 	t_inputctx		input;
 	t_rayinfo		half;
 	unsigned int		fpsc;
