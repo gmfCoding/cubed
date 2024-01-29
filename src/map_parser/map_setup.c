@@ -69,7 +69,7 @@ void	map_update_vis(t_map *map)
 			type = map->tiles[index].type;
 			if (type == WALL)
 				map->tiles[index].vis = 0;
-			else if (type == MODIFIED)
+			else if (type == DOOR)
 				map->tiles[index].vis = 9;
 			else
 				map->tiles[index].vis = -1;

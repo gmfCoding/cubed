@@ -36,11 +36,12 @@
 
 void	world_preset(int argc, char **argv, t_game *game)
 {
-
+	game->world->ent_count = 0;
 	if (argc - 1 >= 1)
 		game->world->map = map_parse(argc, argv, game);
 	else
 		map_default_map_init(game);
+	game->fpsc = 0;
 }
 
 void generate_textures(t_game *game)

@@ -45,4 +45,8 @@ t_vecd	v2mag(t_vec2 vec);
 
 /* Returns a normalised (length of 1) copy of a vector */
 t_vec2	v2norm(t_vec2 vec);
+
+/* Return the distance between to vectors */
+t_vec2	v2diff(t_vec2 f, t_vec2 s);
+
 #endif

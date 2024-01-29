@@ -8,6 +8,31 @@
 //mini_map setup stuff here ^^
 
 
+
+
+// for vector_math_extra.s vvvv
+/*
+t_vec2	v2diff(t_vec2 f, t_vec2 s)
+{
+	t_vec2	vec;
+	
+	vec.x = 0;
+	vec.y = 0;
+	if (f.x > s.x)
+		vec.x = f.x - s.x;
+	else
+		vec.x = s.x - f.x;
+	if (f.y > s.y)
+		vec.y = f.y - s.y;
+	else
+		vec.y = s.y - f.y;
+	return (vec);
+}
+*/
+// for vector_math_extra ^^^^
+
+
+// in input vvvv
 void	mmap_input(t_game *game)
 {
 	if (input_keydown(&game->input, KEY_M))
@@ -23,9 +48,10 @@ void	mmap_input(t_game *game)
 			game->mmap.mm_small = true;
 		}
 	}
-
 }
+// in input ^^^^
 
+//in update vvvv
 int	mmap_is_inside(int x, int y)
 {
 	t_vec2 tile_pos = v2new(x, y);
@@ -49,7 +75,6 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, bool draw_ful
 		{
 			pos.x = ((tile[i].pos.x - MAP_POS_X - MAP_CASE) + (SCR_WIDTH / 2)) - p_pos.x * MAP_S;
 			pos.y = ((tile[i].pos.y - MAP_POS_Y - MAP_CASE) + (SCR_HEIGHT / 2)) - p_pos.y * MAP_S;
-			printf("%f,%f\n",pos.x, pos.y);
 			if (tile[i].vis == true || mmap_is_inside(pos.x - 455, pos.y + 225) == 1)
 			{
 				texture_blit(*(tile[i].img), dst, pos);
@@ -84,6 +109,29 @@ void	mmap_draw_player(t_game *game, t_vec2 m_pos, bool draw_full)
 	}
 }
 
+void	mmap_case_light(t_game *game, t_vec2 pos)
+{
+	if (game->mmap.alert_m == true || game->mmap.alert_h == true)
+	{
+		if (game->fpsc % 30 > 15)// && (game->mmap.alert_m == true || game->mmap.alert_h == true))
+		{
+			if (game->mmap.alert_m == true) 
+				texture_blit(game->mmap.img_case[2], game->rt0, pos);
+			if (game->mmap.alert_h == true) 
+				texture_blit(game->mmap.img_case[3], game->rt0, pos);
+		}
+		else
+		{
+			if (game->mmap.alert_h == true)
+				texture_blit(game->mmap.img_case[2], game->rt0, pos);
+			else
+				texture_blit(game->mmap.img_case[1], game->rt0, pos);
+		}
+	}
+	else
+		texture_blit(game->mmap.img_case[1], game->rt0, pos);
+}
+
 void	mmap_draw(t_game *game)
 {
 	t_vec2 pos;//can maybe store this in mmap struct
@@ -92,8 +140,7 @@ void	mmap_draw(t_game *game)
 	pos.y = MAP_POS_Y;
 	if (game->mmap.mm_small == true)
 	{
-		//if danger color background maybe add a fog effect for large map
-		texture_blit(game->mmap.img_case[1], game->rt0, pos);
+		mmap_case_light(game, pos);
 		mmap_draw_player(game, pos, false);
 		mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos, false);
 		texture_blit(game->mmap.img_case[0], game->rt0, pos);
@@ -104,11 +151,9 @@ void	mmap_draw(t_game *game)
 		mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos, true);
 	}
 }
-
+//in update ^^^
 #include <stdio.h>
 #include <unistd.h>
-
-
 //////////////mmap_setup VVVVVVVVVVVVVVVVVV
 
 void	mmap_init_img(t_game *game)
@@ -183,7 +228,7 @@ int	mmap_img_number_1(bool t, bool l, bool r, bool b)
 	return(mmap_img_number_2(t, l, r, b));
 }
 
-int	mmap_decide_img(t_game *game, int pos)
+int	mmap_decide_img(t_tile *tile, int w, int h, int pos)
 {
 	bool	t;
 	bool	l;
@@ -194,17 +239,13 @@ int	mmap_decide_img(t_game *game, int pos)
 	l = false;
 	r = false;
 	b = false;
-	if (pos-game->world->map.width >= 0 \
-		&& game->world->map.tiles[pos-game->world->map.width].type == WALL)
+	if (pos - w >= 0 && (tile[pos-w].type == WALL || tile[pos-w].type == DOOR))
 		t = true;
-	if (pos-1 >= 0 && game->world->map.tiles[pos-1].type \
-		== WALL && pos % game->world->map.width != 0)
+	if (pos - 1 >= 0 && (tile[pos-1].type == WALL || tile[pos-1].type == DOOR) && pos % w != 0)
 		l = true;
-	if (pos+1 < (game->world->map.width*game->world->map.height) \
-		&& game->world->map.tiles[pos+1].type == WALL && (pos + 1) % game->world->map.width != 0)
+	if (pos + 1 < (w * h) && (tile[pos + 1].type == WALL || tile[pos + 1].type == DOOR) && (pos + 1) % w != 0)
 		r = true;
-	if (pos+game->world->map.width < (game->world->map.width*game->world->map.height) \
-		&& game->world->map.tiles[pos+game->world->map.width].type == WALL)
+	if (pos + w < (w * h) && (tile[pos + w].type == WALL || tile[pos + w].type == DOOR))
 		b = true;
 	return (mmap_img_number_1(t,l,r,b));
 }
@@ -213,38 +254,66 @@ t_texture	*mmap_get_img(t_game *game, int pos)
 {
 	int	index;
 
-	index = mmap_decide_img(game, pos);
+	index = mmap_decide_img(game->world->map.tiles, game->world->map.width, game->world->map.height, pos);
 	return (&game->mmap.mm_img[index]);
 }
 
+t_texture	*mmap_get_door_img(t_game *game, int pos)
+{
+	if (game->world->map.tiles[pos+1].type == FLOOR)
+		return (&game->mmap.mm_img[13]);
+	else
+		return (&game->mmap.mm_img[11]);
+}
+
+int	mmap_tile_assign(t_game *game, int i, int y)
+{
+	int	x;
+	int	index;
+
+	x = -1;
+	while (++x < game->world->map.width)
+	{
+		index = x + y * game->world->map.width;
+		if (game->world->map.tiles[index].type == WALL)
+		{
+			if (game->mmap.tiles[i].img == NULL)
+				game->mmap.tiles[i].img = mmap_get_img(game, index);
+			game->mmap.tiles[i].pos.x = x * MAP_S + MAP_POS_X + MAP_CASE;
+			game->mmap.tiles[i].pos.y = y * MAP_S + MAP_POS_Y + MAP_CASE;
+			game->mmap.tiles[i].ref = index;
+			game->mmap.tiles[i].vis = false;//change map vis here need to make a modifier tho
+			i++;
+		}
+		if (game->world->map.tiles[index].type == DOOR)
+		{
+			game->mmap.tiles[i].img = mmap_get_door_img(game, index);
+			game->mmap.tiles[i].pos.x = x * MAP_S + MAP_POS_X + MAP_CASE;
+			game->mmap.tiles[i].pos.y = y * MAP_S + MAP_POS_Y + MAP_CASE;
+			game->mmap.tiles[i].ref = index;
+			game->mmap.tiles[i].vis = false;//change map vis here need to make a modifier tho
+			i++;
+		}
+	}
+
+
+	return (i);
+}
 
 void	mmap_init(t_game *game)
 {
 	int	x;
 	int	y;
 	int	index;
-	int	count;
+	int	i;
 
 	game->mmap.mm_big = false;
 	game->mmap.mm_small = true;
+	game->mmap.alert_m = false;
+	game->mmap.alert_h = false;
 	mmap_init_img(game);
 	y = -1;
-	count = 0;
+	i = 0;
 	while (++y < game->world->map.height)
-	{
-		x = -1;
-		while (++x < game->world->map.width)
-		{
-			index = x + y * game->world->map.width;
-			if (game->world->map.tiles[index].type == WALL)
-			{
-				game->mmap.tiles[count].img = mmap_get_img(game, index);
-				game->mmap.tiles[count].pos.x = x * MAP_S + MAP_POS_X + MAP_CASE;
-				game->mmap.tiles[count].pos.y = y * MAP_S + MAP_POS_Y + MAP_CASE;
-				game->mmap.tiles[count++].vis = false;
-			}
-			//check for door type
-			//
-		}
-	}
+		i = mmap_tile_assign(game, i, y);
 }

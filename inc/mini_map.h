@@ -26,11 +26,12 @@ typedef struct s_mm_tile
 {
 	t_texture	*img;
 	t_vec2		pos;
+	int16_t		ref;
 	bool		vis;
 
 }		t_mm_tile;
 
-typedef struct s_mmap
+typedef struct	s_mmap
 {
 	t_texture	mm_img[20];
 	t_texture	img_case[4];
@@ -39,10 +40,11 @@ typedef struct s_mmap
 	t_mm_tile	tiles[MAP_MAX_X * MAP_MAX_Y];
 	bool		mm_small;
 	bool		mm_big;
-}		t_mmap;
+	bool		alert_m;
+	bool		alert_h;
+}			t_mmap;
 
 void	mmap_init(t_game *game);
-
 void	mmap_draw(t_game *game);
 void	mmap_input(t_game *game);
 //void	draw_mini_map(t_game *game);

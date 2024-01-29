@@ -6,6 +6,8 @@
 # include <stdbool.h>
 typedef struct	s_world t_world;
 typedef struct	s_map t_map;
+typedef struct	s_tile t_tile;
+typedef	struct	s_mm_tile t_mm_tile;
 
 typedef enum	e_modtype
 {
@@ -15,7 +17,6 @@ typedef enum	e_modtype
 	EAST_TEXTURE,
 	FLOOR_COLOR,
 	CEILING_COLOR,
-	DOOR,
 }				t_modtype;
 
 typedef struct	s_mod
@@ -41,6 +42,22 @@ typedef struct s_door
 	bool	closed;
 	bool	locked;
 }		t_door;
+
+typedef struct	s_entity_2
+{
+	char		name[NAME_SIZE];
+	char		ui_display_1[NAME_SIZE];
+	char		ui_display_2[NAME_SIZE];
+	t_vec2		pos[9];// 9 is for the event trigger
+	t_tile		*ref_tile;
+	t_mm_tile	*ref_mm_tile;
+	int		speed;
+	int		value;
+	struct		s_entity_2 *target; // would be the door entity for instant or something else
+	bool		state_1;
+	bool		state_2;
+	bool		state_3;//just incase i need something else stored
+}			t_entity_2;
 
 typedef struct	s_entity
 {

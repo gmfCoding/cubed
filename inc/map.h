@@ -9,6 +9,7 @@
 # include <inttypes.h>
 # include "libft.h"
 # include "modifiers.h"
+# include "events.h"
 # define TAB_SIZE 4
 # define FILE_TYPE ".xpm"
 # define MAP_MODIFICATION_SIZE 100
@@ -23,6 +24,7 @@ typedef enum	e_tiletype
 	EMPTY,
 	MODIFIED,
 	INVALID,
+	DOOR,
 }				t_tiletype;
 
 typedef struct	s_tile
@@ -46,8 +48,10 @@ typedef struct	s_map
 typedef struct	s_world
 {
 	t_map		map;
-	t_entity	ent[MAX_ENT];
-
+	t_entity	ent[MAX_ENT];//this might be getting phased out but im still using it for the moment
+	t_entity_2	ent_2[MAX_ENT];
+	int		ent_count;
+//	t_event		stored_events[MAX_ENT];
 }			t_world;
 
 	// MAP PARSER //

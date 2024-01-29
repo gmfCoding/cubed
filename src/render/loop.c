@@ -214,6 +214,8 @@ void player_controls(t_game *game)
 
 	oldDirX = player->dir.x;
 	oldPlaneX = player->plane.x;
+	event_player(game);
+//	event_trigger(game, mapPos, DOOR_UNLOCKED_O);
 	if (input_keyheld(&game->input, KEY_W))
 	{
 		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.x * player->moveSpeed), (int)player->pos.y);
@@ -249,18 +251,24 @@ void player_controls(t_game *game)
 		player->plane.x = player->plane.x * cos(player->rotSpeed) - player->plane.y * sin(player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(player->rotSpeed) + player->plane.y * cos(player->rotSpeed);
 	}
-	if (input_keyheld(&game->input, KEY_E))
+	if (input_keydown(&game->input, KEY_E))
 	{
-
-		//t_vec2 mapPos = v2add(player->pos, player->dir);
-		t_vec2 mapPos = v2new(game->half.depths[0].x, game->half.depths[0].y);
-		//if (mapPos.x == game->world->ent[0].doors[0].pos.x && mapPos.y == game->world->ent[0].doors[0].pos.y)
+		if (game->events_on == true)
 		{
-			game->world->map.tiles[(int)(mapPos.x + mapPos.y * game->world->map.width)].vis = -1;
-
-
-			write(1,"E\n",2);		
-			printf("%f,%f,\n", mapPos.x, mapPos.y);
+			event_interact(game);
+//			t_vec2 mapPos = v2new(game->half.depths[0].x, game->half.depths[0].y);
+//			t_vec2 dis;
+/*
+			if (game->world->map.tiles[(int)(mapPos.x + mapPos.y * game->world->map.width)].type == DOOR) 
+			{
+				dis = v2diff(mapPos, game->player.pos);
+				if (dis.x <= 1.5 && dis.y <= 1.5)
+				{
+								
+				
+				}
+			}
+*/
 		}
 
 	}
@@ -359,6 +367,7 @@ void	render(t_game *game)
 {
 	t_vertical	vert;
 
+
 	player_controls(game);
 	input_process(&game->input);
 	render_floor(game);
@@ -374,10 +383,9 @@ void	render(t_game *game)
 		render_vertical(game, vert);
 	}
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
-//	mmap_draw(game->rt0, game->mmap->tiles, game->player.pos);
 	mmap_draw(game);
 //	texture_blit(game->mmap.mm_case, game->rt0, );
 	texture_draw(game, game->rt0, v2new(0, 0));
-//	draw_mini_map(game);
 	draw_debug_info(game);
+	game->fpsc++;
 }
