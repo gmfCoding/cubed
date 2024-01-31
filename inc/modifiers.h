@@ -18,6 +18,7 @@ typedef enum	e_modtype
 	EAST_TEXTURE,
 	FLOOR_COLOR,
 	CEILING_COLOR,
+	MINI_MAP,
 }				t_modtype;
 
 typedef enum	e_ent_type

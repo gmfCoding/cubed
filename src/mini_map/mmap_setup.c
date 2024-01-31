@@ -61,7 +61,7 @@ int	mmap_is_inside(int x, int y)
 	return (1);
 }
 
-void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, bool draw_full)
+void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, t_mmap mmap)
 {
 	int	i;
 	t_vec2 pos;
@@ -71,7 +71,7 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, bool draw_ful
 	{
 		pos.x = tile[i].pos.x - p_pos.x * MAP_S;
 		pos.y = tile[i].pos.y - p_pos.y * MAP_S;
-		if (draw_full)
+		if (mmap.mm_big == true)
 		{
 			pos.x = ((tile[i].pos.x - MAP_POS_X - MAP_CASE) + (SCR_WIDTH / 2)) - p_pos.x * MAP_S;
 			pos.y = ((tile[i].pos.y - MAP_POS_Y - MAP_CASE) + (SCR_HEIGHT / 2)) - p_pos.y * MAP_S;
@@ -80,6 +80,12 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, bool draw_ful
 				texture_blit(*(tile[i].img), dst, pos);
 				tile[i].vis = true;
 			}
+			if (tile[i].alert == true)
+			{
+			
+				printf("this spot right here\n");
+			
+			}	
 		}
 		else if (mmap_is_inside(pos.x - 116, pos.y - 115) == 1)
 		{
@@ -92,7 +98,7 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, bool draw_ful
 void	mmap_draw_player(t_game *game, t_vec2 m_pos, bool draw_full)
 {
 	t_vec2	pos;
-	if (draw_full)
+	if (game->mmap.mm_big == true)
 	{
 		pos.x = (SCR_WIDTH / 2 - 7); 
 		pos.y = (SCR_HEIGHT / 2 - 7);
@@ -142,13 +148,13 @@ void	mmap_draw(t_game *game)
 	{
 		mmap_case_light(game, pos);
 		mmap_draw_player(game, pos, false);
-		mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos, false);
+		mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos, game->mmap);
 		texture_blit(game->mmap.img_case[0], game->rt0, pos);
 	}
 	else if (game->mmap.mm_big == true)
 	{
 		mmap_draw_player(game, pos, true);
-		mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos, true);
+		mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos, game->mmap);
 	}
 }
 //in update ^^^
@@ -288,8 +294,8 @@ int	mmap_tile_assign(t_game *game, int i, int y)
 			game->mmap.tiles[i].pos.x = x * MAP_S + MAP_POS_X + MAP_CASE;
 			game->mmap.tiles[i].pos.y = y * MAP_S + MAP_POS_Y + MAP_CASE;
 			game->mmap.tiles[i].ref = index;
-			game->mmap.tiles[i].vis = false;//change map vis here need to make a modifier tho
-			i++;
+			game->mmap.tiles[i].alert = false;
+			game->mmap.tiles[i++].vis = false;//change map vis here need to make a modifier tho
 		}
 		if (game->world->map.tiles[index].type == DOOR)
 		{
@@ -297,13 +303,26 @@ int	mmap_tile_assign(t_game *game, int i, int y)
 			game->mmap.tiles[i].pos.x = x * MAP_S + MAP_POS_X + MAP_CASE;
 			game->mmap.tiles[i].pos.y = y * MAP_S + MAP_POS_Y + MAP_CASE;
 			game->mmap.tiles[i].ref = index;
-			game->mmap.tiles[i].vis = false;//change map vis here need to make a modifier tho
-			i++;
+			game->mmap.tiles[i].alert = false;
+			game->mmap.tiles[i++].vis = false;//change map vis here need to make a modifier tho
 		}
 	}
-
-
 	return (i);
+}
+
+
+bool	mmap_fog_check(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	while (game->world->map.mods[i].type != MINI_MAP)
+		i++;
+	if (game->world->map.mods[i].content == NULL)
+		return (false);
+	if (game->world->map.mods[i].content[0] == 'F')
+		return (false);
+	return (true);
 }
 
 void	mmap_init(t_game *game)
@@ -322,4 +341,6 @@ void	mmap_init(t_game *game)
 	i = 0;
 	while (++y < game->world->map.height)
 		i = mmap_tile_assign(game, i, y);
+	while(i > -1)
+		game->mmap.tiles[i--].vis = mmap_fog_check(game);
 }
