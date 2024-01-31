@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/31 18:11:13 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:10:29 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 #include "vector2i.h"
 
 #include "libft.h"
+
+
+#define C_WALL 0
+#define C_SPRITE 1
 
 void	measure_frame_rate(t_app app)
 {
@@ -276,13 +280,33 @@ void player_controls(t_game *game)
 	}
 	if (input_keyheld(&game->input, KEY_D))
 	{
+		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.y * player->moveSpeed), (int)player->pos.y);
+		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.x * player->moveSpeed));
+		if (horz->vis == -1)
+			player->pos.x += player->dir.y * player->moveSpeed;
+		if (vert->vis == -1)
+			player->pos.y += -player->dir.x * player->moveSpeed;
+		//player->pos = v2add(player->pos, v2muls(v2new(player->dir.y, -player->dir.x), player->moveSpeed));
+	}
+	if (input_keyheld(&game->input, KEY_A))
+	{
+		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.y * -player->moveSpeed), (int)player->pos.y);
+		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.x * -player->moveSpeed));
+		if (horz->vis == -1)
+			player->pos.x += player->dir.y * -player->moveSpeed;
+		if (vert->vis == -1)
+			player->pos.y += -player->dir.x * -player->moveSpeed;	
+		//player->pos = v2add(player->pos, v2muls(v2new(player->dir.y, -player->dir.x), -player->moveSpeed));
+	}
+	if (input_keyheld(&game->input, KEY_RARROW) || v2isub(game->input.mouse_prev, game->input.mouse).x < 0)
+	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(-player->rotSpeed) - player->dir.y * sin(-player->rotSpeed);
 		player->dir.y = oldDirX * sin(-player->rotSpeed) + player->dir.y * cos(-player->rotSpeed);
 		player->plane.x = player->plane.x * cos(-player->rotSpeed) - player->plane.y * sin(-player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(-player->rotSpeed) + player->plane.y * cos(-player->rotSpeed);
 	}
-	if (input_keyheld(&game->input, KEY_A))
+	if (input_keyheld(&game->input, KEY_LARROW) || v2isub(game->input.mouse_prev, game->input.mouse).x > 0)
 	{
 
 		// both camera direction and camera plane must be rotated
@@ -326,6 +350,7 @@ typedef struct s_column
 	t_vec2	uv;
 	t_vec2i	sample;
 	t_vec2i	range;
+	int		type;
 }			t_column;
 
 t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
@@ -334,30 +359,78 @@ t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 	int height;
 
 	col.texture = map_get_tile(&game->world->map, hit.x, hit.y).tex;
-	if (hit.sp_tex >0)
+	if (hit.sp_tex > 0)
+	{
+		col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+		col.type = C_SPRITE;
 		col.texture = hit.sp_tex;
-	col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
-	if (hit.side == 0)
-		col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
-	col.uv.x -= floor(col.uv.x);
-	col.sample.x = (int)(col.uv.x * (double)WALL_TEX_SIZE);
-	if (hit.side == 0 && vertical->dir.x > 0)
-		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
-	if (hit.side == 1 && vertical->dir.y < 0)
-		col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
-	height = (int)(R_HEIGHT / hit.depth);
-	col.range.s = -height / 2 + R_HEIGHT / 2;
-	if (col.range.s < 0)
-		col.range.s = 0;
-	col.range.e = height / 2 + R_HEIGHT / 2;
-	if (col.range.e >= R_HEIGHT)
-		col.range.e = R_HEIGHT - 1;
-	col.sample_dy = 1.0 * WALL_TEX_SIZE / height;
-	col.uv.y = (col.range.s - R_HEIGHT / 2 + height / 2) * col.sample_dy;
-	col.shaded = hit.side == 1;
+		col.uv.x -= floor(col.uv.x);
+		col.sample.x = (int)(col.uv.x * (double)32);
+		if (hit.side == 0 && vertical->dir.x > 0)
+			col.sample.x = 32 - col.sample.x - 1;
+		if (hit.side == 1 && vertical->dir.y < 0)
+			col.sample.x = 32 - col.sample.x - 1;
+		height = (int)(R_HEIGHT / hit.depth);
+		col.range.s = -height / 2 + R_HEIGHT / 2;
+		if (col.range.s < 0)
+			col.range.s = 0;
+		col.range.e = height / 2 + R_HEIGHT / 2;
+		if (col.range.e >= R_HEIGHT)
+			col.range.e = R_HEIGHT - 1;
+		col.sample_dy = 1.0 * 32 / height;
+		col.uv.y = (col.range.s - R_HEIGHT / 2 + height / 2) * col.sample_dy;
+		col.shaded = hit.side == 1;
+	}	
+	else
+	{
+		col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+		if (hit.side == 0)
+			col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
+		col.uv.x -= floor(col.uv.x);
+		col.sample.x = (int)(col.uv.x * (double)WALL_TEX_SIZE);
+		if (hit.side == 0 && vertical->dir.x > 0)
+			col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
+		if (hit.side == 1 && vertical->dir.y < 0)
+			col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
+		height = (int)(R_HEIGHT / hit.depth);
+		col.range.s = -height / 2 + R_HEIGHT / 2;
+		if (col.range.s < 0)
+			col.range.s = 0;
+		col.range.e = height / 2 + R_HEIGHT / 2;
+		if (col.range.e >= R_HEIGHT)
+			col.range.e = R_HEIGHT - 1;
+		col.sample_dy = 1.0 * WALL_TEX_SIZE / height;
+		col.uv.y = (col.range.s - R_HEIGHT / 2 + height / 2) * col.sample_dy;
+		col.shaded = hit.side == 1;
+	}
 	return (col);
 }
 
+void	render_debug_column(t_game *game, t_column col)
+{
+	int	f;
+	int	s;
+	int	y;
+
+	y = col.range.s;
+	while (++y < col.range.e)
+	{
+		col.sample.y = (int)col.uv.y & (32 - 1);
+		if (col.type == C_WALL)
+			col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
+		f = (int)col.sample.y | R_ALPHA;
+		//f = ((int)(col.uv.y * WALL_TEX_SIZE) << R_GREEN) | ((int)col.uv.x) | 0xFF000000; 
+		col.uv.y += col.sample_dy;
+		if (col.type == C_WALL)
+		{
+			if (col.shaded == 1)
+				f = (f >> 1) & 0x7F7F7F;
+			else
+				f = f & 0xFFFFFF;
+		}
+		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
+	}
+}
 void	render_column(t_game *game, t_column col)
 {
 	int	f;
@@ -367,7 +440,9 @@ void	render_column(t_game *game, t_column col)
 	y = col.range.s;
 	while (++y < col.range.e)
 	{
-		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
+		col.sample.y = (int)col.uv.y & (32 - 1);
+		if (col.type == C_WALL)
+			col.sample.y = (int)col.uv.y & (tex.width - 1);
 		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
 		if ((f & M_APLHA) != R_ALPHA)
 		{
@@ -375,10 +450,13 @@ void	render_column(t_game *game, t_column col)
 			f = colour_blend(f, s);
 		}
 		col.uv.y += col.sample_dy;
-		if (col.shaded == 1)
-			f = (f >> 1) & 0x7F7F7F;
-		else
-			f = f & 0xFFFFFF;
+		if (col.type == C_WALL)
+		{
+			if (col.shaded == 1)
+				f = (f >> 1) & 0x7F7F7F;
+			else
+				f = f & 0xFFFFFF;
+		}
 		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
 	}
 }
@@ -394,7 +472,7 @@ void	render_vertical(t_game *game, t_vertical info)
 	{
 		col = calculate_column(game, &info, info.ray.depths[d]);
 		col.x = info.x;
-		render_column(game, col);
+		render_debug_column(game, col);
 	}
 }
 
@@ -413,8 +491,8 @@ void update_segments(t_game *game)
 		temp = dir.x;
 		dir.x = dir.y;
 		dir.y = -temp;
-		curr->s1 = v2add(curr->pos, v2muls(dir, 8.25));
-		curr->s2 = v2add(curr->pos, v2muls(dir, -9.25));
+		curr->s1 = v2add(curr->pos, v2muls(dir, 1.25));
+		curr->s2 = v2add(curr->pos, v2muls(dir, -1.25));
 	}
 }
 
