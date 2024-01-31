@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:35:57 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/31 18:00:39 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void generate_textures(t_game *game)
 	game->textures[4] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
 	game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");
 	game->textures[6] = texture_load(game->app.mlx, "assets/window.xpm");
-	game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[7] = texture_load(game->app.mlx, "assets/debug.xpm");
 }
 
 
@@ -98,6 +98,10 @@ int	main(int argc, char **argv)
 	world_preset(argc, argv, &game);
 	map_print(&game.world->map);
 	game.app.mlx = mlx_init();
+	game.world->sp_count = 1;
+	game.world->sprite[0] = (t_sprite){.tex = 7, .pos = v2new(26.5, 9.5)};
+	game.world->map.tiles[26 + 10 * game.world->map.width].sp_count = 1;
+	game.world->map.tiles[26 + 10 * game.world->map.width].sprite[0] = 0;
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_get_debug_view(&game, 1);

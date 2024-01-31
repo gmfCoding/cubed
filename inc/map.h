@@ -31,6 +31,8 @@ typedef struct	s_tile
 	t_tiletype	type;
 	uint8_t		tex;
 	int8_t		vis;
+	char		sp_count;
+	char		sprite[4];
 }				t_tile;
 
 typedef struct	s_map
@@ -44,11 +46,24 @@ typedef struct	s_map
 	int			color_floor;
 }				t_map;
 
+typedef uint16_t t_tid;
+typedef struct s_sprite t_sprite;
+
+struct	s_sprite
+{
+	t_tid		tex;
+	t_vec2		pos;
+	t_vec2		s1;
+	t_vec2		s2;
+};
+
+
 typedef struct	s_world
 {
 	t_map		map;
 	t_entity	ent[MAX_ENT];
-
+	t_sprite	sprite[MAX_ENT];
+	char		sp_count;
 }			t_world;
 
 	// MAP PARSER //

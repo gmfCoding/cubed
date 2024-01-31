@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/17 18:38:41 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:11:13 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,23 @@ t_tile *map_get_tile_ref(t_map *map, int x, int y)
 	return (tile);
 }
 
+
+typedef enum e_hittype t_hittype;
+enum e_hittype
+{
+	HT_NONE,
+	HT_WALL,
+	HT_CLEAR,
+	HT_SPRITE
+};
+
 /* Preforms a raycast on the tile grid
 	RETURNS:
 	-1 if there were no hits
 	0 if there was a hit but no more
 	1 if there was a hit and potentially more
 */
-int	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
+t_hittype	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 {
 	t_tile	*tile;
 	t_map *const	map = &game->world->map;
@@ -161,34 +171,67 @@ int	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 			dda->map.y += dda->step.y;
 		}
 		if (!inside(dda->map.x, dda->map.y, map->width, map->height))
-			return (-1);
+			return (HT_NONE);
 		tile = map_get_tile_ref(map, dda->map.x, dda->map.y);
-		if (tile->vis >= 0)
+		if (tile->vis >= 0 || tile->sp_count > 0)
 		{
 			hit->x = dda->map.x;
 			hit->y = dda->map.y;
-			return (tile->vis);
+			if (tile->vis >= 1)
+				return (HT_CLEAR);
+			if (tile->sp_count > 0)
+				return (HT_SPRITE);
+			return (HT_WALL);
 		}
 	}
 	return (-1);
+}
+
+int			ccw(t_vec2 a, t_vec2 b, t_vec2 c)
+{
+	return ((c.y - a.y) * (b.x - a.x) > (b.y - a.y) * (c.x - a.x));
+}
+
+int			two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2)
+{
+	return (ccw(a1, a2, b2) != ccw(b1, a2, b2) && ccw(a1, b1, a2) != ccw(a1, b1, b2));
 }
 
 t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 {
 	t_rayinfo	ray;
 	t_dda		dda;
-	int			hit;
+	t_sprite	*sp;
+	t_hittype	hit;
+	t_tile		*tile;
+	t_vec2		v2;
 
 	ray = (t_rayinfo){0};
 	dda = (t_dda){0};
 	dda = dda_calculate(start, dir);
+	v2 = v2add(start, v2muls(dir, 20));
 	while (ray.hits < MAX_DEPTHS)
 	{
 		hit = raycast_hit(game, &ray.depths[ray.hits], &dda);
-		if (hit >= 0)
+		if (hit == HT_WALL || hit == HT_CLEAR)
 			ray.hits++;
-		if (hit <= 0)
+		if (hit == HT_NONE || hit == HT_WALL)
 			break ;
+		tile = map_get_tile_ref(&game->world->map, dda.map.x, dda.map.y);
+		hit = 0;
+		while (hit < tile->sp_count)
+		{
+			sp = &game->world->sprite[tile->sprite[hit]];
+			printf("v = (%f, %f) s = (%f, %f) s_1 = (%f, %f) s_2 = (%f, %f)\n", game->player.dir.x, game->player.dir.y, start.x, start.y, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
+			if (two_seg_intersect(sp->s1, sp->s2, start, v2))
+			{
+				printf("found spote\n");
+				ray.depths[ray.hits].depth = v2mag(v2sub(game->player.pos, sp->pos));
+				ray.depths[ray.hits].sp_tex = sp->tex;
+				ray.hits++;
+			}
+			hit--;
+		}
 	}
 	return (ray);
 }
@@ -291,6 +334,8 @@ t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 	int height;
 
 	col.texture = map_get_tile(&game->world->map, hit.x, hit.y).tex;
+	if (hit.sp_tex >0)
+		col.texture = hit.sp_tex;
 	col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
 	if (hit.side == 0)
 		col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
@@ -353,14 +398,36 @@ void	render_vertical(t_game *game, t_vertical info)
 	}
 }
 
+void update_segments(t_game *game)
+{
+	t_sprite	*curr;
+	t_vec2		dir;
+	t_vecd		temp;
+	int i;
+
+	i = -1;
+	while (++i < game->world->sp_count)
+	{
+		curr = &game->world->sprite[i];
+		dir = v2norm(v2sub(game->player.pos, curr->pos));
+		temp = dir.x;
+		dir.x = dir.y;
+		dir.y = -temp;
+		curr->s1 = v2add(curr->pos, v2muls(dir, 8.25));
+		curr->s2 = v2add(curr->pos, v2muls(dir, -9.25));
+	}
+}
+
 void	render(t_game *game)
 {
 	t_vertical	vert;
-
+	
+	update_segments(game);
 	player_controls(game);
 	input_process(&game->input);
 	render_floor(game);
 	vert.x = -1;
+
 	while (++vert.x < R_HEIGHT)
 	{
 		vert.camera_x = 2 * vert.x / (double)R_WIDTH - 1;
