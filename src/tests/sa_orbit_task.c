@@ -79,12 +79,12 @@ void	orbit_control_action(t_button *btn, t_ui_context *ctx)
 	printf("velocity: %f\n", v3mag(cart->vel));
 	if (mode[0] == BS_THRUST[0])
 	{
-		cart->vel = v3muls(cart->vel, 1.01);
+		cart->vel = v3muls(cart->vel, 1.002);
 		orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
 	}
 	else if (mode[0] == BS_RTHRUST[0])
 	{
-		cart->vel = v3muls(cart->vel, 1 / 1.01);
+		cart->vel = v3muls(cart->vel, 1 / 1.002);
 		orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
 	}
 	else if (mode[0] == BS_TIME[0])
