@@ -21,7 +21,7 @@ SRCSF = $(TEST) \
 		util/time.c \
 		util/error_handler.c \
 		util/string_utils.c \
-		util/atan2.c \
+		util/trig.c \
 		map_parser/map_setup.c \
 		map_parser/map_dimensions.c \
 		map_parser/map_tile_processing.c \
@@ -38,8 +38,7 @@ SRCSF = $(TEST) \
 		input/input_setup.c \
 		input/keys.c \
 		task/task.c \
-		task/orbit/ctok_position.c \
-		task/orbit/ctok_velocity.c \
+		task/orbit/cart_to_kep.c \
 		task/orbit/ktoc_position.c \
 		task/orbit/ktoc_velocity.c \
 		task/orbit/kep_angle.c \

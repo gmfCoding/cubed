@@ -8,6 +8,11 @@
 #define AU 1.495978707e+11
 #define ARCS2DEG 0.000277778
 
+#define BS_THRUST "+"
+#define BS_RTHRUST "-"
+#define BS_TIME "t"
+#define BS_RTIME "T"
+
 
 typedef struct s_button		t_button;
 typedef struct s_ui_context	t_ui_context;
@@ -36,6 +41,8 @@ struct s_ui_context
 		{
 			t_button	kep_prograde;	
 			t_button	kep_retrograde;	
+			t_button	kep_time;	
+			t_button	kep_retrotime;	
 		} b;
 		t_button	buttons[sizeof(struct s_buttons) / sizeof(t_button)];
 	};
@@ -66,35 +73,56 @@ void	orbit_control_action(t_button *btn, t_ui_context *ctx)
 	t_orb_cart *const		cart = &task->obj0.cart;
 
 	printf("Applying thrust: %s\n", mode);
+	orb_cart_pos(&task->obj0.path, &task->obj0.ang, cart);
 	orb_cart_vel(&task->obj0.path, &task->obj0.ang, cart);
+	orb_transform_cart(&task->obj0.path, cart);
 	printf("velocity: %f\n", v3mag(cart->vel));
-	if (mode[0] == '+')
+	if (mode[0] == BS_THRUST[0])
+	{
+		cart->vel = v3muls(cart->vel, 1.01);
+		orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
+	}
+	else if (mode[0] == BS_RTHRUST[0])
+	{
+		cart->vel = v3muls(cart->vel, 1 / 1.01);
+		orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
+	}
+	else if (mode[0] == BS_TIME[0])
 	{
 		kep_ang_set(&task->obj0.path, &task->obj0.ang, task->obj0.ang.time + 1);
-		cart->vel = v3muls(cart->vel, 1.001);
 	}
-	else
+	else if (mode[0] == BS_RTIME[0])
 	{
 		kep_ang_set(&task->obj0.path, &task->obj0.ang, task->obj0.ang.time - 1);
-		cart->vel = v3muls(cart->vel, 1 / 1.001);
 	}
-	orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
 }
 
 void	ui_setup(t_ui_context *ctx)
 {
 	*ctx = (t_ui_context){0}; 
-	ctx->b.kep_retrograde = (t_button){
-		.rect = (t_rect){.min = v2new(10, 10), .max = v2new(90, 40)},
-		.callback = &orbit_control_action,
-		.reference = "-",
-		.colour = R_ALPHA | R_RED,
-	};
 	ctx->b.kep_prograde = (t_button){
 		.rect = (t_rect){.min = v2new(100, 10), .max = v2new(180, 40)},
 		.callback = &orbit_control_action,
-		.reference = "+",
+		.reference = BS_THRUST,
 		.colour = R_ALPHA | R_BLUE,
+	};
+	ctx->b.kep_retrograde = (t_button){
+		.rect = (t_rect){.min = v2new(10, 10), .max = v2new(90, 40)},
+		.callback = &orbit_control_action,
+		.reference = BS_RTHRUST,
+		.colour = R_ALPHA | R_RED,
+	};
+	ctx->b.kep_time = (t_button){
+		.rect = (t_rect){.min = v2new(100, 50), .max = v2new(180, 80)},
+		.callback = &orbit_control_action,
+		.reference = BS_TIME,
+		.colour = R_ALPHA | R_BLUE,
+	};
+	ctx->b.kep_retrotime = (t_button){
+		.rect = (t_rect){.min = v2new(10, 50), .max = v2new(90, 80)},
+		.callback = &orbit_control_action,
+		.reference = BS_RTIME,
+		.colour = R_ALPHA | R_RED,
 	};
 }
 
@@ -163,6 +191,7 @@ int	sa_task_orbit_process(t_sa_orbit_task *task)
 {
 	texture_clear(task->rt0, 0);
 	orbit_path_render(&task->obj0.path, &task->rt0);
+	orbit_path_render(&task->obj_path, &task->rt0);
 	orbit_obj_render(&task->obj0, &task->rt0);
 	usleep(16666);
 	ui_process_draw(&task->ui, &task->input, task->rt0);
@@ -176,6 +205,18 @@ int	sa_task_orbit_process(t_sa_orbit_task *task)
 // {
 // 	if (input_keydown())
 // }
+
+void apply_thrust_test(t_sa_orbit_task *task)
+{
+	t_orb_cart *const		cart = &task->obj0.cart;
+
+	orb_cart_pos(&task->obj0.path, &task->obj0.ang, cart);
+	orb_cart_vel(&task->obj0.path, &task->obj0.ang, cart);
+	orb_transform_cart(&task->obj0.path, cart);
+	cart->vel = v3muls(cart->vel, 1.05);
+	orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
+}
+
 int	main(void)
 {
 	t_sa_orbit_task	task;
@@ -184,17 +225,19 @@ int	main(void)
 	task.sun = orb_body_create_rm(6.96340e8, 1.9891e30);
 	//task.earth = orb_body_create_rm(6378100, 5.9722E24);
 	task.obj0.self = task.sun;
-	task.obj0.path.sma = 1.00000011 * KM_AU;
-	//task.obj0.path.ecc = 0.0;
-	task.obj0.path.ecc = 0.516708617;
-	task.obj0.path.inc = 0 * DEG2RAD;
-	//task.obj0.path.inc = 45 * DEG2RAD;
-	task.obj0.path.lan = 0 * KM_AU;
 	task.obj0.path.sgp_u = task.sun.u;
+	task.obj0.path.sma = 1 * KM_AU;
+	task.obj0.path.ecc = 0.5;
+	task.obj0.path.inc = 0.001;
+	task.obj0.path.lan = 0.0001;
+	task.obj0.path.aop = 0.0001;
 	task.obj0.ang.s_0.mna0 = 0;
 	task.obj0.ang.s_0.time0 = 0;
 	task.obj0.ang.time = 0;
 	kep_ang_set(&task.obj0.path, &task.obj0.ang, 0);
+	kep_clamp(&task.obj0.path, &task.obj0.ang);
+	task.obj_path = task.obj0.path;
+	apply_thrust_test(&task);
 	task.app.mlx = mlx_init();
 	task.app.win = mlx_new_window(task.app.mlx, 400, 400, "ORBIT");
 	task.rt0 = texture_create(task.app.mlx, 400, 400);

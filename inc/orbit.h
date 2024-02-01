@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 05:29:26 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/01 18:34:25 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -21,6 +21,7 @@
 # define KM_G  6.67430e-11
 # define KM_AU 1.496E11
 
+# define KEP_MIN_EPSILON 0.0001
 # define EA_MAX_ERROR 10e-13
 # define EA_MAX_ITER 100
 
@@ -71,6 +72,9 @@ double			kep_time(t_kep_ang *ang);
 /* Returns the orbital period in seconds. */
 double			kep_period(t_kep_path *path);
 
+/* Clamps the values of  */
+void			kep_clamp(t_kep_path *path, t_kep_ang *kep);
+
 /*** task/orbit/ktoc_position.c ***/
 
 double			orb_radius(t_kep_path *path, t_kep_ang *ang);
@@ -84,13 +88,18 @@ double			orb_speed(t_kep_path *path, t_kep_ang *ang);
 
 void			orb_cart_vel(t_kep_path *p, t_kep_ang *a, t_orb_cart *c);
 
-/*** task/orbit/ctok_position.c ***/
+/*** task/orbit/cart_to_kep.c ***/
 void			orb_cart_to_kep(t_orb_cart *c, t_kep_path *p, t_kep_ang *a);
-
 
 /*** task/orbit/render.c ***/
 
-void	orbit_path_render(t_kep_path *path, t_texture *rt);
+void			orbit_path_render(t_kep_path *path, t_texture *rt);
 
-void	orbit_obj_render(t_orb_obj *obj, t_texture *rt);
+void			orbit_obj_render(t_orb_obj *obj, t_texture *rt);
+
+/*** task/orbit/transform.c ***/
+double			orb_transform_x(t_kep_path *p, double x, double y);
+double			orb_transform_y(t_kep_path *p, double x, double y);
+double			orb_transform_z(t_kep_path *p, double x, double y);
+void			orb_transform_cart(t_kep_path *path, t_orb_cart *cart);
 #endif
