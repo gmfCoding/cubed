@@ -8,20 +8,6 @@ double v2dot(t_vec2 a, t_vec2 b)
   return (a.x * b.x + a.y * b.y);
 }
 
-void	event_draw_on_minimap(t_game *game, t_vec2 pos)
-{
-/*
-	game->mmap.tiles[i].pos.x = x * MAP_S + MAP_POS_X + MAP_CASE;
-	game->mmap.tiles[i].pos.y = y * MAP_S + MAP_POS_Y + MAP_CASE;
-	pos.x = ((tile[i].pos.x - MAP_POS_X - MAP_CASE) + (SCR_WIDTH / 2)) - p_pos.x * MAP_S;
-	pos.y = ((tile[i].pos.y - MAP_POS_Y - MAP_CASE) + (SCR_HEIGHT / 2)) - p_pos.y * MAP_S;
-*/			
-	//have to change image here
-	//// cat draw an image here its only one frame need to toggle it on here and maybe store the position
-	//actually i think just toggle it on and draw it somewhere else and postion somewhere else
-	texture_blit(game->mmap.img_pr, game->rt0, pos);
-}
-
 void	event_display_ui(t_game *game)
 {
 	if (game->display_ui == true)
@@ -41,15 +27,16 @@ void	event_alert_medium(t_game *game, t_entity_2 *ent)
 {
 	game->mmap.alert_m = true;
 	game->mmap.alert_h = false;
-	if (game->mmap.mm_big = true)
-		event_draw_on_minimap(game, ent->target->pos[0]);
-
+	game->mmap.al_pos = ent->target->pos[0];
+	
 }
 
 void	event_alert_high(t_game *game, t_entity_2 *ent)
 {
 	game->mmap.alert_h = true;
 	game->mmap.alert_m = false;
+	game->mmap.al_pos = ent->target->pos[0];
+
 }
 
 
@@ -62,7 +49,7 @@ void	event_door_locked(t_game *game, t_entity_2 *ent)
 
 void	event_door_open(t_game *game, t_entity_2 *ent)
 {
-	game->world->map.tiles[(int)(ent->pos[0].x + ent->pos[0].y * game->world->map.width)].vis = 0;
+	game->world->map.tiles[(int)(ent->pos[0].x + ent->pos[0].y * game->world->map.width)].vis = 1;
 	ent->ref_mm_tile->img = &game->mmap.mm_img[13];
 	ent->type = DOOR_UNLOCKED;	
 }
@@ -85,6 +72,7 @@ void	event_interact(t_game *game)
 	t_vec2	pos;
 	while (game->events_active[++i] != NULL)
 	{
+		pos = v2add(game->events_active[i]->pos[0], v2new(0.5, 0.5));
 		pos.x = game->events_active[i]->pos[0].x + 0.5;
 		pos.y = game->events_active[i]->pos[0].y + 0.5;
 		if(v2dot(v2norm(v2sub(pos, game->player.pos)), game->player.dir)> 0.8)

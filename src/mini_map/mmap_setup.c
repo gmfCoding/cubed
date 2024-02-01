@@ -50,7 +50,6 @@ void	mmap_input(t_game *game)
 	}
 }
 // in input ^^^^
-
 //in update vvvv
 int	mmap_is_inside(int x, int y)
 {
@@ -81,7 +80,7 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, t_mmap mmap)
 				tile[i].vis = true;
 			}
 			if (tile[i].alert == true)
-			{
+			{// i dont think we need this .alert any more
 			
 				printf("this spot right here\n");
 			
@@ -138,6 +137,45 @@ void	mmap_case_light(t_game *game, t_vec2 pos)
 		texture_blit(game->mmap.img_case[1], game->rt0, pos);
 }
 
+void	mmap_draw_alert(t_game *game, t_vec2 p_pos, t_mmap *mmap)
+{
+	t_vec2 pos;
+	int i;
+
+	i = 20;
+	if (mmap->alert_m == true || mmap->alert_h == true)
+	{
+		pos.x = ((mmap->al_pos.x * MAP_S)  - (p_pos.x * MAP_S) + (SCR_WIDTH / 2));
+		pos.y = ((mmap->al_pos.y * MAP_S) - (p_pos.y * MAP_S) + (SCR_HEIGHT / 2) - 12);
+		if (pos.x < 24 || pos.x > SCR_WIDTH - 24 || pos.y <  24 || pos.y > SCR_HEIGHT - 24)
+		{
+			if (pos.x < 1)
+				pos.x = 1;
+			if (pos.x > SCR_WIDTH - 24)
+				pos.x = SCR_WIDTH - 24;
+			if (pos.y < 1)
+				pos.y = 1;
+			if (pos.y > SCR_HEIGHT - 24)
+				pos.y = SCR_HEIGHT - 24;
+			i++;
+		}
+		if (game->fpsc % 30 > 15)// && (game->mmap.alert_m == true || game->mmap.alert_h == true))
+		{
+			if (game->mmap.alert_m == true) 
+				texture_blit(mmap->mm_img[i+2], game->rt0, pos);
+			if (game->mmap.alert_h == true) 
+				texture_blit(mmap->mm_img[i+4], game->rt0, pos);
+		}
+		else
+		{
+			if (game->mmap.alert_h == true)
+				texture_blit(mmap->mm_img[i+2], game->rt0, pos);
+			else
+				texture_blit(mmap->mm_img[i], game->rt0, pos);
+		}
+	}
+}	
+
 void	mmap_draw(t_game *game)
 {
 	t_vec2 pos;//can maybe store this in mmap struct
@@ -155,6 +193,7 @@ void	mmap_draw(t_game *game)
 	{
 		mmap_draw_player(game, pos, true);
 		mmap_draw_walls(game->rt0, game->mmap.tiles, game->player.pos, game->mmap);
+		mmap_draw_alert(game, game->player.pos, &game->mmap);
 	}
 }
 //in update ^^^
@@ -190,6 +229,12 @@ void	mmap_init_img(t_game *game)
 	game->mmap.mm_img[17] = texture_load(game->app.mlx, "assets/minimap/mm17.xpm");
 	game->mmap.mm_img[18] = texture_load(game->app.mlx, "assets/minimap/mm18.xpm");
 	game->mmap.mm_img[19] = texture_load(game->app.mlx, "assets/minimap/mm19.xpm");
+	game->mmap.mm_img[20] = texture_load(game->app.mlx, "assets/minimap/mm20.xpm");
+	game->mmap.mm_img[21] = texture_load(game->app.mlx, "assets/minimap/mm21.xpm");
+	game->mmap.mm_img[22] = texture_load(game->app.mlx, "assets/minimap/mm22.xpm");
+	game->mmap.mm_img[23] = texture_load(game->app.mlx, "assets/minimap/mm23.xpm");
+	game->mmap.mm_img[24] = texture_load(game->app.mlx, "assets/minimap/mm24.xpm");
+	game->mmap.mm_img[25] = texture_load(game->app.mlx, "assets/minimap/mm25.xpm");
 }
 
 int	mmap_img_number_2(bool t, bool l, bool r, bool b)
@@ -309,7 +354,6 @@ int	mmap_tile_assign(t_game *game, int i, int y)
 	}
 	return (i);
 }
-
 
 bool	mmap_fog_check(t_game *game)
 {

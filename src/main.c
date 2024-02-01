@@ -39,7 +39,7 @@ void	world_preset(int argc, char **argv, t_game *game)
 {
 	game->world->ent_count = 0;
 	if (argc - 1 >= 1)
-		game->world->map = map_parse(argc, argv, game);
+		map_parse(argc, argv, game);
 	else
 		map_default_map_init(game);
 	game->fpsc = 0;
@@ -102,7 +102,7 @@ int	main(int argc, char **argv)
 	game.app.mlx = mlx_init();
 	world_preset(argc, argv, &game);
 	map_print(&game.world->map);
-	mmap_init(&game);
+//	mmap_init(&game);
 	modifier_after(&game);
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);

@@ -56,7 +56,9 @@ typedef struct	s_world
 
 	// MAP PARSER //
 t_tiletype	get_tiletype(char c);
-t_map		map_parse(int argc, char **argv, t_game *game);
+
+//t_map		map_parse(int argc, char **argv, t_game *game);
+void		map_parse(int argc, char **argv, t_game *game);
 int		map_width_size(t_list *curr);
 int		map_height_size(t_list *curr);
 int		map_check_elements(t_list *raw_map_files);

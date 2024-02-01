@@ -34,11 +34,12 @@ typedef struct s_mm_tile
 
 typedef struct	s_mmap
 {
-	t_texture	mm_img[20];
+	t_texture	mm_img[26];
 	t_texture	img_case[4];
 	t_texture	img_pp;
 	t_texture	img_pr;
 	t_mm_tile	tiles[MAP_MAX_X * MAP_MAX_Y];
+	t_vec2		al_pos;
 	bool		mm_small;
 	bool		mm_big;
 	bool		alert_m;

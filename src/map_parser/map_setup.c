@@ -22,7 +22,7 @@
  * the content is str_dup and if freed at a later point
  */
 
-t_map	map_init(t_map *map, char *map_str, t_game *game)
+void	map_init(t_map *map, char *map_str, t_game *game)
 {
 	t_list	*curr;
 	t_list	*raw_map_file;
@@ -47,8 +47,8 @@ t_map	map_init(t_map *map, char *map_str, t_game *game)
 		curr = curr->next;
 	}
 	modifier_setup(raw_map_file, map, game->world);
+
 	deallocate_list(&raw_map_file);
-	return (*map);
 }
 
 void	map_update_vis(t_map *map)
@@ -87,9 +87,8 @@ void	map_update_vis(t_map *map)
  * the mapstr or a map number to this fuction
  */
 
-t_map	map_parse(int argc, char **argv, t_game *game)
+void	map_parse(int argc, char **argv, t_game *game)
 {
-	t_map	map;
 	char	*map_str;
 
 	if (argc == 1)
@@ -98,9 +97,10 @@ t_map	map_parse(int argc, char **argv, t_game *game)
 		map_str = argv[1];
 	else
 		exit(2);
-	map = map_init(&map, map_str, game);
-	map_update_vis(&map);
-	return (map);
+	map_init(&game->world->map, map_str, game);
+	mmap_init(game);
+
+	map_update_vis(&game->world->map);
 }
 
 
