@@ -29,7 +29,12 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_door_setup.c \
 		modifiers/mod_func_minimap.c \
 		modifiers/mod_func_alert.c \
+		mini_map/mmap_draw.c \
+		mini_map/mmap_draw_anim.c \
+		mini_map/mmap_image_decider.c \
+		mini_map/mmap_input.c \
 		mini_map/mmap_setup.c \
+		mini_map/mmap_tile_assign.c \
 		events/event_handler.c \
 		entities/player_setup.c \
 		input/input.c \

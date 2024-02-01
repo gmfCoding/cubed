@@ -39,8 +39,6 @@ void	event_alert_high(t_game *game, t_entity_2 *ent)
 
 }
 
-
-
 void	event_door_locked(t_game *game, t_entity_2 *ent)
 {
 	printf("DOOR IS LOCKED\n");
@@ -158,11 +156,3 @@ void	event_player(t_game *game)
 
 
 }
-/*
-void	event_trigger(t_game *game, t_vec2 pos, t_event_type type)
-{
-	printf("we are here in events\n");
-
-
-}
-*/

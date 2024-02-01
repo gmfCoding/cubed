@@ -251,28 +251,9 @@ void player_controls(t_game *game)
 		player->plane.x = player->plane.x * cos(player->rotSpeed) - player->plane.y * sin(player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(player->rotSpeed) + player->plane.y * cos(player->rotSpeed);
 	}
-//	if (input_keydown(&game->input, KEY_E))
-//	{
-		if (game->events_on == true)
-		{
-			event_interact(game);
-//			t_vec2 mapPos = v2new(game->half.depths[0].x, game->half.depths[0].y);
-//			t_vec2 dis;
-/*
-			if (game->world->map.tiles[(int)(mapPos.x + mapPos.y * game->world->map.width)].type == DOOR) 
-			{
-				dis = v2diff(mapPos, game->player.pos);
-				if (dis.x <= 1.5 && dis.y <= 1.5)
-				{
-								
-				
-				}
-			}
-*/
-		}
-
-//	}
-	mmap_input(game);
+	if (game->events_on == true)
+		event_interact(game);
+	mmap_input(game, &game->mmap);
 }
 
 typedef struct s_vertical

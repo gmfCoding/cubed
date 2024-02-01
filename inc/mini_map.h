@@ -20,7 +20,7 @@
 # define MAP_S 24
 
 typedef struct s_game t_game;
-
+typedef struct s_app t_app;
 
 typedef struct s_mm_tile
 {
@@ -48,6 +48,12 @@ typedef struct	s_mmap
 
 void	mmap_init(t_game *game);
 void	mmap_draw(t_game *game);
-void	mmap_input(t_game *game);
-//void	draw_mini_map(t_game *game);
+void	mmap_input(t_game *game, t_mmap *mmap);
+
+void	mmap_draw_case_anim(t_game *game, t_vec2 pos);
+void	mmap_draw_alert_anim(t_game *game, t_texture *img, t_vec2 pos, int i);
+int	mmap_decide_img(t_tile *tile, int w, int h, int pos);
+void	mmap_init_img_1(t_mmap *mmap, void *mlx);
+int	mmap_tile_assign(t_game *game, int i, int y);
+
 #endif
