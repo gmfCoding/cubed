@@ -33,3 +33,25 @@ t_vec2	v2norm(t_vec2 vec)
 	vec.y /= mag;
 	return (vec);
 }
+
+t_vec2	v2diff(t_vec2 f, t_vec2 s)
+{
+	t_vec2	vec;
+	
+	vec.x = 0;
+	vec.y = 0;
+	if (f.x > s.x)
+		vec.x = f.x - s.x;
+	else
+		vec.x = s.x - f.x;
+	if (f.y > s.y)
+		vec.y = f.y - s.y;
+	else
+		vec.y = s.y - f.y;
+	return (vec);
+}
+
+double v2dot(t_vec2 a, t_vec2 b)
+{
+  return (a.x * b.x + a.y * b.y);
+}

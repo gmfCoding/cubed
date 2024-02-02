@@ -9,6 +9,7 @@
 # include <inttypes.h>
 # include "libft.h"
 # include "modifiers.h"
+# include "events.h"
 # define TAB_SIZE 4
 # define FILE_TYPE ".xpm"
 # define MAP_MODIFICATION_SIZE 100
@@ -16,7 +17,6 @@
 # define MAP_MAX_X MAP_MAX_XY
 # define MAP_MAX_Y MAP_MAX_XY
 # define G_MAPTABLE_LEN 6
-
 typedef enum	e_tiletype
 {
 	FLOOR,
@@ -24,6 +24,7 @@ typedef enum	e_tiletype
 	EMPTY,
 	MODIFIED,
 	INVALID,
+	DOOR,
 }				t_tiletype;
 
 typedef struct	s_tile
@@ -61,14 +62,19 @@ struct	s_sprite
 typedef struct	s_world
 {
 	t_map		map;
-	t_entity	ent[MAX_ENT];
+
+	t_entity	ent[MAX_ENT];//this might be getting phased out but im still using it for the moment
+	t_entity_2	ent_2[MAX_ENT];
+	int		ent_count;
 	t_sprite	sprite[MAX_ENT];
 	char		sp_count;
 }			t_world;
 
 	// MAP PARSER //
 t_tiletype	get_tiletype(char c);
-t_map		map_parse(int argc, char **argv, t_game *game);
+
+//t_map		map_parse(int argc, char **argv, t_game *game);
+void		map_parse(int argc, char **argv, t_game *game);
 int		map_width_size(t_list *curr);
 int		map_height_size(t_list *curr);
 int		map_check_elements(t_list *raw_map_files);

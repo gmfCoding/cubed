@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "map.h"
+#include "state.h"
+#include "modifiers.h"
 /*
  * ADD MODIFIERS 
  * here is where you can add modifiers or anything addition to the game
@@ -52,6 +54,8 @@ char *const			g_mapsymbols[] = {
 	"C",
 	"DR",
 	"KE",
+	"AL",
+	"MM",
 };
 
 t_ex_action const	g_mapfuncs[] = {
@@ -63,6 +67,8 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_c,
 	&mod_gen_dr,
 	&mod_gen_ke,
+	&mod_gen_al,
+	&mod_gen_mm,
 };
 
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
@@ -88,4 +94,24 @@ void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		}
 		curr = curr->next;
 	}
+}
+
+t_mm_tile	*mmap_find_tile(t_game *game, t_vec2 pos)
+{
+	int	i;
+
+	i = -1;
+	while(game->mmap.tiles[++i].img != NULL)
+		if (game->mmap.tiles[i].ref == (pos.y * game->world->map.width) + pos.x)
+			return (&game->mmap.tiles[i]);
+	return (NULL);
+}
+
+void	modifier_after(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	while (++i < game->world->ent_count)
+		game->world->ent_2[i].ref_mm_tile = mmap_find_tile(game, game->world->ent_2[i].pos[0]);
 }

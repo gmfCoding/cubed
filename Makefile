@@ -24,9 +24,21 @@ SRCSF = $(TEST) \
 		map_parser/map_checker_element.c \
 		map_parser/map_default_map.c \
 		modifiers/modifier_setup.c \
+		modifiers/modifier_utils.c \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_floor_ceiling_color.c \
 		modifiers/mod_func_door_setup.c \
+		modifiers/mod_func_minimap.c \
+		modifiers/mod_func_alert.c \
+		mini_map/mmap_draw.c \
+		mini_map/mmap_draw_anim.c \
+		mini_map/mmap_image_decider.c \
+		mini_map/mmap_input.c \
+		mini_map/mmap_setup.c \
+		mini_map/mmap_tile_assign.c \
+		events/event_alert.c \
+		events/event_door.c \
+		events/event_handler.c \
 		entities/player_setup.c \
 		input/input.c \
 		input/input_hooks.c \
