@@ -17,7 +17,9 @@
 #include "input.h"
 #include "texture.h"
 #include "ray.h"
+#include "mini_map.h"
 
+//typedef struct s_entity_2 t_entity_2;
 typedef struct s_game t_game;
 
 #define MAX_DEBUG_VIEWS 10
@@ -37,6 +39,8 @@ struct s_app
 };
 
 typedef struct s_world t_world;
+typedef struct s_mmap t_mmap;
+
 
 struct s_game
 {
@@ -54,9 +58,13 @@ struct s_game
 	t_player		player;
 	t_texture		textures[8];
 	t_world			*world;
-
+	t_mmap			mmap;
+	t_entity_2		*events_active[9];
+	bool			events_on;
+	bool			display_ui;
 	t_inputctx		input;
 	t_rayinfo		half;
+	unsigned int		fpsc;
 };
 
 void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);

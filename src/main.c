@@ -15,6 +15,8 @@
 
 #include "texture.h"
 #include "cubed.h"
+#include "mini_map.h"
+#include "modifiers.h"
 
 // int	main(int argc, char **argv)
 // {
@@ -35,11 +37,13 @@
 
 void	world_preset(int argc, char **argv, t_game *game)
 {
-
+	game->world->ent_count = 0;
 	if (argc - 1 >= 1)
-		game->world->map = map_parse(argc, argv, game);
+		map_parse(argc, argv, game);
 	else
 		map_default_map_init(game);
+	game->fpsc = 0;
+	game->display_ui = false;
 }
 
 void generate_textures(t_game *game)
@@ -95,15 +99,20 @@ int	main(int argc, char **argv)
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
 	*game.world = (t_world){0};
+	game.app.mlx = mlx_init();
 	world_preset(argc, argv, &game);
 	map_print(&game.world->map);
-	game.app.mlx = mlx_init();
+//	mmap_init(&game);
+	modifier_after(&game);
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+
 	generate_textures(&game);
+
 	input_setup(game.app.mlx, game.app.win, &game.input);
+
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);
 
