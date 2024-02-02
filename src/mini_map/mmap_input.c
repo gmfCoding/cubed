@@ -2,6 +2,10 @@
 #include "texture.h"
 #include "state.h"
 
+/*
+ * this fucntionis called from input toggling
+ * between the small mini map to the large minimap
+ */
 void	mmap_input(t_game *game, t_mmap *mmap)
 {
 	if (input_keydown(&game->input, KEY_M))

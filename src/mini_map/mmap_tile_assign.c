@@ -10,6 +10,13 @@ t_texture	*mmap_get_img(t_game *game, int pos)
 	return (&game->mmap.mm_img[index]);
 }
 
+/*
+ * used to return a door image a boolean is used to
+ * check if the door is vertical if not is must be horizontal
+ * this approach could be done better at the moment
+ * it checks if the tile next to its map type is a floor
+ * or not
+ */
 t_texture	*mmap_get_door_img(t_game *game, int pos, int i)
 {
 	if (game->world->map.tiles[pos+1].type == FLOOR)
@@ -31,6 +38,15 @@ void	mmap_tile_assign_set(t_game *game, int i, int x, int y)
 	game->mmap.tiles[i++].vis = false;
 }
 
+/*
+ * sets up the minimap tiles it skips over all non WALL 
+ * and non DOOR map tile types this is done to reduce loop
+ * time when displaying the minimap in game runtime
+ *
+ * could reduce looping further by splitting the map into
+ * chunks/section and only looping over the tiles near the player
+ * or the tiles that can fit inside the minimap
+ */
 int	mmap_tile_assign(t_game *game, int i, int y)
 {
 	int	x;

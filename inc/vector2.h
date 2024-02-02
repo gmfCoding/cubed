@@ -49,4 +49,6 @@ t_vec2	v2norm(t_vec2 vec);
 /* Return the distance between to vectors */
 t_vec2	v2diff(t_vec2 f, t_vec2 s);
 
+double v2dot(t_vec2 a, t_vec2 b);
+
 #endif

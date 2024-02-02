@@ -2,12 +2,11 @@
 #include "state.h"
 #include "mini_map.h"
 
-
-double v2dot(t_vec2 a, t_vec2 b)
-{
-  return (a.x * b.x + a.y * b.y);
-}
-
+/*
+ * a temperoraly function ran straight from loop to display ui
+ * should be replaced with actual image of font or interaction
+ * image
+ */
 void	event_display_ui(t_game *game)
 {
 	if (game->display_ui == true)
@@ -16,107 +15,56 @@ void	event_display_ui(t_game *game)
 	}
 }
 
-void	event_alert_off(t_game *game, t_entity_2 *ent)
-{
-	game->mmap.alert_m = false;
-	game->mmap.alert_h = false;
-}
-
-
-void	event_alert_medium(t_game *game, t_entity_2 *ent)
-{
-	game->mmap.alert_m = true;
-	game->mmap.alert_h = false;
-	game->mmap.al_pos = ent->target->pos[0];
-	
-}
-
-void	event_alert_high(t_game *game, t_entity_2 *ent)
-{
-	game->mmap.alert_h = true;
-	game->mmap.alert_m = false;
-	game->mmap.al_pos = ent->target->pos[0];
-
-}
-
-void	event_door_locked(t_game *game, t_entity_2 *ent)
-{
-	printf("DOOR IS LOCKED\n");
-	return ;
-}
-
-void	event_door_open(t_game *game, t_entity_2 *ent)
-{
-	game->world->map.tiles[(int)(ent->pos[0].x + ent->pos[0].y * game->world->map.width)].vis = 1;
-	ent->ref_mm_tile->img = &game->mmap.mm_img[13];
-	ent->type = DOOR_UNLOCKED;	
-}
-
-void	event_door_unlocked(t_game *game, t_entity_2 *ent)
-{
-	game->world->map.tiles[(int)(ent->pos[0].x + ent->pos[0].y * game->world->map.width)].vis = -1;
-	if (ent->ref_mm_tile->vertical = true)
-		ent->ref_mm_tile->img = &game->mmap.mm_img[14];
-	else
-		ent->ref_mm_tile->img = &game->mmap.mm_img[12];
-	ent->type = DOOR_OPEN;
-}
-
+/*
+ * function is run if the bool events_on is on
+ * loops over the referenced events_active and runs the 
+ * function based apon its type if the fucntion requires input 
+ * to run that is checked in the function itself otherwise it
+ * will display only the ui if it has
+ */
 void	event_interact(t_game *game)
 {
 	int	i;
+	t_vec2	pos;
 
 	i = -1;
-	t_vec2	pos;
 	while (game->events_active[++i] != NULL)
 	{
 		pos = v2add(game->events_active[i]->pos[0], v2new(0.5, 0.5));
-		pos.x = game->events_active[i]->pos[0].x + 0.5;
-		pos.y = game->events_active[i]->pos[0].y + 0.5;
 		if(v2dot(v2norm(v2sub(pos, game->player.pos)), game->player.dir)> 0.8)
 		{
-
 			if (game->events_active[i]->type == DOOR_UNLOCKED)
-			{
-				game->display_ui = true;
-				if (input_keydown(&game->input, KEY_E))
-					event_door_unlocked(game, game->events_active[i]);
-				return ;
-			}
-			if (game->events_active[i]->type == DOOR_OPEN)
-			{
-				game->display_ui = true;
-				if (input_keydown(&game->input, KEY_E))
-					event_door_open(game, game->events_active[i]);
-				return ;
-			}
-			if (game->events_active[i]->type == DOOR_LOCKED)
-			{
-				game->display_ui = true;
-				if (input_keydown(&game->input, KEY_E))
-					event_door_locked(game, game->events_active[i]);
-				return ;
-			}
-			if (game->events_active[i]->type == ALERT_HIGH)
-			{
+				event_door_unlocked(game, game->events_active[i]);
+			else if (game->events_active[i]->type == DOOR_OPEN)
+				event_door_open(game, game->events_active[i]);
+			else if (game->events_active[i]->type == DOOR_LOCKED)
+				event_door_locked(game, game->events_active[i]);
+			else if (game->events_active[i]->type == ALERT_HIGH)
 				event_alert_high(game, game->events_active[i]);
-				return ;
-			}
-			if (game->events_active[i]->type == ALERT_MEDIUM)
-			{
+			else if (game->events_active[i]->type == ALERT_MEDIUM)
 				event_alert_medium(game, game->events_active[i]);
-				return ;
-			}
-			if (game->events_active[i]->type == ALERT_OFF)
-			{
+			else if (game->events_active[i]->type == ALERT_OFF)
 				event_alert_off(game, game->events_active[i]);
-				return ;
-			}
+			return ;
 		}
 		game->display_ui = false;
 	}
 }
 
+/*
+ * whenever the player moves to a new tile it will set all events
+ * that could be triggered by iteraction if there are any to NULL
+ * it will then loop through all posible events that exist 
+ * and check if they have any triggerable tiles for that players
+ * position if there are any events in that tile a reference is
+ * stored in events active only a maximum of 9 events can be stored
+ * in events active.
+ * 
+ * this fucntion could be done in segments where the map is split
+ * up into more section any then you would only loop through the
+ * events in that section where the player is located it really 
+ * depends on how many events are in a single game round
+ */
 void	event_check(t_game *game)
 {
 	int	i;
@@ -143,6 +91,11 @@ void	event_check(t_game *game)
 	}
 }
 
+/*
+ * the fucntion is triggered on player movement,
+ * checking if the players tile is different from last tile
+ * player was in 
+ */
 void	event_player(t_game *game)
 {
 	if ((int)game->player.pos.x != game->player.oldp_x || (int)game->player.pos.y != game->player.oldp_y)
@@ -153,6 +106,4 @@ void	event_player(t_game *game)
 		game->player.oldp_y = game->player.pos.y;
 		event_check(game);
 	}
-
-
 }

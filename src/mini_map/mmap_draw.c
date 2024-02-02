@@ -3,8 +3,11 @@
 #include "texture.h"
 #include "state.h"
 
-
-int	mmap_is_inside(int x, int y)
+/*
+ * chris's sexy math making sure the map is inside
+ * the minimap case image
+ */
+int	mmap_is_inside_case(int x, int y)
 {
 	t_vec2 tile_pos = v2new(x, y);
 	tile_pos = v2sub(tile_pos, v2new(MAP_POS_X, MAP_POS_Y));
@@ -13,6 +16,13 @@ int	mmap_is_inside(int x, int y)
 	return (1);
 }
 
+/*
+ * loops through walls and checks if it is inside the cases
+ * images space if we are displaying the small minimap
+ * and if large mini map is displayed it can display all
+ * wall and door images also set the wall seen if mini map
+ * fog is turned on
+ */
 void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, t_mmap mmap)
 {
 	int	i;
@@ -26,14 +36,14 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, t_mmap mmap)
 		{
 			pos.x = ((tile[i].pos.x - MAP_POS_X - MAP_CASE) + (SCR_WIDTH / 2)) - p_pos.x * MAP_S;
 			pos.y = ((tile[i].pos.y - MAP_POS_Y - MAP_CASE) + (SCR_HEIGHT / 2)) - p_pos.y * MAP_S;
-			if (tile[i].vis == true || mmap_is_inside(pos.x - 455, pos.y + 225) == 1)
+			if (tile[i].vis == true || mmap_is_inside_case(pos.x - 455, pos.y + 225) == 1)
 			{
 				texture_blit(*(tile[i].img), dst, pos);
 				tile[i].vis = true;
 			}
 
 		}
-		else if (mmap_is_inside(pos.x - 116, pos.y - 115) == 1)
+		else if (mmap_is_inside_case(pos.x - 116, pos.y - 115) == 1)
 		{
 			texture_blit(*(tile[i].img), dst, pos);
 			tile[i].vis = true;
@@ -41,6 +51,10 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, t_mmap mmap)
 	}
 }
 
+/*
+ * draws the green dot and the rotation of the player on the
+ * mini map 
+ */
 void	mmap_draw_player(t_game *game, t_vec2 m_pos, bool draw_full)
 {
 	t_vec2	pos;
@@ -61,6 +75,10 @@ void	mmap_draw_player(t_game *game, t_vec2 m_pos, bool draw_full)
 	}
 }
 
+/*
+ * draws the little alert icon on minimap when a trigger for an
+ * alert has been hit
+ */
 void	mmap_draw_alert(t_game *game, t_vec2 p_pos, t_mmap *mmap)
 {
 	t_vec2 pos;
@@ -87,6 +105,14 @@ void	mmap_draw_alert(t_game *game, t_vec2 p_pos, t_mmap *mmap)
 	}
 }
 
+/*
+ * these mmap_draw functions are run at runtime
+ * mostly to draw images based on condtions i may
+ * need to change th define values of MAP_POS_X and Y
+ * and store them in the struct and then change those 
+ * values in the modifier on start up based apon what
+ * the map.bur file postions say for the MM minimap
+ */
 void	mmap_draw(t_game *game)
 {
 	t_vec2 pos;//can maybe store this in mmap struct

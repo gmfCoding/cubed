@@ -2,48 +2,11 @@
 #include "mini_map.h"
 #include "texture.h"
 #include "state.h"
-/*
-void	mmap_init_img_2(t_game *game)
-{
-	game->mmap.mm_img[1] = texture_load(game->app.mlx, "assets/minimap/mm01.xpm");
-	game->mmap.mm_img[2] = texture_load(game->app.mlx, "assets/minimap/mm02.xpm");
-	game->mmap.mm_img[3] = texture_load(game->app.mlx, "assets/minimap/mm03.xpm");
-	game->mmap.mm_img[4] = texture_load(game->app.mlx, "assets/minimap/mm04.xpm");
-	game->mmap.mm_img[5] = texture_load(game->app.mlx, "assets/minimap/mm05.xpm");
-	game->mmap.mm_img[6] = texture_load(game->app.mlx, "assets/minimap/mm06.xpm");
-	game->mmap.mm_img[7] = texture_load(game->app.mlx, "assets/minimap/mm07.xpm");
-	game->mmap.mm_img[8] = texture_load(game->app.mlx, "assets/minimap/mm08.xpm");
-	game->mmap.mm_img[9] = texture_load(game->app.mlx, "assets/minimap/mm09.xpm");
-	game->mmap.mm_img[10] = texture_load(game->app.mlx, "assets/minimap/mm10.xpm");
-	game->mmap.mm_img[11] = texture_load(game->app.mlx, "assets/minimap/mm11.xpm");
-	game->mmap.mm_img[12] = texture_load(game->app.mlx, "assets/minimap/mm12.xpm");
-	game->mmap.mm_img[13] = texture_load(game->app.mlx, "assets/minimap/mm13.xpm");
-	game->mmap.mm_img[14] = texture_load(game->app.mlx, "assets/minimap/mm14.xpm");
-	game->mmap.mm_img[15] = texture_load(game->app.mlx, "assets/minimap/mm15.xpm");
-	game->mmap.mm_img[16] = texture_load(game->app.mlx, "assets/minimap/mm16.xpm");
-	game->mmap.mm_img[17] = texture_load(game->app.mlx, "assets/minimap/mm17.xpm");
-	game->mmap.mm_img[18] = texture_load(game->app.mlx, "assets/minimap/mm18.xpm");
-	game->mmap.mm_img[19] = texture_load(game->app.mlx, "assets/minimap/mm19.xpm");
-	game->mmap.mm_img[20] = texture_load(game->app.mlx, "assets/minimap/mm20.xpm");
-	game->mmap.mm_img[21] = texture_load(game->app.mlx, "assets/minimap/mm21.xpm");
-	game->mmap.mm_img[22] = texture_load(game->app.mlx, "assets/minimap/mm22.xpm");
-	game->mmap.mm_img[23] = texture_load(game->app.mlx, "assets/minimap/mm23.xpm");
-	game->mmap.mm_img[24] = texture_load(game->app.mlx, "assets/minimap/mm24.xpm");
-	game->mmap.mm_img[25] = texture_load(game->app.mlx, "assets/minimap/mm25.xpm");
-}
 
-void	mmap_init_img_1(t_game *game)
-{
-	game->mmap.img_pr = texture_load(game->app.mlx, "assets/minimap/mm_player_r.xpm");
-	game->mmap.img_pp = texture_load(game->app.mlx, "assets/minimap/mm_player_p.xpm");
-	game->mmap.img_case[0] = texture_load(game->app.mlx, "assets/minimap/mmcase.xpm");
-	game->mmap.img_case[1] = texture_load(game->app.mlx, "assets/minimap/mm_back_b.xpm");
-	game->mmap.img_case[2] = texture_load(game->app.mlx, "assets/minimap/mm_back_y.xpm");
-	game->mmap.img_case[3] = texture_load(game->app.mlx, "assets/minimap/mm_back_r.xpm");
-	game->mmap.mm_img[0] = texture_load(game->app.mlx, "assets/minimap/mm00.xpm");
-	mmap_init_img_2(game);
-}
-*/
+/*
+ * stores images later on we will change this to be stored in one
+ * big img array but for now this will do
+ */
 void	mmap_init_img_2(t_mmap *mmap, void *mlx)
 {
 	mmap->mm_img[1] = texture_load(mlx, "assets/minimap/mm01.xpm");
@@ -100,6 +63,13 @@ int	mmap_img_number_2(bool t, bool l, bool r, bool b)
 	return (2);
 }
 
+/*
+ * this function is joined with the one above returns a number
+ * of the correct tile type this function can be used for other
+ * similar things to check if an object is surrounded by walls
+ * or anything just need to pass in the booleans of 4 direction
+ * or copy the mmap_decide_img function and tweak it
+ */
 int	mmap_img_number_1(bool t, bool l, bool r, bool b)
 {
 	if (t == true && l == false && r == false && b == true)
@@ -127,6 +97,12 @@ int	mmap_img_number_1(bool t, bool l, bool r, bool b)
 	return(mmap_img_number_2(t, l, r, b));
 }
 
+/*
+ * used to decide an image it is set to false by default
+ * meaning there is no walls or doors around that tile
+ * we then go into the above fucntion which returns an index
+ * for the image that will be used for that minimap tile
+ */
 int	mmap_decide_img(t_tile *tile, int w, int h, int pos)
 {
 	bool	t;

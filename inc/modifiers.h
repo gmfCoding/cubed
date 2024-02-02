@@ -81,7 +81,6 @@ typedef struct	s_entity
 
 }		t_entity;
 
-void	modifier_after(t_game *game);
 typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
 void		mod_gen_no(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_so(char *content, int index, t_world *world, t_map *map);
@@ -93,6 +92,8 @@ void		mod_gen_dr(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_ke(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_mm(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_al(char *content, int index, t_world *world, t_map *map);
-void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
 
+void	modifier_after(t_game *game);
+void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
+void	*get_pos_and_surrounding_tiles(t_world *world, int x, int y);
 #endif

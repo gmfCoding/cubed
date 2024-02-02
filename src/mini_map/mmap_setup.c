@@ -3,7 +3,7 @@
 #include "texture.h"
 #include "state.h"
 
-/*
+/* unsure if we need this function coz i didnt end up using it but its here
 t_vec2	v2diff(t_vec2 f, t_vec2 s)
 {
 	t_vec2	vec;
@@ -21,6 +21,10 @@ t_vec2	v2diff(t_vec2 f, t_vec2 s)
 	return (vec);
 }
 */
+
+/*
+ * set the fog on map if it is and 'F' in the .bur map
+ */
 bool	mmap_fog_check(t_game *game)
 {
 	int	i;
@@ -35,6 +39,9 @@ bool	mmap_fog_check(t_game *game)
 	return (true);
 }
 
+/*
+ * sets up mini map its called after the modifiers have been done
+ */
 void	mmap_init(t_game *game)
 {
 	int	x;
