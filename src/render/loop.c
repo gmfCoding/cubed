@@ -215,7 +215,6 @@ void player_controls(t_game *game)
 	oldDirX = player->dir.x;
 	oldPlaneX = player->plane.x;
 	event_player(game);
-//	event_trigger(game, mapPos, DOOR_UNLOCKED_O);
 	if (input_keyheld(&game->input, KEY_W))
 	{
 		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.x * player->moveSpeed), (int)player->pos.y);
@@ -234,7 +233,27 @@ void player_controls(t_game *game)
 		if (vert->vis == -1)
 			player->pos.y -= player->dir.y * player->moveSpeed;
 	}
+	if (input_keyheld(&game->input, KEY_A))
+	{
+		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.y * player->moveSpeed), (int)player->pos.y);
+		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.x * player->moveSpeed));
+		if (horz->vis == -1)
+			player->pos.x += player->dir.y * player->moveSpeed;
+		if (vert->vis == -1)
+			player->pos.y += -player->dir.x * player->moveSpeed;
+		//player->pos = v2add(player->pos, v2muls(v2new(player->dir.y, -player->dir.x), player->moveSpeed));
+	}
 	if (input_keyheld(&game->input, KEY_D))
+	{
+		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.y * -player->moveSpeed), (int)player->pos.y);
+		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.x * -player->moveSpeed));
+		if (horz->vis == -1)
+			player->pos.x += player->dir.y * -player->moveSpeed;
+		if (vert->vis == -1)
+			player->pos.y += -player->dir.x * -player->moveSpeed;	
+		//player->pos = v2add(player->pos, v2muls(v2new(player->dir.y, -player->dir.x), -player->moveSpeed));
+	}
+	if (input_keyheld(&game->input, KEY_RARROW) || v2isub(game->input.mouse_prev, game->input.mouse).x < 0)
 	{
 		// both camera direction and camera plane must be rotated
 		player->dir.x = player->dir.x * cos(-player->rotSpeed) - player->dir.y * sin(-player->rotSpeed);
@@ -242,7 +261,7 @@ void player_controls(t_game *game)
 		player->plane.x = player->plane.x * cos(-player->rotSpeed) - player->plane.y * sin(-player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(-player->rotSpeed) + player->plane.y * cos(-player->rotSpeed);
 	}
-	if (input_keyheld(&game->input, KEY_A))
+	if (input_keyheld(&game->input, KEY_LARROW) || v2isub(game->input.mouse_prev, game->input.mouse).x > 0)
 	{
 
 		// both camera direction and camera plane must be rotated
