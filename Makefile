@@ -18,6 +18,8 @@ SRCSF = $(TEST) \
 		render/loop.c \
 		render/floor_render.c \
 		render/line.c \
+		render/line_aa.c \
+		render/blur.c \
 		util/time.c \
 		util/error_handler.c \
 		util/string_utils.c \

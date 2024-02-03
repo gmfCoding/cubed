@@ -193,7 +193,7 @@ int	sa_task_orbit_process(t_sa_orbit_task *task)
 	orbit_path_render(&task->obj0.path, &task->rt0);
 	orbit_path_render(&task->obj_path, &task->rt0);
 	orbit_obj_render(&task->obj0, &task->rt0);
-	usleep(16666);
+	//usleep(16666);
 	ui_process_draw(&task->ui, &task->input, task->rt0);
 	texture_draw(task->app, task->rt0, v2new(0,0));
 	l_draw_debug_info(task);

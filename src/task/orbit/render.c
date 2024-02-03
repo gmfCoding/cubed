@@ -36,12 +36,14 @@ void	orbit_path_render(t_kep_path *path, t_texture *rt)
 		printf("%f %f %f\n", pos.x, pos.y, pos.z);
 		if (t != 0)
 		{
-			texture_draw_line(*rt, v3tov2(prev), v3tov2(pos), R_RED | R_ALPHA);
+			//texture_draw_line(*rt, (v3tov2(prev)), (v3tov2(pos)), R_RED | R_ALPHA);
+			texture_draw_line_aa(*rt, v2tov2i(v3tov2(prev)), v2tov2i(v3tov2(pos)), R_RED | R_ALPHA);
 		}
 		prev = pos;
-		t += period / 100;
+		t += period / 64;
 		i++;
 	}
+	//texture_blur(*rt);
 }
 
 void	orbit_obj_render(t_orb_obj *obj, t_texture *rt)
