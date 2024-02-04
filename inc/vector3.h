@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/04 01:16:01 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 00:25:03 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR3_H
@@ -16,9 +16,16 @@ typedef double	t_vecd;
 
 typedef struct s_vec3
 {
-	t_vecd	x;
-	t_vecd	y;
-	t_vecd	z;
+	union
+	{
+		struct
+		{
+			t_vecd	x;
+			t_vecd	y;
+			t_vecd	z;
+		};
+		t_vecd	v[3];
+	};
 }				t_vec3;
 
 t_vec3	v3new(t_vecd x, t_vecd y, t_vecd z);
@@ -61,4 +68,7 @@ t_vec3	v3sdiv(t_vecd s, t_vec3 f);
 
 /* Returns component-wise inverse c = 1 / c */
 t_vec3	v3inv(t_vec3 f);
+
+char	*v3toa(double v[3]);
+
 #endif

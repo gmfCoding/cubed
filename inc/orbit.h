@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/04 19:11:41 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 00:29:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -25,9 +25,24 @@
 # define EA_MAX_ERROR 10e-13
 # define EA_MAX_ITER 100
 
-typedef struct s_texture t_texture;
+typedef struct s_texture	t_texture;
 
-/*** task/orbit/kep_angle.c ***/
+typedef enum e_angt			t_angt;
+
+enum e_angt
+{
+	ANG_TIME,
+	ANG_MEAN,
+	ANG_ECCA
+};
+
+
+/*** task/orbit/sys/kep_angle_util.c ***/
+double			orb_time_at_mean(t_kep_path *path, t_kep_ang *ang, double mna);
+
+double			orb_ea_to_ma(double ea, double ecc);
+
+/*** task/orbit/sys/kep_angle.c ***/
 
 /* Calculates the angular rate at which the mean anomally changes. */
 double			kep_mean_rate(t_kep_path *path);
@@ -54,9 +69,9 @@ double			kep_ta(t_kep_path *path, t_kep_ang *ang);
 double			kep_anom_e(t_kep_path *path, t_kep_ang *ang);
 
 /* Sets the time sample of angular position parameters and updates them */
-void			kep_ang_set(t_kep_path *path, t_kep_ang *ang, double tn);
+void			kep_ang_set(t_kep_path *p, t_kep_ang *a, double tn, t_angt t);
 
-/*** task/orbit/body.c ***/
+/*** task/orbit/sys/body.c ***/
 
 /* Returns a new body based on radius and density. */
 t_orb_body		orb_body_create_rd(double radius, double density);
@@ -64,7 +79,7 @@ t_orb_body		orb_body_create_rd(double radius, double density);
 /* Returns a new body based on radius and mass. */
 t_orb_body		orb_body_create_rm(double radius, double mass);
 
-/*** task/orbit/kep_properties.c ***/
+/*** task/orbit/sys/kep_properties.c ***/
 
 /* Returns the current time since epoch in seconds. */
 double			kep_time(t_kep_ang *ang);
@@ -75,7 +90,7 @@ double			kep_period(t_kep_path *path);
 /* Clamps the values of  */
 void			kep_clamp(t_kep_path *path, t_kep_ang *kep);
 
-/*** task/orbit/ktoc_position.c ***/
+/*** task/orbit/sys/ktoc_position.c ***/
 
 double			orb_radius(t_kep_path *path, t_kep_ang *ang);
 
@@ -83,21 +98,27 @@ void			orb_pos(t_kep_path *path, t_kep_ang *ang, t_vec3 *cart);
 
 void			orb_cart_pos(t_kep_path *p, t_kep_ang *a, t_orb_cart *c);
 
-/*** task/orbit/ktoc_velocity.c ***/
+/*** task/orbit/sys/ktoc_velocity.c ***/
 double			orb_speed(t_kep_path *path, t_kep_ang *ang);
+
+void			orb_vel(t_kep_path *path, t_kep_ang *ang, t_vec3 *vel);
 
 void			orb_cart_vel(t_kep_path *p, t_kep_ang *a, t_orb_cart *c);
 
-/*** task/orbit/cart_to_kep.c ***/
+/*** task/orbit/sys/cart_to_kep.c ***/
 void			orb_cart_to_kep(t_orb_cart *c, t_kep_path *p, t_kep_ang *a);
 
-/*** task/orbit/render.c ***/
+/*** task/orbit/sys/render.c ***/
 
-void			orbit_path_render(t_kep_path *path, t_texture *rt);
+void			orbit_path_render(t_kep_path *path, t_texture *rt, int col);
 
 void			orbit_obj_render(t_kep_path *p, t_kep_ang *a, t_texture *rt);
 
-/*** task/orbit/transform.c ***/
+/* Scales the orbit into screen space. */
+t_vec3			orb_to_ndc(t_kep_path *path, \
+t_vec3 cart, t_vec3 offset, t_vecd scale);
+
+/*** task/orbit/sys/transform.c ***/
 double			orb_transform_x(t_kep_path *p, double x, double y);
 double			orb_transform_y(t_kep_path *p, double x, double y);
 double			orb_transform_z(t_kep_path *p, double x, double y);

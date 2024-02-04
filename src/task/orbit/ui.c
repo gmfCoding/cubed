@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 19:14:49 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/04 19:31:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/04 23:36:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ui.h"
@@ -18,6 +18,7 @@ static const t_button	g_button_init[] = {
 {
 	.rect = {.pos = {10, 10}, .size = {80, 30}},
 	.callback = &orbit_control_action,
+	.repeat = true,
 	.reference = BS_THRUST, .colour = R_ALPHA | R_BLUE,
 },
 	(t_button)
@@ -25,18 +26,22 @@ static const t_button	g_button_init[] = {
 	.rect = {.pos = {10, 50}, .size = {80, 30}},
 	.callback = &orbit_control_action,
 	.reference = BS_RTHRUST, .colour = R_ALPHA | R_RED,
+	.repeat = true,
 },
 	(t_button)
 {
 	.rect = {.pos = {100, 10}, .size = {80, 30}},
 	.callback = &orbit_control_action,
 	.reference = BS_TIME, .colour = R_ALPHA | R_BLUE,
+	.repeat = true,
+
 },
 	(t_button)
 {
 	.rect = {.pos = {100, 50}, .size = {80, 30}},
 	.callback = &orbit_control_action,
 	.reference = BS_RTIME, .colour = R_ALPHA | R_RED,
+	.repeat = true,
 },
 	(t_button)
 {

@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ftoa.c                                          :+:      :+:    :+:   */
+/*   vtoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 00:47:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 00:54:34 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/04 23:58:09 by clovell           #+#    #+#             */
+/*   Updated: 2024/02/05 00:05:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-static int	ft_abs(int abs)
+char	*v3toa(double v[3])
 {
-	if (abs < 0)
-		return (-abs);
-	return (abs);
+	return (ft_strfmt("%f, %f, %f", v[0], v[1], v[2]));
 }
 
-char	*ft_ftoa(double n, int precision)
+char	*v2toa(double v[3])
 {
-	char		*whole;
-	char		*frac;
-	const char	*padding = "";
+	return (ft_strfmt("%f, %f, %f", v[0], v[1]));
+}
 
-	whole = ft_ltoa((long long int)n);
-	n = ft_abs((n - (long long int)n) * (double)precision);
-	frac = ft_ltoa(n);
-	if (n < 10)
-		padding = "00";
-	else if (n < 100)
-		padding = "0";
-	return (ft_strfmt("%S.%s%S", whole, padding, frac));
+// char	*v3itoa(int v[3])
+// {
+// 	return (ft_strfmt("%i, %i, %i", v[0], v[1], v[2]));
+// }
+
+char	*v2itoa(int v[3])
+{
+	return (ft_strfmt("%i, %i, %i", v[0], v[1]));
 }

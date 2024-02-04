@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/24 22:24:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 00:25:30 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR2_H
@@ -54,4 +54,6 @@ t_vec2	v2divs(t_vec2 f, t_vecd s);
 
 /* Returns component-wise inverse division c = s / c */
 t_vec2	v2sdiv(t_vecd s, t_vec2 f);
+
+char	*v2toa(int v[3]);
 #endif

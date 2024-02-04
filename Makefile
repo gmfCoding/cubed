@@ -13,6 +13,7 @@ SRCSF = $(TEST) \
 		vector/vector3_math.c \
 		vector/vector3_math_div.c \
 		vector/vector3.c \
+		vector/vtoa.c \
 		vector/vector_conv.c \
 		render/render_util.c \
 		render/loop.c \
@@ -42,12 +43,15 @@ SRCSF = $(TEST) \
 		task/orbit/sys/ktoc_position.c \
 		task/orbit/sys/ktoc_velocity.c \
 		task/orbit/sys/kep_angle.c \
+		task/orbit/sys/kep_angle_util.c \
 		task/orbit/sys/kep_properties.c \
 		task/orbit/sys/transform.c \
 		task/orbit/sys/render.c \
 		task/orbit/sys/body.c \
 		task/orbit/ui.c \
+		task/orbit/orbit.c \
 		cerror.c \
+
 #		task/orbit/task2.c
 INCSF = cubed.h
 

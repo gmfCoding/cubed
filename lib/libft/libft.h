@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:41:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 22:22:38 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 00:49:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,13 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
+char	*ft_ltoa(long long int n);
 char	*ft_ftoa(double n, int precision);
+
+char	*ft_v3toa(double v[3]);
+char	*ft_v2toa(double v[2]);
+char	*ft_v3itoa(int v[3]);
+char	*ft_v2itoa(int v[2]);
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));

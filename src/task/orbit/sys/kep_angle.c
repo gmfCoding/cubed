@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:54:35 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/04 19:54:11 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 01:27:40 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -40,13 +40,23 @@ double	kep_ta(t_kep_path *path, t_kep_ang *ang)
 	return (2 * ft_atan2(x, y));
 }
 
-void	kep_ang_set(t_kep_path *path, t_kep_ang *ang, double tn)
+void	kep_ang_set(t_kep_path *path, t_kep_ang *ang, double v, t_angt t)
 {
 	ft_asrt(path == NULL || ang == NULL, E_P E_F);
-	ang->time = tn;
-	ang->mna = kep_mean(path, ang);
-	ang->ea = kep_anom_e(path, ang);
-	ang->ta = kep_ta(path, ang);
+	if (t == ANG_TIME)
+	{
+		printf("time:%f\n", v);
+		ang->time = v;
+		ang->mna = kep_mean(path, ang);
+		ang->ea = kep_anom_e(path, ang);
+		ang->ta = kep_ta(path, ang);
+	}
+	else if (t == ANG_MEAN)
+		kep_ang_set(path, ang, \
+		orb_time_at_mean(path, ang, v) / 86400.0, ANG_TIME);
+	else if (t == ANG_ECCA)
+		kep_ang_set(path, ang, orb_time_at_mean(path, ang, \
+		orb_ea_to_ma(v, path->ecc)) / 86400.0, ANG_TIME);
 }
 
 double	kep_anom_e(t_kep_path *path, t_kep_ang *ang)

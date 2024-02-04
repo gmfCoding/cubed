@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:20:49 by clovell           #+#    #+#             */
-/*   Updated: 2023/03/14 14:08:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 00:53:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -21,7 +21,7 @@ static void	ft_itoa_rec(char *dst, int size, long long int n)
 	dst[size] = n % 10 + '0';
 }
 
-static int	nb_len(long long nb)
+static int	nb_len(long long int nb)
 {
 	int	count;
 
@@ -40,6 +40,33 @@ char	*ft_itoa(int n)
 	long long	ni;
 	int			count;
 	char		*str;
+
+	ni = n;
+	count = nb_len(ni);
+	if (n < 0)
+		ni = 0L - n;
+	str = ft_calloc(count + 1 + (n < 0), sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	if (n == 0)
+	{
+		str[0] = '0';
+		return (str);
+	}
+	ni = n;
+	if (n < 0)
+		ni = 0L - n;
+	ft_itoa_rec(str + (n < 0), count - 1, ni);
+	if (n < 0)
+		str[0] = '-';
+	return (str);
+}
+
+char	*ft_ltoa(long long int n)
+{
+	long long int	ni;
+	int				count;
+	char			*str;
 
 	ni = n;
 	count = nb_len(ni);

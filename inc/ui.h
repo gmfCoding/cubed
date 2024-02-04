@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:55:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/04 19:27:50 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 00:22:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef UI_H
@@ -62,7 +62,7 @@ struct s_ui_context
 		struct s_texts
 		{
 			t_text	node_control;	
-		};
+		} t;
 		t_text	texts[sizeof(struct s_texts) / sizeof(t_text)];
 	};
 };
