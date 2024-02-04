@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:54:35 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/01 18:29:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/04 19:54:11 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -38,7 +38,6 @@ double	kep_ta(t_kep_path *path, t_kep_ang *ang)
 	x = sqrt(1.0 + path->ecc) * sin (ang->ea / 2.0);
 	y = sqrt(1.0 - path->ecc) * cos(ang->ea / 2);
 	return (2 * ft_atan2(x, y));
-
 }
 
 void	kep_ang_set(t_kep_path *path, t_kep_ang *ang, double tn)

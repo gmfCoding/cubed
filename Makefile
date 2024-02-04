@@ -38,18 +38,17 @@ SRCSF = $(TEST) \
 		input/input_setup.c \
 		input/keys.c \
 		task/task.c \
-		task/orbit/cart_to_kep.c \
-		task/orbit/ktoc_position.c \
-		task/orbit/ktoc_velocity.c \
-		task/orbit/kep_angle.c \
-		task/orbit/kep_properties.c \
-		task/orbit/transform.c \
-		task/orbit/render.c \
-		task/orbit/body.c \
-		task/orbit/task.c \
-		task/orbit.c \
+		task/orbit/sys/cart_to_kep.c \
+		task/orbit/sys/ktoc_position.c \
+		task/orbit/sys/ktoc_velocity.c \
+		task/orbit/sys/kep_angle.c \
+		task/orbit/sys/kep_properties.c \
+		task/orbit/sys/transform.c \
+		task/orbit/sys/render.c \
+		task/orbit/sys/body.c \
+		task/orbit/ui.c \
 		cerror.c \
-
+#		task/orbit/task2.c
 INCSF = cubed.h
 
 ifndef $(TEST)
@@ -96,7 +95,7 @@ CC = cc
 WFLAGS =#-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
-LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
+LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm --verbose
 OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2
 OPTS = $(OPT)
 
