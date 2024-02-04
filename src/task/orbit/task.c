@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 01:52:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 03:42:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -53,22 +53,12 @@ void	update_paths(t_sa_orbit_task *t)
 	t->nodes[0] = t->start_ang;
 	while (++i < t->maneuvers)
 	{
-		//S
-		//A is S but d[A] applied
-		//B is A but d[B] applied
-		//C is B but d[C] applied
-		//D is C but d[D] applied
-		//E is D but d[E] applied
-
-		// orbit_thrust_apply((t_kep_path[2]){ &t->paths[i], &t->paths[i + 1]}, \
-		// (t_kep_path[2]){ &t->nodes[i], &t->nodes[i + 1]}, t->delta[i]);
 		kep_ang_set(&t->paths[i], &t->nodes[i], t->mean[i], ANG_MEAN);
-		//orbit_thrust_apply(&t->paths[i], &t->nodes[i], 1.01);
 		orbit_thrust_apply(&t->paths[i], &t->nodes[i], t->delta[i]);
 		if (i + 1 < t->maneuvers)
 		{
 			t->paths[i + 1] = t->paths[i];
-			//t->nodes[i + 1] = t->nodes[i];
+			t->nodes[i + 1] = t->nodes[i];
 		}
 	}
 }
@@ -248,26 +238,26 @@ int	main(void)
 	task.sun = orb_body_create_rm(6.96340e8, 1.9891e30);
 	task.start_path.sgp_u = task.sun.u;
 	task.start_path.sma = 1 * KM_AU;
-	task.start_path.ecc = 0.001;
-	task.start_path.inc = 0.001;
-	task.start_path.lan = 0.0001;
-	task.start_path.aop = 0.0001;
+	task.start_path.ecc = 0.5;
+	task.start_path.inc = M_PI / 4.0;
+	task.start_path.lan = M_PI / 6.0;
+	task.start_path.aop = M_PI / 8.0;
 	task.start_ang.s_0.mna0 = 0;
 	task.start_ang.s_0.time0 = 0;
 	task.start_ang.time = 0;
 	task.maneuvers = 1;
 	task.active_path = 0;
-	task.delta[0] = 1.0;
+	task.delta[0] = 1.25;
 	task.delta[1] = 1.03;
 	task.delta[2] = 1.03;
-	task.mean[0] = 0;
+	task.mean[0] = 360 / 4.0;
 	task.mean[1] = 0;
 	task.mean[2] = 0;
-	update_paths(&task);
 	//task.mean[0] = 58.0915542285;
 	//update_paths(&task);
-	kep_ang_set(&task.start_path, &task.start_ang, 0, ANG_TIME);
 	kep_clamp(&task.start_path, &task.start_ang);
+	kep_ang_set(&task.start_path, &task.start_ang, 90, ANG_TIME);
+	update_paths(&task);
 	task.app.mlx = mlx_init();
 	task.app.win = mlx_new_window(task.app.mlx, 400, 400, "ORBIT");
 	task.rt0 = texture_create(task.app.mlx, 400, 400);
