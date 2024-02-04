@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 03:42:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 03:49:06 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -238,19 +238,19 @@ int	main(void)
 	task.sun = orb_body_create_rm(6.96340e8, 1.9891e30);
 	task.start_path.sgp_u = task.sun.u;
 	task.start_path.sma = 1 * KM_AU;
-	task.start_path.ecc = 0.5;
-	task.start_path.inc = M_PI / 4.0;
-	task.start_path.lan = M_PI / 6.0;
-	task.start_path.aop = M_PI / 8.0;
+	task.start_path.ecc = 0.0001;
+	task.start_path.inc = 0.0001;
+	task.start_path.lan = 0.0001;
+	task.start_path.aop = 0.0001;
 	task.start_ang.s_0.mna0 = 0;
 	task.start_ang.s_0.time0 = 0;
 	task.start_ang.time = 0;
-	task.maneuvers = 1;
+	task.maneuvers = 3;
 	task.active_path = 0;
-	task.delta[0] = 1.25;
-	task.delta[1] = 1.03;
-	task.delta[2] = 1.03;
-	task.mean[0] = 360 / 4.0;
+	task.delta[0] = 1.0;
+	task.delta[1] = 1.0;
+	task.delta[2] = 1.0;
+	task.mean[0] = 0;
 	task.mean[1] = 0;
 	task.mean[2] = 0;
 	//task.mean[0] = 58.0915542285;
