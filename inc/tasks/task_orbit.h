@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/04 23:14:50 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 17:46:18 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -14,6 +14,7 @@
 # include "cubed.h"
 # include "orbit.h"
 # include "ui.h"
+# include "random.h"
 
 /*** Button selector references ***/
 # define BS_THRUST "+"
@@ -22,6 +23,7 @@
 # define BS_RTIME "T"
 # define BS_NNODE "n"
 # define BS_PNODE "p"
+# define BS_NTAR "G"
 
 # define T_ORBIT_MAX_MAN 5
 
@@ -29,6 +31,9 @@ typedef struct s_sa_orbit_task
 {
 	t_kep_path		start_path;
 	t_kep_ang		start_ang;
+
+	t_rand			rand;
+	t_kep_path		target_path;
 
 	t_kep_path		paths[T_ORBIT_MAX_MAN];
 	t_kep_ang		nodes[T_ORBIT_MAX_MAN];

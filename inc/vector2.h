@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 00:25:30 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 17:24:58 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR2_H
@@ -16,8 +16,23 @@ typedef double	t_vecd;
 
 typedef struct s_vec2
 {
-	t_vecd	x;
-	t_vecd	y;
+	union
+	{
+		struct
+		{
+			union
+			{
+				t_vecd	x;
+				t_vecd	min;
+			};
+			union
+			{
+				t_vecd	y;
+				t_vecd	max;
+			};
+		};
+		t_vecd	v[2];
+	};
 }				t_vec2;
 
 t_vec2	v2new(t_vecd x, t_vecd y);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:55:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 00:22:29 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 17:56:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef UI_H
@@ -46,16 +46,20 @@ struct s_ui_context
 	void	*parent;
 	union
 	{
-		struct s_buttons
+		union u_buttons
 		{
-			t_button	kep_prograde;	
-			t_button	kep_retrograde;	
-			t_button	kep_time;	
-			t_button	kep_retrotime;
-			t_button	node_next;	
-			t_button	node_prev;	
-		} b;
-		t_button	buttons[sizeof(struct s_buttons) / sizeof(t_button)];
+			struct s_buttons
+			{
+				t_button	kep_prograde;	
+				t_button	kep_retrograde;	
+				t_button	kep_time;	
+				t_button	kep_retrotime;
+				t_button	node_next;	
+				t_button	node_prev;	
+				t_button	generate_target;	
+			} orbit;
+		} u_b;
+		t_button	buttons[sizeof(union u_buttons) / sizeof(t_button)];
 	};
 	union
 	{

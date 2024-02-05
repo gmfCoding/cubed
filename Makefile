@@ -22,7 +22,8 @@ SRCSF = $(TEST) \
 		util/time.c \
 		util/error_handler.c \
 		util/string_utils.c \
-		util/trig.c \
+		util/math.c \
+		util/random.c \
 		map_parser/map_setup.c \
 		map_parser/map_dimensions.c \
 		map_parser/map_tile_processing.c \
@@ -48,6 +49,7 @@ SRCSF = $(TEST) \
 		task/orbit/sys/transform.c \
 		task/orbit/sys/render.c \
 		task/orbit/sys/body.c \
+		task/orbit/sys/generate.c \
 		task/orbit/ui.c \
 		task/orbit/orbit.c \
 		cerror.c \

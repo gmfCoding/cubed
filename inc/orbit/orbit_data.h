@@ -6,12 +6,13 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 00:57:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 05:31:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 17:31:36 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_DATA_H
 # define ORBIT_DATA_H
 # include "vector3.h"
+# include "vector2.h"
 
 typedef struct s_kep_path			t_kep_path;
 typedef struct s_kep_ang			t_kep_ang;
@@ -92,4 +93,13 @@ struct	s_orbital_object
 	t_orb_body	parent;
 	t_orb_body	self;
 };
+
+typedef struct s_orb_gen
+{
+	t_vec2	sma;
+	t_vec2	ecc;
+	t_vec2	inc;
+	t_vec2	aop;
+	t_vec2	lan;
+}				t_orb_gen;
 #endif

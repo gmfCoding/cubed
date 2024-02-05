@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 03:49:06 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 17:56:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -69,6 +69,7 @@ void	render_paths(t_sa_orbit_task *t)
 	int			i;
 	int			colour;
 
+	orbit_path_render(&t->target_path, &t->rt0,  R_RED |  R_GREEN |  R_BLUE  | R_ALPHA);
 	orbit_path_render(&t->start_path, &t->rt0, R_BLUE | R_ALPHA);
 	i = -1;
 	while (++i < t->maneuvers)
@@ -231,11 +232,22 @@ int	sa_task_orbit_process(t_sa_orbit_task *task)
 // 	if (input_keydown())
 // }
 
+const t_orb_gen	g_orbgen = {
+	.sma = {0.5 * KM_AU, 1.25 * KM_AU},	
+	.ecc = {KEP_MIN_EPSILON, 0.8},	
+	.inc = {KEP_MIN_EPSILON, KEP_MIN_EPSILON},	
+	.aop = {KEP_MIN_EPSILON, M_TAU},	
+	.lan = {KEP_MIN_EPSILON, KEP_MIN_EPSILON},	
+};
+
 int	main(void)
 {
 	t_sa_orbit_task	task;
 
+	msrand(&task.rand, 51234);
+	orb_generate(&task.target_path, &g_orbgen, &task.rand);
 	task.sun = orb_body_create_rm(6.96340e8, 1.9891e30);
+	task.target_path.sgp_u = task.sun.u;
 	task.start_path.sgp_u = task.sun.u;
 	task.start_path.sma = 1 * KM_AU;
 	task.start_path.ecc = 0.0001;
