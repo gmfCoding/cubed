@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 17:56:35 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 21:27:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -69,7 +69,11 @@ void	render_paths(t_sa_orbit_task *t)
 	int			i;
 	int			colour;
 
-	orbit_path_render(&t->target_path, &t->rt0,  R_RED |  R_GREEN |  R_BLUE  | R_ALPHA);
+	colour = R_RED | R_GREEN | R_BLUE;
+	printf("dev:%f\n", orb_deviation(&t->target_path, &t->paths[t->maneuvers - 1]));
+	if (orb_deviation(&t->target_path, &t->paths[t->maneuvers - 1]) < 0.05)
+		colour = R_GREEN;
+	orbit_path_render(&t->target_path, &t->rt0, colour | R_ALPHA);
 	orbit_path_render(&t->start_path, &t->rt0, R_BLUE | R_ALPHA);
 	i = -1;
 	while (++i < t->maneuvers)

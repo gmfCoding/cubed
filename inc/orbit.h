@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 17:52:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 21:20:30 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -129,5 +129,8 @@ void			orb_transform_cart(t_kep_path *path, t_orb_cart *cart);
 /*** task/orbit/sys/generate.c ***/
 void			orb_generate(t_kep_path *path,
 					const t_orb_gen *gen, t_rand *rand);
+
+/*** task/orbit/sys/equality.c ***/
+double	orb_deviation(t_kep_path *a, t_kep_path *b);
 
 #endif

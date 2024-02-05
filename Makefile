@@ -50,6 +50,7 @@ SRCSF = $(TEST) \
 		task/orbit/sys/render.c \
 		task/orbit/sys/body.c \
 		task/orbit/sys/generate.c \
+		task/orbit/sys/equality.c \
 		task/orbit/ui.c \
 		task/orbit/orbit.c \
 		cerror.c \

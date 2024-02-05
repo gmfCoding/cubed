@@ -3,6 +3,12 @@
 	"configurations": [
 		{
 			"type": "lldb",
+			"request": "attach",
+			"name": "LLDB Attach",
+			"program": "${workspaceFolder}/cubed"
+		},
+		{
+			"type": "lldb",
 			"request": "launch",
 			"name": "LLDB Launch",
 			"program": "${workspaceFolder}/cubed",

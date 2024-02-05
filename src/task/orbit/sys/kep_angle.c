@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:54:35 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 01:27:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 21:22:30 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -45,7 +45,6 @@ void	kep_ang_set(t_kep_path *path, t_kep_ang *ang, double v, t_angt t)
 	ft_asrt(path == NULL || ang == NULL, E_P E_F);
 	if (t == ANG_TIME)
 	{
-		printf("time:%f\n", v);
 		ang->time = v;
 		ang->mna = kep_mean(path, ang);
 		ang->ea = kep_anom_e(path, ang);
