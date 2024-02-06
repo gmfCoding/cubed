@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:55:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 17:56:01 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/06 14:28:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef UI_H
@@ -29,6 +29,8 @@ struct s_button
 	void				*reference;
 	void				*context;
 	bool				repeat;
+	bool				visible;
+	bool				enabled;
 	t_uibtn_click_cb	callback;
 	int					held;
 };

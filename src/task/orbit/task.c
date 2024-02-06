@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 21:27:32 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/06 14:25:59 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -149,35 +149,6 @@ bool	rect_contains_v2(t_rect rect, t_vec2 pos)
 	&& pos.x <= rect.max.x && pos.y <= rect.max.y);
 }
 
-void	ui_process_draw(t_ui_context *ctx, t_inputctx *in, t_texture target)
-{
-	t_button	*curr;
-	t_rect		aabb;
-	int			i;
-	int			col;
-	bool		invoke;
-
-	i = -1;
-	while (++i < (int)(sizeof(ctx->buttons) / sizeof(t_button)))
-	{
-		curr = &ctx->buttons[i];
-		col = curr->colour;
-		aabb = curr->rect;
-		if (rect_contains_v2(aabb, v2itov2(in->mouse)))
-		{
-			col = R_GREEN | R_ALPHA;
-			invoke = input_keydown(in, MB_LEFT);
-			invoke |= curr->repeat && input_keyheld(in, MB_LEFT);
-			if (invoke && curr->callback != NULL)
-				curr->callback(curr, ctx);
-		}
-		texture_draw_line(target, aabb.min, aabb.max, col);
-		texture_draw_line(target, aabb.min, v2new(aabb.min.x, aabb.max.y), col);
-		texture_draw_line(target, aabb.min, v2new(aabb.max.x, aabb.min.y), col);
-		texture_draw_line(target, aabb.max, v2new(aabb.max.x, aabb.min.y), col);
-		texture_draw_line(target, aabb.max, v2new(aabb.min.x, aabb.max.y), col);
-	}
-}
 
 
 static void l_draw_debug_info_active(t_sa_orbit_task *task, char **str)

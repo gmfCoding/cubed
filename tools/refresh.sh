@@ -63,7 +63,7 @@ CYAN="\033[0;36m"
 NC="\033[0m"
 
 
-FILES=$(find ../assets/source/ -type f -name "*.png" )
+FILES=$(find ../assets/source/ -type f -name "*.png" -not -path "*/_*")
 for filename in $FILES; do
     IN=$(realpath -m $filename) # png path
 	OUT=$(realpath -m $(echo $filename | sed s,/assets/source/,/assets/,g | sed s,.png,.xpm,g)) # converts png path to xpm path
