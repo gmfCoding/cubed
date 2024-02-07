@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 19:14:49 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:41:17 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:59:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ui.h"
@@ -26,8 +26,10 @@ static const t_button	g_button_init[] = {
 {
 	.rect = {.pos = {10, 10}, .size = {80, 30}},
 	.callback = &orbit_control_action,
-	.repeat = true,
 	.reference = BS_THRUST, .colour = R_ALPHA | R_BLUE,
+	.repeat = true,
+	.visible = true,
+	.enabled = true,
 },
 	(t_button)
 {
@@ -35,6 +37,8 @@ static const t_button	g_button_init[] = {
 	.callback = &orbit_control_action,
 	.reference = BS_RTHRUST, .colour = R_ALPHA | R_RED,
 	.repeat = true,
+	.visible = true,
+	.enabled = true,
 },
 	(t_button)
 {
@@ -42,7 +46,8 @@ static const t_button	g_button_init[] = {
 	.callback = &orbit_control_action,
 	.reference = BS_TIME, .colour = R_ALPHA | R_BLUE,
 	.repeat = true,
-
+	.visible = true,
+	.enabled = true,
 },
 	(t_button)
 {
@@ -50,24 +55,32 @@ static const t_button	g_button_init[] = {
 	.callback = &orbit_control_action,
 	.reference = BS_RTIME, .colour = R_ALPHA | R_RED,
 	.repeat = true,
+	.visible = true,
+	.enabled = true,
 },
 	(t_button)
 {
 	.rect = {.pos = {190, 10}, .size = {30, 30}},
 	.callback = &orbit_control_action,
 	.reference = BS_PNODE, .colour = R_ALPHA | R_BLUE | R_RED,
+	.visible = true,
+	.enabled = true,
 },
 	(t_button)
 {
 	.rect = {.pos = {190, 50}, .size = {30, 30}},
 	.callback = &orbit_control_action,
 	.reference = BS_NNODE, .colour = R_ALPHA | R_RED | R_GREEN,
+	.visible = true,
+	.enabled = true,
 },
 	(t_button)
 {
 	.rect = {.pos = {230, 50}, .size = {30, 30}},
 	.callback = &sa_orb_btn_gen_target,
 	.reference = BS_NNODE, .colour = R_ALPHA | R_RED | R_GREEN | R_BLUE,
+	.visible = true,
+	.enabled = true,
 },
 };
 
