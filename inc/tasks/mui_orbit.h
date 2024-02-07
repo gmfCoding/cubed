@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector2_angle.c                                    :+:      :+:    :+:   */
+/*   mui_orbit.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 20:47:14 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/08 02:36:22 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
+/*   Updated: 2024/02/08 03:05:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <math.h>
-#include "vector2.h"
-#include "clmath.h"
+#ifndef MUI_ORBIT_H
+# define MUI_ORBIT_H
+# include "mui.h"
 
-/* Gets the angle from vec to positive x-axis, range: `[0, TAU]`*/
-double	v2x2ang(t_vec2 vec)
-{
-	return (M_PI - atan2(vec.y, -vec.x));
-}
+extern const t_mui_ctx	g_orbit_mui;
+extern const size_t		g_orb_textures_len;
+extern const t_def_tex	g_orb_textures[];
+#endif
+

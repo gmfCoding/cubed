@@ -6,12 +6,13 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 19:38:46 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/08 02:35:43 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
 #include "ui.h"
 #include "input.h"
+#include "render.h"
 
 void	ui_process_draw(t_ui_context *ctx, t_inputctx *in, t_texture target)
 {
@@ -36,6 +37,6 @@ void	ui_process_draw(t_ui_context *ctx, t_inputctx *in, t_texture target)
 			if ((key & 1 || curr->repeat && key & 2) && curr->callback != NULL)
 				curr->callback(curr, ctx);
 		}
-		rect_draw(aabb, target);
+		rect_draw(&aabb, R_RED, target);
 	}
 }

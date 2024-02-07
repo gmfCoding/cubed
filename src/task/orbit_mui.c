@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/08 00:32:13 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/08 02:27:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -187,7 +187,7 @@ static t_mui_slider g_mui_orbit_sliders[] = {
 	.rect = {.min = {61, 303}, .max = {100, 376}},
 	.type = MUI_SLIDE},
 	.start = {61, 303},
-	.end = {100, 376}}
+	.end = {61, 376}}
 };
 
 const t_mui_ctx g_orbit_mui = {

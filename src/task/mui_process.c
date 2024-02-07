@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/08 00:29:21 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/08 02:34:59 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -146,25 +146,9 @@ void	mui_hold_slider(t_mui_slider *curr, t_vec2 mouse)
 {
 	int				i;
 	bool			held;
-	t_vec2			proj;
-	double			t;
 
-	t = v2dot(v2divs(mouse, v2mag(curr->start)), \
-	v2norm(curr->start));
-	proj = v2lerp(curr->start, curr->end, t);
-	curr->value = v2dist(proj, curr->end) \
-	/ v2dist(curr->start, curr->end);
+	curr->value = fmax(0, fmin(0.99, v2invlerp(curr->start, curr->end, mouse)));
 }
-
-// void	mui_process(t_mui_base *base, t_inputctx *in)
-// {
-// 	if (base->type == MUI_BUTTON)
-// 		mui_press_button(base, in);
-// 	else if (base->type == MUI_DIAL)
-// 		mui_process_dial(base, in);
-// 	else if (base->type == MUI_SLIDE)
-// 		mui_process_slider(base, in);
-// }
 
 /* Returns the mui component under the mouse cursor position. */
 t_mui_base	*mui_hover(t_mui_ctx *ctx, t_vec2 mouse)
@@ -185,6 +169,7 @@ t_mui_base	*mui_hover(t_mui_ctx *ctx, t_vec2 mouse)
 			return (base);
 		}
 	}
+	return (NULL);
 }
 
 void	mui_process(t_mui_ctx *ctx, t_inputctx *in)

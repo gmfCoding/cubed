@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 13:13:53 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/08 02:34:21 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR2_H
@@ -76,6 +76,13 @@ t_vec2	v2sdiv(t_vecd s, t_vec2 f);
 /* Returns the interpolation of a to b by t, range: `0 <= t <= 1`*/
 t_vec2 v2lerp(t_vec2 a, t_vec2 b, double t);
 
+/* Returns the interpolation factor from a to b at c. (extrapolated) */
+double	v2invlerp(t_vec2 a, t_vec2 b, t_vec2 c);
+
+/* Projects c on to the line segment AB. (works?)*/
+const t_vec2	v2proj2(t_vec2 a, t_vec2 b, t_vec2 c);
+
+/* Returns the distance between two vectors. */
 t_vecd v2dist(t_vec2 a, t_vec2 b);
 
 double	v2x2ang(t_vec2 vec);

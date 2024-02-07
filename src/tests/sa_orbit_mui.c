@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:18:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 20:18:42 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/08 03:06:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -14,6 +14,8 @@
 #include "render.h"
 #include "ui.h"
 #include "tasks/mui.h"
+#include "tasks/task_orbit.h"
+#include "tasks/mui_orbit.h"
 #include "input.h"
 #include "app.h"
 
@@ -37,10 +39,6 @@ void	sa_orbit_mui_process(void *ptr)
 	mui_process(&mui->mui, &mui->input);
 	input_process(&mui->input);
 }
-
-extern const t_mui_ctx	g_orbit_mui;
-extern const size_t		g_orb_textures_len;
-extern const t_def_tex	*g_orb_textures;
 
 void	mui_def_cache(const t_app *app, t_mui_ctx *mui)
 {
@@ -76,10 +74,10 @@ int	main(void)
 	task.rt0 = texture_create(task.app.mlx, 400, 400);
 	input_setup(task.app.mlx, task.app.win, &task.input);
 	mui_clone(&g_orbit_mui, &task.mui);
-	def_tex_add(&g_orb_textures, g_orb_textures_len);
+	def_tex_add(g_orb_textures, g_orb_textures_len);
 	mui_def_cache(&task.app, &task.mui);
 	task.ui.parent = &task;
-	mlx_loop_hook(task.app.mlx, &sa_orbit_mui_process, &task);
+	mlx_loop_hook(task.app.mlx, (void *)&sa_orbit_mui_process, &task);
 	mlx_loop(task.app.mlx);
 	return (0);
 }
