@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:26 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:30:17 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 18:39:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef DEF_TEX_H
@@ -39,9 +39,9 @@ typedef struct s_def_ctx
 	t_def_node	*head;
 }	t_def_ctx;
 
-void		def_tex_add(t_def_tex *tex, int amount);
-void		def_tex_load(t_app *app, t_def_node *node);
-t_texture	*def_tex_get(t_app *app, char *id);
+void		def_tex_add(const t_def_tex *tex, int amount);
+t_texture	*def_tex_get(const t_app *app, char *id);
+t_def_tex	*def_tex_get_def(const t_app *app, char *id);
 t_def_ctx	*def_get_ctx(void);
 
 #endif

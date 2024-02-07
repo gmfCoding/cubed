@@ -6,11 +6,12 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:31:46 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 19:08:46 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
 # define MUI_H
+# include "def_tex.h"
 # include "vector2i.h"
 # include "texture.h"
 # include "rect.h"
@@ -27,11 +28,10 @@ typedef enum e_mui_type
 typedef struct s_mui_base
 {
 	t_mui_type	type;
-	t_vec2i		pos;
-	t_texture	*texture;
-	const char	**paths;
+	t_vec2		pos;
+	char		*id;
+	t_def_tex	*def;
 	int			frame;
-	int			frames;
 	int			anim;
 	t_rect		rect;
 	bool		unlock;
@@ -41,7 +41,9 @@ typedef struct s_mui_dial
 {
 	t_mui_base	base;
 	t_vec2		drag_start;
-	float		angle;
+	double		curr_angle;
+	double		prev_angle;
+	double		angle;
 	t_vec2		range;
 }	t_mui_dial;
 
@@ -88,5 +90,8 @@ void	mui_process_buttons(t_mui_ctx *ctx, t_inputctx *in);
 void	mui_process_dials(t_mui_ctx *ctx, t_inputctx *in);
 void	mui_process_sliders(t_mui_ctx *ctx, t_inputctx *in);
 void	mui_process(t_mui_ctx *ctx, t_inputctx *in);
+
+
+void	mui_render(t_mui_ctx *ctx, const t_texture *rt);
 
 #endif

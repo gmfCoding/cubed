@@ -78,5 +78,7 @@ t_vec2 v2lerp(t_vec2 a, t_vec2 b, double t);
 
 t_vecd v2dist(t_vec2 a, t_vec2 b);
 
+double	v2x2ang(t_vec2 vec);
+
 char	*v2toa(int v[3]);
 #endif

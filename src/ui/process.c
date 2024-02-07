@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 17:05:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 19:38:46 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -36,10 +36,6 @@ void	ui_process_draw(t_ui_context *ctx, t_inputctx *in, t_texture target)
 			if ((key & 1 || curr->repeat && key & 2) && curr->callback != NULL)
 				curr->callback(curr, ctx);
 		}
-		texture_draw_line(target, aabb.min, aabb.max, col);
-		texture_draw_line(target, aabb.min, v2new(aabb.min.x, aabb.max.y), col);
-		texture_draw_line(target, aabb.min, v2new(aabb.max.x, aabb.min.y), col);
-		texture_draw_line(target, aabb.max, v2new(aabb.max.x, aabb.min.y), col);
-		texture_draw_line(target, aabb.max, v2new(aabb.min.x, aabb.max.y), col);
+		rect_draw(aabb, target);
 	}
 }

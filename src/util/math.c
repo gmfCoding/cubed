@@ -12,6 +12,13 @@
 #include <math.h>
 #include "clmath.h"
 
+
+/* Returns the signed angle difference between a and b. range: `[-PI, PI]`*/
+double	angle_diff(double a, double b)
+{
+	return (atan2(sin(b - a), cos(b - a)));
+}
+
 double	flerp(float lerp, float min, float max)
 {
 	return ((lerp) * (max - min) + min);

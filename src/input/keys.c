@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:16:03 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 05:45:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 20:05:54 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,11 @@ const int			g_keymapkey[] = {
 	KEY_NP_EQUAL,
 	KEY_NP_ENTER,
 	KEY_NP_PERIOD,
+	MB_LEFT,
+	MB_RIGHT,
+	MB_MIDDLE,
+	MB_SCRLDW,
+	MB_SCRLUP,
 	0,
 };
 
@@ -224,6 +229,11 @@ const char *const	g_keymapval[] = {
 	"\e",
 	MAPVAL_DEL,
 	"",
+	"",
+	"",
+	"",
+	"",
+	"",
 };
 
 const char *const	g_keymapname[] = {
@@ -329,6 +339,11 @@ const char *const	g_keymapname[] = {
 	"KEY_NP_EQUAL",
 	"KEY_NP_ENTER",
 	"KEY_NP_PERIOD",
+	"MB_LEFT",
+	"MB_RIGHT",
+	"MB_MIDDLE",
+	"MB_SCRLDW",
+	"MB_SCRLUP",
 	"KEY_INVALID",
 };
 

@@ -6,15 +6,44 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:13:48 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:29:53 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 18:49:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "def_tex.h"
 #include "string_utils.h"
 
-void	def_tex_add(t_def_tex *tex, int amount)
+static void	def_tex_load(const t_app *app, t_def_node *node)
 {
-	t_def_ctx *const	ctx = def_get_ctx();
+	char	buffer[4096];
+	char	*insert;
+	int		i;
+
+	node->data.tex = malloc(sizeof(t_texture) * node->data.frames);
+	i = -1;
+	while (++i < node->data.frames)
+	{
+		insert = &buffer[ft_strlcpy(buffer, node->data.path, sizeof(buffer))];
+		if (node->data.frames > 1)
+			ft_strtol(i, insert);
+		ft_strlcat(insert, ".xpm", 4096);
+		node->data.tex[i] = texture_load(app->mlx, buffer);
+	}
+	node->data.loaded = true;
+}
+
+t_def_ctx	*def_ctx_memman(bool destroy)
+{
+	static t_def_ctx	context = {.head = NULL};
+
+	if (destroy)
+	{
+	}
+	return (&context);
+}
+
+void	def_tex_add(const t_def_tex *tex, int amount)
+{
+	t_def_ctx *const	ctx = def_ctx_memman(false);
 	int					i;
 	t_def_node			*insert;
 
@@ -28,26 +57,18 @@ void	def_tex_add(t_def_tex *tex, int amount)
 	}
 }
 
-void	def_tex_load(t_app *app, t_def_node *node)
+t_texture	*def_tex_get(const t_app *app, char *id)
 {
-	char	buffer[4096];
-	char	*insert;
-	int		i;
+	const t_def_tex	*def = def_tex_get_def(app, id);
 
-	node->data.tex = malloc(sizeof(t_texture) * node->data.frames);
-	i = -1;
-	while (++i < node->data.frames)
-	{
-		insert = &buffer[ft_strlcpy(buffer, node->data.path, sizeof(buffer))];
-		ft_strtol(i, insert);
-		ft_strlcat(insert, ".xpm", 4096);
-		node->data.tex[i] = texture_load(app->mlx, buffer);
-	}
+	if (!def)
+		return (NULL);
+	return (def->tex);
 }
 
-t_texture	*def_tex_get(t_app *app, char *id)
+t_def_tex	*def_tex_get_def(const t_app *app, char *id)
 {
-	const t_def_ctx	*ctx = def_get_ctx();
+	const t_def_ctx	*ctx = def_ctx_memman(false);
 	t_def_node		*curr;
 
 	curr = ctx->head;
@@ -56,18 +77,11 @@ t_texture	*def_tex_get(t_app *app, char *id)
 		if (ft_strcmp(curr->data.id, id) == 0)
 		{
 			if (curr->data.loaded == true)
-				return (curr->data.tex);
+				return (&curr->data);
 			def_tex_load(app, curr);
-			return (curr->data.tex);
+			return (&curr->data);
 		}
 		curr = curr->next;
 	}
 	return (NULL);
-}
-
-t_def_ctx	*def_get_ctx(void)
-{
-	static t_def_ctx	context = {.head = NULL};
-
-	return (&context);
 }

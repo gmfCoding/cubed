@@ -16,7 +16,10 @@
 # endif
 # define M_TAU 6.2831853072
 
+
+double	angle_diff(double a, double b);
 double	ft_atan2(double x, double y);
 double	facos(double x);
 double	flerp(float lerp, float min, float max);
+
 #endif

@@ -6,6 +6,7 @@ SRCSF = $(TEST) \
 		vector/vector2_math_extra.c \
 		vector/vector2_math_div.c \
 		vector/vector2_math.c \
+		vector/vector2_angle.c \
 		vector/vector2.c \
 		vector/vector2i_math_extra.c \
 		vector/vector2i_math.c \
@@ -21,6 +22,7 @@ SRCSF = $(TEST) \
 		render/loop.c \
 		render/floor_render.c \
 		render/line.c \
+		render/rect_render.c \
 		util/time.c \
 		util/error_handler.c \
 		util/string_utils.c \
@@ -56,8 +58,10 @@ SRCSF = $(TEST) \
 		task/orbit/sys/equality.c \
 		task/orbit/ui.c \
 		task/orbit/orbit.c \
+		task/orbit_mui.c \
 		task/mui.c \
 		task/mui_process.c \
+		task/mui_render.c \
 		cerror.c \
 
 #		task/orbit/task2.c
