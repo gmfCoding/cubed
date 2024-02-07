@@ -292,19 +292,6 @@ void player_controls(t_game *game)
 	}
 	if (input_keyheld(&game->input, KEY_D))
 	{
-		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.y * player->moveSpeed), (int)player->pos.y);
-		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.x * player->moveSpeed));
-		if (horz->vis == -1)
-			player->pos.x += player->dir.y * player->moveSpeed;
-		if (vert->vis == -1)
-			player->pos.y += -player->dir.x * player->moveSpeed;
-		//player->pos = v2add(player->pos, v2muls(v2new(player->dir.y, -player->dir.x), player->moveSpeed));
-	}
-/*
-	if (input_keyheld(&game->input, KEY_A))
-	{
-=======
->>>>>>> master
 		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.y * -player->moveSpeed), (int)player->pos.y);
 		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.x * -player->moveSpeed));
 		if (horz->vis == -1)
@@ -313,7 +300,7 @@ void player_controls(t_game *game)
 			player->pos.y += -player->dir.x * -player->moveSpeed;	
 		//player->pos = v2add(player->pos, v2muls(v2new(player->dir.y, -player->dir.x), -player->moveSpeed));
 	}
-*/
+
 	if (input_keyheld(&game->input, KEY_RARROW) || v2isub(game->input.mouse_prev, game->input.mouse).x < 0)
 	{
 		// both camera direction and camera plane must be rotated
@@ -423,7 +410,7 @@ void	render_debug_column(t_game *game, t_column col)
 		if (col.type == C_WALL)
 			col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
 		f = (int)col.sample.y | R_ALPHA;
-		//f = ((int)(col.uv.y * WALL_TEX_SIZE) << R_GREEN) | ((int)col.uv.x) | 0xFF000000; 
+	//	f = ((int)(col.uv.y * WALL_TEX_SIZE) << R_GREEN) | ((int)col.uv.x) | 0xFF000000; 
 		col.uv.y += col.sample_dy;
 		if (col.type == C_WALL)
 		{
@@ -446,7 +433,8 @@ void	render_column(t_game *game, t_column col)
 	{
 		col.sample.y = (int)col.uv.y & (32 - 1);
 		if (col.type == C_WALL)
-			col.sample.y = (int)col.uv.y & (tex.width - 1);
+			col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
+//	col.sample.y = (int)col.uv.y & (tex.width - 1);
 		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
 		if ((f & M_APLHA) != R_ALPHA)
 		{
