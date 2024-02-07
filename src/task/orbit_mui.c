@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 19:33:28 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/08 00:32:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -110,7 +110,7 @@ static t_mui_dial g_mui_orbit_dials[] = {
 	.base = {.pos = {122, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
 	.rect = {.min = {122, 325}, .max = {152, 350}},
-	.type = MUI_BUTTON},
+	.type = MUI_DIAL},
 	.angle = 0,
 	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI},
 },
@@ -193,11 +193,14 @@ static t_mui_slider g_mui_orbit_sliders[] = {
 const t_mui_ctx g_orbit_mui = {
 	.buttons = g_mui_orbit_buttons,
 	.len_buttons = sizeof(g_mui_orbit_buttons) / sizeof(t_mui_button),
+	.size_buttons = sizeof(t_mui_button),
 
 	.dials = g_mui_orbit_dials,
 	.len_dials = sizeof(g_mui_orbit_dials) / sizeof(t_mui_dial),
+	.size_dials = sizeof(t_mui_dial),
 
 	.sliders = g_mui_orbit_sliders,
 	.len_sliders = sizeof(g_mui_orbit_sliders) / sizeof(t_mui_slider),
+	.size_sliders = sizeof(t_mui_slider),
 	.heap = false,
 };

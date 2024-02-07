@@ -70,14 +70,31 @@ typedef union u_mui_any
 	t_mui_dial		*dial;
 }	t_mui_any;
 
+#define MUI_LEN_TYPES 3
+
 typedef struct s_mui_context
 {
-	t_mui_dial		*dials;
-	int				len_dials;
-	t_mui_slider	*sliders;
-	int				len_sliders;
-	t_mui_button	*buttons;
-	int				len_buttons;
+	union
+	{
+		struct
+		{
+			int				len_dials;
+			int				len_sliders;
+			int				len_buttons;
+			int				size_dials;
+			int				size_sliders;
+			int				size_buttons;
+			t_mui_dial		*dials;
+			t_mui_slider	*sliders;
+			t_mui_button	*buttons;
+		};
+		struct
+		{
+			int			lengths[MUI_LEN_TYPES];
+			int			sizes[MUI_LEN_TYPES];
+			t_mui_base	*all[MUI_LEN_TYPES];
+		};
+	};
 	bool			heap;
 }	t_mui_ctx;
 
