@@ -53,6 +53,8 @@ SRCSF = $(TEST) \
 		task/orbit/sys/equality.c \
 		task/orbit/ui.c \
 		task/orbit/orbit.c \
+		task/mui.c \
+		task/mui_process.c \
 		cerror.c \
 
 #		task/orbit/task2.c
@@ -145,6 +147,12 @@ $(OBJS): $(DIROBJ)%.o : $(DIRSRC)%.c $(INCS) | $(DIROBJ)
 	-@printf "${GREEN}"
 	-$(CC) $(PGFLAGS) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
 	-@printf "${NC}"
+
+# TODO: Merge with fclean before submitting
+lclean: clean
+	-make -C $(dir $(DIRLIB)/$(LIBFT)) fclean
+	-make -C $(dir $(DIRLIB)/$(LIBMLX)) fclean
+	-make -C $(dir $(DIRLIB)/$(LIBGNL)) fclean
 
 # CLEANING
 fclean: clean

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:40:25 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 05:44:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 12:23:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void	input_cb_mouse_release(int button, int x, int y, t_inputctx *input)
 void	input_cb_mouse_move(int x, int y, t_inputctx *input)
 {
 	input->mouse = v2inew(x, y);
+	input->mousef = v2new(x, y);
 }
