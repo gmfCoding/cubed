@@ -6,10 +6,11 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 13:17:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:35:50 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
+#include <stdlib.h>
 #include "tasks/mui.h"
 
 void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
@@ -19,21 +20,21 @@ void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
 	dst->len_buttons = src->len_buttons;
 	dst->buttons = malloc(sizeof(t_mui_button) * dst->len_buttons);
 	i = -1;
-	while (++i < src->buttons)
+	while (++i < src->len_buttons)
 	{
 		dst->buttons[i] = src->buttons[i];
 	}
 	dst->len_sliders = src->len_sliders;
 	dst->sliders = malloc(sizeof(t_mui_slider) * dst->len_sliders);
 	i = -1;
-	while (++i < src->sliders)
+	while (++i < src->len_sliders)
 	{
 		dst->sliders[i] = src->sliders[i];
 	}
 	dst->len_dials = src->len_dials;
 	dst->dials = malloc(sizeof(t_mui_dial) * dst->len_dials);
 	i = -1;
-	while (++i < src->dials)
+	while (++i < src->len_dials)
 	{
 		dst->dials[i] = src->dials[i];
 	}

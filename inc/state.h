@@ -6,16 +6,16 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:35:38 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 14:45:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STATE_H
 # define STATE_H
-#include "input.h"
-#include "texture.h"
-#include "ray.h"
-
+# include "input.h"
+# include "texture.h"
+# include "ray.h"
+# include "app.h"
 typedef struct s_game t_game;
 
 #define MAX_DEBUG_VIEWS 10
@@ -39,13 +39,6 @@ struct s_player
 };
 
 typedef struct s_inputctx t_inputctx;
-
-typedef struct s_app t_app;
-struct s_app
-{
-	void *mlx;
-	void *win;
-};
 
 typedef struct s_world t_world;
 

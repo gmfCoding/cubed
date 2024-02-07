@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modifier_setup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 16:43:52 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:27:02 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
 		{
 			if (ft_strncmp(g_mapsymbols[i], \
-					str, mod_strlen(g_mapsymbols[i])) == 0)
-				((t_ex_action)g_mapfuncs[i])(str + (mod_strlen(g_mapsymbols[i]) \
+					str, strlen_nl(g_mapsymbols[i])) == 0)
+				((t_ex_action)g_mapfuncs[i])(str + (strlen_nl(g_mapsymbols[i]) \
 					+ 1), mod_pos++, world, map);
 		}
 		curr = curr->next;

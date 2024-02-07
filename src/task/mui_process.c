@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 13:17:32 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:33:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -14,6 +14,7 @@
 #include "vectorconv.h"
 #include "tasks/mui.h"
 #include "input.h"
+#include "rect.h"
 
 void	mui_process_buttons(t_mui_ctx *ctx, t_inputctx *in)
 {

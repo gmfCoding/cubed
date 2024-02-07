@@ -3,6 +3,7 @@
 
 # include "cubed.h"
 # include "libft.h"
+# include "string_utils.h"
 
 # define TAB_SIZE 4
 # define FILE_TYPE ".xpm"
@@ -106,11 +107,6 @@ void	mod_gen_ea(char *content, int mod_pos, t_world *world, t_map *map);
 void	mod_gen_c(char *content, int mod_pos, t_world *world, t_map *map);
 void	mod_gen_f(char *content, int mod_pos, t_world *world, t_map *map);
 
-int	mod_strlen(const char *str);
-int	ft_strcmp(char *s1, char *s2);
-int	ft_isspace(int c);
-void remove_spaces(char *str);
-int	is_line(const char *line);
 int error_return(char *msg, int exit_code, int print_error, t_list **free_me);
 int error_with(char *msg, int value, int print_error);
 void	deallocate_list(t_list **raw_map_file);

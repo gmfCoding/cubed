@@ -2,6 +2,7 @@ SRCSF = $(TEST) \
 		texture/texture.c \
 		texture/pixel.c \
 		texture/texture_util.c \
+		texture/deferred.c \
 		vector/vector2_math_extra.c \
 		vector/vector2_math_div.c \
 		vector/vector2_math.c \
@@ -15,6 +16,7 @@ SRCSF = $(TEST) \
 		vector/vector3.c \
 		vector/vtoa.c \
 		vector/vector_conv.c \
+		vector/rect.c \
 		render/render_util.c \
 		render/loop.c \
 		render/floor_render.c \
@@ -39,6 +41,7 @@ SRCSF = $(TEST) \
 		input/input_hooks.c \
 		input/input_setup.c \
 		input/keys.c \
+		ui/process.c \
 		task/task.c \
 		task/orbit/sys/cart_to_kep.c \
 		task/orbit/sys/ktoc_position.c \

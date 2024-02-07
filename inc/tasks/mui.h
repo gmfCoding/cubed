@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 13:18:37 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:31:46 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -15,17 +15,6 @@
 # include "texture.h"
 # include "rect.h"
 # include <stdbool.h>
-
-typedef struct s_mui_context
-{
-	t_mui_dial		*dials;
-	int				len_dials;
-	t_mui_slider	*sliders;
-	int				len_sliders;
-	t_mui_button	*buttons;
-	int				len_buttons;
-	bool			heap;
-}	t_mui_ctx;
 
 typedef enum e_mui_type
 {
@@ -40,6 +29,7 @@ typedef struct s_mui_base
 	t_mui_type	type;
 	t_vec2i		pos;
 	t_texture	*texture;
+	const char	**paths;
 	int			frame;
 	int			frames;
 	int			anim;
@@ -78,6 +68,16 @@ typedef union u_mui_any
 	t_mui_dial		*dial;
 }	t_mui_any;
 
+typedef struct s_mui_context
+{
+	t_mui_dial		*dials;
+	int				len_dials;
+	t_mui_slider	*sliders;
+	int				len_sliders;
+	t_mui_button	*buttons;
+	int				len_buttons;
+	bool			heap;
+}	t_mui_ctx;
 
 void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst);
 void	mui_destroy(t_mui_ctx *mui, t_mui_ctx **store, bool heap);

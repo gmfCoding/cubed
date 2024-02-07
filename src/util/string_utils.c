@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:33:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 15:37:08 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:27:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-int	mod_strlen(const char *str)
+int	strlen_nl(const char *str)
 {
 	int	i;
 

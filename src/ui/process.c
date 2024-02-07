@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 12:34:20 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:38:37 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -31,7 +31,7 @@ void	ui_process_draw(t_ui_context *ctx, t_inputctx *in, t_texture target)
 		curr = &ctx->buttons[i];
 		col = curr->colour;
 		aabb = curr->rect;
-		if (curr->enabled && rect_contains_v2(aabb, v2itov2(in->mouse)))
+		if (curr->enabled && rect_contains_v2(aabb, in->mousef))
 		{
 			col = R_GREEN | R_ALPHA;
 			if (invoke && curr->callback != NULL)

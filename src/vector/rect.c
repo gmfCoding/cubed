@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector2_math_extra.c                               :+:      :+:    :+:   */
+/*   rect.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 15:49:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:31:26 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/07 16:34:17 by clovell           #+#    #+#             */
+/*   Updated: 2024/02/07 16:35:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <math.h>
+#include "rect.h"
 #include "vector2.h"
 
-t_vecd	v2sqrmag(t_vec2 vec)
+t_rect	rect_getbounded(t_rect rect)
 {
-	return (vec.x * vec.x + vec.y * vec.y);
+	t_rect	result;
+
+	result.pos = v2sub(rect.pos, v2divs(rect.size, 2));
+	result.size = v2add(rect.pos, v2divs(rect.size, 2));
+	return (result);
 }
 
-t_vecd	v2mag(t_vec2 vec)
+bool	rect_contains_v2(t_rect rect, t_vec2 pos)
 {
-	return (sqrt(v2sqrmag(vec)));
-}
-
-t_vecd v2det(t_vec2 a, t_vec2 b)
-{
-	return (a.x * b.y - a.y * b.x);
-}
-
-t_vecd v2dot(t_vec2 a, t_vec2 b)
-{
-	return (a.x * b.x + a.y * b.y);
-}
-
-t_vec2 v2lerp(t_vec2 a, t_vec2 b, double t)
-{
-	return (v2add(a, v2muls(v2sub(b, a), fmin(1, fmax(0, t)))));
+	return (pos.x >= rect.min.x && pos.y >= rect.min.y \
+	&& pos.x <= rect.max.x && pos.y <= rect.max.y);
 }

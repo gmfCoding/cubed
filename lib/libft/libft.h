@@ -6,13 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:41:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 00:49:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:29:20 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stddef.h>
+# include <inttypes.h>
 
 typedef struct s_list
 {
@@ -50,6 +51,8 @@ char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_ltoa(long long int n);
 char	*ft_ftoa(double n, int precision);
+size_t	ft_intlen(int64_t	nb);
+size_t	ft_strtol(int64_t num, char *str);
 
 char	*ft_v3toa(double v[3]);
 char	*ft_v2toa(double v[2]);

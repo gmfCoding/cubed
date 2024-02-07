@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   random.c                                           :+:      :+:    :+:   */
+/*   string_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 17:16:09 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:42:07 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/07 16:24:49 by clovell           #+#    #+#             */
+/*   Updated: 2024/02/07 16:29:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <inttypes.h>
-#include "random.h"
+#ifndef STRING_UTILS_H
+# define STRING_UTILS_H
 
-void	msrand(t_rand *rand, uint64_t seed)
-{
-	rand->next = seed;
-}
-
-int	mrand(t_rand *rand)
-{
-	rand->next = rand->next * 1103515245 + 12345;
-	return ((unsigned)(rand->next / (MRAND_MAX * 2)) % MRAND_MAX);
-}
+int		strlen_nl(const char *str);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_isspace(int c);
+void	remove_spaces(char *str);
+int		is_line(const char *line);
+#endif
