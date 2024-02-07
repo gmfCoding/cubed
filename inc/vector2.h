@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 17:24:58 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 13:13:53 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR2_H
@@ -64,11 +64,19 @@ t_vec2	v2norm(t_vec2 vec);
 /* Returns the determinate (perp cross product)*/
 t_vecd v2det(t_vec2 a, t_vec2 b);
 
+/* Returns the dot product. */
+t_vecd v2dot(t_vec2 a, t_vec2 b);
+
 /* Returns component wise division c = c / s */
 t_vec2	v2divs(t_vec2 f, t_vecd s);
 
 /* Returns component-wise inverse division c = s / c */
 t_vec2	v2sdiv(t_vecd s, t_vec2 f);
+
+/* Returns the interpolation of a to b by t, range: `0 <= t <= 1`*/
+t_vec2 v2lerp(t_vec2 a, t_vec2 b, double t);
+
+t_vecd v2dist(t_vec2 a, t_vec2 b);
 
 char	*v2toa(int v[3]);
 #endif
