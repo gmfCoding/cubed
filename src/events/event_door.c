@@ -29,7 +29,7 @@ void	event_door_unlocked(t_game *game, t_entity_2 *ent)
 	{
 		game->world->map.tiles[(int)(ent->pos[0].x + ent->pos[0].y * game->world->map.width)].vis = -1;
 		game->world->map.tiles[(int)(ent->pos[0].x + ent->pos[0].y * game->world->map.width)].type = DOOR;
-		if (ent->ref_mm_tile->vertical = true)
+		if (ent->ref_mm_tile->vertical == true)
 			ent->ref_mm_tile->img = &game->mmap.mm_img[14];
 		else
 			ent->ref_mm_tile->img = &game->mmap.mm_img[12];

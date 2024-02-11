@@ -281,7 +281,7 @@ t_vec2	*star_get_path(t_game *game, t_vec2 start, t_vec2 target)
 		if ((int)smallest->pos.x == (int)target.x && (int)smallest->pos.y == (int)target.y)
 		{
 			printf("targetfound\n");
-			target_found == true;
+			target_found = true;
 			break ;
 		}
 		printf("in open\n");
