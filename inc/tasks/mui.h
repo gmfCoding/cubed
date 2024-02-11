@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 19:08:46 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/11 19:17:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -70,7 +70,7 @@ typedef union u_mui_any
 	t_mui_dial		*dial;
 }	t_mui_any;
 
-#define MUI_LEN_TYPES 3
+# define MUI_LEN_TYPES 4
 
 typedef struct s_mui_context
 {
@@ -81,12 +81,15 @@ typedef struct s_mui_context
 			int				len_dials;
 			int				len_sliders;
 			int				len_buttons;
+			int				len_inds;
 			int				size_dials;
 			int				size_sliders;
 			int				size_buttons;
+			int				size_inds;
 			t_mui_dial		*dials;
 			t_mui_slider	*sliders;
 			t_mui_button	*buttons;
+			t_mui_base		*inds;
 		};
 		struct
 		{
@@ -101,7 +104,7 @@ typedef struct s_mui_context
 void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst);
 void	mui_destroy(t_mui_ctx *mui, t_mui_ctx **store, bool heap);
 
-typedef struct s_inputctx t_inputctx;
+typedef struct s_inputctx	t_inputctx;
 
 void	mui_process_buttons(t_mui_ctx *ctx, t_inputctx *in);
 void	mui_process_dials(t_mui_ctx *ctx, t_inputctx *in);

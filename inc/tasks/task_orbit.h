@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/08 03:06:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/11 19:01:28 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -31,6 +31,12 @@
 # define ORB_MUI_BTN_MS2 3
 # define ORB_MUI_BTN_MS3 4
 # define ORB_MUI_BTN_MS4 5
+
+# define ORB_MUI_IND0 0
+# define ORB_MUI_IND1 1
+# define ORB_MUI_IND2 2
+# define ORB_MUI_IND3 3
+# define ORB_MUI_IND4 4
 
 # define ORB_MUI_LEN_BTN 6
 

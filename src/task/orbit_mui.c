@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/08 02:27:38 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/11 19:17:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -15,7 +15,7 @@
 
 const t_def_tex g_orb_textures[] = {
 {
-	.id = "orb_mui_background",
+	.id = "orb_mui_bg",
 	.path = "assets/orbit/panel/panel",
 	.frames = 1,
 },
@@ -190,6 +190,39 @@ static t_mui_slider g_mui_orbit_sliders[] = {
 	.end = {61, 376}}
 };
 
+static t_mui_base g_mui_orbit_inds[] = {
+[ORB_MUI_IND0] = {
+	.pos = {124, 349}, .anim = 0, .frame = 0,
+	.id = "orb_mui_ind", .unlock = true,
+	// .rect = {.min = {124, 349}, .max = {149, 374}},
+	.type = MUI_BUTTON
+},
+[ORB_MUI_IND1] = {
+	.pos = {177, 349,}, .anim = 0, .frame = 0,
+	.id = "orb_mui_ind", .unlock = true,
+	// .rect = {.min = {177, 349}, .max = {202, 374}},
+	.type = MUI_BUTTON
+},
+[ORB_MUI_IND2] = {
+	.pos = {231, 349}, .anim = 0, .frame = 0,
+	.id = "orb_mui_ind", .unlock = true,
+	// .rect = {.min = {231, 349}, .max = {255, 374}},
+	.type = MUI_BUTTON
+},
+[ORB_MUI_IND3] = {
+	.pos = {284, 349, }, .anim = 0, .frame = 0,
+	.id = "orb_mui_ind", .unlock = true,
+	// .rect = {.min = {284, 349}, .max = {309, 374}},
+	.type = MUI_BUTTON
+},
+[ORB_MUI_IND4] = {
+	.pos = {337, 349}, .anim = 0, .frame = 0,
+	.id = "orb_mui_ind", .unlock = true,
+	// .rect = {.min = {337, 349}, .max = {362, 374}},
+	.type = MUI_BUTTON
+},
+};
+
 const t_mui_ctx g_orbit_mui = {
 	.buttons = g_mui_orbit_buttons,
 	.len_buttons = sizeof(g_mui_orbit_buttons) / sizeof(t_mui_button),
@@ -202,5 +235,10 @@ const t_mui_ctx g_orbit_mui = {
 	.sliders = g_mui_orbit_sliders,
 	.len_sliders = sizeof(g_mui_orbit_sliders) / sizeof(t_mui_slider),
 	.size_sliders = sizeof(t_mui_slider),
+
+	.inds = g_mui_orbit_inds,
+	.len_inds = sizeof(g_mui_orbit_inds) / sizeof(t_mui_base),
+	.size_inds = sizeof(t_mui_base),
+
 	.heap = false,
 };
