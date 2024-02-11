@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   orbit_mui.c                                        :+:      :+:    :+:   */
+/*   orbit_mui.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "tasks/task_orbit.h"
 #include "def_tex.h"
 
-const t_def_tex g_orb_textures[] = {
+static const t_def_tex g_orb_textures[] = {
 {
 	.id = "orb_mui_bg",
 	.path = "assets/orbit/panel/panel",
@@ -51,10 +51,7 @@ const t_def_tex g_orb_textures[] = {
 }
 };
 
-const size_t	g_orb_textures_len = sizeof(g_orb_textures) \
-	/ sizeof(t_def_tex);
-
-static t_mui_button g_mui_orbit_buttons[] = {
+static const t_mui_button g_mui_orbit_buttons[] = {
 [ORB_MUI_BTN_APPLY] = {
 	.base = {.pos = {23, 306}, .anim = 0, .frame = 0,
 	.id = "orb_mui_apply", .unlock = true,
@@ -105,7 +102,7 @@ static t_mui_button g_mui_orbit_buttons[] = {
 },
 };
 
-static t_mui_dial g_mui_orbit_dials[] = {
+static const t_mui_dial g_mui_orbit_dials[] = {
 [ORB_MUI_DIAL_M0] = {
 	.base = {.pos = {122, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
@@ -180,7 +177,7 @@ static t_mui_dial g_mui_orbit_dials[] = {
 },
 };
 
-static t_mui_slider g_mui_orbit_sliders[] = {
+static const t_mui_slider g_mui_orbit_sliders[] = {
 [ORB_MUI_SLD_THROTTLE] = {
 	.base = {.pos = {61, 298}, .anim = 0, .frame = 0,
 	.id = "orb_mui_throttle", .unlock = true,
@@ -190,7 +187,7 @@ static t_mui_slider g_mui_orbit_sliders[] = {
 	.end = {61, 376}}
 };
 
-static t_mui_base g_mui_orbit_inds[] = {
+static const t_mui_base g_mui_orbit_inds[] = {
 [ORB_MUI_IND0] = {
 	.pos = {110, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
@@ -223,8 +220,8 @@ static t_mui_base g_mui_orbit_inds[] = {
 },
 };
 
-const t_mui_ctx g_orbit_mui = {
-	.buttons = g_mui_orbit_buttons,
+static const t_mui_ctx g_orbit_mui = {
+	.buttons = (t_mui_button *)g_mui_orbit_buttons,
 	.len_buttons = sizeof(g_mui_orbit_buttons) / sizeof(t_mui_button),
 	.size_buttons = sizeof(t_mui_button),
 
@@ -242,3 +239,12 @@ const t_mui_ctx g_orbit_mui = {
 
 	.heap = false,
 };
+
+void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
+{
+	const int	g_len_tex = sizeof(g_orb_textures) / sizeof(t_def_tex);
+
+	mui_clone(&g_orbit_mui, mui);
+	def_tex_add(g_orb_textures, g_len_tex);
+	mui_def_preload(app, mui);
+}

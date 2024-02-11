@@ -13,28 +13,56 @@
 #include <stdlib.h>
 #include "tasks/mui.h"
 
+// void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
+// {
+// 	int	i;
+
+// 	*dst = *src;
+// 	dst->buttons = malloc(sizeof(t_mui_button) * dst->len_buttons);
+// 	i = -1;
+// 	while (++i < src->len_buttons)
+// 	{
+// 		dst->buttons[i] = src->buttons[i];
+// 	}
+// 	dst->sliders = malloc(sizeof(t_mui_slider) * dst->len_sliders);
+// 	i = -1;
+// 	while (++i < src->len_sliders)
+// 	{
+// 		dst->sliders[i] = src->sliders[i];
+// 	}
+// 	dst->dials = malloc(sizeof(t_mui_dial) * dst->len_dials);
+// 	i = -1;
+// 	while (++i < src->len_dials)
+// 	{
+// 		dst->dials[i] = src->dials[i];
+// 	}
+// 	dst->heap = true;
+// }
+
 void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
 {
-	int	i;
+	char		*src_iter;
+	char		*dst_iter;
+	int			j;
+	int			i;
 
-	*dst = *src;
-	dst->buttons = malloc(sizeof(t_mui_button) * dst->len_buttons);
 	i = -1;
-	while (++i < src->len_buttons)
+	while (++i < MUI_LEN_TYPES)
+		dst->all[i] = malloc(src->sizes[i] * src->lengths[i]);
+	j = -1;
+	while (++j < MUI_LEN_TYPES)
 	{
-		dst->buttons[i] = src->buttons[i];
-	}
-	dst->sliders = malloc(sizeof(t_mui_slider) * dst->len_sliders);
-	i = -1;
-	while (++i < src->len_sliders)
-	{
-		dst->sliders[i] = src->sliders[i];
-	}
-	dst->dials = malloc(sizeof(t_mui_dial) * dst->len_dials);
-	i = -1;
-	while (++i < src->len_dials)
-	{
-		dst->dials[i] = src->dials[i];
+		i = -1;
+		src_iter = &src->all[j][0];
+		dst_iter = &dst->all[j][0];
+		dst->lengths[j] = src->lengths[j];
+		dst->sizes[j] = src->sizes[j];
+		while (++i < src->lengths[j])
+		{
+			ft_memcpy(dst_iter, src_iter, src->sizes[j]);
+			src_iter = &src_iter[0] + src->sizes[j];
+			dst_iter = &dst_iter[0] + src->sizes[j];
+		}
 	}
 	dst->heap = true;
 }

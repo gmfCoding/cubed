@@ -58,7 +58,7 @@ SRCSF = $(TEST) \
 		task/orbit/sys/equality.c \
 		task/orbit/ui.c \
 		task/orbit/orbit.c \
-		task/orbit_mui.c \
+		task/orbit/mui/orbit_mui.c \
 		task/mui.c \
 		task/mui_process.c \
 		task/mui_render.c \

@@ -13,8 +13,7 @@
 # define MUI_ORBIT_H
 # include "mui.h"
 
-extern const t_mui_ctx	g_orbit_mui;
-extern const size_t		g_orb_textures_len;
-extern const t_def_tex	g_orb_textures[];
+void	mui_orbit_setup(t_app *app, t_mui_ctx *mui);
+
 #endif
 

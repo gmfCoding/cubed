@@ -67,9 +67,7 @@ int	main(void)
 	task.app.win = mlx_new_window(task.app.mlx, 400, 400, "ORBIT");
 	task.rt0 = texture_create(task.app.mlx, 400, 400);
 	input_setup(task.app.mlx, task.app.win, &task.input);
-	mui_clone(&g_orbit_mui, &task.mui);
-	def_tex_add(g_orb_textures, g_orb_textures_len);
-	mui_def_preload(&task.app, &task.mui);
+	mui_orbit_setup(&task.app, &task.mui);
 	task.ui.parent = &task;
 	mlx_loop_hook(task.app.mlx, (void *)&sa_orbit_mui_process, &task);
 	mlx_loop(task.app.mlx);

@@ -71,7 +71,6 @@ typedef union u_mui_any
 }	t_mui_any;
 
 # define MUI_LEN_TYPES 4
-
 typedef struct s_mui_context
 {
 	union
