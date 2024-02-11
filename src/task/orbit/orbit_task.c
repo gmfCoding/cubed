@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 00:26:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 01:23:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -52,7 +52,6 @@ void	update_paths(t_sa_orbit_task *t)
 
 void	render_paths(t_sa_orbit_task *t)
 {
-	t_kep_ang	ang;
 	int			i;
 	int			colour;
 
@@ -69,13 +68,7 @@ void	render_paths(t_sa_orbit_task *t)
 			colour = R_GREEN & 0x7F7F | R_ALPHA;
 		orbit_path_render(&t->paths[i], &t->rt0, colour);
 	}
-	i = -1;
-	while (++i < t->maneuvers)
-	{
-		ang = (t_kep_ang){0};
-		kep_ang_set(&t->paths[i], &ang, t->mean[i], ANG_MEAN);
-		orbit_obj_render(&t->paths[i], &ang, &t->rt0);
-	}
+	orbit_obj_render_at(&t->paths_all[t->active_path], t->mean[t->active_path], ANG_MEAN, &t->rt0);
 }
 
 void	orbit_control_action(t_button *btn, t_ui_context *ctx)

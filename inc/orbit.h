@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 21:20:30 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 01:06:59 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -113,8 +113,9 @@ void			orb_cart_to_kep(t_orb_cart *c, t_kep_path *p, t_kep_ang *a);
 /*** task/orbit/sys/render.c ***/
 
 void			orbit_path_render(t_kep_path *path, t_texture *rt, int col);
-
 void			orbit_obj_render(t_kep_path *p, t_kep_ang *a, t_texture *rt);
+void			orbit_obj_render_at(t_kep_path *path, double mean,
+					t_angt angt, t_texture *rt);
 
 /* Scales the orbit into screen space. */
 t_vec3			orb_to_ndc(t_kep_path *path, \

@@ -53,6 +53,7 @@ SRCSF = $(TEST) \
 		task/orbit/sys/kep_properties.c \
 		task/orbit/sys/transform.c \
 		task/orbit/sys/render.c \
+		task/orbit/sys/render_extra.c \
 		task/orbit/sys/body.c \
 		task/orbit/sys/generate.c \
 		task/orbit/sys/equality.c \

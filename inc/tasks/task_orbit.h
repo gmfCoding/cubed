@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 19:01:28 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 01:18:36 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -55,16 +55,26 @@
 # define ORB_MUI_SLD_THROTTLE 0
 
 # define T_ORBIT_MAX_MAN 5
+# define T_ORBIT_MAX_ALL 7
 
 typedef struct s_sa_orbit_task
 {
-	t_kep_path		start_path;
 	t_kep_ang		start_ang;
-
 	t_rand			rand;
-	t_kep_path		target_path;
+	union
+	{
+		t_kep_path		paths_all[T_ORBIT_MAX_ALL];
+		/* DON'T CHANGE: Memory layout very important for rendering code. 
+			start_path must be JUST before paths.
+		*/
+		struct
+		{
+			t_kep_path		start_path;
+			t_kep_path		paths[T_ORBIT_MAX_MAN];
+			t_kep_path		target_path;
+		};
+	};
 
-	t_kep_path		paths[T_ORBIT_MAX_MAN];
 	t_kep_ang		nodes[T_ORBIT_MAX_MAN];
 	double			delta[T_ORBIT_MAX_MAN];		
 	double			mean[T_ORBIT_MAX_MAN];		
