@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 19:24:32 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/11 22:43:37 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -103,13 +103,12 @@ typedef struct s_mui_context
 void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst);
 void	mui_destroy(t_mui_ctx *mui, t_mui_ctx **store, bool heap);
 
+/* Preloads all the deferred textures. */
+void	mui_def_preload(t_app *app, t_mui_ctx *ctx);
+
 typedef struct s_inputctx	t_inputctx;
 
-void	mui_process_buttons(t_mui_ctx *ctx, t_inputctx *in);
-void	mui_process_dials(t_mui_ctx *ctx, t_inputctx *in);
-void	mui_process_sliders(t_mui_ctx *ctx, t_inputctx *in);
 void	mui_process(t_mui_ctx *ctx, t_inputctx *in);
-
 
 void	mui_render(t_mui_ctx *ctx, const t_texture *rt);
 

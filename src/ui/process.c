@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/08 02:35:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/11 23:39:53 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -26,9 +26,9 @@ void	ui_process_draw(t_ui_context *ctx, t_inputctx *in, t_texture target)
 	i = -1;
 	while (++i < (int)(sizeof(ctx->buttons) / sizeof(t_button)))
 	{
+		curr = &ctx->buttons[i];
 		if (!curr->visible)
 			continue ;
-		curr = &ctx->buttons[i];
 		col = curr->colour;
 		aabb = curr->rect;
 		if (curr->enabled && rect_contains_v2(aabb, in->mousef))
@@ -37,6 +37,6 @@ void	ui_process_draw(t_ui_context *ctx, t_inputctx *in, t_texture target)
 			if ((key & 1 || curr->repeat && key & 2) && curr->callback != NULL)
 				curr->callback(curr, ctx);
 		}
-		rect_draw(&aabb, R_RED, target);
+		rect_draw(&aabb, col | R_ALPHA, target);
 	}
 }

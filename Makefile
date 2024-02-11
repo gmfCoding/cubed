@@ -114,6 +114,7 @@ CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm --verbose
 OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2
 OPTS = $(OPT)
+SAN = address 
 
 ifneq (,$(findstring def,$(OPTS)))
 OPTS = fsan,debug
@@ -123,7 +124,13 @@ ifneq (,$(findstring debug,$(OPTS)))
 	DFLAGS += -g3
 endif
 ifneq (,$(findstring fsan,$(OPTS)))
-	DFLAGS += -fsanitize=address
+# -fno-sanitize-ignorelist -fsanitize-ignorelist=ignorelist.txt
+# Compile with selected sanitizer:
+# And when using other sanitizers such as memory or undefined, it may be useful to not prematurely stop,
+# Use UBSAN_OPTIONS=halt_on_error=0 (need -fs..-recover=..) or equivelent
+# Also might be nice to redirect stderr to a file
+# USE 
+	DFLAGS += -fsanitize=$(SAN) -fsanitize-recover=$(SAN) 
 endif
 ifneq (,$(findstring gmon,$(OPTS)))
 	PGFLAGS += -pg

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:18:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 19:55:31 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/11 22:44:02 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -38,25 +38,6 @@ void	sa_orbit_mui_process(void *ptr)
 	texture_draw(mui->app, mui->rt0, v2new(0, 0));
 	mui_process(&mui->mui, &mui->input);
 	input_process(&mui->input);
-}
-
-void	mui_def_preload(t_app *app, t_mui_ctx *ctx)
-{
-	t_mui_base	*base;
-	int			i;
-	int			j;
-
-	j = -1;
-	while (++j < MUI_LEN_TYPES)
-	{
-		base = ctx->all[j];
-		i = -1;
-		while (++i < ctx->lengths[j])
-		{
-			base->def = def_tex_get_def(app, base->id);
-			base = (void *)((char *)base + ctx->sizes[j]);
-		}
-	}
 }
 
 int	main(void)
