@@ -227,10 +227,10 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 		while (hit < tile->sp_count)
 		{
 			sp = &game->world->sprite[tile->sprite[hit]];
-			printf("v = (%f, %f) s = (%f, %f) s_1 = (%f, %f) s_2 = (%f, %f)\n", game->player.dir.x, game->player.dir.y, start.x, start.y, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
+		//	printf("v = (%f, %f) s = (%f, %f) s_1 = (%f, %f) s_2 = (%f, %f)\n", game->player.dir.x, game->player.dir.y, start.x, start.y, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
 			if (two_seg_intersect(sp->s1, sp->s2, start, v2))
 			{
-				printf("found spote\n");
+			//	printf("found spote\n");
 				ray.depths[ray.hits].depth = v2mag(v2sub(game->player.pos, sp->pos));
 				ray.depths[ray.hits].sp_tex = sp->tex;
 				ray.hits++;

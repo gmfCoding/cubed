@@ -17,6 +17,7 @@
 #include "cubed.h"
 #include "mini_map.h"
 #include "modifiers.h"
+#include "a_star.h"
 
 // int	main(int argc, char **argv)
 // {
@@ -108,9 +109,9 @@ int	main(int argc, char **argv)
 	game.world->sprite[0] = (t_sprite){.tex = 7, .pos = v2new(26.5, 9.5)};
 	game.world->map.tiles[26 + 10 * game.world->map.width].sp_count = 1;
 	game.world->map.tiles[26 + 10 * game.world->map.width].sprite[0] = 0;
-
-
 	modifier_after(&game);
+
+	print_vector_path(&game);	
 
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
