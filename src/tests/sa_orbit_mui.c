@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:18:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 19:13:28 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/11 19:55:31 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -54,7 +54,7 @@ void	mui_def_preload(t_app *app, t_mui_ctx *ctx)
 		while (++i < ctx->lengths[j])
 		{
 			base->def = def_tex_get_def(app, base->id);
-			base = (char *)base + ctx->sizes[j];
+			base = (void *)((char *)base + ctx->sizes[j]);
 		}
 	}
 }

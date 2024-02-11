@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 19:17:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/11 20:05:54 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -40,7 +40,7 @@ const t_def_tex g_orb_textures[] = {
 	.frames = 20,
 },
 {
-	.id = "orb_mui_mindicator",
+	.id = "orb_mui_ind",
 	.path = "assets/orbit/panel/thrustindicator_",
 	.frames = 20,
 },
@@ -192,31 +192,31 @@ static t_mui_slider g_mui_orbit_sliders[] = {
 
 static t_mui_base g_mui_orbit_inds[] = {
 [ORB_MUI_IND0] = {
-	.pos = {124, 349}, .anim = 0, .frame = 0,
+	.pos = {110, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
 	// .rect = {.min = {124, 349}, .max = {149, 374}},
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND1] = {
-	.pos = {177, 349,}, .anim = 0, .frame = 0,
+	.pos = {163, 325,}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
 	// .rect = {.min = {177, 349}, .max = {202, 374}},
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND2] = {
-	.pos = {231, 349}, .anim = 0, .frame = 0,
+	.pos = {217, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
 	// .rect = {.min = {231, 349}, .max = {255, 374}},
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND3] = {
-	.pos = {284, 349, }, .anim = 0, .frame = 0,
+	.pos = {270, 325, }, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
 	// .rect = {.min = {284, 349}, .max = {309, 374}},
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND4] = {
-	.pos = {337, 349}, .anim = 0, .frame = 0,
+	.pos = {323, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
 	// .rect = {.min = {337, 349}, .max = {362, 374}},
 	.type = MUI_BUTTON

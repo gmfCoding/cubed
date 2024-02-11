@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 19:17:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/11 19:24:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -31,7 +31,7 @@ typedef struct s_mui_base
 	t_vec2		pos;
 	char		*id;
 	t_def_tex	*def;
-	int			frame;
+	uint8_t		frame;
 	int			anim;
 	t_rect		rect;
 	bool		unlock;
