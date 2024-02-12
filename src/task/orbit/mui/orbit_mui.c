@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 18:47:37 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:23:02 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -278,7 +278,10 @@ void	orbit_mui_control_action(t_mui_ctx *ctx)
 {
 	t_sa_orbit_task *const	task = ctx->ctx;
 	int						i;
+	double					max_delta;
 
+	max_delta = orb_max_delta(&task->paths[task->active_path], \
+	&task->nodes[task->active_path]);
 	i = -1;
 	while (++i < ctx->len_buttons)
 		if (ctx->buttons[i].on && i < T_ORBIT_MAX_MAN)
@@ -288,8 +291,11 @@ void	orbit_mui_control_action(t_mui_ctx *ctx)
 		if (i < T_ORBIT_MAX_MAN)
 			task->mean[i] = ctx->dials[i].angle;
 	i = -1;
-	while (++i < T_ORBIT_MAX_MAN)
-		ctx->inds[i].frame = task->delta[i]; //TODO: (delta / maxDelta) * frames
+	// while (++i < T_ORBIT_MAX_MAN)
+	// 	ctx->inds[i].frame = task->delta[i]; //TODO: (delta / maxDelta) * frames
 	task->delta[task->active_path] += (ctx->sliders[0].value - 0.5) / 100.0; // Alternatively = lerp(reverseMaxDelta, maxDelta, value)
+	// if (fabs(task->delta[task->active_path]) > 1.01)
+	// 	task->delta[task->active_path] = fclamp(-max_delta, max_delta, task->delta[task->active_path]);
+	// printf("%f\n", max_delta);
 	update_paths(task);
 }

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 18:44:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:52:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -43,7 +43,6 @@ void	mui_hold_slider(t_mui_slider *curr, t_vec2 mouse)
 	bool			held;
 
 	curr->value = fmax(0, fmin(0.99, v2invlerp(curr->start, curr->end, mouse)));
-	printf("%f\n", curr->value);
 }
 
 /* Returns the mui component under the mouse cursor position. */

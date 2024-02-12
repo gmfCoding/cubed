@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 18:46:17 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 23:33:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -91,4 +91,6 @@ typedef struct s_sa_orbit_task
 
 // TODO: Remove?
 void	orbit_control_action(t_button *btn, t_ui_context *ctx);
+void	update_paths(t_sa_orbit_task *t);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 18:37:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:16:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -34,10 +34,13 @@ void	orbit_thrust_apply(t_kep_path *path,
 t_kep_ang *node, double thrust)
 {
 	t_orb_cart	cart;
+	t_vec3		ecv;
 
 	cart = (t_orb_cart){0};
 	orb_cart_pos(path, node, &cart);
 	orb_cart_vel(path, node, &cart);
+	ecv = orb_cart_ecv(&cart, path->sgp_u);
+	printf("%f\n", ecv.x);
 	cart.vel = v3muls(cart.vel, thrust);
 	orb_transform_cart(path, &cart);
 	orb_cart_to_kep(&cart, path, node);

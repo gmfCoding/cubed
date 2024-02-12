@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:29:40 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 17:31:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 22:58:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -19,9 +19,20 @@ double	angle_diff(double a, double b)
 	return (atan2(sin(b - a), cos(b - a)));
 }
 
-double	flerp(float lerp, float min, float max)
+double	flerp(double min, double max, double lerp)
 {
 	return ((lerp) * (max - min) + min);
+}
+
+
+double	fclamp(double min, double max, double value)
+{
+	if (value > max)
+		return (max);
+	else if (value < min)
+		return (min);
+	else
+		return (value);
 }
 
 double	ft_atan2(double y, double x)
@@ -48,3 +59,4 @@ double	facos(double x)
 		return (M_PI);
 	return (acos(x));
 }
+

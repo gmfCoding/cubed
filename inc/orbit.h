@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 01:06:59 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:10:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -101,13 +101,16 @@ void			orb_pos(t_kep_path *path, t_kep_ang *ang, t_vec3 *cart);
 void			orb_cart_pos(t_kep_path *p, t_kep_ang *a, t_orb_cart *c);
 
 /*** task/orbit/sys/ktoc_velocity.c ***/
+double			orb_max_delta(t_kep_path *path, t_kep_ang *ang);
 double			orb_speed(t_kep_path *path, t_kep_ang *ang);
+double			orb_speed_at_ecc(t_kep_path *path, t_kep_ang *ang, double ecc);
 
 void			orb_vel(t_kep_path *path, t_kep_ang *ang, t_vec3 *vel);
 
 void			orb_cart_vel(t_kep_path *p, t_kep_ang *a, t_orb_cart *c);
 
 /*** task/orbit/sys/cart_to_kep.c ***/
+t_vec3			orb_cart_ecv(t_orb_cart *cart, double u);
 void			orb_cart_to_kep(t_orb_cart *c, t_kep_path *p, t_kep_ang *a);
 
 /*** task/orbit/sys/render.c ***/
