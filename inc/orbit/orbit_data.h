@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 00:57:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:02:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:24:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_DATA_H
@@ -49,10 +49,6 @@ struct s_orb_cart
 	t_ocrf	ref;
 	t_vec3	pos;
 	t_vec3	vel;
-
-	t_vec3	opos;
-	t_vec3	ovel;
-	t_vec3	e;
 };
 
 struct s_orb_body_def
@@ -73,7 +69,6 @@ struct s_kep_path
 	double		aop;
 	double		ecc;
 	double		sgp_u;
-	t_vec3		e;
 };
 
 struct s_kep_ang

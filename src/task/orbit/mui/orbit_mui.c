@@ -6,14 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:23:02 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:32:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
 #include "tasks/task_orbit.h"
 #include "def_tex.h"
 
-static const t_def_tex g_orb_textures[] = {
+static const t_def_tex		g_orb_textures[] = {
 {
 	.id = "orb_mui_bg",
 	.path = "assets/orbit/panel/panel",
@@ -51,7 +51,7 @@ static const t_def_tex g_orb_textures[] = {
 }
 };
 
-static const t_mui_button g_mui_orbit_buttons[] = {
+static const t_mui_button	g_mui_orbit_buttons[] = {
 [ORB_MUI_BTN_MS0] = {
 	.base = {.pos = {124, 349}, .anim = 0, .frame = 0,
 	.id = "orb_mui_mselector", .unlock = true,
@@ -102,7 +102,7 @@ static const t_mui_button g_mui_orbit_buttons[] = {
 },
 };
 
-static const t_mui_dial g_mui_orbit_dials[] = {
+static const t_mui_dial		g_mui_orbit_dials[] = {
 [ORB_MUI_DIAL_M0] = {
 	.base = {.pos = {122, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
@@ -177,7 +177,7 @@ static const t_mui_dial g_mui_orbit_dials[] = {
 },
 };
 
-static const t_mui_slider g_mui_orbit_sliders[] = {
+static const t_mui_slider	g_mui_orbit_sliders[] = {
 [ORB_MUI_SLD_THROTTLE] = {
 	.base = {.pos = {61, 298}, .anim = 0, .frame = 0,
 	.id = "orb_mui_throttle", .unlock = true,
@@ -189,7 +189,7 @@ static const t_mui_slider g_mui_orbit_sliders[] = {
 	.rest = 0.5, .elastic = true},
 };
 
-static const t_mui_base g_mui_orbit_inds[] = {
+static const t_mui_base		g_mui_orbit_inds[] = {
 [ORB_MUI_IND0] = {
 	.pos = {110, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
@@ -222,23 +222,19 @@ static const t_mui_base g_mui_orbit_inds[] = {
 },
 };
 
-static const t_mui_ctx g_orbit_mui = {
+static const t_mui_ctx		g_orbit_mui = {
 	.buttons = (t_mui_button *)g_mui_orbit_buttons,
 	.len_buttons = sizeof(g_mui_orbit_buttons) / sizeof(t_mui_button),
 	.size_buttons = sizeof(t_mui_button),
-
 	.dials = g_mui_orbit_dials,
 	.len_dials = sizeof(g_mui_orbit_dials) / sizeof(t_mui_dial),
 	.size_dials = sizeof(t_mui_dial),
-
 	.sliders = g_mui_orbit_sliders,
 	.len_sliders = sizeof(g_mui_orbit_sliders) / sizeof(t_mui_slider),
 	.size_sliders = sizeof(t_mui_slider),
-
 	.inds = g_mui_orbit_inds,
 	.len_inds = sizeof(g_mui_orbit_inds) / sizeof(t_mui_base),
 	.size_inds = sizeof(t_mui_base),
-
 	.heap = false,
 };
 
@@ -251,37 +247,11 @@ void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
 	mui_def_preload(app, mui);
 }
 
-// void	orbit_mui_control_action(t_button *btn, t_mui_ctx *ctx)
-// {
-// 	t_sa_orbit_task *const	task = ctx->ctx;
-// 	t_mui_base				*base;
-// 	int						i;
-// 	int						j;
-
-// 	j = -1;
-// 	while (++j < MUI_LEN_TYPES)
-// 	{
-// 		base = ctx->all[j];
-// 		i = -1;
-// 		while (++i < ctx->lengths[j])
-// 		{
-// 			if (base->type == MUI_DIAL && i < T_ORBIT_MAX_MAN)
-// 				task->mean[i] = ((t_mui_dial*)base)->angle;
-// 			if (base->type == MUI_BUTTON && i < T_ORBIT_MAX_MAN && ((t_mui_button *)base)->on)
-// 				task->active_path = i;
-// 			base = (void *)((char *)base + ctx->sizes[j]);
-// 		}
-// 	}
-// 	update_paths(task);
-// }
 void	orbit_mui_control_action(t_mui_ctx *ctx)
 {
 	t_sa_orbit_task *const	task = ctx->ctx;
 	int						i;
-	double					max_delta;
 
-	max_delta = orb_max_delta(&task->paths[task->active_path], \
-	&task->nodes[task->active_path]);
 	i = -1;
 	while (++i < ctx->len_buttons)
 		if (ctx->buttons[i].on && i < T_ORBIT_MAX_MAN)
@@ -291,11 +261,6 @@ void	orbit_mui_control_action(t_mui_ctx *ctx)
 		if (i < T_ORBIT_MAX_MAN)
 			task->mean[i] = ctx->dials[i].angle;
 	i = -1;
-	// while (++i < T_ORBIT_MAX_MAN)
-	// 	ctx->inds[i].frame = task->delta[i]; //TODO: (delta / maxDelta) * frames
-	task->delta[task->active_path] += (ctx->sliders[0].value - 0.5) / 100.0; // Alternatively = lerp(reverseMaxDelta, maxDelta, value)
-	// if (fabs(task->delta[task->active_path]) > 1.01)
-	// 	task->delta[task->active_path] = fclamp(-max_delta, max_delta, task->delta[task->active_path]);
-	// printf("%f\n", max_delta);
+	task->delta[task->active_path] += (ctx->sliders[0].value - 0.5) / 100.0;
 	update_paths(task);
 }

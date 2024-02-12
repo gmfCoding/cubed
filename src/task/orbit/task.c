@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:16:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:39:53 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -17,19 +17,6 @@
 #include "vectorconv.h"
 #include "rect.h"
 
-// void	orbit_thrust_apply
-// (t_kep_path *paths[2], t_kep_path *nodes[2], double thrust)
-// {
-// 	t_orb_cart cart;
-
-// 	cart = (t_orb_cart){0};
-// 	orb_cart_pos(paths[0], nodes[0], &cart);
-// 	orb_cart_vel(paths[0], nodes[0], &cart);
-// 	orb_transform_cart(paths[0], &cart);
-// 	cart.vel = v3muls(cart.vel, thrust);
-// 	orb_cart_to_kep(&cart, paths[1], nodes[1]);
-// }
-
 void	orbit_thrust_apply(t_kep_path *path,
 t_kep_ang *node, double thrust)
 {
@@ -39,8 +26,6 @@ t_kep_ang *node, double thrust)
 	cart = (t_orb_cart){0};
 	orb_cart_pos(path, node, &cart);
 	orb_cart_vel(path, node, &cart);
-	ecv = orb_cart_ecv(&cart, path->sgp_u);
-	printf("%f\n", ecv.x);
 	cart.vel = v3muls(cart.vel, thrust);
 	orb_transform_cart(path, &cart);
 	orb_cart_to_kep(&cart, path, node);
@@ -94,67 +79,27 @@ void	render_paths(t_sa_orbit_task *t, t_texture *rt)
 	}
 }
 
-void	orbit_control_action(t_button *btn, t_ui_context *ctx)
-{
-	t_sa_orbit_task *const	task = ctx->parent;
-	char *const				mode = btn->reference;
-
-	if (mode[0] == BS_PNODE[0])
-		task->active_path++;
-	if (mode[0] == BS_NNODE[0])
-		task->active_path--;
-	if (task->active_path < 0)
-		task->active_path = 0;
-	if (task->active_path >= task->maneuvers)
-		task->active_path = task->maneuvers - 1;
-	if (mode[0] == BS_THRUST[0])
-		task->delta[task->active_path] += 0.01;
-	else if (mode[0] == BS_RTHRUST[0])
-		task->delta[task->active_path] -= 0.01;
-	else if (mode[0] == BS_TIME[0])
-		task->mean[task->active_path] += M_PI / 100.0;
-	else if (mode[0] == BS_RTIME[0])
-		task->mean[task->active_path] -= M_PI / 100.0;
-	printf("delta:%f\n", task->delta[task->active_path]);
-	printf("mean:%f\n", task->mean[task->active_path]);
-	// if (mode[0] == BS_THRUST[0] || mode[0] == BS_RTHRUST[0])
-	// 	orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
-	// printf("Applying thrust: %s\n", mode);
-	// orb_cart_pos(&task->obj0.path, &task->obj0.ang, cart);
-	// orb_cart_vel(&task->obj0.path, &task->obj0.ang, cart);
-	// orb_transform_cart(&task->obj0.path, cart);
-	// printf("velocity: %f\n", v3mag(cart->vel));
-	// if (mode[0] == BS_THRUST[0])
-	// 	cart->vel = v3muls(cart->vel, 1.002);
-	// else if (mode[0] == BS_RTHRUST[0])
-	// 	cart->vel = v3muls(cart->vel, 1 / 1.002);
-	// // else if (mode[0] == BS_TIME[0])
-	// // 	kep_ang_set(&task->obj0.path, &task->obj0.ang, task->obj0.ang.time + 1);
-	// // else if (mode[0] == BS_RTIME[0])
-	// // 	kep_ang_set(&task->obj0.path, &task->obj0.ang, task->obj0.ang.time - 1);
-	// // if (mode[0] == BS_THRUST[0] || mode[0] == BS_RTHRUST[0])
-	// // 	orb_cart_to_kep(cart, &task->obj0.path, &task->obj0.ang);
-	update_paths(task);
-}
-
-static void l_draw_debug_info_active(t_sa_orbit_task *task, char **str)
+static void	l_draw_debug_info_active(t_sa_orbit_task *task, char **str)
 {
 	t_vec3		pos;
 	t_vec3		vel;
-	t_kep_path	*path = &task->paths[task->active_path];
+	t_kep_path *const	path = &task->paths[task->active_path];
 
+	// TODO: Remove?
 	orb_pos(path, &task->nodes[task->active_path], &pos);
 	orb_vel(path, &task->nodes[task->active_path], &vel);
 	pos.x = orb_transform_x(path, pos.x, pos.y);
 	pos.y = orb_transform_y(path, pos.x, pos.y);
 	pos.z = orb_transform_z(path, pos.x, pos.y);
-	pos = orb_to_ndc(&task->paths[task->active_path], pos, v3new(200, 200, 0), 100);
+	pos = orb_to_ndc(&task->paths[task->active_path], pos, \
+	v3new(200, 200, 0), 100);
 	vel.x = orb_transform_x(path, vel.x, vel.y);
 	vel.y = orb_transform_y(path, vel.x, vel.y);
 	vel.z = orb_transform_z(path, vel.x, vel.y);
 	*(&str[0]) = ft_strfmt("(%S)", v3toa(pos.v));
 	*(&str[1]) = ft_strfmt("(%S)", v3toa(vel.v));
-	*(&str[2]) = ft_strfmt("(%f, %f, %f, %f, %f, %f)", path->sma, path->ecc, path->inc, path->lan, path->aop, task->mean[task->active_path]);
+	*(&str[2]) = ft_strfmt("(%f, %f, %f, %f, %f, %f)", path->sma, \
+	path->ecc, path->inc, path->lan, path->aop, task->mean[task->active_path]);
 }
 
 static void	l_draw_debug_info(t_sa_orbit_task *task)
@@ -188,18 +133,10 @@ int	sa_task_orbit_process(t_sa_orbit_task *task)
 	mui_process(&task->mui, &task->input);
 	input_process(&task->input);
 	render_paths(task, &task->rt0);
-	usleep(16666);
-	// ui_process_draw(&task->ui, &task->input, task->rt0);
-	// texture_draw(task->app, task->rt0, v2new(0, 0));
 	l_draw_debug_info(task);
-	// input_process(&task->input);
+	usleep(16666); // Forbidden
 	return (0);
 }
-
-// void draw_element_controls(t_sa_orbit_task *task)
-// {
-// 	if (input_keydown())
-// }
 
 const t_orb_gen	g_orbgen = {
 	.sma = {0.5 * KM_AU, 1.25 * KM_AU},	
@@ -228,14 +165,18 @@ int	main(void)
 	task.start_ang.s_0.mna0 = 0;
 	task.start_ang.s_0.time0 = 0;
 	task.start_ang.time = 0;
-	task.maneuvers = 3;
+	task.maneuvers = 5;
 	task.active_path = 0;
 	task.delta[0] = 1.0;
 	task.delta[1] = 1.0;
 	task.delta[2] = 1.0;
+	task.delta[3] = 1.0;
+	task.delta[4] = 1.0;
 	task.mean[0] = 0;
 	task.mean[1] = 0;
 	task.mean[2] = 0;
+	task.mean[3] = 0;
+	task.mean[4] = 0;
 	kep_clamp(&task.start_path, &task.start_ang);
 	kep_ang_set(&task.start_path, &task.start_ang, 90, ANG_TIME);
 	update_paths(&task);

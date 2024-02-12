@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 19:14:49 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 23:40:11 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:41:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ui.h"
@@ -21,6 +21,11 @@ void	sa_orb_btn_gen_target(t_button *btn, t_ui_context *ctx)
 	task->target_path.sgp_u = task->sun.u;
 }
 
+
+void	orbit_control_action(t_button *btn, t_ui_context *ctx)
+{
+	// TEMP REMOVE FUNC
+}
 
 static const t_button	g_button_init[] = {
 	(t_button)

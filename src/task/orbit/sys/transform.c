@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:11:31 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 01:47:14 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:33:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "orbit.h"
@@ -28,6 +28,7 @@ double	orb_transform_y(t_kep_path *p, double x, double y)
 {
 	double	tx;
 	double	ty;
+
 	ft_asrt(p == NULL, E_P E_F);
 	tx = cos(p->aop) * sin(p->lan) + sin(p->aop) * cos(p->inc) * cos(p->lan);
 	ty = cos(p->aop) * cos(p->inc) * cos(p->lan) - sin(p->aop) * sin(p->lan);

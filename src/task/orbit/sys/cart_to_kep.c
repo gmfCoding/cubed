@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:46:18 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:11:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:33:26 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "orbit.h"
@@ -22,7 +22,6 @@ double	v3cosa(t_vec3 a, t_vec3 b)
 {
 	return (v3dot(a, b) / sqrt(v3sqrmag(a) * v3sqrmag(b)));
 }
-
 
 double	orb_cart_to_ecc(t_orb_cart *cart, double u)
 {

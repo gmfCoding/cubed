@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 23:36:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 23:19:02 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:34:12 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "orbit.h"
@@ -15,7 +15,6 @@
 double	orb_speed(t_kep_path *path, t_kep_ang *ang)
 {
 	ft_asrt(path == NULL || ang == NULL, E_P E_F);
-	//return (path->sma * (1.0 - path->ecc * cos(ang->ea)));
 	return (sqrt(path->sgp_u * path->sma) / orb_radius(path, ang));
 }
 
