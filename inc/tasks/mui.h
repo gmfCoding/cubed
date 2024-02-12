@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 22:43:37 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:43:45 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -47,12 +47,17 @@ typedef struct s_mui_dial
 	t_vec2		range;
 }	t_mui_dial;
 
+/*
+Idea: reset to mid point when let go
+*/
 typedef struct s_mui_slider
 {
 	t_mui_base	base;
 	t_vec2		start;
 	t_vec2		end;
 	double		value;
+	bool		elastic;
+	double		rest;
 }	t_mui_slider;
 
 typedef struct s_mui_button
@@ -73,6 +78,7 @@ typedef union u_mui_any
 # define MUI_LEN_TYPES 4
 typedef struct s_mui_context
 {
+	void		*ctx;
 	union
 	{
 		struct

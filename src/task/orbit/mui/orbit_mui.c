@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   orbit_mui.c                                   :+:      :+:    :+:   */
+/*   orbit_mui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 20:05:54 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:47:37 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -52,14 +52,6 @@ static const t_def_tex g_orb_textures[] = {
 };
 
 static const t_mui_button g_mui_orbit_buttons[] = {
-[ORB_MUI_BTN_APPLY] = {
-	.base = {.pos = {23, 306}, .anim = 0, .frame = 0,
-	.id = "orb_mui_apply", .unlock = true,
-	.rect = {.min = {23, 306}, .max = {50, 331}},
-	.type = MUI_BUTTON},
-	.on = false,
-	.toggle = false
-},
 [ORB_MUI_BTN_MS0] = {
 	.base = {.pos = {124, 349}, .anim = 0, .frame = 0,
 	.id = "orb_mui_mselector", .unlock = true,
@@ -99,6 +91,14 @@ static const t_mui_button g_mui_orbit_buttons[] = {
 	.type = MUI_BUTTON},
 	.on = false,
 	.toggle = true
+},
+[ORB_MUI_BTN_APPLY] = {
+	.base = {.pos = {23, 306}, .anim = 0, .frame = 0,
+	.id = "orb_mui_apply", .unlock = true,
+	.rect = {.min = {23, 306}, .max = {50, 331}},
+	.type = MUI_BUTTON},
+	.on = false,
+	.toggle = false
 },
 };
 
@@ -184,7 +184,9 @@ static const t_mui_slider g_mui_orbit_sliders[] = {
 	.rect = {.min = {61, 303}, .max = {100, 376}},
 	.type = MUI_SLIDE},
 	.start = {61, 303},
-	.end = {61, 376}}
+	.end = {61, 376},
+	.value = 0.5,
+	.rest = 0.5, .elastic = true},
 };
 
 static const t_mui_base g_mui_orbit_inds[] = {
@@ -247,4 +249,47 @@ void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
 	mui_clone(&g_orbit_mui, mui);
 	def_tex_add(g_orb_textures, g_len_tex);
 	mui_def_preload(app, mui);
+}
+
+// void	orbit_mui_control_action(t_button *btn, t_mui_ctx *ctx)
+// {
+// 	t_sa_orbit_task *const	task = ctx->ctx;
+// 	t_mui_base				*base;
+// 	int						i;
+// 	int						j;
+
+// 	j = -1;
+// 	while (++j < MUI_LEN_TYPES)
+// 	{
+// 		base = ctx->all[j];
+// 		i = -1;
+// 		while (++i < ctx->lengths[j])
+// 		{
+// 			if (base->type == MUI_DIAL && i < T_ORBIT_MAX_MAN)
+// 				task->mean[i] = ((t_mui_dial*)base)->angle;
+// 			if (base->type == MUI_BUTTON && i < T_ORBIT_MAX_MAN && ((t_mui_button *)base)->on)
+// 				task->active_path = i;
+// 			base = (void *)((char *)base + ctx->sizes[j]);
+// 		}
+// 	}
+// 	update_paths(task);
+// }
+void	orbit_mui_control_action(t_mui_ctx *ctx)
+{
+	t_sa_orbit_task *const	task = ctx->ctx;
+	int						i;
+
+	i = -1;
+	while (++i < ctx->len_buttons)
+		if (ctx->buttons[i].on && i < T_ORBIT_MAX_MAN)
+			task->active_path = i;
+	i = -1;
+	while (++i < ctx->len_dials)
+		if (i < T_ORBIT_MAX_MAN)
+			task->mean[i] = ctx->dials[i].angle;
+	i = -1;
+	while (++i < T_ORBIT_MAX_MAN)
+		ctx->inds[i].frame = task->delta[i]; //TODO: (delta / maxDelta) * frames
+	task->delta[task->active_path] += (ctx->sliders[0].value - 0.5) / 100.0; // Alternatively = lerp(reverseMaxDelta, maxDelta, value)
+	update_paths(task);
 }

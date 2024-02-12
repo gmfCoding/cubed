@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:59:35 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 19:56:02 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:48:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -18,7 +18,6 @@
 static void	mui_frame_buttons(t_mui_ctx *ctx, const t_texture *rt)
 {
 	t_mui_button	*curr;
-	t_texture		target;
 	int				i;
 
 	i = -1;
@@ -34,7 +33,6 @@ static void	mui_frame_buttons(t_mui_ctx *ctx, const t_texture *rt)
 static void	mui_frame_dials(t_mui_ctx *ctx, const t_texture *rt)
 {
 	t_mui_dial	*curr;
-	t_texture	target;
 	double		angle;
 	int			frame;
 	int			i;
@@ -55,7 +53,6 @@ static void	mui_frame_dials(t_mui_ctx *ctx, const t_texture *rt)
 static void	mui_frame_sliders(t_mui_ctx *ctx, const t_texture *rt)
 {
 	t_mui_slider	*curr;
-	t_texture		target;
 	int				frame;
 	int				i;
 
@@ -63,11 +60,9 @@ static void	mui_frame_sliders(t_mui_ctx *ctx, const t_texture *rt)
 	while (++i < ctx->len_sliders)
 	{
 		curr = &ctx->sliders[i];
-		frame = (curr->value * curr->base.def->frames);
-		target = curr->base.def->tex[frame];
+		curr->base.frame = (curr->value * curr->base.def->frames);
 	}
 }
-
 
 static void	mui_render_all(t_mui_ctx *ctx, const t_texture *rt)
 {

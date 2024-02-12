@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:54:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:37:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -63,7 +63,7 @@ void	update_paths(t_sa_orbit_task *t)
 	}
 }
 
-void	render_paths(t_sa_orbit_task *t)
+void	render_paths(t_sa_orbit_task *t, t_texture *rt)
 {
 	t_kep_ang	ang;
 	int			i;
@@ -72,22 +72,22 @@ void	render_paths(t_sa_orbit_task *t)
 	colour = R_RED | R_GREEN | R_BLUE;
 	if (orb_deviation(&t->target_path, &t->paths[t->maneuvers - 1]) < 0.05)
 		colour = R_GREEN;
-	orbit_path_render(&t->target_path, &t->rt0, colour | R_ALPHA);
-	orbit_path_render(&t->start_path, &t->rt0, R_BLUE | R_ALPHA);
+	orbit_path_render(&t->target_path, rt, colour | R_ALPHA);
+	orbit_path_render(&t->start_path, rt, R_BLUE | R_ALPHA);
 	i = -1;
 	while (++i < t->maneuvers)
 	{
 		colour = R_RED | R_ALPHA;
 		if (i == t->active_path)
 			colour = R_GREEN & 0x7F7F | R_ALPHA;
-		orbit_path_render(&t->paths[i], &t->rt0, colour);
+		orbit_path_render(&t->paths[i], rt, colour);
 	}
 	i = -1;
 	while (++i < t->maneuvers)
 	{
 		ang = (t_kep_ang){0};
 		kep_ang_set(&t->paths[i], &ang, t->mean[i], ANG_MEAN);
-		orbit_obj_render(&t->paths[i], &ang, &t->rt0);
+		orbit_obj_render(&t->paths[i], &ang, rt);
 	}
 }
 
@@ -175,13 +175,21 @@ static void	l_draw_debug_info(t_sa_orbit_task *task)
 
 int	sa_task_orbit_process(t_sa_orbit_task *task)
 {
+	t_texture *const		tex = def_tex_get(&task->app, "orb_mui_bg");
+
 	texture_clear(task->rt0, 0);
-	render_paths(task);
-	usleep(16666);
-	ui_process_draw(&task->ui, &task->input, task->rt0);
+	texture_blit(*tex, task->rt0, v2new(0, 0));
+	mui_render(&task->mui, &task->rt0);
 	texture_draw(task->app, task->rt0, v2new(0, 0));
-	l_draw_debug_info(task);
+	orbit_mui_control_action(&task->mui);
+	mui_process(&task->mui, &task->input);
 	input_process(&task->input);
+	render_paths(task, &task->rt0);
+	usleep(16666);
+	// ui_process_draw(&task->ui, &task->input, task->rt0);
+	// texture_draw(task->app, task->rt0, v2new(0, 0));
+	l_draw_debug_info(task);
+	// input_process(&task->input);
 	return (0);
 }
 
@@ -225,8 +233,6 @@ int	main(void)
 	task.mean[0] = 0;
 	task.mean[1] = 0;
 	task.mean[2] = 0;
-	//task.mean[0] = 58.0915542285;
-	//update_paths(&task);
 	kep_clamp(&task.start_path, &task.start_ang);
 	kep_ang_set(&task.start_path, &task.start_ang, 90, ANG_TIME);
 	update_paths(&task);
@@ -234,8 +240,8 @@ int	main(void)
 	task.app.win = mlx_new_window(task.app.mlx, 400, 400, "ORBIT");
 	task.rt0 = texture_create(task.app.mlx, 400, 400);
 	input_setup(task.app.mlx, task.app.win, &task.input);
-	ui_setup(&task.ui);
-	task.ui.parent = &task;
+	task.mui.ctx = &task;
+	mui_orbit_setup(&task.app, &task.mui);
 	mlx_loop_hook(task.app.mlx, &sa_task_orbit_process, &task);
 	mlx_loop(task.app.mlx);
 	return (0);

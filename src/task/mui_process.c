@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/08 02:34:59 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:44:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -43,6 +43,7 @@ void	mui_hold_slider(t_mui_slider *curr, t_vec2 mouse)
 	bool			held;
 
 	curr->value = fmax(0, fmin(0.99, v2invlerp(curr->start, curr->end, mouse)));
+	printf("%f\n", curr->value);
 }
 
 /* Returns the mui component under the mouse cursor position. */
@@ -83,5 +84,7 @@ void	mui_process(t_mui_ctx *ctx, t_inputctx *in)
 		mui_hold_dial((void *)base, in->mousef);
 	else if (base->type == MUI_SLIDE && (key & 2))
 		mui_hold_slider((void *)base, in->mousef);
+	else if (base->type == MUI_SLIDE && ((t_mui_slider *)base)->elastic)
+		((t_mui_slider *)base)->value = ((t_mui_slider *)base)->rest;
 	return ;
 }
