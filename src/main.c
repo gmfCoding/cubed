@@ -111,7 +111,7 @@ int	main(int argc, char **argv)
 	game.world->map.tiles[26 + 10 * game.world->map.width].sprite[0] = 0;
 	modifier_after(&game);
 
-	print_vector_path(&game);	
+//	print_vector_path(&game);	
 
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
