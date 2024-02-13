@@ -3,67 +3,6 @@
 #include "a_star.h"
 
 /*
- * check to make sure node doesnt already exist also updating those nodes g_cost
- * from new nodes postion only if the g_cost is greater then what current g_cost
- * is plus 10 there maybe a way to reduce loop time here but i havent worked it out
- * possibly combining both loops into 1 idk
- */
-int	star_not_in_list(t_star_node **open, t_star_node **close, t_vec2 pos, t_star_node *active)
-{
-	t_star_node	*curr;
-
-	curr = *close;
-	while (curr != NULL)
-	{
-		if ((int)curr->pos.x == (int)pos.x && (int)curr->pos.y == (int)pos.y)
-			return 0;
-		curr = curr->next;
-	}
-	curr = *open;
-	while (curr != NULL)
-	{
-		if ((int)curr->pos.x == (int)pos.x && (int)curr->pos.y == (int)pos.y)
-		{
-			if ((int)curr->pos.x == (int)active->pos.x || (int)curr->pos.y == (int)active->pos.y)
-				if (curr->g_cost > active->g_cost + 10)
-					curr->g_cost = active->g_cost + 10;
-			else
-				if (curr->g_cost > active->g_cost + 14)
-					curr->g_cost = active->g_cost + 14;
-			return 0;
-		}
-		curr = curr->next;
-	}
-	return 1;
-}
-
-/*
- * inserts a node around the current node as long as the node doesnt exit and
- * its vis is set to -1, this has been updated but it is incorrect have to 
- * checkout old star_get_neighbours function because this still allows movement
- * through corner to corner which should not be allowed earlier code handles this
- */
-void	star_get_neighbours(t_game *game, t_star_node *curr, t_star_node **open, t_star_node **close)
-{
-	int		index;
-	int		i;
-	t_vec2		pos;
-	const int	deltas[][2] = DELTAS;
-
-	index = game->world->map.width * curr->pos.y + curr->pos.x;
-	i = -1;
-	while (++i < DELTAS_LEN)
-	{
-		pos.x = curr->pos.x + deltas[i][0];
-		pos.y = curr->pos.y + deltas[i][1];
-		if (pos.x >= 0 && pos.x < game->world->map.width && pos.y >= 0 && pos.y < game->world->map.height \
-			&& game->world->map.tiles[(int)pos.y * game->world->map.width + (int)pos.x].vis == -1)
-			if (star_not_in_list(open, close, pos, curr))
-				star_insert_node(game, open, curr, pos);
-	}
-}
-
-/*
  * get the huristic which is just a fancy way of saying
  * it get the distance to the target pos from current node
  */
@@ -111,12 +50,11 @@ t_star_node	*star_get_smallest_cost(t_star_node **open, t_star_node **close, t_v
 	return temp;
 }
 
-
 /*
  * A* ALGORITHYM 
- * populates a path from the starting vector adding nodes for each of its neibours
- * then checks which of those neibours huristic and moves made from start_cost
- * is the smallest and moves to that neiboring node and repeats if two are tide for 
+ * populates a path from the starting vector adding nodes for each of its neighbors
+ * then checks which of those neighbors huristic and moves made from start_cost
+ * is the smallest and moves to that neighboring node and repeats if two are tide for 
  * the smallest it will then choose the smallest huristic cost which is the distance
  * from current node to target. can possible change the t_vec2 struct to store ints
  * or something smaller then can get rig of the cast of int from double
@@ -150,7 +88,7 @@ t_vec2	*star_find_path(t_game *game, t_vec2 start, t_vec2 target)
 		smallest = star_get_smallest_cost(&open, &close, target);
 		if ((int)smallest->pos.x == (int)target.x && (int)smallest->pos.y == (int)target.y)
 			break;
-		star_get_neighbours(game, smallest, &open, &close);
+		star_get_neighbors(game, smallest, &open, &close);
 	}
 	if (open == NULL)
 	{
