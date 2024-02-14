@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 19:14:49 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:41:14 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/14 13:56:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ui.h"
@@ -17,7 +17,7 @@ void	sa_orb_btn_gen_target(t_button *btn, t_ui_context *ctx)
 {
 	t_sa_orbit_task *const	task = ctx->parent;
 
-	orb_generate(&task->target_path, &g_orbgen, &task->rand);
+	// orb_generate(&task->target_path, &g_orbgen, &task->rand);
 	task->target_path.sgp_u = task->sun.u;
 }
 

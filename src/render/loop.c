@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 05:41:04 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/14 16:51:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,7 +316,7 @@ void	render_column(t_game *game, t_column col)
 		col.uv.y += col.sample_dy;
 		if (col.shaded == 1)
 			f = (f >> 1) & 0x7F7F7F;
-		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
+		pixel_set(game->rt1, col.x, y, f & M_COL | R_ALPHA);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 19:53:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:32:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/14 16:54:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cubed.h"
@@ -43,7 +43,7 @@ void	orbit_path_render(t_kep_path *path, t_texture *rt, int col)
 		pos[0] = orb_to_ndc(path, pos[2], v3new(200, 200, 0), 100);
 		if (a != 0)
 			texture_draw_line(*rt, v3tov2(pos[1]), \
-			v3tov2(pos[0]), col | R_ALPHA);
+			v3tov2(pos[0]), col & M_COL | R_ALPHA);
 		pos[1] = pos[0];
 		a += (2 * PI) / 50.0;
 	}

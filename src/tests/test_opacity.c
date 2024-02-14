@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 18:29:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/05 01:36:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:11:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -46,6 +46,8 @@ typedef struct s_test_opacity
 	t_widget	widgets[LEN_WIDGET];
 	t_widget	*selected;
 
+	t_texture	test;
+
 }				t_test_opacity;
 
 t_widget	*get_widget_cursor(t_test_opacity *test)
@@ -74,7 +76,7 @@ static void	update(t_test_opacity *test)
 	const t_vec2	mouse = v2new(game->input.mouse.x, game->input.mouse.y);
 	int				i;
 
-	texture_clear(game->rt0);
+	texture_clear(game->rt0, 0 | R_ALPHA);
 	if (input_keydown(&game->input, MB_LEFT))
 		test->selected = get_widget_cursor(test);
 	if (input_keyup(&game->input, MB_LEFT))
@@ -86,6 +88,7 @@ static void	update(t_test_opacity *test)
 	while (++i < LEN_WIDGET)
 		texture_blit(test->widgets[i].tex, game->rt0, test->widgets[i].pos);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
+	texture_draw(game->app, test->test, v2new(50, 50));
 	input_process(&game->input);
 }
 
@@ -100,6 +103,15 @@ int	main(void)
 	test = (t_test_opacity){0};
 	*game = (t_game){0};
 	game->app.mlx = mlx_init();
+	test.test = texture_create(game->app.mlx, 10, 10);
+	for (int y = 0; y < 10; y++)
+	{
+		for (int x = 0; x < 10; x++)
+		{
+			pixel_set(test.test, x, y, 0xFFFFFF | R_ALPHA);
+		}
+	}
+	
 	game->rt0 = texture_create(game->app.mlx, R_WIDTH, R_HEIGHT);
 	game->app.win = mlx_new_window(game->app.mlx, R_WIDTH, R_HEIGHT, NAME);
 	i = -1;

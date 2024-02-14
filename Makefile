@@ -117,6 +117,9 @@ OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2
 OPTS = $(OPT)
 SAN = address 
 
+ifneq (,$(findstring none,$(OPTS)))
+OPFLAG = -O0
+endif
 ifneq (,$(findstring def,$(OPTS)))
 OPTS = fsan,debug
 endif

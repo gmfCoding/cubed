@@ -62,14 +62,19 @@ BCYAN="\033[1;36m"
 CYAN="\033[0;36m"
 NC="\033[0m"
 
+function realpath()
+{
+	echo "$(cd $(dirname "$1");pwd)/$(basename "$1")"
+}
 
-FILES=$(find ../assets/source/ -type f -name "*.png" -not -path "*/_*")
+FILES=$(find ../assets/source -type f -name "*.png" -not -path "*/_*")
+echo $FILES
 for filename in $FILES; do
-    IN=$(realpath -m $filename) # png path
-	OUT=$(realpath -m $(echo $filename | sed s,/assets/source/,/assets/,g | sed s,.png,.xpm,g)) # converts png path to xpm path
+    IN=$(realpath $filename) # png path
+	OUT=$(realpath "$(echo $filename | sed s,/assets/source/,/assets/,g | sed s,.png,.xpm,g)") # converts png path to xpm path
 	mkdir -p $(dirname $OUT)
 	printf ""$GREEN"converting $BLUE$IN$NC to$RED $OUT\n$NC"
-    python3 -m xpm $IN > $OUT
+   	python3 -m xpm "$IN" --inverse-alpha > "$OUT"
 done
 
 cd $OWD

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:39:53 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/14 17:02:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -16,40 +16,6 @@
 #include "vector2.h"
 #include "vectorconv.h"
 #include "rect.h"
-
-void	orbit_thrust_apply(t_kep_path *path,
-t_kep_ang *node, double thrust)
-{
-	t_orb_cart	cart;
-	t_vec3		ecv;
-
-	cart = (t_orb_cart){0};
-	orb_cart_pos(path, node, &cart);
-	orb_cart_vel(path, node, &cart);
-	cart.vel = v3muls(cart.vel, thrust);
-	orb_transform_cart(path, &cart);
-	orb_cart_to_kep(&cart, path, node);
-}
-
-void	update_paths(t_sa_orbit_task *t)
-{
-	t_orb_cart	cart;
-	int			i;
-
-	i = -1;
-	t->paths[0] = t->start_path;
-	t->nodes[0] = t->start_ang;
-	while (++i < t->maneuvers)
-	{
-		kep_ang_set(&t->paths[i], &t->nodes[i], t->mean[i], ANG_MEAN);
-		orbit_thrust_apply(&t->paths[i], &t->nodes[i], t->delta[i]);
-		if (i + 1 < t->maneuvers)
-		{
-			t->paths[i + 1] = t->paths[i];
-			t->nodes[i + 1] = t->nodes[i];
-		}
-	}
-}
 
 void	render_paths(t_sa_orbit_task *t, t_texture *rt)
 {
@@ -128,11 +94,11 @@ int	sa_task_orbit_process(t_sa_orbit_task *task)
 	texture_clear(task->rt0, 0);
 	texture_blit(*tex, task->rt0, v2new(0, 0));
 	mui_render(&task->mui, &task->rt0);
-	texture_draw(task->app, task->rt0, v2new(0, 0));
 	orbit_mui_control_action(&task->mui);
 	mui_process(&task->mui, &task->input);
 	input_process(&task->input);
 	render_paths(task, &task->rt0);
+	texture_draw(task->app, task->rt0, v2new(0, 0));
 	l_draw_debug_info(task);
 	usleep(16666); // Forbidden
 	return (0);

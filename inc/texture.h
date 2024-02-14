@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:13:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:37:28 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/14 16:49:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_texture
 # define M_BLUE  R_BLUE
 // Alpha colour mask
 # define M_APLHA 0xff000000
+# define M_COL	 0x00FFFFFF
 
 # define OF_ALPHA 24
 # define OF_RED   16
