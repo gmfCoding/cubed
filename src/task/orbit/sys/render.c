@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 19:53:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:32:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 20:34:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cubed.h"
@@ -50,7 +50,8 @@ void	orbit_path_render(t_kep_path *path, t_texture *rt,
 	}
 }
 
-void	orbit_obj_render(t_kep_path *path, t_kep_ang *ang, t_texture *rt)
+void	orbit_obj_render(t_kep_path *path, t_kep_ang *ang,
+			t_rect trans, t_texture *rt)
 {
 	t_vec3		pos[2];
 
@@ -58,6 +59,6 @@ void	orbit_obj_render(t_kep_path *path, t_kep_ang *ang, t_texture *rt)
 	pos[1].x = orb_transform_x(path, pos[0].x, pos[0].y);
 	pos[1].y = orb_transform_y(path, pos[0].x, pos[0].y);
 	pos[1].z = orb_transform_z(path, pos[0].x, pos[0].y);
-	pos[0] = orb_to_ndc(path, pos[1], v3new(200, 200, 0), 100);
+	pos[0] = orb_to_ndc(path, pos[1], v2tov3(trans.pos), trans.size.x);
 	pixel_set_s(*rt, pos[0].x, pos[0].y, R_ALPHA | R_GREEN);
 }

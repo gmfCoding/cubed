@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/17 20:06:14 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 20:34:42 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -75,7 +75,7 @@ void	render_paths(t_sa_orbit_task *t, t_texture *rt, t_rect trans)
 	{
 		ang = (t_kep_ang){0};
 		kep_ang_set(&t->paths[i], &ang, t->mean[i], ANG_MEAN);
-		orbit_obj_render(&t->paths[i], &ang, rt);
+		orbit_obj_render(&t->paths[i], &ang, trans, rt);
 	}
 }
 

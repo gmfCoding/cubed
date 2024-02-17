@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:10:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 20:34:51 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -118,7 +118,8 @@ void			orb_cart_to_kep(t_orb_cart *c, t_kep_path *p, t_kep_ang *a);
 
 void			orbit_path_render(t_kep_path *path, t_texture *rt,
 					t_rect trans, int col);
-void			orbit_obj_render(t_kep_path *p, t_kep_ang *a, t_texture *rt);
+void			orbit_obj_render(t_kep_path *p, t_kep_ang *a,
+					t_rect trans, t_texture *rt);
 void			orbit_obj_render_at(t_kep_path *path, double mean,
 					t_angt angt, t_texture *rt);
 
