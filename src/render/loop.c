@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 05:41:04 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 21:22:39 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,8 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 // 	return ((t_vec2){map.x * R_WIDTH / (float)MAP_WIDTH, \
 // 	map.y * R_HEIGHT / (float)MAP_HEIGHT});
 // }
+#include "task.h"
+#include "tasks/task_orbit.h"
 
 void player_controls(t_game *game)
 {
@@ -246,6 +248,13 @@ void player_controls(t_game *game)
 		player->dir.y = oldDirX * sin(player->rotSpeed) + player->dir.y * cos(player->rotSpeed);
 		player->plane.x = player->plane.x * cos(player->rotSpeed) - player->plane.y * sin(player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(player->rotSpeed) + player->plane.y * cos(player->rotSpeed);
+	}
+	if(input_keydown(&game->input, KEY_T))
+	{
+		game->tasks[0] = malloc(sizeof(t_task_orbit));
+		*game->tasks[0] = *g_tasks[0];
+		task_orbit_setup(game, game->tasks[0]);
+		game->test_task = true;
 	}
 }
 
@@ -340,7 +349,6 @@ void	render(t_game *game)
 	t_vertical	vert;
 
 	player_controls(game);
-	input_process(&game->input);
 	render_floor(game);
 	vert.x = -1;
 	while (++vert.x < R_HEIGHT)
@@ -356,4 +364,7 @@ void	render(t_game *game)
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	draw_debug_info(game);
+	if (game->test_task)
+		task_orbit_render(game, game->tasks[0]);
+	input_process(&game->input);
 }

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/17 20:06:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 21:20:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -16,6 +16,7 @@
 # include "ui.h"
 # include "random.h"
 # include "tasks/mui_orbit.h"
+# include "task.h"
 
 /*** Button selector references ***/
 # define BS_THRUST "+"
@@ -66,6 +67,7 @@
 
 typedef struct s_sa_orbit_task
 {
+	t_task			task;
 	t_kep_ang		start_ang;
 	t_rand			rand;
 	union
@@ -89,17 +91,15 @@ typedef struct s_sa_orbit_task
 
 	t_orb_cart		cart;
 	t_orb_body		sun;
-	t_texture		rt0;
-	t_app			app;
 	t_mui_ctx		mui;
 	t_inputctx		input;
 	float			zoom;
 	float			brightness;
 	t_vec2			scr_offset;
-}	t_sa_orbit_task;
+}	t_task_orbit;
 
 // TODO: Remove?
 void	orbit_control_action(t_button *btn, t_ui_context *ctx);
-void	update_paths(t_sa_orbit_task *t);
+void	update_paths(t_task_orbit *t);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:41:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:29:20 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 20:54:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
+
+void	*ft_memsetf32(void *b, float c, size_t len);
+void	*ft_memsetf64(void *b, double c, size_t len);
 void	*ft_memset(void *b, int c, size_t n);
+
 void	*ft_memmove(void *dst, const void *src, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);

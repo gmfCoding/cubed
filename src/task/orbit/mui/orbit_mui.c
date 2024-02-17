@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/17 18:07:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 20:56:42 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -231,13 +231,13 @@ static const t_mui_ctx		g_orbit_mui = {
 	.buttons = (t_mui_button *)g_mui_orbit_buttons,
 	.len_buttons = sizeof(g_mui_orbit_buttons) / sizeof(t_mui_button),
 	.size_buttons = sizeof(t_mui_button),
-	.dials = g_mui_orbit_dials,
+	.dials = (t_mui_dial *)g_mui_orbit_dials,
 	.len_dials = sizeof(g_mui_orbit_dials) / sizeof(t_mui_dial),
 	.size_dials = sizeof(t_mui_dial),
-	.sliders = g_mui_orbit_sliders,
+	.sliders = (t_mui_slider *)g_mui_orbit_sliders,
 	.len_sliders = sizeof(g_mui_orbit_sliders) / sizeof(t_mui_slider),
 	.size_sliders = sizeof(t_mui_slider),
-	.inds = g_mui_orbit_inds,
+	.inds = (t_mui_base *)g_mui_orbit_inds,
 	.len_inds = sizeof(g_mui_orbit_inds) / sizeof(t_mui_base),
 	.size_inds = sizeof(t_mui_base),
 	.heap = false,
@@ -254,7 +254,7 @@ void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
 
 void	orbit_mui_control_action(t_mui_ctx *ctx)
 {
-	t_sa_orbit_task *const	task = ctx->ctx;
+	t_task_orbit *const	task = ctx->ctx;
 	int						i;
 
 	task->scr_offset.x = ctx->dials[ORB_MUI_DIAL_X].angle;
