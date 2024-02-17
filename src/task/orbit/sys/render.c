@@ -23,7 +23,8 @@ t_vec3	orb_to_ndc(t_kep_path *path, t_vec3 cart, t_vec3 offset, t_vecd scale)
 	return (dev);
 }
 
-void	orbit_path_render(t_kep_path *path, t_texture *rt, int col)
+void	orbit_path_render(t_kep_path *path, t_texture *rt,
+	t_rect trans, int col)
 {
 	double		a;
 	t_kep_ang	ang;
@@ -40,7 +41,7 @@ void	orbit_path_render(t_kep_path *path, t_texture *rt, int col)
 		pos[2].x = orb_transform_x(path, pos[0].x, pos[0].y);
 		pos[2].y = orb_transform_y(path, pos[0].x, pos[0].y);
 		pos[2].z = orb_transform_z(path, pos[0].x, pos[0].y);
-		pos[0] = orb_to_ndc(path, pos[2], v3new(200, 200, 0), 100);
+		pos[0] = orb_to_ndc(path, pos[2], v2tov3(trans.pos), trans.size.x);
 		if (a != 0)
 			texture_draw_line(*rt, v3tov2(pos[1]), \
 			v3tov2(pos[0]), col | R_ALPHA);

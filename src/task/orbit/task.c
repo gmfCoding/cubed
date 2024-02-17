@@ -51,7 +51,7 @@ void	update_paths(t_sa_orbit_task *t)
 	}
 }
 
-void	render_paths(t_sa_orbit_task *t, t_texture *rt)
+void	render_paths(t_sa_orbit_task *t, t_texture *rt, t_rect trans)
 {
 	t_kep_ang	ang;
 	int			i;
@@ -60,16 +60,16 @@ void	render_paths(t_sa_orbit_task *t, t_texture *rt)
 	colour = ORB_WHITE;
 	if (orb_deviation(&t->target_path, &t->paths[t->maneuvers - 1]) < 0.05)
 		colour = ORB_GREEN;
-	orbit_path_render(&t->target_path, rt, colour | R_ALPHA);
-	orbit_path_render(&t->start_path, rt, ORB_BLUE | R_ALPHA);
+	orbit_path_render(&t->target_path, rt, trans, colour | R_ALPHA);
+	orbit_path_render(&t->start_path, rt, trans, ORB_BLUE | R_ALPHA);
 	i = -1;
 	while (++i < t->maneuvers)
 	{
 		colour = ORB_RED | R_ALPHA;
 		if (i != t->active_path)
-			orbit_path_render(&t->paths[i], rt, colour);
+			orbit_path_render(&t->paths[i], rt, trans, colour);
 	}
-	orbit_path_render(&t->paths[t->active_path], rt, ORB_GREEN2 | R_ALPHA);
+	orbit_path_render(&t->paths[t->active_path], rt, trans, ORB_GREEN2 | R_ALPHA);
 	i = -1;
 	while (++i < t->maneuvers)
 	{
@@ -172,7 +172,7 @@ int	sa_task_orbit_process(t_sa_orbit_task *task)
 
 	texture_clear(task->rt0, 0);
 	texture_blit_rect(&task->rt0, scr, (t_rect){45, 37, 274, 266});
-	render_paths(task, &task->rt0);
+	render_paths(task, &task->rt0, (t_rect){task->scr_offset, {task->zoom, 0}});
 	texture_blit(*tex, task->rt0, v2new(0, 0));
 	mui_render(&task->mui, &task->rt0);
 	texture_draw(task->app, task->rt0, v2new(0, 0));
@@ -232,6 +232,7 @@ int	main(void)
 	input_setup(task.app.mlx, task.app.win, &task.input);
 	task.mui.ctx = &task;
 	mui_orbit_setup(&task.app, &task.mui);
+	orbit_mui_control_action(&task.mui);
 	mlx_loop_hook(task.app.mlx, &sa_task_orbit_process, &task);
 	mlx_loop(task.app.mlx);
 	return (0);

@@ -153,32 +153,32 @@ static const t_mui_dial		g_mui_orbit_dials[] = {
 	.id = "orb_mui_screendial", .unlock = true,
 	.rect = {.min = {285, 301}, .max = {303, 318}},
 	.type = MUI_DIAL},
-	.angle = 0,
-	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
+	.angle = 161,
+	.range = {-500, 500}
 },
 [ORB_MUI_DIAL_Y] = {
 	.base = {.pos = {305, 301}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
 	.rect = {.min = {305, 301}, .max = {323, 319}},
 	.type = MUI_DIAL},
-	.angle = 0,
-	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
+	.angle = 150,
+	.range = {-500, 500}
 },
 [ORB_MUI_DIAL_Z] = {
 	.base = {.pos = {325, 301}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
 	.rect = {.min = {325, 301}, .max = {343, 318}},
 	.type = MUI_DIAL},
-	.angle = 0,
-	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
+	.angle = 70,
+	.range = {50, 500}
 },
 [ORB_MUI_DIAL_B] = {
 	.base = {.pos = {344, 301}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
 	.rect = {.min = {344, 301}, .max = {362, 318}},
 	.type = MUI_DIAL},
-	.angle = 0,
-	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
+	.angle = 1.0,
+	.range = {0.0, 1.0}
 },
 };
 
@@ -257,6 +257,10 @@ void	orbit_mui_control_action(t_mui_ctx *ctx)
 	t_sa_orbit_task *const	task = ctx->ctx;
 	int						i;
 
+	task->scr_offset.x = ctx->dials[ORB_MUI_DIAL_X].angle;
+	task->scr_offset.y = ctx->dials[ORB_MUI_DIAL_Y].angle;
+	task->zoom = ctx->dials[ORB_MUI_DIAL_Z].angle;
+	task->brightness = ctx->dials[ORB_MUI_DIAL_B].angle;
 	i = -1;
 	while (++i < ctx->len_buttons)
 		if (ctx->buttons[i].on && i < T_ORBIT_MAX_MAN)

@@ -93,6 +93,9 @@ typedef struct s_sa_orbit_task
 	t_app			app;
 	t_mui_ctx		mui;
 	t_inputctx		input;
+	float			zoom;
+	float			brightness;
+	t_vec2			scr_offset;
 }	t_sa_orbit_task;
 
 // TODO: Remove?
