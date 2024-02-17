@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:32:29 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 18:07:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -17,6 +17,11 @@ static const t_def_tex		g_orb_textures[] = {
 {
 	.id = "orb_mui_bg",
 	.path = "assets/orbit/panel/panel",
+	.frames = 1,
+},
+{
+	.id = "orb_mui_scr",
+	.path = "assets/orbit/panel/screen",
 	.frames = 1,
 },
 {

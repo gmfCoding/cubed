@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 23:33:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 20:06:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -54,6 +54,12 @@
 # define ORB_MUI_LEN_DIAL 9
 
 # define ORB_MUI_SLD_THROTTLE 0
+
+# define ORB_RED 0x00CA522A
+# define ORB_GREEN 0x003DB92A
+# define ORB_GREEN2 0x002DA9AA
+# define ORB_BLUE 0x003552D5
+# define ORB_WHITE 0x00CAB9D5
 
 # define T_ORBIT_MAX_MAN 5
 # define T_ORBIT_MAX_ALL 7

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:39:53 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/17 20:06:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -57,19 +57,19 @@ void	render_paths(t_sa_orbit_task *t, t_texture *rt)
 	int			i;
 	int			colour;
 
-	colour = R_RED | R_GREEN | R_BLUE;
+	colour = ORB_WHITE;
 	if (orb_deviation(&t->target_path, &t->paths[t->maneuvers - 1]) < 0.05)
-		colour = R_GREEN;
+		colour = ORB_GREEN;
 	orbit_path_render(&t->target_path, rt, colour | R_ALPHA);
-	orbit_path_render(&t->start_path, rt, R_BLUE | R_ALPHA);
+	orbit_path_render(&t->start_path, rt, ORB_BLUE | R_ALPHA);
 	i = -1;
 	while (++i < t->maneuvers)
 	{
-		colour = R_RED | R_ALPHA;
-		if (i == t->active_path)
-			colour = R_GREEN & 0x7F7F | R_ALPHA;
-		orbit_path_render(&t->paths[i], rt, colour);
+		colour = ORB_RED | R_ALPHA;
+		if (i != t->active_path)
+			orbit_path_render(&t->paths[i], rt, colour);
 	}
+	orbit_path_render(&t->paths[t->active_path], rt, ORB_GREEN2 | R_ALPHA);
 	i = -1;
 	while (++i < t->maneuvers)
 	{
@@ -121,18 +121,64 @@ static void	l_draw_debug_info(t_sa_orbit_task *task)
 	timeprev = time_get_ms();
 }
 
+/* Copies pixel data from one texture to another, minimally. */
+void	texture_blit_rect(t_texture *dst, t_texture *src, t_rect area)
+{
+	int	j;
+	int	i;
+	int max_j;
+	int max_i;
+
+	max_j = fmin(area.max.y, fmin(src->height, dst->height));
+	max_i = fmin(area.max.x, fmin(src->width, dst->width));
+	j = fmin(0, area.min.y) - 1;
+	while (++j < max_j)
+	{
+		i = fmin(0, area.min.x) - 1;
+		while (++i < area.max.x)
+		{
+			pixel_set(*dst, i, j, pixel_get(*src, i, j));
+		}
+	}
+}
+
+// void	orbit_crt(t_texture *dst, t_texture *src, t_rect area)
+// {
+// 	int	j;
+// 	int	i;
+// 	int max_j;
+// 	int max_i;
+// 	int col;
+
+// 	max_j = fmin(area.max.y, fmin(src->height, dst->height));
+// 	max_i = fmin(area.max.x, fmin(src->width, dst->width));
+// 	j = fmin(0, area.min.y) - 1;
+// 	while (++j < max_j)
+// 	{
+// 		i = fmin(0, area.min.x) - 1;
+// 		while (++i < area.max.x)
+// 		{
+// 			col = colour_blend(pixel_get_s(*src, i, j), \
+// 				pixel_get_s(*dst, i, j));
+// 			pixel_set_s(*dst, i, j, col);
+// 		}
+// 	}
+// }
+
 int	sa_task_orbit_process(t_sa_orbit_task *task)
 {
 	t_texture *const		tex = def_tex_get(&task->app, "orb_mui_bg");
+	t_texture *const		scr = def_tex_get(&task->app, "orb_mui_scr");
 
 	texture_clear(task->rt0, 0);
+	texture_blit_rect(&task->rt0, scr, (t_rect){45, 37, 274, 266});
+	render_paths(task, &task->rt0);
 	texture_blit(*tex, task->rt0, v2new(0, 0));
 	mui_render(&task->mui, &task->rt0);
 	texture_draw(task->app, task->rt0, v2new(0, 0));
 	orbit_mui_control_action(&task->mui);
 	mui_process(&task->mui, &task->input);
 	input_process(&task->input);
-	render_paths(task, &task->rt0);
 	l_draw_debug_info(task);
 	usleep(16666); // Forbidden
 	return (0);
