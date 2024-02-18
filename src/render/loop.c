@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/31 21:10:29 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/18 15:39:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -486,28 +486,74 @@ void update_segments(t_game *game)
 		curr->s1 = v2add(curr->pos, v2muls(dir, 1.25));
 		curr->s2 = v2add(curr->pos, v2muls(dir, -1.25));
 	}
+
+}
+#define D_SCALE 25
+
+void draw_debug_view_world_state(t_game *game)
+{
+	const t_texture	tex = texture_get_debug_view(game, 1);
+	t_sprite		*curr;
+	int 			i;
+	i = -1;
+	while (++i < game->world->sp_count)
+	{
+		curr = &game->world->sprite[i];
+		texture_draw_line(tex, v2muls(curr->s1, D_SCALE), v2muls(curr->s2, D_SCALE), R_RED | R_ALPHA);
+	}
+	texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.dir), D_SCALE), R_BLUE | R_ALPHA);
+	texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.plane), D_SCALE), R_BLUE | R_ALPHA);
+	pixel_set(tex, game->player.pos.x * D_SCALE, game->player.pos.y * D_SCALE, R_GREEN | R_ALPHA);
+
+	for (int y = 0; y < game->world->map.height; y++)
+	{
+		for (int x = 0; x < game->world->map.width; x++)
+		{
+			texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y), D_SCALE), 0x00222222 | R_ALPHA);
+			texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00222222 | R_ALPHA);
+		}
+	}
+	for (int y = 0; y < game->world->map.height; y++)
+	{
+		for (int x = 0; x < game->world->map.width; x++)
+		{
+			if (map_get_tile(&game->world->map, x, y).type == WALL)
+			{
+				texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y), D_SCALE), 0x00AAAAAA | R_ALPHA);
+				texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
+				texture_draw_line(tex, v2muls(v2new(x + 1, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
+				texture_draw_line(tex, v2muls(v2new(x + 1, y + 1), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
+			}
+		}
+	}
 }
 
 void	render(t_game *game)
 {
 	t_vertical	vert;
 
-	
-	update_segments(game);
 
+	const t_texture	dtex = texture_get_debug_view(game, 1);
+	texture_clear(dtex, 0 | R_ALPHA);
+	update_segments(game);
 	player_controls(game);
 	input_process(&game->input);
 	render_floor(game);
 	vert.x = -1;
-
-	while (++vert.x < R_HEIGHT)
+	draw_debug_view_world_state(game);
+	while (++vert.x < R_WIDTH)
 	{
 		vert.camera_x = 2 * vert.x / (double)R_WIDTH - 1;
 		vert.dir = v2add(game->player.dir, \
 		v2muls(game->player.plane, vert.camera_x));
 		vert.ray = raycast(game, game->player.pos, vert.dir);
-		if (vert.x == R_HEIGHT / 2)
+		if (vert.x == R_WIDTH / 2)
 			game->half = vert.ray;
+		if (vert.x % 30 == 1)
+			texture_draw_line(dtex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, v2muls(vert.dir, vert.ray.depths->depth)), D_SCALE), R_RED | R_GREEN | R_ALPHA);
+		// pixel_set_s(dtex, (vert.ray.depths[0].x + vert.ray.depths[0].) * D_SCALE, (vert.ray.depths[0].y + vert.ray.depths[0].minY)  * D_SCALE, R_RED| R_ALPHA);
+		// texture_draw_line(dtex, v2muls(v2add(game->player.pos, v2muls(game->player.plane, vert.camera_x)), D_SCALE), 
+								// v2muls(v2add(v2add(game->player.pos, v2muls(game->player.plane, vert.camera_x)), v2muls(vert.dir, vert.ray.depths[0].dist)), D_SCALE), R_BLUE | R_GREEN | R_ALPHA);
 		render_vertical(game, vert);
 	}
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
@@ -516,5 +562,6 @@ void	render(t_game *game)
 	texture_draw(game, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);
+	texture_draw_debug_view(game, 1);
 	game->fpsc++;
 }

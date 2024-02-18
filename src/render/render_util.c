@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:37:56 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/18 14:50:46 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -99,6 +99,7 @@ t_texture texture_get_debug_view(t_game *game, int view)
 {
 	if (game->views[view].rt.img == NULL)
 	{
+		printf("Creating new debug view: %d\n", view);
 		game->views[view].win = mlx_new_window(game->app.mlx, game->rt0.width, game->rt0.height, "DEBUG VIEW");
 		game->views[view].rt = texture_create(game->app.mlx, game->rt0.width, game->rt0.height);
 	} 
