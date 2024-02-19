@@ -14,8 +14,8 @@ struct s_hitpoint
 {
 	float depth;
 	float dist;
-	float minX;
-	float minY;
+	float min_x;
+	float min_y;
 	int	sp_tex;
 	int x;
 	int y;

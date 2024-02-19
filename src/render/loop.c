@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/20 01:28:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/20 02:22:16 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,14 @@ t_vec2 v2proj_line(t_vec2 a, t_vec2 b, t_vec2 c)
 	return (v2add(b, v2muls(dir, v2dot(dir, a))));
 }
 
+double	v2invlerp(t_vec2 a, t_vec2 b, t_vec2 c)
+{
+	const t_vec2	ac = v2sub(c, a);
+	const t_vec2	ab = v2sub(b, a);
+
+	return (v2dot(ac, ab) / v2dot(ab, ab));
+}
+
 t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 {
 	t_rayinfo	ray;
@@ -228,6 +236,7 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 			{
 				//	printf("found spote\n");
 				ray.depths[ray.hits].depth = v2mag(v2sub(v2proj_line(game->player.pos, sp->s1, sp->s2), game->player.pos));
+				ray.depths[ray.hits].min_x = v2invlerp(sp->s1, sp->s2, v2add(game->player.pos, v2muls(dir, ray.depths[ray.hits].depth)));
 				//ray.depths[ray.hits].depth = v2mag(v2sub(game->player.pos, sp->pos));
 				ray.depths[ray.hits].sp_tex = sp->tex;
 				ray.hits++;
@@ -349,15 +358,22 @@ t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 	col.texture = map_get_tile(&game->world->map, hit.x, hit.y).tex;
 	if (hit.sp_tex > 0)
 	{
-		col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+		// col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+		// if (hit.side == 0)
+		// 	col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
+		//col.uv.x = hit.;
+		// col.uv.x = vertical->camera_x * (hit.depth / 2.0) + hit.min_x;
+		col.uv.x = hit.min_x;
 		col.type = C_SPRITE;
 		col.texture = hit.sp_tex;
 		col.uv.x -= floor(col.uv.x);
-		col.sample.x = (int)(col.uv.x * (double)32);
-		if (hit.side == 0 && vertical->dir.x > 0)
-			col.sample.x = 32 - col.sample.x - 1;
-		if (hit.side == 1 && vertical->dir.y < 0)
-			col.sample.x = 32 - col.sample.x - 1;
+		// if (vertical->dir.y > 0)
+		// 	col.uv.x = 1.0 - col.uv.x;
+		col.sample.x = (int)(col.uv.x * (double)WALL_TEX_SIZE);
+		// if (hit.side == 0 && vertical->dir.x > 0)
+		// 	col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
+		// if (hit.side == 1 && vertical->dir.y < 0)
+		// 	col.sample.x = WALL_TEX_SIZE - col.sample.x - 1;
 		height = (int)(R_HEIGHT / hit.depth);
 		col.range.s = -height / 2 + R_HEIGHT / 2;
 		if (col.range.s < 0)
@@ -365,10 +381,10 @@ t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 		col.range.e = height / 2 + R_HEIGHT / 2;
 		if (col.range.e >= R_HEIGHT)
 			col.range.e = R_HEIGHT - 1;
-		col.sample_dy = 1.0 * 32 / height;
+		col.sample_dy = 1.0 * WALL_TEX_SIZE / height;
 		col.uv.y = (col.range.s - R_HEIGHT / 2 + height / 2) * col.sample_dy;
-		col.shaded = hit.side == 1;
-	}	
+		col.shaded = 0;
+	}
 	else
 	{
 		col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
@@ -430,6 +446,7 @@ void	render_column(t_game *game, t_column col)
 	{
 		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
 		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
+		//f = (int)(col.uv.x * 255) | R_ALPHA;
 		if ((f & M_APLHA) != R_ALPHA)
 		{
 			s = pixel_get(game->rt1, col.x, y);
