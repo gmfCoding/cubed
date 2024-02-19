@@ -16,6 +16,7 @@ SRCSF = $(TEST) \
 		util/error_handler.c \
 		util/string_utils.c \
 		util/memory_utils.c \
+		util/clmath.c \
 		map_parser/map_setup.c \
 		map_parser/map_dimensions.c \
 		map_parser/map_tile_processing.c \
@@ -23,6 +24,7 @@ SRCSF = $(TEST) \
 		map_parser/map_checker_tile.c \
 		map_parser/map_checker_element.c \
 		map_parser/map_default_map.c \
+		map_parser/map.c \
 		modifiers/modifier_setup.c \
 		modifiers/modifier_utils.c \
 		modifiers/mod_func_cardinal_texture.c \

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/18 15:39:44 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/20 01:28:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	draw_debug_info(t_game *game)
 		ft_strfmt("dir:(%f,%f)", (double)player->dir.x, (double)player->dir.y),
 		ft_strfmt("plane:(%f,%f)", \
 		(double)game->player.plane.x, (double)game->player.plane.y),
+		ft_strfmt("depth:(%f)", game->half.depths[0].depth),
 		ft_strfmt("hits:(%d)", game->half.hits),
 	};
 	int				i;
@@ -70,10 +71,6 @@ void	draw_debug_info(t_game *game)
 	timeprev = time_get_ms();
 }
 
-bool	inside(int x, int y, int maxX, int maxY)
-{
-	return (x >= 0 && y >= 0 && x < maxX && y < maxY);
-}
 
 // int	map_index(int x, int y)
 // {
@@ -126,18 +123,6 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 // 		void *entity;
 // 	};
 // };
-
-t_tile map_get_tile(t_map *map, int x, int y)
-{
-	t_tile tile = map->tiles[x + y * map->width];
-	return (tile);
-}
-
-t_tile *map_get_tile_ref(t_map *map, int x, int y)
-{
-	t_tile *tile = &map->tiles[x + y * map->width];
-	return (tile);
-}
 
 
 typedef enum e_hittype t_hittype;
@@ -202,6 +187,17 @@ int			two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2)
 	return (ccw(a1, a2, b2) != ccw(b1, a2, b2) && ccw(a1, b1, a2) != ccw(a1, b1, b2));
 }
 
+
+/* Projects point a onto line segment BC*/
+t_vec2 v2proj_line(t_vec2 a, t_vec2 b, t_vec2 c)
+{
+	t_vec2	dir;
+
+	a = v2sub(a, b);
+	dir = v2norm(v2sub(b, c));
+	return (v2add(b, v2muls(dir, v2dot(dir, a))));
+}
+
 t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 {
 	t_rayinfo	ray;
@@ -230,8 +226,9 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 		//	printf("v = (%f, %f) s = (%f, %f) s_1 = (%f, %f) s_2 = (%f, %f)\n", game->player.dir.x, game->player.dir.y, start.x, start.y, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
 			if (two_seg_intersect(sp->s1, sp->s2, start, v2))
 			{
-			//	printf("found spote\n");
-				ray.depths[ray.hits].depth = v2mag(v2sub(game->player.pos, sp->pos));
+				//	printf("found spote\n");
+				ray.depths[ray.hits].depth = v2mag(v2sub(v2proj_line(game->player.pos, sp->s1, sp->s2), game->player.pos));
+				//ray.depths[ray.hits].depth = v2mag(v2sub(game->player.pos, sp->pos));
 				ray.depths[ray.hits].sp_tex = sp->tex;
 				ray.hits++;
 			}
@@ -431,10 +428,7 @@ void	render_column(t_game *game, t_column col)
 	y = col.range.s;
 	while (++y < col.range.e)
 	{
-		col.sample.y = (int)col.uv.y & (32 - 1);
-		if (col.type == C_WALL)
-			col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
-//	col.sample.y = (int)col.uv.y & (tex.width - 1);
+		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
 		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
 		if ((f & M_APLHA) != R_ALPHA)
 		{
@@ -464,7 +458,7 @@ void	render_vertical(t_game *game, t_vertical info)
 	{
 		col = calculate_column(game, &info, info.ray.depths[d]);
 		col.x = info.x;
-		render_debug_column(game, col);
+		render_column(game, col);
 	}
 }
 
@@ -479,14 +473,13 @@ void update_segments(t_game *game)
 	while (++i < game->world->sp_count)
 	{
 		curr = &game->world->sprite[i];
-		dir = v2norm(v2sub(game->player.pos, curr->pos));
+		dir = game->player.dir;
 		temp = dir.x;
 		dir.x = dir.y;
 		dir.y = -temp;
-		curr->s1 = v2add(curr->pos, v2muls(dir, 1.25));
-		curr->s2 = v2add(curr->pos, v2muls(dir, -1.25));
+		curr->s1 = v2add(curr->pos, v2muls(dir, 0.5));
+		curr->s2 = v2add(curr->pos, v2muls(dir, -0.5));
 	}
-
 }
 #define D_SCALE 25
 
@@ -535,7 +528,10 @@ void	render(t_game *game)
 
 	const t_texture	dtex = texture_get_debug_view(game, 1);
 	texture_clear(dtex, 0 | R_ALPHA);
-	update_segments(game);
+	// static bool once = false;
+	// if (!once)
+		update_segments(game);
+	//once = true;
 	player_controls(game);
 	input_process(&game->input);
 	render_floor(game);

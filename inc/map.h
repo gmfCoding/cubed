@@ -73,6 +73,12 @@ typedef struct	s_world
 	// MAP PARSER //
 t_tiletype	get_tiletype(char c);
 
+
+t_tile map_get_tile(t_map *map, int x, int y);
+t_tile *map_get_tile_ref(t_map *map, int x, int y);
+t_tile map_get_tile_s(t_map *map, int x, int y);
+t_tile *map_get_tile_ref_s(t_map *map, int x, int y);
+
 //t_map		map_parse(int argc, char **argv, t_game *game);
 void		map_parse(int argc, char **argv, t_game *game);
 int		map_width_size(t_list *curr);

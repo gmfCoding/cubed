@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/31 18:00:39 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/20 00:51:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,16 @@ void generate_textures(t_game *game)
 	// }
 	
 	game->textures[0] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[1] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[2] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[4] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
-	game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[6] = texture_load(game->app.mlx, "assets/window.xpm");
-	game->textures[7] = texture_load(game->app.mlx, "assets/debug.xpm");
+	game->textures[1] = game->textures[0];
+	game->textures[2] = game->textures[0];
+	game->textures[3] = game->textures[0];
+	// game->textures[4] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
+	game->textures[4] = texture_load(game->app.mlx, "assets/debug_ground.xpm");
+	game->textures[5] = game->textures[0];
+	game->textures[6] = game->textures[4];
+	// game->textures[6] = texture_load(game->app.mlx, "assets/debug_ground_hl.xpm");
+	// game->textures[7] = texture_load(game->app.mlx, "assets/debug.xpm");
+	game->textures[7] = texture_load(game->app.mlx, "assets/enemy.xpm");
 }
 
 
@@ -107,8 +110,8 @@ int	main(int argc, char **argv)
 	game.app.mlx = mlx_init();
 	game.world->sp_count = 1;
 	game.world->sprite[0] = (t_sprite){.tex = 7, .pos = v2new(26.5, 9.5)};
-	game.world->map.tiles[26 + 10 * game.world->map.width].sp_count = 1;
-	game.world->map.tiles[26 + 10 * game.world->map.width].sprite[0] = 0;
+	game.world->map.tiles[26 + 9 * game.world->map.width].sp_count = 1;
+	game.world->map.tiles[26 + 9 * game.world->map.width].sprite[0] = 0;
 	modifier_after(&game);
 
 //	print_vector_path(&game);	

@@ -6,12 +6,13 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:31:56 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:42:33 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/20 00:33:20 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cubed.h"
 #include "vector2.h"
 #include "vector2i.h"
+#include "map.h"
 
 static void	render_floor_row(t_game *game, int y, t_vec2 step, t_vec2 *floor)
 {
@@ -29,6 +30,9 @@ static void	render_floor_row(t_game *game, int y, t_vec2 step, t_vec2 *floor)
 		floor->x += step.x;
 		floor->y += step.y;
 		colour = pixel_get(game->textures[4], uv.x, uv.y);
+		t_tile *ref = map_get_tile_ref_s(&game->world->map, floor->x, floor->y);
+		if (ref != NULL && ref->sp_count > 0)
+			colour = pixel_get(game->textures[6], uv.x, uv.y);
 		pixel_set(game->rt1, x, y, (colour >> 1) & 8355711 | R_ALPHA);
 		colour = (colour >> 1) & 0x7F7F7F;
 		pixel_set(game->rt1, x, R_HEIGHT - y - 1, colour | R_ALPHA);
