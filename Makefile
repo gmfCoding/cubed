@@ -16,6 +16,7 @@ SRCSF = $(TEST) \
 		vector/vector3_math.c \
 		vector/vector3_math_div.c \
 		vector/vector3.c \
+		vector/vector4_math.c \
 		vector/vtoa.c \
 		vector/vector_conv.c \
 		vector/rect.c \

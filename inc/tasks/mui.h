@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 18:43:45 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 19:35:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -69,13 +69,32 @@ typedef struct s_mui_button
 
 typedef union u_mui_any
 {
-	t_mui_base		*base;
-	t_mui_button	*button;
-	t_mui_slider	*slider;
-	t_mui_dial		*dial;
+	union
+	{
+		t_mui_base		*p;
+		t_mui_base		*base;
+	};
+	union
+	{
+		t_mui_button	*button;
+		t_mui_button	*b;
+	};
+	union
+	{
+		t_mui_slider	*slider;
+		t_mui_slider	*s;
+	};
+	union
+	{
+		t_mui_dial		*dial;
+		t_mui_dial		*d;
+	};
 }	t_mui_any;
 
 # define MUI_LEN_TYPES 4
+
+
+typedef struct s_game t_game; // TODO: REMOVE
 typedef struct s_mui_context
 {
 	void		*ctx;
@@ -104,6 +123,9 @@ typedef struct s_mui_context
 		};
 	};
 	bool			heap;
+	t_vecd			oscale;
+	t_vecd			scale;
+	t_vec2			offset;
 }	t_mui_ctx;
 
 void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst);
@@ -113,6 +135,8 @@ void	mui_destroy(t_mui_ctx *mui, t_mui_ctx **store, bool heap);
 void	mui_def_preload(t_app *app, t_mui_ctx *ctx);
 
 typedef struct s_inputctx	t_inputctx;
+
+void	mui_init(t_mui_ctx *ctx);
 
 void	mui_process(t_mui_ctx *ctx, t_inputctx *in);
 

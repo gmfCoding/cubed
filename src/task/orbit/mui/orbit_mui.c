@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/17 20:56:42 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 19:23:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -127,7 +127,7 @@ static const t_mui_dial		g_mui_orbit_dials[] = {
 [ORB_MUI_DIAL_M2] = {
 	.base = {.pos = {229, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
-	.rect = {{231, 325}, {257, 350}},
+	.rect = {231, 325, 257, 350},
 	.type = MUI_DIAL},
 	.angle = 0,
 	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
@@ -202,7 +202,7 @@ static const t_mui_base		g_mui_orbit_inds[] = {
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND1] = {
-	.pos = {163, 325,}, .anim = 0, .frame = 0,
+	.pos = {163, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
 	// .rect = {.min = {177, 349}, .max = {202, 374}},
 	.type = MUI_BUTTON
@@ -214,7 +214,7 @@ static const t_mui_base		g_mui_orbit_inds[] = {
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND3] = {
-	.pos = {270, 325, }, .anim = 0, .frame = 0,
+	.pos = {270, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
 	// .rect = {.min = {284, 349}, .max = {309, 374}},
 	.type = MUI_BUTTON
@@ -241,6 +241,9 @@ static const t_mui_ctx		g_orbit_mui = {
 	.len_inds = sizeof(g_mui_orbit_inds) / sizeof(t_mui_base),
 	.size_inds = sizeof(t_mui_base),
 	.heap = false,
+	.oscale = 400.0,
+	.scale = 800,
+	.offset = {90.0 , 90.0}
 };
 
 void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)

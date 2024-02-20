@@ -1,23 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rect.h                                             :+:      :+:    :+:   */
+/*   vector4.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 18:51:18 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/19 18:55:48 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/19 18:24:08 by clovell           #+#    #+#             */
+/*   Updated: 2024/02/19 18:52:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef RECT_H
-# define RECT_H
+#ifndef VECTOR4_H
+# define VECTOR4_H
+
 # include <stdbool.h>
 # include "vector2.h"
-# include "vector4.h"
 
+typedef struct s_vec4	t_vec4;
 
-typedef struct s_vec4 t_rect; 
-t_rect	rect_getbounded(t_rect rect);
-t_rect	rect_offset(t_rect rect, t_vec2 offset);
-bool	rect_contains_v2(t_rect rect, t_vec2 pos);
+struct s_vec4
+{
+	union
+	{
+		// struct s_rect
+		struct
+		{
+			union
+			{
+				t_vec2	pos;
+				t_vec2	min;
+			};
+			union
+			{
+				t_vec2	max;
+				t_vec2	size;
+			};
+		};
+		t_vecd		v[4];
+		struct
+		{
+			t_vecd	x;
+			t_vecd	y;
+			t_vecd	z;
+			t_vecd	w;
+		};
+	};
+};
+
+/* Scales the size of a vector by s */
+t_vec4	v4muls(t_vec4 f, t_vecd s);
 #endif

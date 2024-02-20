@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 05:39:53 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 19:45:37 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -77,7 +77,7 @@ int	colour_blend(int first, int second)
 	f[0] = f[0] * a + s[0] * (1.0 - a);
 	f[1] = f[1] * a + s[1] * (1.0 - a);
 	f[2] = f[2] * a + s[2] * (1.0 - a);
-	return (((int *)f)[0]);
+	return ((((int *)f)[0] & ~M_APLHA) | R_ALPHA);
 }
 
 t_texture texture_get_debug_view(t_game *game, int view)

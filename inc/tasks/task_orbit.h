@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/17 21:20:23 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 18:57:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -96,6 +96,7 @@ typedef struct s_sa_orbit_task
 	float			zoom;
 	float			brightness;
 	t_vec2			scr_offset;
+	t_orb_gen		*gen;
 }	t_task_orbit;
 
 // TODO: Remove?

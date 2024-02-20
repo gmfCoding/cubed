@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 18:52:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 19:24:25 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -31,7 +31,7 @@ void	mui_hold_dial(t_mui_dial *curr, t_vec2 mouse)
 
 	curr->prev_angle = curr->curr_angle;
 	centre = v2muls(v2sub(curr->base.rect.max, curr->base.rect.min), 0.5);
-	centre = v2add(curr->base.pos, centre);
+	centre = v2add(curr->base.rect.min, centre);
 	dmpos = v2sub(mouse, centre);
 	curr->curr_angle = v2x2ang(dmpos);
 	curr->angle += angle_diff(curr->prev_angle, curr->curr_angle);

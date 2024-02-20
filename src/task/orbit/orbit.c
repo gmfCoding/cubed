@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/17 21:20:39 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 19:43:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -15,16 +15,12 @@
 #include "render.h"
 #include "orbit.h"
 
-const t_orb_gen	g_orbgen = {
-	.sma = {0.5 * KM_AU, 1.25 * KM_AU},	
-	.ecc = {KEP_MIN_EPSILON, 0.8},	
-	.inc = {KEP_MIN_EPSILON, KEP_MIN_EPSILON},	
-	.aop = {KEP_MIN_EPSILON, M_TAU},	
-	.lan = {KEP_MIN_EPSILON, KEP_MIN_EPSILON},	
-};
-
 int	task_orbit_setup(t_game *game, t_task *base)
 {
+	static t_orb_gen	g_orbgen = {
+		.sma = {0.5 * KM_AU, 1.25 * KM_AU}, .ecc = {0.0001, 0.8},
+		.inc = {0.0001, 0.0001}, .aop = {0.0001, M_TAU}, .lan = {0.0001, 0.0001}
+	};
 	t_task_orbit *const	task = (t_task_orbit*)base;
 
 	msrand(&task->rand, 51234);
@@ -33,8 +29,7 @@ int	task_orbit_setup(t_game *game, t_task *base)
 	task->target_path.sgp_u = task->sun.u;
 	task->start_path = (t_kep_path){
 		.sma = KM_AU, .ecc = 0.0001, .inc = 0.0001,
-		.lan = 0.0001, .aop = 0.0001, .sgp_u = task->sun.u
-	};
+		.lan = 0.0001, .aop = 0.0001, .sgp_u = task->sun.u};
 	task->start_ang = (t_kep_ang){0};
 	task->maneuvers = 5;
 	task->active_path = 0;
@@ -116,13 +111,20 @@ int	task_orbit_render(t_game *game, t_task *base)
 	t_task_orbit *const	task = (t_task_orbit*)base;
 	t_texture *const	tex = def_tex_get(&game->app, "orb_mui_bg");
 	t_texture *const	scr = def_tex_get(&game->app, "orb_mui_scr");
+	static t_texture	rt;
+	static bool			rtl = false;
 
-	texture_clear(game->rt0, 0);
-	texture_blit_rect(&game->rt0, scr, (t_rect){45, 37, 274, 266});
-	render_paths(task, &game->rt0, (t_rect){task->scr_offset, {task->zoom, 0}});
-	texture_blit(*tex, game->rt0, v2new(0, 0));
-	mui_render(&task->mui, &game->rt0);
-	texture_draw(game->app, game->rt0, v2new(0, 0));
+	if (!rtl)
+	{
+		rt = texture_create(game->app.mlx, 400, 400);
+		rtl = true;
+	}
+	//texture_blit_rect(&rt, scr, (t_rect){45, 37, 274, 266});
+	texture_blit(*scr, rt, v2new(0, 0));
+	render_paths(task, &rt, (t_rect){task->scr_offset, {task->zoom, 0}});
+	texture_blit(*tex, rt, v2new(0, 0));
+	mui_render(&task->mui, &rt);
+	texture_blit_s(rt, game->rt0, v2new(90, 90), 2);
 	orbit_mui_control_action(&task->mui);
 	mui_process(&task->mui, &game->input);
 	return (0);
