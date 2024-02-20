@@ -255,40 +255,6 @@ void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
 	mui_def_preload(app, mui);
 }
 
-void	orbit_thrust_apply(t_kep_path *path,
-t_kep_ang *node, double thrust)
-{
-	t_orb_cart	cart;
-	t_vec3		ecv;
-
-	cart = (t_orb_cart){0};
-	orb_cart_pos(path, node, &cart);
-	orb_cart_vel(path, node, &cart);
-	cart.vel = v3muls(cart.vel, thrust);
-	orb_transform_cart(path, &cart);
-	orb_cart_to_kep(&cart, path, node); // TODO MOVE
-}
-
-void	update_paths(t_sa_orbit_task *t)
-{
-	t_orb_cart	cart;
-	int			i;
-
-	i = -1;
-	t->paths[0] = t->start_path;
-	t->nodes[0] = t->start_ang;
-	while (++i < t->maneuvers)// TODO MOVE
-	{
-		kep_ang_set(&t->paths[i], &t->nodes[i], t->mean[i], ANG_MEAN);
-		orbit_thrust_apply(&t->paths[i], &t->nodes[i], t->delta[i]);
-		if (i + 1 < t->maneuvers)
-		{
-			t->paths[i + 1] = t->paths[i];
-			t->nodes[i + 1] = t->nodes[i];
-		}
-	}
-}
-
 void	orbit_mui_control_action(t_mui_ctx *ctx)
 {
 	t_task_orbit *const	task = ctx->ctx;
