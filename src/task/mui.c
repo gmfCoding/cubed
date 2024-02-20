@@ -6,12 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/11 22:42:50 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 19:33:15 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include "tasks/mui.h"
+#include "rect.h"
 
 void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
 {
@@ -39,6 +41,35 @@ void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
 		}
 	}
 	dst->heap = true;
+	dst->scale = src->scale;
+	dst->oscale = src->oscale;
+	dst->offset = src->offset;
+	mui_init(dst);
+}
+
+void	mui_init(t_mui_ctx *ctx)
+{
+	t_mui_any	iter;
+	int			j;
+	int			i;
+
+	j = -1;
+	while (++j < MUI_LEN_TYPES)
+	{
+		i = -1;
+		iter.base = ctx->all[j];
+		while (++i < ctx->lengths[j])
+		{
+			iter.base->rect = v4muls(iter.base->rect, 1.0 / ctx->oscale);
+			iter.base->rect = v4muls(iter.base->rect, ctx->scale);
+			iter.base->rect = rect_offset(iter.base->rect, ctx->offset);
+			if (iter.base->type == MUI_SLIDE)
+				iter.s->start = iter.base->rect.min;
+			if (iter.base->type == MUI_SLIDE)
+				iter.s->end = v2new(iter.p->rect.min.x, iter.p->rect.max.y);
+			iter.base = (char *)iter.base + ctx->sizes[j];
+		}
+	}
 }
 
 void	mui_def_preload(t_app *app, t_mui_ctx *ctx)

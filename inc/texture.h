@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:13:28 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/14 16:49:57 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/17 20:41:31 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TEXTURE_H
 
 # include "vector2.h"
+# include "rect.h"
 
 typedef struct s_texture
 {
@@ -76,8 +77,10 @@ int		pixel_get(t_texture data, int x, int y);
 void	texture_draw_line(t_texture data, t_vec2 start, t_vec2 end, int colour);
 void	texture_draw_square(t_texture data, t_vec2 start, t_vec2 width, int colour);
 
+void	texture_blit_rect(t_texture *dst, t_texture *src, t_rect area);
 void	texture_blit_s(t_texture src, t_texture dst, t_vec2 pos, int scale);
 void    texture_blit(t_texture src, t_texture dst, t_vec2 pos);
+
 void    texture_clear(t_texture src, int colour);
 
 t_texture	texture_create(void *mlx, int width, int height);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 14:45:13 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 19:07:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "texture.h"
 # include "ray.h"
 # include "app.h"
+# include "task.h"
+
+// FORWARD DECLARE
+typedef struct s_task t_task;
 typedef struct s_game t_game;
 
 #define MAX_DEBUG_VIEWS 10
@@ -61,6 +65,8 @@ struct s_game
 
 	t_inputctx		input;
 	t_rayinfo		half;
+	t_task			*tasks[TASK_LEN];
+	bool			test_task;
 };
 
 void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);

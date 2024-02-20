@@ -14,8 +14,7 @@
 # include "vector2.h"
 # include "texture.h"
 # include "state.h"
-
-typedef struct s_rect t_rect;
+# include "rect.h"
 
 void	texture_draw(t_app app, t_texture tex, t_vec2 pos);
 void	rect_draw(const t_rect *aabb, int colour, t_texture rt);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:10:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 19:13:11 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -17,6 +17,7 @@
 # include "clmath.h"
 # include <stdbool.h>
 # include "orbit/orbit_data.h"
+# include "rect.h"
 
 # define KM_G  6.67430e-11
 # define KM_AU 1.496E11
@@ -37,7 +38,6 @@ enum e_angt
 	ANG_ECCA
 };
 
-extern const t_orb_gen		g_orbgen;
 
 /*** task/orbit/sys/kep_angle_util.c ***/
 double			orb_time_at_mean(t_kep_path *path, t_kep_ang *ang, double mna);
@@ -115,8 +115,10 @@ void			orb_cart_to_kep(t_orb_cart *c, t_kep_path *p, t_kep_ang *a);
 
 /*** task/orbit/sys/render.c ***/
 
-void			orbit_path_render(t_kep_path *path, t_texture *rt, int col);
-void			orbit_obj_render(t_kep_path *p, t_kep_ang *a, t_texture *rt);
+void			orbit_path_render(t_kep_path *path, t_texture *rt,
+					t_rect trans, int col);
+void			orbit_obj_render(t_kep_path *p, t_kep_ang *a,
+					t_rect trans, t_texture *rt);
 void			orbit_obj_render_at(t_kep_path *path, double mean,
 					t_angt angt, t_texture *rt);
 

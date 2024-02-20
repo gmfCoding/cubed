@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 23:33:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 18:57:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -16,6 +16,7 @@
 # include "ui.h"
 # include "random.h"
 # include "tasks/mui_orbit.h"
+# include "task.h"
 
 /*** Button selector references ***/
 # define BS_THRUST "+"
@@ -55,11 +56,18 @@
 
 # define ORB_MUI_SLD_THROTTLE 0
 
+# define ORB_RED 0x00CA522A
+# define ORB_GREEN 0x003DB92A
+# define ORB_GREEN2 0x002DA9AA
+# define ORB_BLUE 0x003552D5
+# define ORB_WHITE 0x00CAB9D5
+
 # define T_ORBIT_MAX_MAN 5
 # define T_ORBIT_MAX_ALL 7
 
 typedef struct s_sa_orbit_task
 {
+	t_task			task;
 	t_kep_ang		start_ang;
 	t_rand			rand;
 	union
@@ -83,14 +91,16 @@ typedef struct s_sa_orbit_task
 
 	t_orb_cart		cart;
 	t_orb_body		sun;
-	t_texture		rt0;
-	t_app			app;
 	t_mui_ctx		mui;
 	t_inputctx		input;
-}	t_sa_orbit_task;
+	float			zoom;
+	float			brightness;
+	t_vec2			scr_offset;
+	t_orb_gen		*gen;
+}	t_task_orbit;
 
 // TODO: Remove?
 void	orbit_control_action(t_button *btn, t_ui_context *ctx);
-void	update_paths(t_sa_orbit_task *t);
+void	update_paths(t_task_orbit *t);
 
 #endif

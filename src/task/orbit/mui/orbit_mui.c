@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/14 13:58:33 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/19 19:23:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -17,6 +17,11 @@ static const t_def_tex		g_orb_textures[] = {
 {
 	.id = "orb_mui_bg",
 	.path = "assets/orbit/panel/panel",
+	.frames = 1,
+},
+{
+	.id = "orb_mui_scr",
+	.path = "assets/orbit/panel/screen",
 	.frames = 1,
 },
 {
@@ -122,7 +127,7 @@ static const t_mui_dial		g_mui_orbit_dials[] = {
 [ORB_MUI_DIAL_M2] = {
 	.base = {.pos = {229, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
-	.rect = {{231, 325}, {257, 350}},
+	.rect = {231, 325, 257, 350},
 	.type = MUI_DIAL},
 	.angle = 0,
 	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
@@ -148,32 +153,32 @@ static const t_mui_dial		g_mui_orbit_dials[] = {
 	.id = "orb_mui_screendial", .unlock = true,
 	.rect = {.min = {285, 301}, .max = {303, 318}},
 	.type = MUI_DIAL},
-	.angle = 0,
-	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
+	.angle = 161,
+	.range = {-500, 500}
 },
 [ORB_MUI_DIAL_Y] = {
 	.base = {.pos = {305, 301}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
 	.rect = {.min = {305, 301}, .max = {323, 319}},
 	.type = MUI_DIAL},
-	.angle = 0,
-	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
+	.angle = 150,
+	.range = {-500, 500}
 },
 [ORB_MUI_DIAL_Z] = {
 	.base = {.pos = {325, 301}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
 	.rect = {.min = {325, 301}, .max = {343, 318}},
 	.type = MUI_DIAL},
-	.angle = 0,
-	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
+	.angle = 70,
+	.range = {50, 500}
 },
 [ORB_MUI_DIAL_B] = {
 	.base = {.pos = {344, 301}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
 	.rect = {.min = {344, 301}, .max = {362, 318}},
 	.type = MUI_DIAL},
-	.angle = 0,
-	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
+	.angle = 1.0,
+	.range = {0.0, 1.0}
 },
 };
 
@@ -197,7 +202,7 @@ static const t_mui_base		g_mui_orbit_inds[] = {
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND1] = {
-	.pos = {163, 325,}, .anim = 0, .frame = 0,
+	.pos = {163, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
 	// .rect = {.min = {177, 349}, .max = {202, 374}},
 	.type = MUI_BUTTON
@@ -209,7 +214,7 @@ static const t_mui_base		g_mui_orbit_inds[] = {
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND3] = {
-	.pos = {270, 325, }, .anim = 0, .frame = 0,
+	.pos = {270, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
 	// .rect = {.min = {284, 349}, .max = {309, 374}},
 	.type = MUI_BUTTON
@@ -226,16 +231,19 @@ static const t_mui_ctx		g_orbit_mui = {
 	.buttons = (t_mui_button *)g_mui_orbit_buttons,
 	.len_buttons = sizeof(g_mui_orbit_buttons) / sizeof(t_mui_button),
 	.size_buttons = sizeof(t_mui_button),
-	.dials = g_mui_orbit_dials,
+	.dials = (t_mui_dial *)g_mui_orbit_dials,
 	.len_dials = sizeof(g_mui_orbit_dials) / sizeof(t_mui_dial),
 	.size_dials = sizeof(t_mui_dial),
-	.sliders = g_mui_orbit_sliders,
+	.sliders = (t_mui_slider *)g_mui_orbit_sliders,
 	.len_sliders = sizeof(g_mui_orbit_sliders) / sizeof(t_mui_slider),
 	.size_sliders = sizeof(t_mui_slider),
-	.inds = g_mui_orbit_inds,
+	.inds = (t_mui_base *)g_mui_orbit_inds,
 	.len_inds = sizeof(g_mui_orbit_inds) / sizeof(t_mui_base),
 	.size_inds = sizeof(t_mui_base),
 	.heap = false,
+	.oscale = 400.0,
+	.scale = 800,
+	.offset = {90.0 , 90.0}
 };
 
 void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
@@ -283,9 +291,13 @@ void	update_paths(t_sa_orbit_task *t)
 
 void	orbit_mui_control_action(t_mui_ctx *ctx)
 {
-	t_sa_orbit_task *const	task = ctx->ctx;
+	t_task_orbit *const	task = ctx->ctx;
 	int						i;
 
+	task->scr_offset.x = ctx->dials[ORB_MUI_DIAL_X].angle;
+	task->scr_offset.y = ctx->dials[ORB_MUI_DIAL_Y].angle;
+	task->zoom = ctx->dials[ORB_MUI_DIAL_Z].angle;
+	task->brightness = ctx->dials[ORB_MUI_DIAL_B].angle;
 	i = -1;
 	while (++i < ctx->len_buttons)
 		if (ctx->buttons[i].on && i < T_ORBIT_MAX_MAN)

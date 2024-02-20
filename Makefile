@@ -2,6 +2,7 @@ SRCSF = $(TEST) \
 		texture/texture.c \
 		texture/pixel.c \
 		texture/texture_util.c \
+		texture/texture_blit.c \
 		texture/deferred.c \
 		vector/vector2_math_extra.c \
 		vector/vector2_math_div.c \
@@ -15,6 +16,7 @@ SRCSF = $(TEST) \
 		vector/vector3_math.c \
 		vector/vector3_math_div.c \
 		vector/vector3.c \
+		vector/vector4_math.c \
 		vector/vtoa.c \
 		vector/vector_conv.c \
 		vector/rect.c \

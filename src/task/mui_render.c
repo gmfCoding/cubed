@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:59:35 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 18:48:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/19 19:34:39 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -80,7 +80,6 @@ static void	mui_render_all(t_mui_ctx *ctx, const t_texture *rt)
 		{
 			target = base->def->tex[base->frame % base->def->frames];
 			texture_blit(target, *rt, base->pos);
-			rect_draw(&base->rect, R_RED | R_ALPHA, *rt);
 			base = (void *)((char *)base + ctx->sizes[j]);
 		}
 	}

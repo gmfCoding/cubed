@@ -1,7 +1,11 @@
-#include "state.h"
+#ifndef TASK_H
+# define TASK_H
+# include "texture.h"
+
 typedef struct s_task t_task;
 
-
+// FORWARD DECLARE
+typedef struct s_game t_game;
 
 typedef struct s_sprite
 {
@@ -19,16 +23,10 @@ struct s_task
 	t_taskrender_fn	setup;
 };
 
-typedef struct s_task_orbit
-{
-	t_task task;
-	t_sprite rpro_btn;
-	t_sprite pro_btn;
-} t_task_orbit;
-
-#define TASK_LEN 1
+# define TASK_LEN 1
 
 extern t_task *g_tasks[TASK_LEN];
 
 int    task_orbit_setup(t_game *game, t_task *task);
 int    task_orbit_render(t_game *game, t_task *task);
+#endif
