@@ -18,13 +18,12 @@ typedef int (*t_taskrender_fn)(t_game *game, t_task *task);
 struct s_task
 {
 	char			*name;
-	int				type;
 	int				key;
 	t_taskrender_fn	func;
 	t_taskrender_fn	setup;
 };
 
-# define TASK_LEN 2
+# define TASK_LEN 1
 
 extern t_task *g_tasks[TASK_LEN];
 

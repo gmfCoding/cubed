@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/20 20:04:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/19 19:07:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ struct s_game
 	t_inputctx		input;
 	t_rayinfo		half;
 	t_task			*tasks[TASK_LEN];
-	t_rand			rand;
 	bool			test_task;
 };
 

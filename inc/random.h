@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:17:37 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/20 20:01:09 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/07 16:42:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef RANDOM_H
@@ -22,6 +22,4 @@ typedef struct s_rand
 
 void	msrand(t_rand *rand, uint64_t seed);
 int		mrand(t_rand *rand);
-double	mrand_rangef(t_rand *rand, double min, double max);
-
 #endif

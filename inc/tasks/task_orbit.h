@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/20 18:55:29 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/19 18:57:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -65,7 +65,7 @@
 # define T_ORBIT_MAX_MAN 5
 # define T_ORBIT_MAX_ALL 7
 
-typedef struct s_task_orbit
+typedef struct s_sa_orbit_task
 {
 	t_task			task;
 	t_kep_ang		start_ang;
@@ -89,8 +89,10 @@ typedef struct s_task_orbit
 	int				maneuvers;
 	int				active_path;
 
+	t_orb_cart		cart;
 	t_orb_body		sun;
 	t_mui_ctx		mui;
+	t_inputctx		input;
 	float			zoom;
 	float			brightness;
 	t_vec2			scr_offset;
