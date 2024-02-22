@@ -155,6 +155,24 @@ enum e_hittype
 	0 if there was a hit but no more
 	1 if there was a hit and potentially more
 */
+
+t_vec2 v2proj_line(t_vec2 a, t_vec2 b, t_vec2 c)
+{
+    t_vec2    dir;
+
+    a = v2sub(a, b);
+    dir = v2norm(v2sub(b, c));
+    return (v2add(b, v2muls(dir, v2dot(dir, a))));
+}
+
+double	v2invlerp(t_vec2 a, t_vec2 b, t_vec2 c)
+{
+	const t_vec2	ac = v2sub(c, a);
+	const t_vec2	ab = v2sub(b, a);
+
+	return (v2dot(ac, ab) / v2dot(ab, ab));
+}
+
 t_hittype	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 {
 	t_tile	*tile;
@@ -231,7 +249,11 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 			if (two_seg_intersect(sp->s1, sp->s2, start, v2))
 			{
 			//	printf("found spote\n");
-				ray.depths[ray.hits].depth = v2mag(v2sub(game->player.pos, sp->pos));
+			//	ray.depths[ray.hits].depth = v2mag(v2sub(game->player.pos, sp->pos));
+			
+				ray.depths[ray.hits].depth = v2mag(v2sub(v2proj_line(game->player.pos, sp->s1, sp->s2), game->player.pos));
+		//		ray.depths[ray.hits].depth = v2mag(v2sub(game->player.plane, sp->pos));
+				ray.depths[ray.hits].minX = v2invlerp(sp->s1, sp->s2, v2add(game->player.pos, v2muls(dir, ray.depths[ray.hits].depth)));
 				ray.depths[ray.hits].sp_tex = sp->tex;
 				ray.hits++;
 			}
@@ -352,15 +374,19 @@ t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 	col.texture = map_get_tile(&game->world->map, hit.x, hit.y).tex;
 	if (hit.sp_tex > 0)
 	{
-		col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
+	//	col.uv.x = (game->player.pos.x + hit.depth * vertical->dir.x);
+	//	if (hit.side == 0)
+	//		col.uv.x = (game->player.pos.y + hit.depth * vertical->dir.y);
+		col.uv.x = hit.minX;
 		col.type = C_SPRITE;
 		col.texture = hit.sp_tex;
 		col.uv.x -= floor(col.uv.x);
 		col.sample.x = (int)(col.uv.x * (double)32);
-		if (hit.side == 0 && vertical->dir.x > 0)
-			col.sample.x = 32 - col.sample.x - 1;
-		if (hit.side == 1 && vertical->dir.y < 0)
-			col.sample.x = 32 - col.sample.x - 1;
+	//	printf("col.samplex = %f\n",);
+//		if (hit.side == 0 && vertical->dir.x > 0)
+//			col.sample.x = 32 - col.sample.x - 1;
+//		if (hit.side == 1 && vertical->dir.y < 0)
+//			col.sample.x = 32 - col.sample.x - 1;
 		height = (int)(R_HEIGHT / hit.depth);
 		col.range.s = -height / 2 + R_HEIGHT / 2;
 		if (col.range.s < 0)
@@ -368,12 +394,14 @@ t_column	calculate_column(t_game *game, t_vertical *vertical, t_hitpoint hit)
 		col.range.e = height / 2 + R_HEIGHT / 2;
 		if (col.range.e >= R_HEIGHT)
 			col.range.e = R_HEIGHT - 1;
+	//	printf("height = %d hitdepth = %f\n", height, hit.depth);
 		col.sample_dy = 1.0 * 32 / height;
 		col.uv.y = (col.range.s - R_HEIGHT / 2 + height / 2) * col.sample_dy;
-		col.shaded = hit.side == 1;
+		col.shaded = 0;
 	}	
 	else
 	{
+		col.type = C_WALL;
 		col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
 		if (hit.side == 0)
 			col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
@@ -422,6 +450,7 @@ void	render_debug_column(t_game *game, t_column col)
 		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
 	}
 }
+/*
 void	render_column(t_game *game, t_column col)
 {
 	int	f;
@@ -434,7 +463,39 @@ void	render_column(t_game *game, t_column col)
 		col.sample.y = (int)col.uv.y & (32 - 1);
 		if (col.type == C_WALL)
 			col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
-//	col.sample.y = (int)col.uv.y & (tex.width - 1);
+		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
+		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
+		if ((f & M_APLHA) != R_ALPHA)
+		{
+			s = pixel_get(game->rt1, col.x, y);
+			f = colour_blend(f, s);
+		}
+		col.uv.y += col.sample_dy;
+		if (col.type == C_WALL)
+		{
+			if (col.shaded == 1)
+				f = (f >> 1) & 0x7F7F7F;
+			else
+				f = f & 0xFFFFFF;
+		}
+		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
+	}
+}
+*/
+
+void	render_column(t_game *game, t_column col)
+{
+	int	f;
+	int	s;
+	int	y;
+
+	y = col.range.s;
+	while (++y < col.range.e)
+	{
+	//	col.sample.y = (int)col.uv.y & (32 - 1);
+	//	if (col.type == C_WALL)
+	//		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
+		col.sample.y = (int)col.uv.y & (WALL_TEX_SIZE - 1);
 		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
 		if ((f & M_APLHA) != R_ALPHA)
 		{
@@ -453,7 +514,6 @@ void	render_column(t_game *game, t_column col)
 	}
 }
 
-
 void	render_vertical(t_game *game, t_vertical info)
 {
 	t_column	col;
@@ -464,7 +524,9 @@ void	render_vertical(t_game *game, t_vertical info)
 	{
 		col = calculate_column(game, &info, info.ray.depths[d]);
 		col.x = info.x;
-		render_debug_column(game, col);
+	//	render_debug_column(game, col);
+	
+		render_column(game, col);
 	}
 }
 
@@ -479,12 +541,15 @@ void update_segments(t_game *game)
 	while (++i < game->world->sp_count)
 	{
 		curr = &game->world->sprite[i];
-		dir = v2norm(v2sub(game->player.pos, curr->pos));
+		//dir = v2norm(v2sub(game->player.pos, curr->pos));
+		dir = game->player.dir;
 		temp = dir.x;
 		dir.x = dir.y;
 		dir.y = -temp;
-		curr->s1 = v2add(curr->pos, v2muls(dir, 1.25));
-		curr->s2 = v2add(curr->pos, v2muls(dir, -1.25));
+		curr->s1 = v2add(curr->pos, v2muls(dir, 0.5));
+		curr->s2 = v2add(curr->pos, v2muls(dir, -0.5));
+	//	curr->s1 = v2add(curr->pos, v2muls(dir, 1.25));
+	//	curr->s2 = v2add(curr->pos, v2muls(dir, -1.25));
 	}
 }
 

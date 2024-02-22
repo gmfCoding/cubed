@@ -107,8 +107,8 @@ int	main(int argc, char **argv)
 	game.app.mlx = mlx_init();
 	game.world->sp_count = 1;
 	game.world->sprite[0] = (t_sprite){.tex = 7, .pos = v2new(26.5, 9.5)};
-	game.world->map.tiles[26 + 10 * game.world->map.width].sp_count = 1;
-	game.world->map.tiles[26 + 10 * game.world->map.width].sprite[0] = 0;
+	game.world->map.tiles[26 + 9 * game.world->map.width].sp_count = 1;
+	game.world->map.tiles[26 + 9 * game.world->map.width].sprite[0] = 0;
 	modifier_after(&game);
 
 //	print_vector_path(&game);	
