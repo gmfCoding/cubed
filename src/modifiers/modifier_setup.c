@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modifier_setup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 16:43:52 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:07:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char *const			g_mapsymbols[] = {
 	"KE",
 	"AL",
 	"MM",
+	"WN", // WINDOW
 };
 
 t_ex_action const	g_mapfuncs[] = {
@@ -69,6 +70,7 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_ke,
 	&mod_gen_al,
 	&mod_gen_mm,
+	&mod_gen_wn,
 };
 
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)

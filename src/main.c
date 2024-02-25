@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:35:57 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/25 15:56:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@
 void	world_preset(int argc, char **argv, t_game *game)
 {
 	game->world->ent_count = 0;
-	if (argc - 1 >= 1)
-		map_parse(argc, argv, game);
-	else
-		map_default_map_init(game);
+	map_parse(argc, argv, game);
 	game->fpsc = 0;
 	game->display_ui = false;
 }
@@ -76,15 +73,15 @@ void generate_textures(t_game *game)
 	// 		pixel_set(game->textures[7], x, y, 128 + 256 * 128 + 65536 * 128); // flat grey texture
 	// 	}
 	// }
-	
-	game->textures[0] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[1] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[2] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[4] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
-	game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[6] = texture_load(game->app.mlx, "assets/window.xpm");
-	game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[TEX_WALL] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[TEX_DOOR] = texture_load(game->app.mlx, "assets/window.xpm");
+	game->textures[TEX_WINDOW] = texture_load(game->app.mlx, "assets/window.xpm");
+	// game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[TEX_FLOOR] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
+	game->textures[TEX_CEILING] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
+	// game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");
+	// game->textures[6] = texture_load(game->app.mlx, "assets/wall.xpm");
+	// game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
 
 

@@ -27,14 +27,12 @@ t_vec2	v2diff(t_vec2 f, t_vec2 s)
  */
 bool	mmap_fog_check(t_game *game)
 {
-	int	i;
+	t_mod *mm;
 
-	i = -1;
-	while (game->world->map.mods[i].type != MINI_MAP)
-		i++;
-	if (game->world->map.mods[i].content == NULL)
+	mm = mod_get_mod(&game->world->map, MINI_MAP, NULL);
+	if (mm == NULL || mm->content == NULL)
 		return (false);
-	if (game->world->map.mods[i].content[0] == 'F')
+	if (mm->content[0] == 'F')
 		return (false);
 	return (true);
 }

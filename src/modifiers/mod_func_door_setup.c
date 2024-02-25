@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mod_func_door_setup.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/01/17 18:35:52 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:42:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
-
-
+#include "render.h"
 
 char    *ft_strcpy(char *s1, char *s2)
 {
@@ -41,7 +40,7 @@ void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
 	dr = ft_split(content, ',');
 	map->tiles[ft_atoi(dr[3]) * map->width + ft_atoi(dr[2]) -1].type = DOOR;
 	map->tiles[ft_atoi(dr[3]) * map->width + ft_atoi(dr[2]) -1].vis = 1;
-	map->tiles[ft_atoi(dr[3]) * map->width + ft_atoi(dr[2]) -1].tex = 6;
+	map->tiles[ft_atoi(dr[3]) * map->width + ft_atoi(dr[2]) -1].tex = TEX_DOOR;
 	x = ft_atoi(dr[2]) - 1;
 	y = ft_atoi(dr[3]);
 	while (dr[0][++i] && i < NAME_SIZE)

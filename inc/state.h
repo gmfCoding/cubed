@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 15:29:55 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/25 15:55:25 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ struct s_app
 typedef struct s_world t_world;
 typedef struct s_mmap t_mmap;
 
+# define TEX_WALL 0
+# define TEX_WINDOW 1
+# define TEX_DOOR 2
+# define TEX_FLOOR 4
+# define TEX_CEILING 5
 
 struct s_game
 {
@@ -64,7 +69,7 @@ struct s_game
 	bool			display_ui;
 	t_inputctx		input;
 	t_rayinfo		half;
-	unsigned int		fpsc;
+	unsigned int	fpsc;
 };
 
 void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);
