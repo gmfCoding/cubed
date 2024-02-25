@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 15:55:25 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/25 20:50:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ struct s_game
 	unsigned int	fpsc;
 };
 
-void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);
-void texture_draw_debug_view(t_game *game, int view);
-t_texture texture_get_debug_view(t_game *game, int view);
-
+void		texture_debug_view_blit(t_game *game, int view, 
+				t_texture tex, t_vec2 pos);
+void		texture_draw_debug_view(t_game *game, int view);
+t_texture	texture_get_debug_view(t_game *game, int view);
+void		control_process(t_game *game);
 #endif

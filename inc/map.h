@@ -55,9 +55,12 @@ typedef struct	s_world
 	int		ent_count;
 //	t_event		stored_events[MAX_ENT];
 }			t_world;
+t_tile	map_get_tile(t_map *map, int x, int y);
+t_tile	*map_get_tile_ref(t_map *map, int x, int y);
 
-	// MAP PARSER //
+// MAP PARSER //
 t_tiletype	get_tiletype(char c);
+
 
 //t_map		map_parse(int argc, char **argv, t_game *game);
 void		map_parse(int argc, char **argv, t_game *game);

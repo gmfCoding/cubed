@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mod_func_window.c                                  :+:      :+:    :+:   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 20:38:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 20:38:51 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/25 20:37:03 by clovell           #+#    #+#             */
+/*   Updated: 2024/02/25 20:37:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
-#include "state.h"
 
-/*
- * XPOS, YPOS
- */
-void	mod_gen_wn(char *content, int index, t_world *world, t_map *map)
+t_tile map_get_tile(t_map *map, int x, int y)
 {
-	char	**al;
-	t_tile	*tile;
-	int		x;
-	int		y;
+	t_tile tile = map->tiles[x + y * map->width];
+	return (tile);
+}
 
-	al = ft_split(content, ',');
-	x = ft_atoi(al[0]);
-	y = ft_atoi(al[1]);
-	tile = map_get_tile_ref(map, x, y);
-	tile->tex = TEX_WINDOW;
-	tile->vis = 1;
-	tile->type = WALL;
-	free_str_array(al);
+t_tile *map_get_tile_ref(t_map *map, int x, int y)
+{
+	t_tile *tile = &map->tiles[x + y * map->width];
+	return (tile);
 }

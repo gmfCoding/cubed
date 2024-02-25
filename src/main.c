@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 15:56:41 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/25 20:20:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "cubed.h"
 #include "mini_map.h"
 #include "modifiers.h"
+#include "destroy.h"
 
 // int	main(int argc, char **argv)
 // {
@@ -105,12 +106,9 @@ int	main(int argc, char **argv)
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
-
 	generate_textures(&game);
-
 	input_setup(game.app.mlx, game.app.win, &game.input);
-
+	shutdown_input_setup(&game);
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);
-
 }

@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mod_func_window.c                                  :+:      :+:    :+:   */
+/*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 20:38:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 20:38:51 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/25 20:18:31 by clovell           #+#    #+#             */
+/*   Updated: 2024/02/25 20:45:02 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "map.h"
-#include "state.h"
+#include "cubed.h"
 
-/*
- * XPOS, YPOS
- */
-void	mod_gen_wn(char *content, int index, t_world *world, t_map *map)
+#define KDOWN 2
+#define KUP 3
+#define MDOWN 4
+#define MUP 5
+#define MMOVE 6
+#define EXPOSE 12
+#define DESTROY 17
+
+void	game_destroy(t_game *game)
 {
-	char	**al;
-	t_tile	*tile;
-	int		x;
-	int		y;
+	//TODO: Leak cleanup
+	exit(0);
+}
 
-	al = ft_split(content, ',');
-	x = ft_atoi(al[0]);
-	y = ft_atoi(al[1]);
-	tile = map_get_tile_ref(map, x, y);
-	tile->tex = TEX_WINDOW;
-	tile->vis = 1;
-	tile->type = WALL;
-	free_str_array(al);
+void	shutdown_input_setup(t_game *game)
+{
+	mlx_hook(game->app.win, DESTROY, 0, (void *)game_destroy, game);
 }

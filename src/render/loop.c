@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 15:28:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/25 20:50:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,18 +123,6 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 // 	};
 // };
 
-t_tile map_get_tile(t_map *map, int x, int y)
-{
-	t_tile tile = map->tiles[x + y * map->width];
-	return (tile);
-}
-
-t_tile *map_get_tile_ref(t_map *map, int x, int y)
-{
-	t_tile *tile = &map->tiles[x + y * map->width];
-	return (tile);
-}
-
 /* Preforms a raycast on the tile grid
 	RETURNS:
 	-1 if there were no hits
@@ -206,7 +194,7 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 // 	map.y * R_HEIGHT / (float)MAP_HEIGHT});
 // }
 
-void player_controls(t_game *game)
+void player_loop(t_game *game)
 {
 	t_player *const player = &game->player;
 	double oldDirX;
@@ -215,61 +203,7 @@ void player_controls(t_game *game)
 	oldDirX = player->dir.x;
 	oldPlaneX = player->plane.x;
 	event_player(game);
-	if (input_keyheld(&game->input, KEY_W))
-	{
-		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.x * player->moveSpeed), (int)player->pos.y);
-		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y + player->dir.y * player->moveSpeed));
-		if (horz->vis == -1)
-			player->pos.x += player->dir.x * player->moveSpeed;
-		if (vert->vis == -1)
-			player->pos.y += player->dir.y * player->moveSpeed;
-	}
-	if (input_keyheld(&game->input, KEY_S))
-	{
-		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x - player->dir.x * player->moveSpeed), (int)player->pos.y);
-		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.y * player->moveSpeed));
-		if (horz->vis == -1)
-			player->pos.x -= player->dir.x * player->moveSpeed;
-		if (vert->vis == -1)
-			player->pos.y -= player->dir.y * player->moveSpeed;
-	}
-	if (input_keyheld(&game->input, KEY_A))
-	{
-		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.y * player->moveSpeed), (int)player->pos.y);
-		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.x * player->moveSpeed));
-		if (horz->vis == -1)
-			player->pos.x += player->dir.y * player->moveSpeed;
-		if (vert->vis == -1)
-			player->pos.y += -player->dir.x * player->moveSpeed;
-		//player->pos = v2add(player->pos, v2muls(v2new(player->dir.y, -player->dir.x), player->moveSpeed));
-	}
-	if (input_keyheld(&game->input, KEY_D))
-	{
-		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.y * -player->moveSpeed), (int)player->pos.y);
-		t_tile *vert = map_get_tile_ref(&game->world->map, (int)player->pos.x, (int)(player->pos.y - player->dir.x * -player->moveSpeed));
-		if (horz->vis == -1)
-			player->pos.x += player->dir.y * -player->moveSpeed;
-		if (vert->vis == -1)
-			player->pos.y += -player->dir.x * -player->moveSpeed;	
-		//player->pos = v2add(player->pos, v2muls(v2new(player->dir.y, -player->dir.x), -player->moveSpeed));
-	}
-	if (input_keyheld(&game->input, KEY_RARROW) || v2isub(game->input.mouse_prev, game->input.mouse).x < 0)
-	{
-		// both camera direction and camera plane must be rotated
-		player->dir.x = player->dir.x * cos(-player->rotSpeed) - player->dir.y * sin(-player->rotSpeed);
-		player->dir.y = oldDirX * sin(-player->rotSpeed) + player->dir.y * cos(-player->rotSpeed);
-		player->plane.x = player->plane.x * cos(-player->rotSpeed) - player->plane.y * sin(-player->rotSpeed);
-		player->plane.y = oldPlaneX * sin(-player->rotSpeed) + player->plane.y * cos(-player->rotSpeed);
-	}
-	if (input_keyheld(&game->input, KEY_LARROW) || v2isub(game->input.mouse_prev, game->input.mouse).x > 0)
-	{
-
-		// both camera direction and camera plane must be rotated
-		player->dir.x = player->dir.x * cos(player->rotSpeed) - player->dir.y * sin(player->rotSpeed);
-		player->dir.y = oldDirX * sin(player->rotSpeed) + player->dir.y * cos(player->rotSpeed);
-		player->plane.x = player->plane.x * cos(player->rotSpeed) - player->plane.y * sin(player->rotSpeed);
-		player->plane.y = oldPlaneX * sin(player->rotSpeed) + player->plane.y * cos(player->rotSpeed);
-	}
+	control_process(game);
 	if (game->events_on == true)
 		event_interact(game);
 	mmap_input(game, &game->mmap);
@@ -367,7 +301,7 @@ void	render(t_game *game)
 {
 	t_vertical	vert;
 
-	player_controls(game);
+	player_loop(game);
 	input_process(&game->input);
 	render_floor(game);
 	vert.x = -1;

@@ -12,6 +12,7 @@ SRCSF = $(TEST) \
 		render/loop.c \
 		render/floor_render.c \
 		render/line.c \
+		controls/controls.c \
 		util/time.c \
 		util/error_handler.c \
 		util/string_utils.c \
@@ -23,6 +24,7 @@ SRCSF = $(TEST) \
 		map_parser/map_checker_tile.c \
 		map_parser/map_checker_element.c \
 		map_parser/map_default_map.c \
+		map_parser/map_utils.c \
 		modifiers/modifier_setup.c \
 		modifiers/modifier_utils.c \
 		modifiers/mod_func_cardinal_texture.c \
@@ -46,6 +48,7 @@ SRCSF = $(TEST) \
 		input/input_setup.c \
 		input/keys.c \
 		cerror.c \
+		destroy.c \
 
 INCSF = cubed.h
 
@@ -94,7 +97,7 @@ WFLAGS =#-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
-OPFLAG = -Ofast
+OPFLAG = -Ofast -flto
 OPTS = $(OPT)
 
 ifneq (,$(findstring def,$(OPTS)))

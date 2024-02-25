@@ -23,7 +23,7 @@ void	*get_pos_and_surrounding_tiles(t_world *world, int x, int y)
 	world->ent_2[world->ent_count].pos[8].y = y - 1;
 }
 
-t_mod *mod_get_mod(t_map *map, t_modtype type, int *index)
+t_mod	*mod_get_mod(t_map *map, t_modtype type, int *index)
 {
 	int	i;
 
@@ -33,6 +33,6 @@ t_mod *mod_get_mod(t_map *map, t_modtype type, int *index)
 	if (index != NULL)
 		*index = i;
 	if (i < sizeof(map->mods) / sizeof(*map->mods))
-		return (map->mods[i].type);
+		return (&map->mods[i].type);
 	return (NULL);
 }
