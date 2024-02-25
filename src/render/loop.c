@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/17 18:38:41 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:28:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,7 +366,6 @@ void	render_vertical(t_game *game, t_vertical info)
 void	render(t_game *game)
 {
 	t_vertical	vert;
-
 
 	player_controls(game);
 	input_process(&game->input);

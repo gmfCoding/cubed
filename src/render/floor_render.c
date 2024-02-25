@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:31:56 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 15:23:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/25 15:28:50 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cubed.h"
@@ -29,11 +29,11 @@ static void	render_floor_row(t_game *game, int y, t_vec2 step, t_vec2 *floor)
 		floor->x += step.x;
 		floor->y += step.y;
 		colour = game->world->map.color_ceiling;
-		if (game->use_ground_tex)
+		if (!game->world->map.use_ceiling)
 			colour = pixel_get(game->textures[4], uv.x, uv.y);
 		pixel_set(game->rt1, x, y, (colour >> 1) & 8355711 | R_ALPHA);
 		colour = game->world->map.color_floor;
-		if (game->use_ground_tex)
+		if (!game->world->map.use_floor)
 			colour = (colour >> 1) & 0x7F7F7F;
 		pixel_set(game->rt1, x, R_HEIGHT - y - 1, colour | R_ALPHA);
 	}

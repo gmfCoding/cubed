@@ -41,6 +41,8 @@ typedef struct	s_map
 	t_vec2		s_pos;
 	uint8_t		width;
 	uint8_t		height;
+	bool		use_ceiling;
+	bool		use_floor;
 	int			color_ceiling;
 	int			color_floor;
 }				t_map;

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:22:55 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/02/25 15:19:14 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/25 15:29:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 	map->mods[index].type = FLOOR_COLOR;
 	map->mods[index].content = ft_strdup(content);
 	f = ft_split(content, ',');
+	map->use_floor = true;
 	map->color_floor = 0;
 	map->color_floor |= ft_atoi(f[0]) << OF_RED;
 	map->color_floor |= ft_atoi(f[1]) << OF_GREEN;
@@ -42,6 +43,7 @@ void	mod_gen_c(char *content, int index, t_world *world, t_map *map)
 	map->mods[index].type = CEILING_COLOR;
 	map->mods[index].content = ft_strdup(content);
 	c = ft_split(content, ',');
+	map->use_ceiling = true;
 	map->color_ceiling = 0;
 	map->color_ceiling |= ft_atoi(c[0]) << OF_RED;
 	map->color_ceiling |= ft_atoi(c[1]) << OF_GREEN;
