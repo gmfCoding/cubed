@@ -3,21 +3,17 @@
 #include "cubed.h"
 #include "player.h"
 #include "destroy.h"
+#include <math.h>
 
-static void rotate_player(t_player *player, double angle)
-{	
-	double oldDirX;
-	double oldPlaneX;
-
-	oldDirX = player->dir.x;
-	oldPlaneX = player->plane.x;
-	player->dir.x = player->dir.x * cos(angle) - player->dir.y * sin(angle);
-	player->dir.y = oldDirX * sin(angle) + player->dir.y * cos(angle);
-	player->plane.x = player->plane.x * cos(angle) - player->plane.y * sin(angle);
-	player->plane.y = oldPlaneX * sin(angle) + player->plane.y * cos(angle);
+static void	rotate_player(t_player *player, double angle)
+{
+	player->dir.x = cos(angle);
+	player->dir.y = sin(angle);
+	player->plane.x = -player->dir.y / 2.0;
+	player->plane.y = player->dir.x / 2.0;
 }
 
-static void move_player(t_map *map, t_player *pl, t_vec2 dir)
+static void	move_player(t_map *map, t_player *pl, t_vec2 dir)
 {
 	t_tile *horz;
 	t_tile *vert;
@@ -31,15 +27,11 @@ static void move_player(t_map *map, t_player *pl, t_vec2 dir)
 		pl->pos.y += vel.y;
 }
 
-void control_player_process(t_game *game)
+void	control_player_process(t_game *game)
 {
 	t_player *const		pl = &game->player;
 	t_inputctx *const 	i = &game->input;
-	double				oldDirX;
-	double				oldPlaneX;
 
-	oldDirX = pl->dir.x;
-	oldPlaneX = pl->plane.x;
 	if (input_keyheld(i, KEY_W))
 		move_player(&game->world->map, pl, pl->dir);
 	if (input_keyheld(i, KEY_S))
@@ -48,10 +40,17 @@ void control_player_process(t_game *game)
 		move_player(&game->world->map, pl, v2new(pl->dir.y, -pl->dir.x));
 	if (input_keyheld(i, KEY_D))
 		move_player(&game->world->map, pl, v2new(-pl->dir.y, pl->dir.x));
-	if (input_keyheld(i, KEY_RARROW) || v2isub(i->mouse_prev, i->mouse).x < 0)
-		rotate_player(pl, -pl->rotSpeed);
-	if (input_keyheld(i, KEY_LARROW) || v2isub(i->mouse_prev, i->mouse).x > 0)
-		rotate_player(pl, pl->rotSpeed);
+	if (input_keyheld(i, KEY_RARROW) || input_keyheld(i, KEY_LARROW))
+	{
+		if (input_keyheld(i, KEY_RARROW))
+			pl->key_angle -= pl->rotSpeed;
+		if (input_keyheld(i, KEY_LARROW))
+			pl->key_angle += pl->rotSpeed;
+	}
+	else
+		pl->angle = ((double)i->mouse.x / SCR_WIDTH) * 3.14159 * 2; // TODO: Use M_TAU
+	printf("%f %f\n", pl->angle, pl->key_angle);
+	rotate_player(pl, ((pl->angle * 2) - pl->key_angle) );
 }
 
 void	control_core_process(t_game *game)
