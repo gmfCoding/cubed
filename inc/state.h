@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:35:38 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/25 15:08:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ struct s_game
 	t_inputctx		input;
 	t_rayinfo		half;
 	unsigned int		fpsc;
+
+	bool use_ground_tex;
 };
 
 void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);
