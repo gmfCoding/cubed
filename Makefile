@@ -11,7 +11,9 @@ SRCSF = $(TEST) \
 		render/render_util.c \
 		render/loop.c \
 		render/floor_render.c \
+		render/wall_render.c \
 		render/line.c \
+		render/raycast.c \
 		controls/controls.c \
 		util/time.c \
 		util/error_handler.c \

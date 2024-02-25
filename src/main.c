@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 21:21:36 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/26 00:54:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ void generate_textures(t_game *game)
 	// 	}
 	// }
 	game->textures[TEX_WALL] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[TEX_WALLN] = game->textures[TEX_WALL];
+	game->textures[TEX_WALLE] = game->textures[TEX_WALL];
+	game->textures[TEX_WALLS] = game->textures[TEX_WALL];
+	game->textures[TEX_WALLW] = game->textures[TEX_WALL];
 	game->textures[TEX_DOOR] = texture_load(game->app.mlx, "assets/window.xpm");
 	game->textures[TEX_WINDOW] = texture_load(game->app.mlx, "assets/window.xpm");
 	// game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");

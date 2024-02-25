@@ -49,7 +49,6 @@ void	control_player_process(t_game *game)
 	}
 	else
 		pl->angle = ((double)i->mouse.x / SCR_WIDTH) * 3.14159 * 2; // TODO: Use M_TAU
-	printf("%f %f\n", pl->angle, pl->key_angle);
 	rotate_player(pl, ((pl->angle * 2) - pl->key_angle) );
 }
 

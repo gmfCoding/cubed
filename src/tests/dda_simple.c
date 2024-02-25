@@ -263,7 +263,5 @@ int main(int argc, char **argv)
 
 	mlx_loop_hook(game.mlx, (void *)render2, &game);
 	mlx_hook(game.win, 2, (1L << 0), (void *)on_key_press2, &game);
-
-	// mlx_mouse_hook(game.win, (void *)on_mouse, &game);
 	mlx_loop(game.mlx);
 }
