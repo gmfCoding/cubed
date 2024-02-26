@@ -29,10 +29,11 @@ void	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 		world->ent_2[world->ent_count].state_1 = true;
 	world->ent_count++;
 
-	world->sprite[world->sp_amount] = (t_sprite){.tex = 7, .pos = v2new((double)x + 0.5, (double )y + 0.5)};
-	world->map.tiles[x + y * world->map.width].sp_count = 1;
-	world->map.tiles[x + y * world->map.width].sprite[0] = 0;
+	t_tile *tile = &world->map.tiles[x + y * world->map.width]; // TODO: Use map_get_tile_ref (after main merge)
+	world->sprite[world->sp_amount] = (t_sprite){.tex = 7, .pos = v2new((double)x + ((double)rand() / (RAND_MAX * 2.0)), (double )y + ((double)rand() / (RAND_MAX * 2.0)))}; // FORBIDDEN USE OF rand()
+	tile->sprite[tile->sp_count] = world->sp_amount;
 	world->sp_amount++;
+	tile->sp_count++;
 	printf("sp_amount = %d\n", world->sp_amount);
 //need to organize the sprite struct or make a new one or rederence the image of what is being displayed
 

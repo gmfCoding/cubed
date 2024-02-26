@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/31 21:10:29 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/27 03:07:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,20 +252,17 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 		while (++i < tile->sp_count)
 		{
 
-			sp = &game->world->sprite[tile->sprite[hit]];
-		//	printf("v = (%f, %f) s = (%f, %f) s_1 = (%f, %f) s_2 = (%f, %f)\n", game->player.dir.x, game->player.dir.y, start.x, start.y, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
-
-
-
-	//	printf("%d\n", dda.map.x);
-			if (two_seg_intersect(sp->s1, sp->s2, start, v2))
+			sp = &game->world->sprite[tile->sprite[i]];
+			static int prev;
+			if (dda.map.x != prev)
 			{
-				static int prev;
-				if (dda.map.x != prev)
-				{
-				  printf("%d\n", dda.map.x);
-				  prev = dda.map.x;
-				}
+				//printf("v = (%f, %f) s = (%f, %f) s_1 = (%f, %f) s_2 = (%f, %f)\n", game->player.dir.x, game->player.dir.y, start.x, start.y, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
+				printf("i:%d x:%d s_1 = (%f, %f) s_2 = (%f, %f)\n", i, dda.map.x, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
+				prev = dda.map.x;
+			}
+			if (two_seg_intersect(sp->s2, sp->s1, start, v2))
+			{
+
 //		printf("%d\n", dda.map.x);
 
 			//	printf("found spote\n");
@@ -583,7 +580,6 @@ void draw_debug_view_world_state(t_game *game)
     t_sprite        *curr;
     int             i;
     i = -1;
-	texture_clear(tex, 0 | R_ALPHA);
 
     while (++i < game->world->sp_amount)
     {
@@ -627,7 +623,8 @@ void	render(t_game *game)
 {
 	t_vertical	vert;
 
-	
+    const t_texture    tex = texture_get_debug_view(game, 2);
+	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	update_segments(game);
 
@@ -644,6 +641,9 @@ void	render(t_game *game)
 		vert.ray = raycast(game, game->player.pos, vert.dir);
 		if (vert.x == R_HEIGHT / 2)
 			game->half = vert.ray;
+		if (vert.x % 30 == 1)
+			texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, v2muls(vert.dir, vert.ray.depths->depth)), D_SCALE), R_RED | R_GREEN | R_ALPHA);
+
 		render_vertical(game, vert);
 	}
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
