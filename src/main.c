@@ -39,6 +39,7 @@
 void	world_preset(int argc, char **argv, t_game *game)
 {
 	game->world->ent_count = 0;
+	game->world->sp_amount = 0;
 	if (argc - 1 >= 1)
 		map_parse(argc, argv, game);
 	else
@@ -105,17 +106,18 @@ int	main(int argc, char **argv)
 	map_print(&game.world->map);
 
 	game.app.mlx = mlx_init();
-	game.world->sp_count = 1;
-	game.world->sprite[0] = (t_sprite){.tex = 7, .pos = v2new(26.5, 9.5)};
-	game.world->map.tiles[26 + 9 * game.world->map.width].sp_count = 1;
-	game.world->map.tiles[26 + 9 * game.world->map.width].sprite[0] = 0;
+
+//	game.world->sp_count = 0;
+//	game.world->sprite[0] = (t_sprite){.tex = 7, .pos = v2new(26.5, 9.5)};
+//	game.world->map.tiles[26 + 9 * game.world->map.width].sp_count = 1;
+//	game.world->map.tiles[26 + 9 * game.world->map.width].sprite[0] = 0;
+
 	modifier_after(&game);
 
 //	print_vector_path(&game);	
-
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
-	game.rt2 = texture_get_debug_view(&game, 1);
+//	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
 
 	generate_textures(&game);

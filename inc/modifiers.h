@@ -31,6 +31,7 @@ typedef enum	e_ent_type
 	ALERT_HIGH,
 	ALERT_OFF,
 	FIVE_LIGHTS,
+	ENEMY,
 }		t_ent_type;
 
 typedef struct	s_mod
@@ -92,6 +93,7 @@ void		mod_gen_dr(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_ke(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_mm(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_al(char *content, int index, t_world *world, t_map *map);
+void		mod_gen_en(char *content, int index, t_world *world, t_map *map);
 
 void	modifier_after(t_game *game);
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);

@@ -67,7 +67,7 @@ typedef struct	s_world
 	t_entity_2	ent_2[MAX_ENT];
 	int		ent_count;
 	t_sprite	sprite[MAX_ENT];
-	char		sp_count;
+	char		sp_amount;
 }			t_world;
 
 	// MAP PARSER //

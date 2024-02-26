@@ -56,6 +56,7 @@ char *const			g_mapsymbols[] = {
 	"KE",
 	"AL",
 	"MM",
+	"EN",
 };
 
 t_ex_action const	g_mapfuncs[] = {
@@ -69,6 +70,7 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_ke,
 	&mod_gen_al,
 	&mod_gen_mm,
+	&mod_gen_en,
 };
 
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
