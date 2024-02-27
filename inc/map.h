@@ -5,8 +5,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "player.h"
 # include <inttypes.h>
+# include "player.h"
+# include "enemy.h"
 # include "libft.h"
 # include "modifiers.h"
 # include "events.h"
@@ -58,7 +59,6 @@ struct	s_sprite
 	t_vec2		s2;
 };
 
-
 typedef struct	s_world
 {
 	t_map		map;
@@ -66,6 +66,7 @@ typedef struct	s_world
 	t_entity	ent[MAX_ENT];//this might be getting phased out but im still using it for the moment
 	t_entity_2	ent_2[MAX_ENT];
 	int		ent_count;
+	t_enemy		enemy;
 	t_sprite	sprite[MAX_ENT];
 	char		sp_amount;
 }			t_world;

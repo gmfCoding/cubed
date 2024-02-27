@@ -19,6 +19,7 @@ typedef enum	e_modtype
 	FLOOR_COLOR,
 	CEILING_COLOR,
 	MINI_MAP,
+	ENEMY,
 }				t_modtype;
 
 typedef enum	e_ent_type
@@ -31,7 +32,6 @@ typedef enum	e_ent_type
 	ALERT_HIGH,
 	ALERT_OFF,
 	FIVE_LIGHTS,
-	ENEMY,
 }		t_ent_type;
 
 typedef struct	s_mod

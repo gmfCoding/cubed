@@ -41,6 +41,7 @@ SRCSF = $(TEST) \
 		events/event_door.c \
 		events/event_handler.c \
 		entities/player_setup.c \
+		entities/enemy.c \
 		a_star/a_star_path_collect.c \
 		a_star/a_star_neighboring.c \
 		a_star/a_star_memory.c \

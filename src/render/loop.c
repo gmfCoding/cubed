@@ -257,7 +257,7 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 			if (dda.map.x != prev)
 			{
 				//printf("v = (%f, %f) s = (%f, %f) s_1 = (%f, %f) s_2 = (%f, %f)\n", game->player.dir.x, game->player.dir.y, start.x, start.y, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
-				printf("i:%d x:%d s_1 = (%f, %f) s_2 = (%f, %f)\n", i, dda.map.x, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
+				//printf("i:%d x:%d s_1 = (%f, %f) s_2 = (%f, %f)\n", i, dda.map.x, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
 				prev = dda.map.x;
 			}
 			if (two_seg_intersect(sp->s2, sp->s1, start, v2))
@@ -623,14 +623,14 @@ void	render(t_game *game)
 {
 	t_vertical	vert;
 
-    const t_texture    tex = texture_get_debug_view(game, 2);
-	texture_clear(tex, 0 | R_ALPHA);
+//    const t_texture    tex = texture_get_debug_view(game, 2);
+//	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	update_segments(game);
 
 	player_controls(game);
 	input_process(&game->input);
-	draw_debug_view_world_state(game);
+//	draw_debug_view_world_state(game);
 	render_floor(game);
 	vert.x = -1;
 	while (++vert.x < R_HEIGHT)
@@ -641,8 +641,8 @@ void	render(t_game *game)
 		vert.ray = raycast(game, game->player.pos, vert.dir);
 		if (vert.x == R_HEIGHT / 2)
 			game->half = vert.ray;
-		if (vert.x % 30 == 1)
-			texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, v2muls(vert.dir, vert.ray.depths->depth)), D_SCALE), R_RED | R_GREEN | R_ALPHA);
+//		if (vert.x % 30 == 1)
+//			texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, v2muls(vert.dir, vert.ray.depths->depth)), D_SCALE), R_RED | R_GREEN | R_ALPHA);
 
 		render_vertical(game, vert);
 	}
@@ -652,6 +652,6 @@ void	render(t_game *game)
 	texture_draw(game, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);
-	texture_draw_debug_view(game, 2);
+//	texture_draw_debug_view(game, 2);
 	game->fpsc++;
 }

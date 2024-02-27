@@ -14,6 +14,7 @@
 # define STATE_H
 
 #include "player.h"
+#include "enemy.h"
 #include "input.h"
 #include "texture.h"
 #include "ray.h"
@@ -54,7 +55,6 @@ struct s_game
 
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
-
 	t_player		player;
 	t_texture		textures[8];
 	t_world			*world;
