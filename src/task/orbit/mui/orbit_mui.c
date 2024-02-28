@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/28 17:26:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:41:12 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -245,10 +245,9 @@ static const t_mui_ctx		g_orbit_mui = {
 	.inds = (t_mui_base *)g_mui_orbit_inds,
 	.len_inds = sizeof(g_mui_orbit_inds) / sizeof(t_mui_base),
 	.size_inds = sizeof(t_mui_base),
-	.heap = false,
 	.oscale = 400.0,
 	.scale = 800,
-	.offset = {90.0 , 90.0}
+	.offset = {90.0, 90.0}
 };
 
 void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
@@ -263,7 +262,7 @@ void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
 void	orbit_mui_control_action(t_mui_ctx *ctx)
 {
 	t_task_orbit *const	task = ctx->ctx;
-	int						i;
+	int					i;
 
 	task->scr_offset.x = ctx->dials[ORB_MUI_DIAL_X].angle;
 	task->scr_offset.y = ctx->dials[ORB_MUI_DIAL_Y].angle;

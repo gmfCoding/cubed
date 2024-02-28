@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/28 17:25:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:39:43 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -14,6 +14,7 @@
 # include "def_tex.h"
 # include "vector2i.h"
 # include "texture.h"
+# include "input.h"
 # include "rect.h"
 # include <stdbool.h>
 
@@ -94,11 +95,10 @@ typedef union u_mui_any
 
 # define MUI_LEN_TYPES 4
 
-
-typedef struct s_game t_game; // TODO: REMOVE
+typedef struct s_game	t_game; // TODO: REMOVE
 typedef struct s_mui_context
 {
-	void		*ctx;
+	void			*ctx;
 	union
 	{
 		struct
@@ -123,7 +123,6 @@ typedef struct s_mui_context
 			t_mui_base	*all[MUI_LEN_TYPES];
 		};
 	};
-	bool			heap;
 	t_vecd			oscale;
 	t_vecd			scale;
 	t_vec2			offset;
@@ -135,12 +134,11 @@ void	mui_destroy(t_mui_ctx *mui, t_mui_ctx **store, bool heap);
 /* Preloads all the deferred textures. */
 void	mui_def_preload(t_app *app, t_mui_ctx *ctx);
 
-typedef struct s_inputctx	t_inputctx;
-
 void	mui_init(t_mui_ctx *ctx);
 
 void	mui_process(t_mui_ctx *ctx, t_inputctx *in);
-void	mui_button_group_off(t_mui_ctx *ctx, t_inputctx *in, t_mui_button *last);
+void	mui_button_group_off(t_mui_ctx *ctx, t_inputctx *in,
+			t_mui_button *last);
 
 void	mui_render(t_mui_ctx *ctx, const t_texture *rt);
 
