@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/20 18:01:28 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:51:12 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ void player_controls(t_game *game)
 		game->tasks[0] = malloc(sizeof(t_task_orbit));
 		*game->tasks[0] = *g_tasks[0];
 		task_orbit_setup(game, game->tasks[0]);
-		game->test_task = true;
+		game->tasks[0]->show = true;
 	}
 }
 
@@ -362,7 +362,7 @@ void	render(t_game *game)
 		render_vertical(game, vert);
 	}
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
-	if (game->test_task)
+	if (game->tasks[0] && game->tasks[0]->show)
 		task_orbit_render(game, game->tasks[0]);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	input_process(&game->input);

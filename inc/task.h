@@ -21,6 +21,7 @@ struct s_task
 	int				key;
 	t_taskrender_fn	func;
 	t_taskrender_fn	setup;
+	bool			show;
 };
 
 # define TASK_LEN 1

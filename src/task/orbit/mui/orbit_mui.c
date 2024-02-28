@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/28 17:41:12 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:53:45 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -261,22 +261,24 @@ void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
 
 void	orbit_mui_control_action(t_mui_ctx *ctx)
 {
-	t_task_orbit *const	task = ctx->ctx;
+	t_task_orbit *const	t = ctx->ctx;
 	int					i;
 
-	task->scr_offset.x = ctx->dials[ORB_MUI_DIAL_X].angle;
-	task->scr_offset.y = ctx->dials[ORB_MUI_DIAL_Y].angle;
-	task->zoom = ctx->dials[ORB_MUI_DIAL_Z].angle;
-	task->brightness = ctx->dials[ORB_MUI_DIAL_B].angle;
+	t->scr_offset.x = ctx->dials[ORB_MUI_DIAL_X].angle;
+	t->scr_offset.y = ctx->dials[ORB_MUI_DIAL_Y].angle;
+	t->zoom = ctx->dials[ORB_MUI_DIAL_Z].angle;
+	t->brightness = ctx->dials[ORB_MUI_DIAL_B].angle;
 	i = -1;
 	while (++i < ctx->len_buttons)
 		if (ctx->buttons[i].on && i < T_ORBIT_MAX_MAN)
-			task->active_path = i;
+			t->active_path = i;
 	i = -1;
 	while (++i < ctx->len_dials)
 		if (i < T_ORBIT_MAX_MAN)
-			task->mean[i] = ctx->dials[i].angle;
+			t->mean[i] = ctx->dials[i].angle;
 	i = -1;
-	task->delta[task->active_path] += (ctx->sliders[0].value - 0.5) / 100.0;
-	update_paths(task);
+	t->delta[t->active_path] += (ctx->sliders[0].value - 0.5) / 100.0;
+	if (orb_deviation(&t->target_path, &t->paths[t->maneuvers - 1]) < 0.05)
+		t->task.show = !(ctx->buttons[ORB_MUI_BTN_APPLY].on);
+	update_paths(t);
 }

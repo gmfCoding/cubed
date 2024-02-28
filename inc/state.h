@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/19 19:07:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:50:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "ray.h"
 # include "app.h"
 # include "task.h"
+# include "random.h"
 
 // FORWARD DECLARE
 typedef struct s_task t_task;
@@ -66,7 +67,7 @@ struct s_game
 	t_inputctx		input;
 	t_rayinfo		half;
 	t_task			*tasks[TASK_LEN];
-	bool			test_task;
+	t_rand			task_rand; // TODO: Make into t_game::rand?
 };
 
 void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);
