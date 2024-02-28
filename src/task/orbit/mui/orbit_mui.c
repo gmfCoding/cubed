@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/19 19:23:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:26:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -63,6 +63,7 @@ static const t_mui_button	g_mui_orbit_buttons[] = {
 	.rect = {.min = {124, 349}, .max = {149, 374}},
 	.type = MUI_BUTTON},
 	.on = false,
+	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_MS1] = {
@@ -71,6 +72,7 @@ static const t_mui_button	g_mui_orbit_buttons[] = {
 	.rect = {.min = {177, 349}, .max = {202, 374}},
 	.type = MUI_BUTTON},
 	.on = false,
+	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_MS2] = {
@@ -79,6 +81,7 @@ static const t_mui_button	g_mui_orbit_buttons[] = {
 	.rect = {.min = {231, 349}, .max = {255, 374}},
 	.type = MUI_BUTTON},
 	.on = false,
+	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_MS3] = {
@@ -87,6 +90,7 @@ static const t_mui_button	g_mui_orbit_buttons[] = {
 	.rect = {.min = {284, 349}, .max = {309, 374}},
 	.type = MUI_BUTTON},
 	.on = false,
+	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_MS4] = {
@@ -95,6 +99,7 @@ static const t_mui_button	g_mui_orbit_buttons[] = {
 	.rect = {.min = {337, 349}, .max = {362, 374}},
 	.type = MUI_BUTTON},
 	.on = false,
+	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_APPLY] = {

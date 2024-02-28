@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/19 19:24:25 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:25:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -67,6 +67,7 @@ t_mui_base	*mui_hover(t_mui_ctx *ctx, t_vec2 mouse)
 	return (NULL);
 }
 
+
 void	mui_process(t_mui_ctx *ctx, t_inputctx *in)
 {
 	static t_mui_base	*base = NULL;
@@ -78,7 +79,10 @@ void	mui_process(t_mui_ctx *ctx, t_inputctx *in)
 	if (!base)
 		return ;
 	if (base->type == MUI_BUTTON && (key & 1))
+	{
 		mui_press_button((void *)base, in->mousef);
+		mui_button_group_off(ctx, in, (void *)base);
+	}
 	else if (base->type == MUI_DIAL && (key & 2))
 		mui_hold_dial((void *)base, in->mousef);
 	else if (base->type == MUI_SLIDE && (key & 2))

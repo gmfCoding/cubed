@@ -64,6 +64,7 @@ SRCSF = $(TEST) \
 		task/orbit/mui/orbit_mui.c \
 		task/mui.c \
 		task/mui_process.c \
+		task/mui_process_extra.c \
 		task/mui_render.c \
 		cerror.c \
 

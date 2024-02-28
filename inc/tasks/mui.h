@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/19 19:35:00 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:25:07 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -65,6 +65,7 @@ typedef struct s_mui_button
 	t_mui_base	base;
 	bool		on;
 	bool		toggle;
+	int			group;
 }	t_mui_button;
 
 typedef union u_mui_any
@@ -139,6 +140,7 @@ typedef struct s_inputctx	t_inputctx;
 void	mui_init(t_mui_ctx *ctx);
 
 void	mui_process(t_mui_ctx *ctx, t_inputctx *in);
+void	mui_button_group_off(t_mui_ctx *ctx, t_inputctx *in, t_mui_button *last);
 
 void	mui_render(t_mui_ctx *ctx, const t_texture *rt);
 
