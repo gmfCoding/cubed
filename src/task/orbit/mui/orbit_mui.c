@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/28 17:53:45 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:59:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -62,7 +62,7 @@ static const t_mui_button	g_mui_orbit_buttons[] = {
 	.id = "orb_mui_mselector", .unlock = true,
 	.rect = {.min = {124, 349}, .max = {149, 374}},
 	.type = MUI_BUTTON},
-	.on = false,
+	.on = true,
 	.group = 1,
 	.toggle = true
 },
