@@ -4,6 +4,7 @@ SRCSF = $(TEST) \
 		texture/texture_util.c \
 		texture/texture_blit.c \
 		texture/deferred.c \
+		texture/circle.c \
 		vector/vector2_math_extra.c \
 		vector/vector2_math_div.c \
 		vector/vector2_math.c \

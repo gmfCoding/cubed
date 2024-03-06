@@ -33,6 +33,10 @@
 # define ORB_BLUE 0x003552D5
 # define ORB_WHITE 0x00CAB9D5
 
+# define ORB_PLANET 0x006DBF6E
+# define T_ORBIT_MAX_MAN 5
+# define T_ORBIT_MAX_ALL 7
+
 typedef struct s_sa_orbit_task
 {
 	t_task			task;

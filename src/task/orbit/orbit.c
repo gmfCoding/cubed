@@ -14,6 +14,7 @@
 #include "tasks/task_orbit.h"
 #include "render.h"
 #include "orbit.h"
+#include "vectorconv.h"
 
 int	task_orbit_setup(t_game *game, t_task *base)
 {
@@ -119,6 +120,7 @@ int	task_orbit_render(t_game *game, t_task *base)
 	}
 	//texture_blit_rect(&rt, scr, (t_rect){45, 37, 274, 266});
 	texture_blit(*scr, rt, v2new(0, 0));
+	texture_draw_circle(&rt, v2tov2i(task->scr_offset), task->zoom * 1/10, ORB_PLANET | R_ALPHA);
 	render_paths(task, &rt, (t_rect){task->scr_offset, {task->zoom, 0}});
 	texture_blit(*tex, rt, v2new(0, 0));
 	mui_render(&task->mui, &rt);
