@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/19 18:57:44 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/04 19:04:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -27,43 +27,11 @@
 # define BS_PNODE "p"
 # define BS_NTAR "G"
 
-# define ORB_MUI_BTN_MS0 0
-# define ORB_MUI_BTN_MS1 1
-# define ORB_MUI_BTN_MS2 2
-# define ORB_MUI_BTN_MS3 3
-# define ORB_MUI_BTN_MS4 4
-# define ORB_MUI_BTN_APPLY 5
-
-# define ORB_MUI_IND0 0
-# define ORB_MUI_IND1 1
-# define ORB_MUI_IND2 2
-# define ORB_MUI_IND3 3
-# define ORB_MUI_IND4 4
-
-# define ORB_MUI_LEN_BTN 6
-
-# define ORB_MUI_DIAL_M0 0
-# define ORB_MUI_DIAL_M1 1
-# define ORB_MUI_DIAL_M2 2
-# define ORB_MUI_DIAL_M3 3
-# define ORB_MUI_DIAL_M4 4
-
-# define ORB_MUI_DIAL_X 5
-# define ORB_MUI_DIAL_Y 6
-# define ORB_MUI_DIAL_Z 7
-# define ORB_MUI_DIAL_B 8
-# define ORB_MUI_LEN_DIAL 9
-
-# define ORB_MUI_SLD_THROTTLE 0
-
 # define ORB_RED 0x00CA522A
 # define ORB_GREEN 0x003DB92A
 # define ORB_GREEN2 0x002DA9AA
 # define ORB_BLUE 0x003552D5
 # define ORB_WHITE 0x00CAB9D5
-
-# define T_ORBIT_MAX_MAN 5
-# define T_ORBIT_MAX_ALL 7
 
 typedef struct s_sa_orbit_task
 {

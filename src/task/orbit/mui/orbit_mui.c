@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/28 17:59:41 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/04 19:15:46 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -58,54 +58,60 @@ static const t_def_tex		g_orb_textures[] = {
 
 static const t_mui_button	g_mui_orbit_buttons[] = {
 [ORB_MUI_BTN_MS0] = {
-	.base = {.pos = {124, 349}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_MS0_X, ORB_MSA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_mselector", .unlock = true,
-	.rect = {.min = {124, 349}, .max = {149, 374}},
+	.rect = {.min = {ORB_MS0_X, ORB_MSA_Y},
+	.max = {ORB_MS0_MAX_X, ORB_MSA_MAX_Y}},
 	.type = MUI_BUTTON},
 	.on = true,
 	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_MS1] = {
-	.base = {.pos = {177, 349,}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_MS1_X, ORB_MSA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_mselector", .unlock = true,
-	.rect = {.min = {177, 349}, .max = {202, 374}},
+	.rect = {.min = {ORB_MS1_X, ORB_MSA_Y},
+	.max = {ORB_MS1_MAX_X, ORB_MSA_MAX_Y}},
 	.type = MUI_BUTTON},
 	.on = false,
 	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_MS2] = {
-	.base = {.pos = {231, 349}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_MS2_X, ORB_MSA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_mselector", .unlock = true,
-	.rect = {.min = {231, 349}, .max = {255, 374}},
+	.rect = {.min = {ORB_MS2_X, ORB_MSA_Y},
+	.max = {ORB_MS2_MAX_X, ORB_MSA_MAX_Y}},
 	.type = MUI_BUTTON},
 	.on = false,
 	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_MS3] = {
-	.base = {.pos = {284, 349, }, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_MS3_X, ORB_MSA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_mselector", .unlock = true,
-	.rect = {.min = {284, 349}, .max = {309, 374}},
+	.rect = {.min = {ORB_MS3_X, ORB_MSA_Y},
+	.max = {ORB_MS3_MAX_X, ORB_MSA_MAX_Y}},
 	.type = MUI_BUTTON},
 	.on = false,
 	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_MS4] = {
-	.base = {.pos = {337, 349}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_MS4_X, ORB_MSA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_mselector", .unlock = true,
-	.rect = {.min = {337, 349}, .max = {362, 374}},
+	.rect = {.min = {ORB_MS4_X, ORB_MSA_Y},
+	.max = {ORB_MS4_MAX_X, ORB_MSA_MAX_Y}},
 	.type = MUI_BUTTON},
 	.on = false,
 	.group = 1,
 	.toggle = true
 },
 [ORB_MUI_BTN_APPLY] = {
-	.base = {.pos = {23, 306}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_APL_X, ORB_APL_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_apply", .unlock = true,
-	.rect = {.min = {23, 306}, .max = {50, 331}},
+	.rect = {.min = {ORB_APL_X, ORB_APL_Y},
+	.max = {ORB_APL_MAX_X, ORB_APL_MAX_Y}},
 	.type = MUI_BUTTON},
 	.on = false,
 	.toggle = false
@@ -114,73 +120,73 @@ static const t_mui_button	g_mui_orbit_buttons[] = {
 
 static const t_mui_dial		g_mui_orbit_dials[] = {
 [ORB_MUI_DIAL_M0] = {
-	.base = {.pos = {122, 325}, .anim = 0, .frame = 0,
+	.base = {.pos = {122, ORB_DMA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
-	.rect = {.min = {122, 325}, .max = {152, 350}},
+	.rect = {ORB_DMS0_X, ORB_DMA_Y, ORB_DMS0_MAX_X, ORB_DMA_MAX_Y},
 	.type = MUI_DIAL},
 	.angle = 0,
 	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI},
 },
 [ORB_MUI_DIAL_M1] = {
-	.base = {.pos = {176, 325}, .anim = 0, .frame = 0,
+	.base = {.pos = {176, ORB_DMA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
-	.rect = {.min = {176, 325}, .max = {204, 350}},
+	.rect = {ORB_DMS1_X, ORB_DMA_Y, ORB_DMS1_MAX_X, ORB_DMA_MAX_Y},
 	.type = MUI_DIAL},
 	.angle = 0,
 	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
 },
 [ORB_MUI_DIAL_M2] = {
-	.base = {.pos = {229, 325}, .anim = 0, .frame = 0,
+	.base = {.pos = {229, ORB_DMA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
-	.rect = {231, 325, 257, 350},
+	.rect = {ORB_DMS2_X, ORB_DMA_Y, ORB_DMS2_MAX_X, ORB_DMA_MAX_Y},
 	.type = MUI_DIAL},
 	.angle = 0,
 	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
 },
 [ORB_MUI_DIAL_M3] = {
-	.base = {.pos = {283, 325}, .anim = 0, .frame = 0,
+	.base = {.pos = {283, ORB_DMA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
-	.rect = {.min = {285, 325}, .max = {311, 350}},
+	.rect = {ORB_DMS3_X, ORB_DMA_Y, ORB_DMS3_MAX_X, ORB_DMA_MAX_Y},
 	.type = MUI_DIAL},
 	.angle = 0,
 	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
 },
 [ORB_MUI_DIAL_M4] = {
-	.base = {.pos = {336, 325}, .anim = 0, .frame = 0,
+	.base = {.pos = {336, ORB_DMA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_meandial", .unlock = true,
-	.rect = {.min = {336, 325}, .max = {364, 350}},
+	.rect = {ORB_DMS4_X, ORB_DMA_Y, ORB_DMS4_MAX_X, ORB_DMA_MAX_Y},
 	.type = MUI_DIAL},
 	.angle = 0,
 	.range = {-INT16_MAX * M_PI, INT16_MAX * M_PI}
 },
 [ORB_MUI_DIAL_X] = {
-	.base = {.pos = {285, 301}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_BX_X, ORB_BA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
-	.rect = {.min = {285, 301}, .max = {303, 318}},
+	.rect = {.min = {ORB_BX_X, ORB_BA_Y}, .max = {ORB_BX_MAX_X, ORB_BX_MAX_Y}},
 	.type = MUI_DIAL},
 	.angle = 161,
 	.range = {-500, 500}
 },
 [ORB_MUI_DIAL_Y] = {
-	.base = {.pos = {305, 301}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_BY_X, ORB_BA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
-	.rect = {.min = {305, 301}, .max = {323, 319}},
+	.rect = {ORB_BY_X, ORB_BA_Y, ORB_BY_MAX_X, ORB_BY_MAX_Y},
 	.type = MUI_DIAL},
 	.angle = 150,
 	.range = {-500, 500}
 },
 [ORB_MUI_DIAL_Z] = {
-	.base = {.pos = {325, 301}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_BZ_X, ORB_BA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
-	.rect = {.min = {325, 301}, .max = {343, 318}},
+	.rect = {ORB_BZ_X, ORB_BA_Y, ORB_BZ_MAX_X, ORB_BZ_MAX_Y},
 	.type = MUI_DIAL},
 	.angle = 70,
 	.range = {50, 500}
 },
 [ORB_MUI_DIAL_B] = {
-	.base = {.pos = {344, 301}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_BB_X, ORB_BA_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_screendial", .unlock = true,
-	.rect = {.min = {344, 301}, .max = {362, 318}},
+	.rect = {ORB_BB_X, ORB_BA_Y, ORB_BB_MAX_X, ORB_BB_MAX_Y},
 	.type = MUI_DIAL},
 	.angle = 1.0,
 	.range = {0.0, 1.0}
@@ -189,12 +195,12 @@ static const t_mui_dial		g_mui_orbit_dials[] = {
 
 static const t_mui_slider	g_mui_orbit_sliders[] = {
 [ORB_MUI_SLD_THROTTLE] = {
-	.base = {.pos = {61, 298}, .anim = 0, .frame = 0,
+	.base = {.pos = {ORB_THRTL_X, ORB_THRTL_Y}, .anim = 0, .frame = 0,
 	.id = "orb_mui_throttle", .unlock = true,
-	.rect = {.min = {61, 303}, .max = {100, 376}},
+	.rect = {ORB_THRTL_X, ORB_THRTL_Y, ORB_THRTL_MAX_X, ORB_THRTL_MAX_Y},
 	.type = MUI_SLIDE},
-	.start = {61, 303},
-	.end = {61, 376},
+	.start = {ORB_THRTL_X, ORB_THRTL_Y},
+	.end = {ORB_THRTL_X, ORB_THRTL_MAX_Y},
 	.value = 0.5,
 	.rest = 0.5, .elastic = true},
 };
@@ -203,25 +209,21 @@ static const t_mui_base		g_mui_orbit_inds[] = {
 [ORB_MUI_IND0] = {
 	.pos = {110, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
-	// .rect = {.min = {124, 349}, .max = {149, 374}},
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND1] = {
 	.pos = {163, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
-	// .rect = {.min = {177, 349}, .max = {202, 374}},
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND2] = {
 	.pos = {217, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
-	// .rect = {.min = {231, 349}, .max = {255, 374}},
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND3] = {
 	.pos = {270, 325}, .anim = 0, .frame = 0,
 	.id = "orb_mui_ind", .unlock = true,
-	// .rect = {.min = {284, 349}, .max = {309, 374}},
 	.type = MUI_BUTTON
 },
 [ORB_MUI_IND4] = {
