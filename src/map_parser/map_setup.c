@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_setup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/01/17 18:32:04 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:48:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,13 @@ void	map_parse(int argc, char **argv, t_game *game)
 	char	*map_str;
 
 	if (argc == 1)
-		map_str = "assets/maps/map1.cub";
+		map_str = "assets/maps/default.cub";
 	else if (argc == 2)
 		map_str = argv[1];
 	else
 		exit(2);
 	map_init(&game->world->map, map_str, game);
 	mmap_init(game);
-
 	map_update_vis(&game->world->map);
 }
 

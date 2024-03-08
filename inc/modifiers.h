@@ -13,6 +13,7 @@ typedef	struct	s_mm_tile t_mm_tile;
 
 typedef enum	e_modtype
 {
+	OTHER,
 	NORTH_TEXTURE,
 	SOUTH_TEXTURE,
 	WEST_TEXTURE,
@@ -95,8 +96,10 @@ void		mod_gen_ke(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_mm(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_al(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_en(char *content, int index, t_world *world, t_map *map);
+void		mod_gen_wn(char *content, int index, t_world *world, t_map *map);
 
 void	modifier_after(t_game *game);
 void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
 void	*get_pos_and_surrounding_tiles(t_world *world, int x, int y);
+t_mod	*mod_get_mod(t_map *map, t_modtype type, int *index);
 #endif

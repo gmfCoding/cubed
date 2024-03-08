@@ -79,7 +79,7 @@ bool	inside(int x, int y, int maxX, int maxY)
 // {
 // 	return (x + y * MAP_WIDTH);
 // }
-
+/*
 typedef struct s_dda
 {
 	t_vec2	delta;
@@ -87,7 +87,7 @@ typedef struct s_dda
 	t_vec2i	step;
 	t_vec2	side;
 }			t_dda;
-
+*/
 t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 {
 	t_dda	dda;
@@ -126,7 +126,7 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 // 		void *entity;
 // 	};
 // };
-
+/*
 t_tile map_get_tile(t_map *map, int x, int y)
 {
 	t_tile tile = map->tiles[x + y * map->width];
@@ -138,7 +138,7 @@ t_tile *map_get_tile_ref(t_map *map, int x, int y)
 	t_tile *tile = &map->tiles[x + y * map->width];
 	return (tile);
 }
-
+*/
 
 typedef enum e_hittype t_hittype;
 enum e_hittype
@@ -280,6 +280,7 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 	return (ray);
 }
 
+
 // t_vec2	screen_to_map(t_vec2 mouse)
 // {
 // 	return ((t_vec2){mouse.x / R_WIDTH * MAP_WIDTH, \
@@ -292,7 +293,7 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 // 	map.y * R_HEIGHT / (float)MAP_HEIGHT});
 // }
 
-void player_controls(t_game *game)
+void player_loop(t_game *game)
 {
 	t_player *const player = &game->player;
 	double oldDirX;
@@ -301,6 +302,7 @@ void player_controls(t_game *game)
 	oldDirX = player->dir.x;
 	oldPlaneX = player->plane.x;
 	event_player(game);
+/*
 	if (input_keyheld(&game->input, KEY_W))
 	{
 		t_tile *horz = map_get_tile_ref(&game->world->map, (int)(player->pos.x + player->dir.x * player->moveSpeed), (int)player->pos.y);
@@ -357,11 +359,15 @@ void player_controls(t_game *game)
 		player->plane.x = player->plane.x * cos(player->rotSpeed) - player->plane.y * sin(player->rotSpeed);
 		player->plane.y = oldPlaneX * sin(player->rotSpeed) + player->plane.y * cos(player->rotSpeed);
 	}
+*/
+	control_process(game);
 	if (game->events_on == true)
 		event_interact(game);
 	mmap_input(game, &game->mmap);
 }
 
+
+//<<<<<<< HEAD
 typedef struct s_vertical
 {
 	int			x;
@@ -622,18 +628,20 @@ void draw_debug_view_world_state(t_game *game)
 
 void	render(t_game *game)
 {
-	t_vertical	vert;
 
+	t_vertical	vert;
 //	const t_texture    tex = texture_get_debug_view(game, 2);
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	enemy_routine(game, &game->world->enemy);
 	update_segments(game);
 
-	player_controls(game);
+//	player_controls(game);
+	player_loop(game);
 	input_process(&game->input);
 	//draw_debug_view_world_state(game);
 	render_floor(game);
+//<<<<<<< HEAD
 	vert.x = -1;
 	while (++vert.x < R_HEIGHT)
 	{
@@ -648,9 +656,11 @@ void	render(t_game *game)
 
 		render_vertical(game, vert);
 	}
+//=======
+//	render_wall(game);
+//>>>>>>> master
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 	mmap_draw(game);
-//	texture_blit(game->mmap.mm_case, game->rt0, );
 	texture_draw(game, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);

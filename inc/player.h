@@ -14,6 +14,8 @@ typedef struct	s_player
 	int	oldp_y;
 	double	moveSpeed;
 	double	rotSpeed;
+	double	angle;
+	double	key_angle;
 }		t_player;
 
 void	player_setup(t_list *curr, t_game *game);

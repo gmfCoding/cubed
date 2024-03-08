@@ -1,18 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_setup.c                                      :+:      :+:    :+:   */
+/*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/23 00:52:55 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 20:07:34 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/25 20:18:31 by clovell           #+#    #+#             */
+/*   Updated: 2024/02/25 20:45:02 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <mlx.h>
-#include "state.h"
-#include "input.h"
+#include "cubed.h"
 
 #define KDOWN 2
 #define KUP 3
@@ -22,13 +19,13 @@
 #define EXPOSE 12
 #define DESTROY 17
 
-void	input_setup(void *mlx, void *win, t_inputctx *input)
+void	game_destroy(t_game *game)
 {
-	*input = (t_inputctx){0};
-	mlx_hook(win, KDOWN, (1L << 0), (void *)input_cb_key_press, input);
-	mlx_hook(win, KUP, (1L << 1), (void *)input_cb_key_release, input);
-	mlx_hook(win, MDOWN, (1L << 2), (void *)input_cb_mouse_press, input);
-	mlx_hook(win, MUP, (1L << 3), (void *)input_cb_mouse_release, input);
-	mlx_hook(win, MMOVE, (1L << 6), (void *)input_cb_mouse_move, input);
-	mlx_do_key_autorepeatoff(mlx);
+	//TODO: Leak cleanup
+	exit(0);
+}
+
+void	shutdown_input_setup(t_game *game)
+{
+	mlx_hook(game->app.win, DESTROY, 0, (void *)game_destroy, game);
 }

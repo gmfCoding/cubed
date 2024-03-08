@@ -19,6 +19,7 @@
 #include "modifiers.h"
 #include "a_star.h"
 #include "enemy.h"
+#include "destroy.h"
 
 // int	main(int argc, char **argv)
 // {
@@ -49,6 +50,23 @@ void	world_preset(int argc, char **argv, t_game *game)
 	game->display_ui = false;
 }
 
+/*
+void	world_preset(int argc, char **argv, t_game *game)
+{
+	game->world->ent_count = 0;
+<<<<<<< HEAD
+	game->world->sp_amount = 0;
+	if (argc - 1 >= 1)
+		map_parse(argc, argv, game);
+	else
+		map_default_map_init(game);
+=======
+	map_parse(argc, argv, game);
+>>>>>>> master
+	game->fpsc = 0;
+	game->display_ui = false;
+}
+*/
 void generate_textures(t_game *game)
 {
 	 game->textures[0] = texture_create(game->app.mlx, WALL_TEX_SIZE, WALL_TEX_SIZE);
@@ -79,15 +97,20 @@ void generate_textures(t_game *game)
 	// 		pixel_set(game->textures[7], x, y, 128 + 256 * 128 + 65536 * 128); // flat grey texture
 	// 	}
 	// }
-	
-	game->textures[0] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[1] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[2] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[4] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
-	game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");
-	game->textures[6] = texture_load(game->app.mlx, "assets/window.xpm");
-	game->textures[7] = texture_load(game->app.mlx, "assets/debug.xpm");
+
+	game->textures[TEX_WALL] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[TEX_WALLN] = game->textures[TEX_WALL];
+	game->textures[TEX_WALLE] = game->textures[TEX_WALL];
+	game->textures[TEX_WALLS] = game->textures[TEX_WALL];
+	game->textures[TEX_WALLW] = game->textures[TEX_WALL];
+	game->textures[TEX_DOOR] = texture_load(game->app.mlx, "assets/window.xpm");
+	game->textures[TEX_WINDOW] = texture_load(game->app.mlx, "assets/window.xpm");
+	// game->textures[3] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[TEX_FLOOR] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
+	game->textures[TEX_CEILING] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
+	// game->textures[5] = texture_load(game->app.mlx, "assets/wall.xpm");
+	// game->textures[6] = texture_load(game->app.mlx, "assets/wall.xpm");
+	// game->textures[7] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
 
 
@@ -120,15 +143,14 @@ int	main(int argc, char **argv)
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 //	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+//ill move this after vv
 	game.world->enemy.path = star_find_path(&game, game.world->enemy.sprite_ref->pos, game.player.pos);
-
 	game.world->enemy.patrol_target.y = game.world->enemy.old_pos[0].y + 0.5;
 	game.world->enemy.patrol_target.x = game.world->enemy.old_pos[0].x + 0.5;
+//ill move this after ^^
 	generate_textures(&game);
-
 	input_setup(game.app.mlx, game.app.win, &game.input);
-
+	shutdown_input_setup(&game);
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);
-
 }

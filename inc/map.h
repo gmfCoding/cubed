@@ -44,6 +44,8 @@ typedef struct	s_map
 	t_vec2		s_pos;
 	uint8_t		width;
 	uint8_t		height;
+	bool		use_ceiling;
+	bool		use_floor;
 	int			color_ceiling;
 	int			color_floor;
 }				t_map;
@@ -70,9 +72,12 @@ typedef struct	s_world
 	t_sprite	sprite[MAX_ENT];
 	char		sp_amount;
 }			t_world;
+t_tile	map_get_tile(t_map *map, int x, int y);
+t_tile	*map_get_tile_ref(t_map *map, int x, int y);
 
-	// MAP PARSER //
+// MAP PARSER //
 t_tiletype	get_tiletype(char c);
+
 
 //t_map		map_parse(int argc, char **argv, t_game *game);
 void		map_parse(int argc, char **argv, t_game *game);

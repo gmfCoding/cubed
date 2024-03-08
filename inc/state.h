@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:35:38 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/26 00:53:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@ struct s_app
 typedef struct s_world t_world;
 typedef struct s_mmap t_mmap;
 
+# define TEX_WALLN 0
+# define TEX_WALLE 1
+# define TEX_WALLS 2
+# define TEX_WALLW 3
+# define TEX_WALL 4
+# define TEX_WINDOW 5
+# define TEX_DOOR 6
+# define TEX_FLOOR 7
+# define TEX_CEILING 8
 
 struct s_game
 {
@@ -56,7 +65,7 @@ struct s_game
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
 	t_player		player;
-	t_texture		textures[8];
+	t_texture		textures[9];
 	t_world			*world;
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];
@@ -64,11 +73,12 @@ struct s_game
 	bool			display_ui;
 	t_inputctx		input;
 	t_rayinfo		half;
-	unsigned int		fpsc;
+	unsigned int	fpsc;
 };
 
-void texture_debug_view_blit(t_game *game, int view, t_texture tex, t_vec2 pos);
-void texture_draw_debug_view(t_game *game, int view);
-t_texture texture_get_debug_view(t_game *game, int view);
-
+void		texture_debug_view_blit(t_game *game, int view, 
+				t_texture tex, t_vec2 pos);
+void		texture_draw_debug_view(t_game *game, int view);
+t_texture	texture_get_debug_view(t_game *game, int view);
+void		control_process(t_game *game);
 #endif
