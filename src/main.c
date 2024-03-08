@@ -18,6 +18,7 @@
 #include "mini_map.h"
 #include "modifiers.h"
 #include "a_star.h"
+#include "enemy.h"
 
 // int	main(int argc, char **argv)
 // {
@@ -119,7 +120,10 @@ int	main(int argc, char **argv)
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 //	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+	game.world->enemy.path = star_find_path(&game, game.world->enemy.sprite_ref->pos, game.player.pos);
 
+	game.world->enemy.patrol_target.y = game.world->enemy.old_pos[0].y + 0.5;
+	game.world->enemy.patrol_target.x = game.world->enemy.old_pos[0].x + 0.5;
 	generate_textures(&game);
 
 	input_setup(game.app.mlx, game.app.win, &game.input);

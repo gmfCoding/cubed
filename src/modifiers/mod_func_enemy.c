@@ -1,4 +1,5 @@
 #include "map.h"
+//#include "vector2i.h"
 
 /*
  * NAME,TARGET,SPEED,XPOS,YPOS,ENEMY_STATE
@@ -16,21 +17,27 @@ void	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	y = ft_atoi(en[4]);
 //	if (ft_strcmp(en[0], "partick") != 0)//if we have more the one type of enemy
 //		enemy->anim = patrik->anim;
-	world->enemy.speed = ft_atoi(en[2]);
+//	world->enemy.speed = ft_atoi(en[2]);
+	world->enemy.speed = 0.01;
 	if (en[5][0] == 'N')
 		world->enemy.state = NOT_ACTIVE;
+	if (en[5][0] == 'T')
+		world->enemy.state = TARGET_IN_SIGHT;
+	if (en[5][0] == 'G')
+		world->enemy.state = GO_PATH_TO_TARGET;
+	if (en[5][0] == 'P')
+		world->enemy.state = PATROL;
 	world->enemy.dir = 0;
-
-	world->enemy.tile_ref = &world->map.tiles[x + y * world->map.width]; // TODO: Use map_get_tile_ref (after main merge)
+	world->enemy.p_index = 1;
+	t_tile *tile = &world->map.tiles[x + y * world->map.width]; // TODO: Use map_get_tile_ref (after main merge)
 	world->sprite[world->sp_amount] = (t_sprite){.tex = 7, .pos = v2new((double)x + 0.5, (double )y + 0.5)};
-	world->enemy.pos = v2new((double)x + 0.5, (double )y + 0.5);//maybe dont need this if we are using the sprite position
-
-	world->enemy.tile_ref->sprite[world->enemy.tile_ref->sp_count] = world->sp_amount;
+	world->enemy.old_pos[0] = v2inew(x, y);//using to track if we move to a new tile
+	world->enemy.old_pos[1] = v2inew(x, y);//using to track if we move to a new tile
+	world->enemy.old_pos[2] = v2inew(x, y);//using to track if we move to a new tile
+	tile->sprite[tile->sp_count] = world->sp_amount;
+	world->enemy.sprite_ref = &world->sprite[world->sp_amount];
 	world->sp_amount++;
-	world->enemy.tile_ref->sp_count++;
-
-
-
+	tile->sp_count++;
 	free_str_array(en);
 }
 

@@ -93,18 +93,19 @@ void star_check_diagonal_neighbors(t_game *game, t_star_node *curr, t_star_node 
 		}
 	}
 }
-
+/*
 void star_get_neighbors(t_game *game, t_star_node *curr, t_star_node **open, t_star_node **close)
 {
     star_check_cardinal_neighbors(game, curr, open, close);
     star_check_diagonal_neighbors(game, curr, open, close);
 }
+*/
 /*
  * this function allows movement through corner to corner 
  * which should not be allowed in our situation but it is a nice function
  */
-/*
-void	star_get_neighbours(t_game *game, t_star_node *curr, t_star_node **open, t_star_node **close)
+
+void	star_get_neighbors(t_game *game, t_star_node *curr, t_star_node **open, t_star_node **close)
 {
 	int		index;
 	int		i;
@@ -123,4 +124,4 @@ void	star_get_neighbours(t_game *game, t_star_node *curr, t_star_node **open, t_
 				star_insert_node(game, open, curr, pos);
 	}
 }
-*/
+

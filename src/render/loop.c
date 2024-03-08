@@ -569,7 +569,7 @@ void update_segments(t_game *game)
 	//	curr->s2 = v2add(curr->pos, v2muls(dir, -1.25));
 	}
 }
-
+/*
 #define D_SCALE 25
 
 
@@ -618,19 +618,21 @@ void draw_debug_view_world_state(t_game *game)
     }
   //  texture_clear(tex, R_RED | R_ALPHA);
 }
+*/
 
 void	render(t_game *game)
 {
 	t_vertical	vert;
 
-//    const t_texture    tex = texture_get_debug_view(game, 2);
+//	const t_texture    tex = texture_get_debug_view(game, 2);
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
+	enemy_routine(game, &game->world->enemy);
 	update_segments(game);
 
 	player_controls(game);
 	input_process(&game->input);
-//	draw_debug_view_world_state(game);
+	//draw_debug_view_world_state(game);
 	render_floor(game);
 	vert.x = -1;
 	while (++vert.x < R_HEIGHT)
