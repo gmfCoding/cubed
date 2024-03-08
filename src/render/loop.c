@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/27 03:07:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/09 01:30:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 	return (dda);
 }
 
-
 // struct s_collider
 // {
 // 	bool type: 1;
@@ -140,146 +139,12 @@ t_tile *map_get_tile_ref(t_map *map, int x, int y)
 }
 */
 
-typedef enum e_hittype t_hittype;
-enum e_hittype
-{
-	HT_NONE,
-	HT_WALL,
-	HT_CLEAR,
-	HT_SPRITE
-};
-
 /* Preforms a raycast on the tile grid
 	RETURNS:
 	-1 if there were no hits
 	0 if there was a hit but no more
 	1 if there was a hit and potentially more
 */
-
-t_vec2 v2proj_line(t_vec2 a, t_vec2 b, t_vec2 c)
-{
-    t_vec2    dir;
-
-    a = v2sub(a, b);
-    dir = v2norm(v2sub(b, c));
-    return (v2add(b, v2muls(dir, v2dot(dir, a))));
-}
-
-double	v2invlerp(t_vec2 a, t_vec2 b, t_vec2 c)
-{
-	const t_vec2	ac = v2sub(c, a);
-	const t_vec2	ab = v2sub(b, a);
-
-	return (v2dot(ac, ab) / v2dot(ab, ab));
-}
-
-t_hittype	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
-{
-	t_tile	*tile;
-	t_map *const	map = &game->world->map;
-
-	while (1)
-	{
-		hit->side = dda->side.x >= dda->side.y;
-		if (dda->side.x < dda->side.y)
-		{
-			hit->depth = dda->side.x;
-			dda->side.x += dda->delta.x;
-			dda->map.x += dda->step.x;
-		}
-		else
-		{
-			hit->depth = dda->side.y;
-			dda->side.y += dda->delta.y;
-			dda->map.y += dda->step.y;
-		}
-		if (!inside(dda->map.x, dda->map.y, map->width, map->height))
-			return (HT_NONE);
-		tile = map_get_tile_ref(map, dda->map.x, dda->map.y);
-
-		if (tile->vis >= 0 || tile->sp_count > 0)
-		{
-
-			hit->x = dda->map.x;
-			hit->y = dda->map.y;
-		//	if (tile->sp_count > 0)
-		//	{
-		//	 	 printf("GFound sprite on tile: %d %d\n", hit->x, hit->y);
-		//	}
-			if (tile->vis >= 1)
-				return (HT_CLEAR);
-			if (tile->sp_count > 0)
-				return (HT_SPRITE);
-			return (HT_WALL);
-		}
-	}
-	return (-1);
-}
-
-int			ccw(t_vec2 a, t_vec2 b, t_vec2 c)
-{
-	return ((c.y - a.y) * (b.x - a.x) > (b.y - a.y) * (c.x - a.x));
-}
-
-int			two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2)
-{
-	return (ccw(a1, a2, b2) != ccw(b1, a2, b2) && ccw(a1, b1, a2) != ccw(a1, b1, b2));
-}
-
-t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
-{
-	t_rayinfo	ray;
-	t_dda		dda;
-	t_sprite	*sp;
-	t_hittype	hit;
-	t_tile		*tile;
-	t_vec2		v2;
-	int		i;
-
-	ray = (t_rayinfo){0};
-	dda = (t_dda){0};
-	dda = dda_calculate(start, dir);
-	v2 = v2add(start, v2muls(dir, 20));
-	while (ray.hits < MAX_DEPTHS)
-	{
-		hit = raycast_hit(game, &ray.depths[ray.hits], &dda);
-		if (hit == HT_WALL || hit == HT_CLEAR)
-			ray.hits++;
-		if (hit == HT_NONE || hit == HT_WALL)
-			break ;
-		tile = map_get_tile_ref(&game->world->map, dda.map.x, dda.map.y);
-		i = -1;
-		while (++i < tile->sp_count)
-		{
-
-			sp = &game->world->sprite[tile->sprite[i]];
-			static int prev;
-			if (dda.map.x != prev)
-			{
-				//printf("v = (%f, %f) s = (%f, %f) s_1 = (%f, %f) s_2 = (%f, %f)\n", game->player.dir.x, game->player.dir.y, start.x, start.y, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
-				//printf("i:%d x:%d s_1 = (%f, %f) s_2 = (%f, %f)\n", i, dda.map.x, sp->s1.x, sp->s1.y, sp->s2.x, sp->s2.y);
-				prev = dda.map.x;
-			}
-			if (two_seg_intersect(sp->s2, sp->s1, start, v2))
-			{
-
-//		printf("%d\n", dda.map.x);
-
-			//	printf("found spote\n");
-			//	ray.depths[ray.hits].depth = v2mag(v2sub(game->player.pos, sp->pos));
-		//		printf("tile->sp_count = %d and hit = %d\n", tile->sp_count, hit);	
-				ray.depths[ray.hits].depth = v2mag(v2sub(v2proj_line(game->player.pos, sp->s1, sp->s2), game->player.pos));
-		//		ray.depths[ray.hits].depth = v2mag(v2sub(game->player.plane, sp->pos));
-				ray.depths[ray.hits].minX = v2invlerp(sp->s1, sp->s2, v2add(game->player.pos, v2muls(dir, ray.depths[ray.hits].depth)));
-				ray.depths[ray.hits].sp_tex = sp->tex;
-				ray.hits++;
-			}
-		//	hit--;
-		}
-	}
-	return (ray);
-}
-
 
 // t_vec2	screen_to_map(t_vec2 mouse)
 // {

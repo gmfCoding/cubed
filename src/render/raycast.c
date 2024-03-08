@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:31:27 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/26 01:43:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/09 01:10:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "vector2i.h"
 #include "state.h"
 #include "ray.h"
-/*
+
 bool	inside(int x, int y, int maxX, int maxY)
 {
 	return (x >= 0 && y >= 0 && x < maxX && y < maxY);
@@ -58,15 +58,15 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 	return (dda);
 }
 
+int			ccw(t_vec2 a, t_vec2 b, t_vec2 c)
+{
+	return ((c.y - a.y) * (b.x - a.x) > (b.y - a.y) * (c.x - a.x));
+}
 
-// struct s_collider
-// {
-// 	bool type: 1;
-// 	union
-// 	{
-// 		void *entity;
-// 	};
-// };
+int			two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2)
+{
+	return (ccw(a1, a2, b2) != ccw(b1, a2, b2) && ccw(a1, b1, a2) != ccw(a1, b1, b2));
+}
 
 /* Preforms a raycast on the tile grid
 	RETURNS:
@@ -74,8 +74,8 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 	0 if there was a hit but no more
 	1 if there was a hit and potentially more
 */
-/*
-int	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
+
+t_hittype raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 {
 	t_tile	*tile;
 	t_map *const	map = &game->world->map;
@@ -97,13 +97,18 @@ int	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 			hit->side = dda->step.y > 0;
 		}
 		if (!inside(dda->map.x, dda->map.y, map->width, map->height))
-			return (-1);
+			return (HT_NONE);
 		tile = map_get_tile_ref(map, dda->map.x, dda->map.y);
-		if (tile->vis >= 0)
+
+		if (tile->vis >= 0 || tile->sp_count > 0)
 		{
 			hit->x = dda->map.x;
 			hit->y = dda->map.y;
-			return (tile->vis);
+			if (tile->vis >= 1)
+				return (HT_CLEAR);
+			if (tile->sp_count > 0)
+				return (HT_SPRITE);
+			return (HT_WALL);
 		}
 	}
 	return (-1);
@@ -113,19 +118,36 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 {
 	t_rayinfo	ray;
 	t_dda		dda;
-	int			hit;
+	t_sprite	*sp;
+	t_hittype	hit;
+	t_tile		*tile;
+	t_vec2		v2;
+	int			i;
 
 	ray = (t_rayinfo){0};
 	dda = (t_dda){0};
 	dda = dda_calculate(start, dir);
+	v2 = v2add(start, v2muls(dir, 20));
 	while (ray.hits < MAX_DEPTHS)
 	{
 		hit = raycast_hit(game, &ray.depths[ray.hits], &dda);
-		if (hit >= 0)
+		if (hit == HT_WALL || hit == HT_CLEAR)
 			ray.hits++;
-		if (hit <= 0)
+		if (hit == HT_NONE || hit == HT_WALL)
 			break ;
+		tile = map_get_tile_ref(&game->world->map, dda.map.x, dda.map.y);
+		i = -1;
+		while (++i < tile->sp_count)
+		{
+			sp = &game->world->sprite[tile->sprite[i]];
+			if (two_seg_intersect(sp->s2, sp->s1, start, v2))
+			{
+				ray.depths[ray.hits].depth = v2mag(v2sub(v2proj_line(game->player.pos, sp->s1, sp->s2), game->player.pos));
+				ray.depths[ray.hits].minX = v2invlerp(sp->s1, sp->s2, v2add(game->player.pos, v2muls(dir, ray.depths[ray.hits].depth)));
+				ray.depths[ray.hits].sp_tex = sp->tex;
+				ray.hits++;
+			}
+		}
 	}
 	return (ray);
 }
-*/
