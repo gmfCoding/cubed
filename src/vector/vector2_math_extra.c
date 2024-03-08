@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:49:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 01:32:18 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/09 02:33:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -63,7 +63,7 @@ t_vec2	v2proj_line(t_vec2 a, t_vec2 b, t_vec2 c)
 {
 	const t_vec2	diff = v2sub(a, b);
 	const t_vec2	dir = v2norm(v2sub(b, c));
-	const t_vecd	scale = v2dot(dir, a);
+	const t_vecd	scale = v2dot(dir, diff);
 
 	return (v2add(b, v2muls(dir, scale)));
 }

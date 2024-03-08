@@ -11,6 +11,7 @@ SRCSF = $(TEST) \
 		render/render_util.c \
 		render/loop.c \
 		render/floor_render.c \
+		render/column_render.c \
 		render/wall_render.c \
 		render/line.c \
 		render/raycast.c \
@@ -104,7 +105,8 @@ WFLAGS =#-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
-OPFLAG = -Ofast -flto
+OPFLAG = -Ofast -flto -march=native -msse4.2 
+
 OPTS = $(OPT)
 
 ifneq (,$(findstring def,$(OPTS)))

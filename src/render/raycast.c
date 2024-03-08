@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:31:27 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 01:10:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/09 02:33:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ bool	inside(int x, int y, int maxX, int maxY)
 {
 	return (x >= 0 && y >= 0 && x < maxX && y < maxY);
 }
-
-// int	map_index(int x, int y)
-// {
-// 	return (x + y * MAP_WIDTH);
-// }
 
 t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 {
@@ -99,7 +94,6 @@ t_hittype raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 		if (!inside(dda->map.x, dda->map.y, map->width, map->height))
 			return (HT_NONE);
 		tile = map_get_tile_ref(map, dda->map.x, dda->map.y);
-
 		if (tile->vis >= 0 || tile->sp_count > 0)
 		{
 			hit->x = dda->map.x;

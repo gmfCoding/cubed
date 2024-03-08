@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 16:34:56 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 13:16:18 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/09 03:49:36 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "texture.h"
@@ -33,13 +33,13 @@
 // }
 
 __attribute__((always_inline))
-inline void	pixel_set(t_texture data, int x, int y, int color)
+inline void	pixel_set(const t_texture data, const int x, const int y, const int color)
 {
 	data.data[x + y * data.width] = color;
 }
 
 __attribute__((always_inline))
-inline void	pixel_set_s(t_texture data, int x, int y, int color)
+inline void	pixel_set_s(const t_texture data, const int x, const int y, const int color)
 {
 	if (x < 0 || y < 0 || x >= data.width || y >= data.height)
 		return ;
@@ -54,7 +54,7 @@ inline void	pixel_set_s(t_texture data, int x, int y, int color)
 // 	return (*(int *)dst);
 // }
 
-inline int	pixel_get(t_texture data, int x, int y)
+inline int	pixel_get(const t_texture data, const int x, const int y)
 {
 	return (data.data[x + y * data.width]);
 }
@@ -82,7 +82,7 @@ int	pixel_get_s(t_texture data, int x, int y)
 // 	return (*(int *)dst);
 // }
 
-int	pixel_get_s(t_texture data, int x, int y)
+int	pixel_get_s(const t_texture data, const int x, const int y)
 {
 	if (x < 0 || y < 0 || x > data.width || y > data.height)
 		return (R_ALPHA);
