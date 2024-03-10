@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/26 01:50:33 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/09 02:00:36 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "vector2i.h"
 
 #include "libft.h"
+#include "internal/wall.h"
 
 void	measure_frame_rate(t_app app)
 {
@@ -66,26 +67,8 @@ void	draw_debug_info(t_game *game)
 	timeprev = time_get_ms();
 }
 
-// t_vec2	screen_to_map(t_vec2 mouse)
-// {
-// 	return ((t_vec2){mouse.x / R_WIDTH * MAP_WIDTH, \
-// 	mouse.y / R_HEIGHT * MAP_HEIGHT});
-// }
-
-// t_vec2	map_to_screen(t_vec2 map)
-// {
-// 	return ((t_vec2){map.x * R_WIDTH / (float)MAP_WIDTH, \
-// 	map.y * R_HEIGHT / (float)MAP_HEIGHT});
-// }
-
-void player_loop(t_game *game)
+void	player_loop(t_game *game)
 {
-	t_player *const player = &game->player;
-	double oldDirX;
-	double oldPlaneX;
-
-	oldDirX = player->dir.x;
-	oldPlaneX = player->plane.x;
 	event_player(game);
 	control_process(game);
 	if (game->events_on == true)
@@ -93,11 +76,91 @@ void player_loop(t_game *game)
 	mmap_input(game, &game->mmap);
 }
 
+void	update_segments(t_game *game)
+{
+	t_sprite	*curr;
+	t_vec2		dir;
+	t_vecd		temp;
+	int i;
+
+	i = -1;
+	while (++i < game->world->sp_amount)
+	{
+		curr = &game->world->sprite[i];
+		//dir = v2norm(v2sub(game->player.pos, curr->pos));
+		dir = game->player.dir;
+		temp = dir.x;
+		dir.x = dir.y;
+		dir.y = -temp;
+		curr->s1 = v2add(curr->pos, v2muls(dir, 0.5));
+		curr->s2 = v2add(curr->pos, v2muls(dir, -0.5));
+	//	curr->s1 = v2add(curr->pos, v2muls(dir, 1.25));
+	//	curr->s2 = v2add(curr->pos, v2muls(dir, -1.25));
+	}
+}
+/*
+#define D_SCALE 25
+
+
+void draw_debug_view_world_state(t_game *game)
+{
+    const t_texture    tex = texture_get_debug_view(game, 2);
+
+    t_sprite        *curr;
+    int             i;
+    i = -1;
+
+    while (++i < game->world->sp_amount)
+    {
+        curr = &game->world->sprite[i];
+        texture_draw_line(tex, v2muls(curr->s1, D_SCALE), v2muls(curr->s2, D_SCALE), R_RED | R_ALPHA);
+    }
+    texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.dir), D_SCALE), R_BLUE | R_ALPHA);
+    texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.plane), D_SCALE), R_BLUE | R_ALPHA);
+    pixel_set(tex, game->player.pos.x * D_SCALE, game->player.pos.y * D_SCALE, R_GREEN | R_ALPHA);
+
+    for (int y = 0; y < game->world->map.height; y++)
+    {
+        for (int x = 0; x < game->world->map.width; x++)
+        {
+            texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y), D_SCALE), 0x00222222 | R_ALPHA);
+            texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00222222 | R_ALPHA);
+        }
+    }
+    for (int y = 0; y < game->world->map.height; y++)
+    {
+        for (int x = 0; x < game->world->map.width; x++)
+        {
+            t_tile *tile = map_get_tile_ref(&game->world->map, x, y); 
+            if (tile->type == WALL)
+            {
+                texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y), D_SCALE), 0x00AAAAAA | R_ALPHA);
+                texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
+                texture_draw_line(tex, v2muls(v2new(x + 1, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
+                texture_draw_line(tex, v2muls(v2new(x + 1, y + 1), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
+            }
+            if (tile->sp_count > 0)
+            {
+                texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00DDDDDD | R_ALPHA);
+            }
+        }
+    }
+  //  texture_clear(tex, R_RED | R_ALPHA);
+}
+*/
+
 void	render(t_game *game)
 {
+//	const t_texture    tex = texture_get_debug_view(game, 2);
+//	texture_clear(tex, 0 | R_ALPHA);
+	//mlx_mouse_hide(game->app.mlx, game->app.win);
+	enemy_routine(game, &game->world->enemy);
+	update_segments(game);
 
+//	player_controls(game);
 	player_loop(game);
 	input_process(&game->input);
+	//draw_debug_view_world_state(game);
 	render_floor(game);
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
@@ -105,5 +168,6 @@ void	render(t_game *game)
 	texture_draw(game, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);
+//	texture_draw_debug_view(game, 2);
 	game->fpsc++;
 }

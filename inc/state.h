@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/26 00:53:29 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/09 02:42:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STATE_H
 
 #include "player.h"
+#include "enemy.h"
 #include "input.h"
 #include "texture.h"
 #include "ray.h"
@@ -42,9 +43,9 @@ typedef struct s_world t_world;
 typedef struct s_mmap t_mmap;
 
 # define TEX_WALLN 0
-# define TEX_WALLE 1
-# define TEX_WALLS 2
-# define TEX_WALLW 3
+# define TEX_WALLS 1
+# define TEX_WALLW 2
+# define TEX_WALLE 3
 # define TEX_WALL 4
 # define TEX_WINDOW 5
 # define TEX_DOOR 6
@@ -63,7 +64,6 @@ struct s_game
 
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
-
 	t_player		player;
 	t_texture		textures[9];
 	t_world			*world;

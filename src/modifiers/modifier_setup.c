@@ -56,6 +56,7 @@ char *const			g_mapsymbols[] = {
 	"KE",
 	"AL",
 	"MM",
+	"EN",
 	"WN", // WINDOW
 };
 
@@ -70,6 +71,7 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_ke,
 	&mod_gen_al,
 	&mod_gen_mm,
+	&mod_gen_en,
 	&mod_gen_wn,
 };
 

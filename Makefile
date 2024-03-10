@@ -11,6 +11,7 @@ SRCSF = $(TEST) \
 		render/render_util.c \
 		render/loop.c \
 		render/floor_render.c \
+		render/column_render.c \
 		render/wall_render.c \
 		render/line.c \
 		render/raycast.c \
@@ -34,6 +35,7 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_door_setup.c \
 		modifiers/mod_func_minimap.c \
 		modifiers/mod_func_alert.c \
+		modifiers/mod_func_enemy.c \
 		modifiers/mod_func_window.c \
 		mini_map/mmap_draw.c \
 		mini_map/mmap_draw_anim.c \
@@ -45,6 +47,10 @@ SRCSF = $(TEST) \
 		events/event_door.c \
 		events/event_handler.c \
 		entities/player_setup.c \
+		entities/enemy.c \
+		a_star/a_star_path_collect.c \
+		a_star/a_star_neighboring.c \
+		a_star/a_star_memory.c \
 		input/input.c \
 		input/input_hooks.c \
 		input/input_setup.c \
@@ -99,7 +105,8 @@ WFLAGS =#-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
-OPFLAG = -Ofast -flto
+OPFLAG = -Ofast -flto -march=native -msse4.2 
+
 OPTS = $(OPT)
 
 ifneq (,$(findstring def,$(OPTS)))

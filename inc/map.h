@@ -5,8 +5,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "player.h"
 # include <inttypes.h>
+# include "player.h"
+# include "enemy.h"
 # include "libft.h"
 # include "modifiers.h"
 # include "events.h"
@@ -32,6 +33,8 @@ typedef struct	s_tile
 	t_tiletype	type;
 	uint8_t		tex;
 	int8_t		vis;
+	char		sp_count;
+	char		sprite[4];
 }				t_tile;
 
 typedef struct	s_map
@@ -47,13 +50,27 @@ typedef struct	s_map
 	int			color_floor;
 }				t_map;
 
+typedef uint16_t t_tid;
+typedef struct s_sprite t_sprite;
+
+struct	s_sprite
+{
+	t_tid		tex;
+	t_vec2		pos;
+	t_vec2		s1;
+	t_vec2		s2;
+};
+
 typedef struct	s_world
 {
 	t_map		map;
+
 	t_entity	ent[MAX_ENT];//this might be getting phased out but im still using it for the moment
 	t_entity_2	ent_2[MAX_ENT];
 	int		ent_count;
-//	t_event		stored_events[MAX_ENT];
+	t_enemy		enemy;
+	t_sprite	sprite[MAX_ENT];
+	char		sp_amount;
 }			t_world;
 t_tile	map_get_tile(t_map *map, int x, int y);
 t_tile	*map_get_tile_ref(t_map *map, int x, int y);

@@ -4,6 +4,7 @@
 # define NAME_SIZE 50
 # define MAX_ENT 100 
 # include <stdbool.h>
+# include "a_star.h"
 typedef struct	s_world t_world;
 typedef struct	s_map t_map;
 typedef struct	s_tile t_tile;
@@ -19,7 +20,8 @@ typedef enum	e_modtype
 	EAST_TEXTURE,
 	FLOOR_COLOR,
 	CEILING_COLOR,
-	MINI_MAP
+	MINI_MAP,
+	ENEMY,
 }				t_modtype;
 
 typedef enum	e_ent_type
@@ -93,6 +95,7 @@ void		mod_gen_dr(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_ke(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_mm(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_al(char *content, int index, t_world *world, t_map *map);
+void		mod_gen_en(char *content, int index, t_world *world, t_map *map);
 void		mod_gen_wn(char *content, int index, t_world *world, t_map *map);
 
 void	modifier_after(t_game *game);
