@@ -66,6 +66,11 @@ t_vec2	enemy_patrol_target(t_game *game, t_enemy *enemy)
 	return (targets[i]);
 }
 
+/*
+ * normally takes in the s1 ans s2 which is the enemy sprits left
+ * and right sides position and the end is the player position
+ * i use a double as an index on walk the direction and check for walls
+ */
 int	enemy_has_line_of_sight(t_game *game, t_vec2 start, t_vec2 end)
 {
 	t_vec2	dir;
@@ -84,11 +89,14 @@ int	enemy_has_line_of_sight(t_game *game, t_vec2 start, t_vec2 end)
 		if (game->world->map.tiles[x + y * game->world->map.width].vis != -1)
 			if (game->world->map.tiles[x + y * game->world->map.width].sp_count == 0)
 				return (0);
-		i += 0.2;
+		i += 0.5;
 	}
 	return (1);
 }
 
+/*
+ * frees the current path and attempts to get a new A-star path
+ */
 void	enemy_update_path_to_target(t_game *game, t_enemy *enemy)
 {
 	if (enemy->path != NULL)
@@ -96,6 +104,12 @@ void	enemy_update_path_to_target(t_game *game, t_enemy *enemy)
 	enemy->path = star_find_path(game, enemy->sprite_ref->pos, game->player.pos);
 }
 
+/*
+ * are function used to update the tiles that have the enemy
+ * sprite image in it the function can be made better we current
+ * decrease the sp_count(sprite count) in the tile no matter what
+ * this could be problematic and made better
+ */
 void	enemy_update_sp_tile_count(t_game *game, t_enemy *enemy)
 {
 	if ((int)enemy->sprite_ref->s1.x != enemy->old_pos[1].x || (int)enemy->sprite_ref->s1.y != enemy->old_pos[1].y)
@@ -206,6 +220,18 @@ void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
 	enemy_move_to_target(enemy, game->player.pos);
 }
 
+/*
+ * the enemy will look for a valid path while in patrol
+ * if the path return for a_star in NULL it will continue
+ * to patrol if there is a path the enemy will change to
+ * GO_PATH_TO_TARGET where it traveres the a_star path
+ * if while traversing both the s1 and s2 of the enemy
+ * texture have a clear line of sight to the player
+ * the enemy state will change to TARGET_IN_SIGHT and move
+ * directly towards the player and check if the player is still
+ * in line of sight when it is not it will go back to 
+ * GO_PATH_TO_TARGET
+ */
 void	enemy_routine(t_game *game, t_enemy *enemy)
 {
 	if (enemy->state == NOT_ACTIVE)
