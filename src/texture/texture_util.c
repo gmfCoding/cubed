@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:30:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:37:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 20:48:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "texture.h"
@@ -14,48 +14,6 @@
 
 #define SET pixel_set
 #define GET pixel_get
-
-// Copies pixel data from one texture to another
-void	texture_blit(t_texture src, t_texture dst, t_vec2 pos)
-{
-	int		x;
-	int		y;
-	float	a;
-	int		col;
-
-	y = -1;
-	while (++y < src.height)
-	{
-		x = -1;
-		while (++x < src.width)
-		{
-			col = colour_blend(pixel_get_s(src, x, y), \
-				pixel_get_s(dst, pos.x + x, pos.y + y));
-			pixel_set_s(dst, pos.x + x, pos.y + y, col);
-		}
-	}
-}
-
-// Copies pixel data from one texture to another with scale
-void	texture_blit_s(t_texture src, t_texture dst, t_vec2 pos, int scale)
-{
-	int		x;
-	int		y;
-	float	a;
-	int		col;
-
-	y = -1;
-	while (++y < src.height * scale)
-	{
-		x = -1;
-		while (++x < src.width * scale)
-		{
-			col = colour_blend(pixel_get_s(src, x / scale, y / scale), \
-				pixel_get_s(dst, pos.x + x, pos.y + y));
-			pixel_set_s(dst, pos.x + x, pos.y + y, R_ALPHA | col);
-		}
-	}
-}
 
 void	texture_clear(t_texture src, int colour)
 {

@@ -6,10 +6,10 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:18:31 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 20:45:02 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 20:52:26 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "cubed.h"
+#include "state.h"
 
 #define KDOWN 2
 #define KUP 3

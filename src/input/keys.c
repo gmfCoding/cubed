@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:16:03 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/26 02:03:45 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 20:40:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,11 @@ static const int			g_keymapkey[] = {
 	KEY_NP_EQUAL,
 	KEY_NP_ENTER,
 	KEY_NP_PERIOD,
+	MB_LEFT,
+	MB_RIGHT,
+	MB_MIDDLE,
+	MB_SCRLDW,
+	MB_SCRLUP,
 	0,
 };
 
@@ -220,9 +225,14 @@ static const char *const	g_keymapval[] = {
 	"+",
 	"*",
 	"-",
-	"="
+	"=",
 	"\e",
 	MAPVAL_DEL,
+	"",
+	"",
+	"",
+	"",
+	"",
 	"",
 };
 
@@ -329,6 +339,11 @@ static const char *const	g_keymapname[] = {
 	"KEY_NP_EQUAL",
 	"KEY_NP_ENTER",
 	"KEY_NP_PERIOD",
+	"MB_LEFT",
+	"MB_RIGHT",
+	"MB_MIDDLE",
+	"MB_SCRLDW",
+	"MB_SCRLUP",
 	"KEY_INVALID",
 };
 
@@ -360,7 +375,7 @@ int	key_get_index(int key)
 	int	i;
 
 	i = -1;
-	while (++i < sizeof(g_keymapkey) / sizeof(*g_keymapkey))
+	while (++i < (int)(sizeof(g_keymapkey) / sizeof(*g_keymapkey)))
 	{
 		if (key == g_keymapkey[i])
 			return (i);

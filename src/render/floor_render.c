@@ -6,12 +6,13 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:31:56 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/25 15:40:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:08:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "cubed.h"
 #include "vector2.h"
 #include "vector2i.h"
+#include "config.h"
+#include "state.h"
 
 static void	render_floor_row(t_game *game, int y, t_vec2 step, t_vec2 *floor)
 {

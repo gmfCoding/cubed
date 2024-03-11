@@ -15,7 +15,7 @@
 /* *************** */
 
 #include "internal/wall.h"
-#include "cubed.h"
+#include "state.h"
 #include "vector2.h"
 #include "vector2i.h"
 #include "ray.h"

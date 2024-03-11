@@ -6,19 +6,23 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:50:37 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/31 16:51:41 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/03/11 20:55:16 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef RENDER_H
 # define RENDER_H
 # include "vector2.h"
 # include "texture.h"
-# include "state.h"
+# include "rect.h"
+# include "app.h"
+
+typedef struct s_game t_game;
 
 /*** render_util.c ***/
+void	rect_draw(const t_rect *aabb, int colour, t_texture rt);
 
 /* Draws a texture to the screen */
-void	texture_draw(t_game *gs, t_texture tex, t_vec2 pos);
+void	texture_draw(t_app app, t_texture tex, t_vec2 pos);
 
 /* Wall rendering
 	floor_render.c

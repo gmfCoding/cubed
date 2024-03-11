@@ -6,14 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:41:22 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 04:06:15 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:09:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* *************** */
 /*  prior: loop.c: */
 /* *************** */
 #include "internal/wall.h"
-#include "cubed.h"
+#include "state.h"
 #include "vector2.h"
 #include "vector2i.h"
 #include "ray.h"

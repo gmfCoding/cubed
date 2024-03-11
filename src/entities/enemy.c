@@ -1,22 +1,7 @@
 #include "enemy.h"
 #include "map.h"
 #include "state.h"
-
-double v2dist(t_vec2 a, t_vec2 b)
-{
-	double dx;
-	double dy;
-
-	dx = b.x - a.x;
-	dy = b.y - a.y;
-	return (sqrt(dx * dx + dy * dy));
-}
-
-unsigned int custom_rand(unsigned int seed)
-{
-	seed = (seed * 1103515245 + 12345) & 0x7FFFFFFF;
-	return (seed);
-}
+#include "vector2.h"
 
 t_vec2	enemy_calculate_direction(t_vec2 enemy_pos, t_vec2 target)
 {
@@ -49,7 +34,7 @@ t_vec2	enemy_patrol_target(t_game *game, t_enemy *enemy)
 
 	x = (int)enemy->sprite_ref->pos.x + 0.5;
 	y = (int)enemy->sprite_ref->pos.y + 0.5;
-	i = custom_rand((int)game->player.pos.x * (int)game->player.pos.y) % 4;
+	i = mrand(&game->rand) % 4;
 	targets[0] = v2new(x + 1, y);
 	targets[1] = v2new(x, y + 1);
 	targets[2] = v2new(x - 1, y);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 02:00:36 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:33:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #include "mini_map.h"
 #include "input.h"
-#include "cubed.h"
+#include "state.h"
 #include "texture.h"
 #include "vector2i.h"
 
@@ -45,9 +45,9 @@ void	measure_frame_rate(t_app app)
 
 void	draw_debug_info(t_game *game)
 {
-	t_player *const	player = &game->player;
-	static int64_t	timeprev = 0;
-	const char		*debugstr[] = {
+	t_player *const		player = &game->player;
+	static int64_t		timeprev = 0;
+	char		*const	debugstr[] = {
 		ft_strfmt("fps:%d", (int)(1.0 / ((time_get_ms() - timeprev) / 1000.0))),
 		ft_strfmt("pos:(%f,%f)", (double)player->pos.x, (double)player->pos.y),
 		ft_strfmt("dir:(%f,%f)", (double)player->dir.x, (double)player->dir.y),
@@ -55,10 +55,10 @@ void	draw_debug_info(t_game *game)
 		(double)game->player.plane.x, (double)game->player.plane.y),
 		ft_strfmt("hits:(%d)", game->half.hits),
 	};
-	int				i;
+	int					i;
 
 	i = -1;
-	while (++i < sizeof(debugstr) / sizeof(*debugstr))
+	while (++i < (int)(sizeof(debugstr) / sizeof(*debugstr)))
 	{
 		mlx_string_put(game->app.mlx, game->app.win, 0, \
 			i * 12 + 12, 0xFFFFFF, debugstr[i]);
@@ -156,16 +156,15 @@ void	render(t_game *game)
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	enemy_routine(game, &game->world->enemy);
 	update_segments(game);
-
-//	player_controls(game);
 	player_loop(game);
-	input_process(&game->input);
-	//draw_debug_view_world_state(game);
 	render_floor(game);
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 	mmap_draw(game);
-	texture_draw(game, game->rt0, v2new(0, 0));
+	if (game->tasks[0] && game->tasks[0]->show)
+		task_orbit_render(game, game->tasks[0]);
+	input_process(&game->input);
+	texture_draw(game->app, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);
 //	texture_draw_debug_view(game, 2);

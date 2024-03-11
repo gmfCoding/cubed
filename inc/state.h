@@ -6,21 +6,24 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 02:42:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:12:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STATE_H
 # define STATE_H
+# include "input.h"
+# include "texture.h"
+# include "ray.h"
+# include "app.h"
+# include "task.h"
+# include "random.h"
+# include "player.h"
+# include "enemy.h"
+# include "mini_map.h"
 
-#include "player.h"
-#include "enemy.h"
-#include "input.h"
-#include "texture.h"
-#include "ray.h"
-#include "mini_map.h"
-
-//typedef struct s_entity_2 t_entity_2;
+// FORWARD DECLARE
+typedef struct s_task t_task;
 typedef struct s_game t_game;
 
 #define MAX_DEBUG_VIEWS 10
@@ -32,12 +35,6 @@ struct s_debug_texture
 };
 
 typedef struct s_inputctx t_inputctx;
-typedef struct s_app t_app;
-struct s_app
-{
-	void *mlx;
-	void *win;
-};
 
 typedef struct s_world t_world;
 typedef struct s_mmap t_mmap;
@@ -73,6 +70,9 @@ struct s_game
 	bool			display_ui;
 	t_inputctx		input;
 	t_rayinfo		half;
+	t_task			*tasks[TASK_LEN];
+	t_rand			task_rand; // TODO: Use t_game::rand instead ?
+	t_rand			rand;
 	unsigned int	fpsc;
 };
 

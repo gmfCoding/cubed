@@ -1,12 +1,12 @@
 #ifndef MINI_MAP_H
 # define MINI_MAP_H
 
+#include <mlx.h>
+#include <stdlib.h>
 #include "vector2.h"
 #include "texture.h"
 #include "map.h"
 #include "config.h"
-#include <mlx.h>
-#include <stdlib.h>
 
 //int mapX=6,mapY=6,mapS=32,mapSS=24;
 

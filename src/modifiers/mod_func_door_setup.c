@@ -6,12 +6,13 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/02/25 15:42:04 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:09:43 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "render.h"
+#include "state.h"
 
 char    *ft_strcpy(char *s1, char *s2)
 {

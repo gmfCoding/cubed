@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/02/25 16:07:00 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:16:21 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
 		{
 			if (ft_strncmp(g_mapsymbols[i], \
-					str, mod_strlen(g_mapsymbols[i])) == 0)
-				((t_ex_action)g_mapfuncs[i])(str + (mod_strlen(g_mapsymbols[i]) \
+					str, strlen_nl(g_mapsymbols[i])) == 0)
+				((t_ex_action)g_mapfuncs[i])(str + (strlen_nl(g_mapsymbols[i]) \
 					+ 1), index++, world, map);
 		}
 		curr = curr->next;

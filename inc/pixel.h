@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 03:27:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 03:50:04 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:07:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PIXEL_H
@@ -35,6 +35,7 @@
 # define M_BLUE  R_BLUE
 // Alpha colour mask
 # define M_APLHA 0xff000000
+# define M_COL	 0x00ffffff
 
 # define OF_ALPHA 24
 # define OF_RED   16

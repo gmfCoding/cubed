@@ -2,9 +2,31 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Python Debugger: Current File with Arguments",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${file}",
+			"console": "integratedTerminal",
+			"args": "assets/source/orbit/orbit_inst.sep"
+		},
+		{
+			"type": "lldb",
+			"request": "attach",
+			"name": "LLDB Attach",
+			"program": "${workspaceFolder}/cubed"
+		},
+		{
 			"type": "lldb",
 			"request": "launch",
+			"name": "LLDB Launch",
+			"program": "${workspaceFolder}/cubed",
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		},
+		{
 			"name": "Launch",
+			"type": "cppdbg",
+			"request": "launch",
 			"program": "${workspaceFolder}/cubed",
 		//	"args": ["assets/maps/map1.cub"],
 			"cwd": "${workspaceFolder}"

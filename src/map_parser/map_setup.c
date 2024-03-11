@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/02/25 16:48:29 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 20:41:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	map_init(t_map *map, char *map_str, t_game *game)
 	int		index;
 
 	raw_map_file = ft_lst_readfile(map_str);
-	if (raw_map_file == NULL)
+	if ((int64_t)raw_map_file->content <= 1 || raw_map_file == NULL)
 		error_return("File Invalid", 1, 1, NULL);
 	index = 0;
 	remove_empty_lines(&raw_map_file);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:43:28 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 16:47:49 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/03/11 21:16:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	map_skip_over_modifiers(char *content)
 	i = -1;
 	while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
 	{
-		if (ft_strncmp(g_mapsymbols[i], content, mod_strlen(g_mapsymbols[i])) == 0)
+		if (ft_strncmp(g_mapsymbols[i], content, strlen_nl(g_mapsymbols[i])) == 0)
 			return (1);
 	}
 	return (0);

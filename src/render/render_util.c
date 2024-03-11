@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/13 17:37:56 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:07:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -15,9 +15,9 @@
 #include "texture.h"
 #include "state.h"
 
-void	texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
+void	texture_draw(t_app app, t_texture tex, t_vec2 pos)
 {
-	mlx_put_image_to_window(gs->app.mlx, gs->app.win, tex.img, pos.x, pos.y);
+	mlx_put_image_to_window(app.mlx, app.win, tex.img, pos.x, pos.y);
 }
 
 // int	colour_blend(int first, int second)
@@ -68,8 +68,8 @@ void	texture_draw(t_game *gs, t_texture tex, t_vec2 pos)
 // 	return (r << OF_RED | g << OF_GREEN | b << OF_BLUE | R_ALPHA);
 // }
 
-
 #ifdef __linux__
+
 int	colour_blend(int first, int second)
 {
 	uint8_t *const	f = (uint8_t*)&first;
@@ -79,19 +79,19 @@ int	colour_blend(int first, int second)
 	f[0] = f[0] * a + s[0] * (1.0 - a);
 	f[1] = f[1] * a + s[1] * (1.0 - a);
 	f[2] = f[2] * a + s[2] * (1.0 - a);
-	return (((int *)f)[0]);
+	return ((((int *)f)[0] & M_COL) | R_ALPHA);
 }
 # else
 int	colour_blend(int first, int second)
 {
 	uint8_t *const	f = (uint8_t*)&first;
 	uint8_t *const	s = (uint8_t*)&second;
-	const float		a = 1.0 - (f[3] * (1.0f / 255.0f));
+	const float		a = (f[3] * (1.0f / 255.0f));
 
-	f[0] = f[0] * a + s[0] * (1.0 - a);
-	f[1] = f[1] * a + s[1] * (1.0 - a);
-	f[2] = f[2] * a + s[2] * (1.0 - a);
-	return (((int *)f)[0]);
+	f[0] = f[0] * (1.0 - a) + s[0] * (a);
+	f[1] = f[1] * (1.0 - a) + s[1] * (a);
+	f[2] = f[2] * (1.0 - a) + s[2] * (a);
+	return ((((int *)f)[0] & M_COL) | R_ALPHA);
 }
 #endif
 
@@ -107,8 +107,6 @@ t_texture texture_get_debug_view(t_game *game, int view)
 
 void texture_draw_debug_view(t_game *game, int view)
 {
-	t_texture rt;
-
 	if (view >= MAX_DEBUG_VIEWS)
 		return ;
 	mlx_put_image_to_window(game->app.mlx, game->views[view].win, game->views[view].rt.img, 0, 0);

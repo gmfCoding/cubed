@@ -7,3 +7,6 @@ cubed
 **/*.a
 **/obj/
 .DS_Store
+**/_**/
+**/*.blend1
+**/*.blend2

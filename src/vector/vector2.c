@@ -6,10 +6,11 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:50:56 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/22 20:47:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/08 02:36:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "vector2.h"
+#include <math.h>
 
 t_vec2	v2new(t_vecd x, t_vecd y)
 {
@@ -18,4 +19,22 @@ t_vec2	v2new(t_vecd x, t_vecd y)
 	vec.x = x;
 	vec.y = y;
 	return (vec);
+}
+
+t_vecd	v2sqrmag(t_vec2 vec)
+{
+	return (vec.x * vec.x + vec.y * vec.y);
+}
+
+t_vecd	v2mag(t_vec2 vec)
+{
+	return (sqrt(v2sqrmag(vec)));
+}
+
+const t_vec2	v2proj2(t_vec2 a, t_vec2 b, t_vec2 c)
+{
+	const t_vec2	diff = v2sub(a, b);
+	const t_vecd	scale = v2dot(diff, v2sub(c, a)) / v2mag(diff);
+
+	return (v2add(v2muls(v2norm(diff), scale), a));
 }
