@@ -24,13 +24,18 @@ SRCSF = $(TEST) \
 		render/render_util.c \
 		render/loop.c \
 		render/floor_render.c \
+		render/column_render.c \
+		render/wall_render.c \
 		render/line.c \
 		render/rect_render.c \
+		render/raycast.c \
+		controls/controls.c \
 		util/time.c \
-		util/error_handler.c \
-		util/string_utils.c \
 		util/math.c \
 		util/random.c \
+		util/memory_utils.c \
+		util/string_utils.c \
+		util/error_handler.c \
 		map_parser/map_setup.c \
 		map_parser/map_dimensions.c \
 		map_parser/map_tile_processing.c \
@@ -38,10 +43,30 @@ SRCSF = $(TEST) \
 		map_parser/map_checker_tile.c \
 		map_parser/map_checker_element.c \
 		map_parser/map_default_map.c \
+		map_parser/map_utils.c \
 		modifiers/modifier_setup.c \
+		modifiers/modifier_utils.c \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_floor_ceiling_color.c \
+		modifiers/mod_func_door_setup.c \
+		modifiers/mod_func_minimap.c \
+		modifiers/mod_func_alert.c \
+		modifiers/mod_func_enemy.c \
+		modifiers/mod_func_window.c \
+		mini_map/mmap_draw.c \
+		mini_map/mmap_draw_anim.c \
+		mini_map/mmap_image_decider.c \
+		mini_map/mmap_input.c \
+		mini_map/mmap_setup.c \
+		mini_map/mmap_tile_assign.c \
+		events/event_alert.c \
+		events/event_door.c \
+		events/event_handler.c \
 		entities/player_setup.c \
+		entities/enemy.c \
+		a_star/a_star_path_collect.c \
+		a_star/a_star_neighboring.c \
+		a_star/a_star_memory.c \
 		input/input.c \
 		input/input_hooks.c \
 		input/input_setup.c \
@@ -68,6 +93,7 @@ SRCSF = $(TEST) \
 		task/mui_process_extra.c \
 		task/mui_render.c \
 		cerror.c \
+		destroy.c \
 
 #		task/orbit/task2.c
 # TODO: Add other headers?
@@ -117,8 +143,9 @@ CC = cc
 WFLAGS =#-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
-LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm --verbose
-OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2
+LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
+OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2 
+
 OPTS = $(OPT)
 SAN = address 
 

@@ -10,8 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "map.h"
 
+/*
+ * both functions take the link_list and return a size
+ * the list thats passed through has skipped over the elements
+ */
 int	map_width_size(t_list *curr)
 {
 	int		i;

@@ -6,66 +6,17 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:13:28 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/01 14:55:12 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 20:38:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEXTURE_H
 # define TEXTURE_H
-
 # include "vector2.h"
 # include "rect.h"
 # include "vector2i.h"
-
-typedef struct s_texture
-{
-	void	*img;
-	int		*data;
-	int		width;
-	int		height;
-	int		bpp;
-	int		line_size;
-	int		endian;
-}				t_texture;
-
-# ifdef __linux__
-// Full opaque colour (linux)
-#  define R_ALPHA 0xff000000
-#  else
-// Full opaque colour (mac)
-#  define R_ALPHA 0x00000000
-# endif
-
-// Full red colour
-# define R_RED   0x00ff0000
-// Full green colour
-# define R_GREEN 0x0000ff00
-// Full blue colour
-# define R_BLUE  0x000000ff
-
-// Red colour mask
-# define M_RED   R_RED
-// Green colour mask
-# define M_GREEN R_GREEN
-// Blue colour mask
-# define M_BLUE  R_BLUE
-// Alpha colour mask
-# define M_APLHA 0xff000000
-# define M_COL	 0x00FFFFFF
-
-# define OF_ALPHA 24
-# define OF_RED   16
-# define OF_GREEN 8
-# define OF_BLUE  0
-
-
-// typedef struct s_col
-// {
-// 	uint8_t r;
-// 	uint8_t g;
-// 	uint8_t b;
-// 	uint8_t a;
-// } t_col;
+# include "pixel.h"
+# include "structs/s_texture.h"
 
 int		colour_blend(int first, int second);
 

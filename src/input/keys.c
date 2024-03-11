@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:16:03 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 20:05:54 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 20:40:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "keys.h"
 #define MAPVAL_DEL "\033[1C\b"
 
-const int			g_keymapkey[] = {
+static const int			g_keymapkey[] = {
 	KEY_SPACE,
 	KEY_APOSTROPH,
 	KEY_COMMA,
@@ -125,7 +125,7 @@ const int			g_keymapkey[] = {
 	0,
 };
 
-const char *const	g_keymapval[] = {
+static const char *const	g_keymapval[] = {
 	"  ",
 	"\'\"",
 	",<",
@@ -236,7 +236,7 @@ const char *const	g_keymapval[] = {
 	"",
 };
 
-const char *const	g_keymapname[] = {
+static const char *const	g_keymapname[] = {
 	"KEY_SPACE",
 	"KEY_APOSTROPH",
 	"KEY_COMMA",

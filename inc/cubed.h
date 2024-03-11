@@ -24,7 +24,7 @@
 
 # ifdef __linux__
 #  define R_ALPHA 0xff000000
-#  else
+# else
 #  define R_ALPHA 0x00000000
 # endif
 

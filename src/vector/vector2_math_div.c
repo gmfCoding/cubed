@@ -27,6 +27,15 @@ t_vec2	v2inv(t_vec2 f)
 	return (vec);
 }
 
+t_vec2	v2rev(t_vec2 f)
+{
+	t_vec2	vec;
+
+	vec.x = -f.x;
+	vec.y = -f.y;
+	return (vec);
+}
+
 t_vec2	v2norm(t_vec2 vec)
 {
 	t_vecd	mag;

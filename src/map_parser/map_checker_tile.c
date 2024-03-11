@@ -10,8 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "map.h"
 
+/*
+ * checks how many players are in map it currently returns
+ * the number of players and errors if its less or more then 1
+ * just incase we wanted to add more player later on we could 
+ * implement.. but i think it maybe better to do that through the
+ * modifiers instead if we do. 
+ */
 int	map_check_player(char *content)
 {
 	int	i;
@@ -30,6 +37,9 @@ int	map_check_player(char *content)
 	return (count);
 }
 
+/*
+ * check the map making sure it doesnt contain any invalid chars
+ */
 int	map_check_invalid_char(char *content)
 {
 	int	i;
@@ -49,7 +59,11 @@ int	map_check_invalid_char(char *content)
 	return (count);
 }
 
-/*flood fill */
+/*
+ * a FLOOD_FILL type of function used to check the whole map surrounds
+ * making sure each tile is not a FLOOR/0 or anything other then a
+ * WALL/1 or EMPTY/2. if it is it will return an error
+ */
 int	map_check_surrounded(t_map *map_temp, int pos)
 {
 	if (pos >= 0 && pos <= (map_temp->width * map_temp->height) \
@@ -72,6 +86,9 @@ int	map_check_surrounded(t_map *map_temp, int pos)
 	return (0);
 }
 
+/*
+ * checks content of the map to follow the rules of subject
+ */
 void	map_check_err(t_map *map_temp, t_list *temp, \
 		t_list *raw_map_file, char *map_str)
 {
@@ -83,7 +100,8 @@ void	map_check_err(t_map *map_temp, t_list *temp, \
 	count_invalid_char = 0;
 	while (curr != NULL && curr->content != NULL)
 	{
-		if (is_line((char *)curr->content) && ((char *)curr->content)[0] != ' ')
+		if (is_empty_line((char *)curr->content) \
+			&& ((char *)curr->content)[0] != ' ')
 			error_return(":Invalid Line In Map", 1, 1, &raw_map_file);
 		count_players += map_check_player((char *)curr->content);
 		count_invalid_char += map_check_invalid_char((char *)curr->content);
@@ -101,6 +119,9 @@ void	map_check_err(t_map *map_temp, t_list *temp, \
 		error_return(":Invalid File Type", 1, 1, &raw_map_file);
 }
 
+/*
+ * sets up the map ready for checking for map errors
+ */
 void	map_check_setup(t_list *curr, t_list *raw_map_file, char *map_str)
 {
 	t_list	*temp;

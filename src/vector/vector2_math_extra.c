@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:49:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/08 02:32:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:03:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -33,4 +33,33 @@ double	v2invlerp(t_vec2 a, t_vec2 b, t_vec2 c)
 	const t_vec2	ab = v2sub(b, a);
 
 	return (v2dot(ac, ab) / v2dot(ab, ab));
+}
+
+t_vec2	v2diff(t_vec2 f, t_vec2 s)
+{
+	t_vec2	vec;
+	
+	vec.x = 0;
+	vec.y = 0;
+	if (f.x > s.x)
+		vec.x = f.x - s.x;
+	else
+		vec.x = s.x - f.x;
+	if (f.y > s.y)
+		vec.y = f.y - s.y;
+	else
+		vec.y = s.y - f.y;
+	return (vec);
+}
+
+/*
+	Projects point a onto line segment BC
+*/
+t_vec2	v2proj_line(t_vec2 a, t_vec2 b, t_vec2 c)
+{
+	const t_vec2	diff = v2sub(a, b);
+	const t_vec2	dir = v2norm(v2sub(b, c));
+	const t_vecd	scale = v2dot(dir, diff);
+
+	return (v2add(b, v2muls(dir, scale)));
 }

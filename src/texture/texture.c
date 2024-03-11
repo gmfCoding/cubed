@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:11:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/14 16:29:49 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/11 21:02:31 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -60,3 +60,4 @@ t_texture	texture_load(void *mlx, char *path)
 	texture_init(t);
 	return (t);
 }
+

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 21:24:09 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/20 17:45:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/11 21:07:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -81,8 +81,7 @@ int	colour_blend(int first, int second)
 	f[2] = f[2] * a + s[2] * (1.0 - a);
 	return ((((int *)f)[0] & M_COL) | R_ALPHA);
 }
-#else
-
+# else
 int	colour_blend(int first, int second)
 {
 	uint8_t *const	f = (uint8_t*)&first;

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/04 18:58:55 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:10:02 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -15,6 +15,7 @@
 #include "render.h"
 #include "orbit.h"
 #include "vectorconv.h"
+#include "state.h"
 
 int	task_orbit_setup(t_game *game, t_task *base)
 {

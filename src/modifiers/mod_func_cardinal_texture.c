@@ -10,33 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "map.h"
 
-
-void	mod_gen_no(char *content, int mod_pos, t_world *world, t_map *map)
+void	mod_gen_no(char *content, int index, t_world *world, t_map *map)
 {
 	(void)world;
-	map->mods[mod_pos].type = NORTH_TEXTURE;
-	map->mods[mod_pos].content = content;
+	map->mods[index].type = NORTH_TEXTURE;
+	map->mods[index].content = ft_strdup(content);
 }
 
-void	mod_gen_so(char *content, int mod_pos, t_world *world, t_map *map)
+void	mod_gen_so(char *content, int index, t_world *world, t_map *map)
 {
 	(void)world;
-	map->mods[mod_pos].type = SOUTH_TEXTURE;
-	map->mods[mod_pos].content = content;
+	map->mods[index].type = SOUTH_TEXTURE;
+	map->mods[index].content = ft_strdup(content);
 }
 
-void	mod_gen_we(char *content, int mod_pos, t_world *world, t_map *map)
+void	mod_gen_we(char *content, int index, t_world *world, t_map *map)
 {
 	(void)world;
-	map->mods[mod_pos].type = WEST_TEXTURE;
-	map->mods[mod_pos].content = content;
+	map->mods[index].type = WEST_TEXTURE;
+	map->mods[index].content = ft_strdup(content);
 }
 
-void	mod_gen_ea(char *content, int mod_pos, t_world *world, t_map *map)
+void	mod_gen_ea(char *content, int index, t_world *world, t_map *map)
 {
 	(void)world;
-	map->mods[mod_pos].type = EAST_TEXTURE;
-	map->mods[mod_pos].content = content;
+	map->mods[index].type = EAST_TEXTURE;
+	map->mods[index].content = ft_strdup(content);
 }
