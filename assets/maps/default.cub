@@ -1,7 +1,7 @@
-NO ./assets/debug.xpm
-SO ./assets/debug.xpm
-WE ./assets/debug.xpm
-EA ./assets/debug.xpm
+NO ./assets/wall.xpm
+SO ./assets/wall.xpm
+WE ./assets/wall.xpm
+EA ./assets/wall.xpm
 
 WN 7,2
 

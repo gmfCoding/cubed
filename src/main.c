@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 03:09:12 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 19:57:57 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,14 @@ int	main(int argc, char **argv)
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 //	game.rt2 = texture_get_debug_view(&game, 1);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+
 //ill move this after vv
-	game.world->enemy.path = star_find_path(&game, game.world->enemy.sprite_ref->pos, game.player.pos);
-	game.world->enemy.patrol_target.y = game.world->enemy.old_pos[0].y + 0.5;
-	game.world->enemy.patrol_target.x = game.world->enemy.old_pos[0].x + 0.5;
+	if (mod_get_mod(&game.world->map, ENEMY, NULL) != NULL)
+	{
+		game.world->enemy.path = star_find_path(&game, game.world->enemy.sprite_ref->pos, game.player.pos);
+		game.world->enemy.patrol_target.y = game.world->enemy.old_pos[0].y + 0.5;
+		game.world->enemy.patrol_target.x = game.world->enemy.old_pos[0].x + 0.5;
+	}
 //ill move this after ^^
 	generate_textures(&game);
 	input_setup(game.app.mlx, game.app.win, &game.input);
