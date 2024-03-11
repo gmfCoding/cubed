@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:07:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 21:33:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,16 +156,14 @@ void	render(t_game *game)
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	enemy_routine(game, &game->world->enemy);
 	update_segments(game);
-
 	player_loop(game);
-	input_process(&game->input);
 	render_floor(game);
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
+	mmap_draw(game);
 	if (game->tasks[0] && game->tasks[0]->show)
 		task_orbit_render(game, game->tasks[0]);
 	input_process(&game->input);
-	mmap_draw(game);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);

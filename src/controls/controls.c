@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   controls.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
+/*   Updated: 2024/03/11 21:31:05 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include <math.h>
 #include "mlx.h"
 #include "state.h"
 #include "player.h"
 #include "destroy.h"
 #include "clmath.h"
+#include "tasks/task_orbit.h"
 
 static void	rotate_player(t_player *player, double angle)
 {
@@ -56,6 +68,13 @@ void	control_core_process(t_game *game)
 {
 	if (input_keyheld(&game->input, KEY_ESC))
 		game_destroy(game);
+	if(input_keydown(&game->input, KEY_T))
+	{
+		game->tasks[0] = malloc(sizeof(t_task_orbit));
+		*game->tasks[0] = *g_tasks[0];
+		task_orbit_setup(game, game->tasks[0]);
+		game->tasks[0]->show = true;
+	}
 }
 
 // Doesn't work on wslg
