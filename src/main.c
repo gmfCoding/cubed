@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:00:46 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 05:34:21 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@
 // 	mlx_loop(mlx);
 // }
 
-void	world_preset(int argc, char **argv, t_game *game)
+t_err	world_preset(int argc, char **argv, t_game *game)
 {
 	game->world->ent_count = 0;
 	game->world->sp_amount = 0;
-	map_parse(argc, argv, game);
 	game->fpsc = 0;
 	game->display_ui = false;
+	return (map_parse(argc, argv, game));
 }
 
 void generate_textures(t_game *game)
@@ -85,12 +85,13 @@ int	main(int argc, char **argv)
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
 	*game.world = (t_world){0};
-	game.app.mlx = mlx_init();
-	world_preset(argc, argv, &game);
+	if (world_preset(argc, argv, &game))
+	{
+		free(game.world);
+		return (-1);
+	}
 	map_print(&game.world->map);
-
 	game.app.mlx = mlx_init();
-
 //	game.world->sp_count = 0;
 //	game.world->sprite[0] = (t_sprite){.tex = 7, .pos = v2new(26.5, 9.5)};
 //	game.world->map.tiles[26 + 9 * game.world->map.width].sp_count = 1;

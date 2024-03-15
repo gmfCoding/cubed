@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   memory_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/03/16 05:35:57 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "map.h"
 #include "state.h"
 #include "get_next_line.h"
@@ -48,6 +58,7 @@ void	deallocate_list(t_list **raw_map_file)
 		free(temp->content);
 		free(temp);
 	}
+	*raw_map_file = NULL;
 }
 
 t_list	*ft_lst_readfile(const char *path)
