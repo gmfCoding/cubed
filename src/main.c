@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 05:34:21 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 06:01:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,33 +78,21 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-//	printf("%s  %s  %f  %f  %d  %d\n", game.world.ent->keys[0].name, game.world.ent->keys[0].doorname, game.world.ent->keys[0].pos.x, \
-		       	game.world.ent->keys[0].pos.y, game.world.ent->keys[0].auto_open, game.world.ent->keys[0].collected);
-//	free_content(&game);
-
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
 	*game.world = (t_world){0};
+	game.app.mlx = mlx_init();
 	if (world_preset(argc, argv, &game))
 	{
 		free(game.world);
 		return (-1);
 	}
 	map_print(&game.world->map);
-	game.app.mlx = mlx_init();
-//	game.world->sp_count = 0;
-//	game.world->sprite[0] = (t_sprite){.tex = 7, .pos = v2new(26.5, 9.5)};
-//	game.world->map.tiles[26 + 9 * game.world->map.width].sp_count = 1;
-//	game.world->map.tiles[26 + 9 * game.world->map.width].sprite[0] = 0;
-
 	modifier_after(&game);
-
-//	print_vector_path(&game);	
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
-
 //ill move this after vv
 	if (mod_get_mod(&game.world->map, ENEMY, NULL) != NULL)
 	{

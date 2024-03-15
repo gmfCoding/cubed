@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:33:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/15 21:25:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,14 @@ void	draw_debug_info(t_game *game)
 		ft_strfmt("plane:(%f,%f)", \
 		(double)game->player.plane.x, (double)game->player.plane.y),
 		ft_strfmt("hits:(%d)", game->half.hits),
+		ft_strfmt("type:(%d)", map_get_tile(&game->world->map, game->half.depths[0].x, game->half.depths[0].y).type),
+		ft_strfmt("vis:(%d)", map_get_tile(&game->world->map, game->half.depths[0].x, game->half.depths[0].y).vis),
 	};
 	int					i;
-
+	if (input_keydown( &game->input, KEY_H))
+	{
+		printf("Pausing!");
+	}
 	i = -1;
 	while (++i < (int)(sizeof(debugstr) / sizeof(*debugstr)))
 	{

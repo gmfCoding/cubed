@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 05:37:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 06:41:21 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -48,6 +48,7 @@ typedef struct s_tile
 {
 	t_tiletype	type;
 	uint8_t		tex;
+	/// @brief -1: Nothing, 0: Opaque, 1: Transparent
 	int8_t		vis;
 	char		sp_count;
 	char		sprite[4];

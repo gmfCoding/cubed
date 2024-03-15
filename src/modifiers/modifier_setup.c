@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/11 21:16:21 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 05:58:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_mm_tile	*mmap_find_tile(t_game *game, t_vec2 pos)
 	int	i;
 
 	i = -1;
-	while(game->mmap.tiles[++i].img != NULL)
+	while (game->mmap.tiles[++i].img != NULL)
 		if (game->mmap.tiles[i].ref == (pos.y * game->world->map.width) + pos.x)
 			return (&game->mmap.tiles[i]);
 	return (NULL);
@@ -113,9 +113,10 @@ t_mm_tile	*mmap_find_tile(t_game *game, t_vec2 pos)
 
 void	modifier_after(t_game *game)
 {
-	int	i;
+	t_world *const	w = game->world;
+	int				i;
 
 	i = -1;
-	while (++i < game->world->ent_count)
-		game->world->ent_2[i].ref_mm_tile = mmap_find_tile(game, game->world->ent_2[i].pos[0]);
+	while (++i < w->ent_count)
+		w->ent_2[i].ref_mm_tile = mmap_find_tile(game, w->ent_2[i].pos[0]);
 }

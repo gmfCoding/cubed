@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/02/25 22:33:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 06:10:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	player_pos_setup(t_list *curr, t_player *player)
 				|| str[x] == 'E' || str[x] == 'W')
 			{
 				player_rot_setup(str[x], player);
-				player->pos.x = x;
-				player->pos.y = y;
+				player->pos.x = x + 0.5;
+				player->pos.y = y + 0.5;
 			}
 		}
 		y++;

@@ -6,13 +6,34 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 05:31:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 06:37:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "state.h"
 #include "map.h"
 #include "cerror.h"
+
+static void	map_update_vis(t_map *map)
+{
+	t_tile	*tile;
+	int		x;
+	int		y;
+	int		index;
+
+	y = -1;
+	while (++y < map->height)
+	{
+		x = -1;
+		while (++x < map->width)
+		{
+			tile = map_get_tile_ref(map, x, y);
+			tile->vis = -1;
+			if (tile->type == WALL)
+				tile->vis = 1;
+		}
+	}
+}
 
 void	map_tiles_init(t_map *map, t_list *curr)
 {
@@ -29,14 +50,16 @@ void	map_tiles_init(t_map *map, t_list *curr)
 		{
 			tile = map_get_tile_ref(map, x, y);
 			*tile = (t_tile){0};
-			tile->type = FLOOR; 
+			tile->type = FLOOR;
 		}
 	}
+	index = 0;
 	while (curr != NULL && curr->content != NULL)
 	{
 		index += map_tiles(map, (char *)curr->content, index);
 		curr = curr->next;
 	}
+	map_update_vis(map);
 }
 
 /*
@@ -52,22 +75,22 @@ void	map_tiles_init(t_map *map, t_list *curr)
 // 	error_return("File Invalid", 1, 1, &raw_map_file);
 
 #define MSG_FI "File Invalid"
-t_err map_init(t_map *map, char *map_str, t_game *game)
+
+t_err	map_init(t_map *map, char *map_str, t_game *game)
 {
 	t_list	*curr;
 	t_list	*raw_map_file;
 
 	raw_map_file = ft_lst_readfile(map_str);
 	if (raw_map_file == NULL || (int64_t)raw_map_file->content <= 1)
-		deallocate_list(raw_map_file);
-	if (raw_map_file == NULL)
-		return (err(1, "File Invalid"));
+		return (deallocate_list(&raw_map_file), err(1, "File Invalid"));
 	remove_empty_lines(&raw_map_file);
 	replace_tabs(raw_map_file);
 	curr = raw_map_file;
 	while (curr != NULL && map_starting_tile((char *)curr->content) == 0)
 		curr = curr->next;
-	map_check_setup(curr, raw_map_file, map_str);
+	if (map_check_setup(curr, raw_map_file, map_str))
+		return (deallocate_list(&raw_map_file), 1);
 	map->width = map_width_size(curr);
 	map->height = map_height_size(curr);
 	if (map->width > 200 || map->height > 200)
@@ -78,32 +101,6 @@ t_err map_init(t_map *map, char *map_str, t_game *game)
 	deallocate_list(&raw_map_file);
 	return (0);
 }
-
-// void	map_update_vis(t_map *map)
-// {
-// 	t_tiletype type;
-// 	int	x;
-// 	int	y;
-// 	int index;
-
-// 	printf("Updating vis array\n");
-// 	y = -1;
-// 	while (++y < map->height)
-// 	{
-// 		x = -1;
-// 		while (++x < map->width)
-// 		{
-// 			index = x + y * map->width;
-// 			type = map->tiles[index].type;
-// 			if (type == DOOR)
-// 				map->tiles[index].vis = 1;
-// 			else if (type == )
-// 				map->tiles[index].vis = -1;
-// 			printf("%d", map->tiles[index].vis);
-// 		}
-// 		printf("\n");
-// 	}
-// }
 
 /*
  * this fuction chooses where to get the map content 
@@ -128,5 +125,3 @@ t_err	map_parse(int argc, char **argv, t_game *game)
 	mmap_init(game);
 	return (0);
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 00:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 05:25:58 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 06:39:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -66,8 +66,8 @@ int	err(int res, char *str)
 	if (res && str)
 	{
 		if (first)
-			ft_putstr_fd(STDERR_FILENO, "Error\n");
-		ft_putstr_fd(STDERR_FILENO, str);
+			ft_putstr_fd("Error\n", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putbacktrace();
 	}
 	return (res);

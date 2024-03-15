@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:01:10 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 05:14:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 06:39:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ static t_err	map_check_surrounded(t_map *map_temp, int pos)
  * checks content of the map to follow the rules of subject
  * Return 1 on error 0 on success
  */
-static t_err	map_check_err(t_map *map_temp, t_list *temp, \
+static t_err	 map_check_err(t_map *map_temp, t_list *temp, \
 		t_list *file, char *path)
 {
 	const t_list	*curr = temp;
-	const char		**cstr = &curr;
+	char ***const	cstr = (void *)&curr;
 	int				players;
 	int				count_invalid_char;
 	int				e;
@@ -110,11 +110,11 @@ static t_err	map_check_err(t_map *map_temp, t_list *temp, \
 	e = 0;
 	while (curr != NULL && curr->content != NULL)
 	{
-		e |= err(is_empty_line(*cstr) && (*cstr)[0] != ' ', ERR_LINE);
+		e |= err(is_empty_line(**cstr) && (**cstr)[0] != ' ', ERR_LINE);
 		if (e)
 			break ;
-		players += map_check_player(*cstr);
-		count_invalid_char += map_check_invalid_char(*cstr);
+		players += map_check_player(**cstr);
+		count_invalid_char += map_check_invalid_char(**cstr);
 		curr = curr->next;
 	}
 	e = err(map_check_elements(file) == 1, ERR_BADELEM);
@@ -129,7 +129,7 @@ static t_err	map_check_err(t_map *map_temp, t_list *temp, \
 /*
  * sets up the map ready for checking for map errors
  */
-t_err	map_check_setup(t_list *curr, t_list *raw_map_file, char *map_str)
+t_err	map_check_setup(t_list *curr, t_list *raw_map_file, char *path)
 {
 	t_list	*temp;
 	t_map	map_temp;
@@ -148,5 +148,5 @@ t_err	map_check_setup(t_list *curr, t_list *raw_map_file, char *map_str)
 	}
 	while (++index < ((map_temp.width * map_temp.height) + map_temp.width))
 		map_temp.tiles[index].type = get_tiletype(' ');
-	return (map_check_err(&map_temp, temp, raw_map_file, map_str));
+	return (map_check_err(&map_temp, temp, raw_map_file, path));
 }
