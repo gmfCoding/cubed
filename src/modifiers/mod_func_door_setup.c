@@ -6,13 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/11 21:09:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 08:05:51 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "render.h"
 #include "state.h"
+#include "csv.h"
 
 char    *ft_strcpy(char *s1, char *s2)
 {
@@ -28,7 +29,7 @@ char    *ft_strcpy(char *s1, char *s2)
 /*
  * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
  */
-void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
+t_err	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
 {
 	static int	dr_count = 0;
 	int	i;
@@ -63,36 +64,35 @@ void	mod_gen_dr(char *content, int index, t_world *world, t_map *map)
 		world->ent_2[world->ent_count].type = DOOR_OPEN;
 	world->ent_count++;
 	free_str_array(dr);
+	return (0);
 }
 
 /*
  * NAME,TEXTURE,ACCESSDOORNAMED,XPOS,YPOS,AUTOUNLOCKOPEN,GRABBEDBYPLAYER 
  */
-void	mod_gen_ke(char *content, int index, t_world *world, t_map *map)
+t_err mod_gen_ke(char *content, int index, t_world *world, t_map *map)
 {
-	static int	ke_count = 0;
-	int	i;
-	char	**ke;
-	char	*texture;
+	static int	keys = 0;
+	char		str[CSV_LEN];
+	t_err		e;
 
-	i = -1;
-	ke = ft_split(content, ',');
-	while (ke[0][++i] && i < NAME_SIZE)
-		world->ent->keys[ke_count].name[i] = ke[0][i];
-	map->mods[index].content = ft_strdup(ke[1]);
-	i = -1;
-	while (ke[2][++i] && i < NAME_SIZE)
-		world->ent->keys[ke_count].doorname[i] = ke[2][i];
-	world->ent->keys[ke_count].pos.x = ft_atoi(ke[3]);
-	world->ent->keys[ke_count].pos.y = ft_atoi(ke[4]);
-	world->ent->keys[ke_count].auto_open = (ke[5][0] == 'A') ? true : false;
-	world->ent->keys[ke_count].collected = (ke[6][0] == 'C') ? true : false;
-	free_str_array(ke);
+	e = csv_next('s', &content, &str);
+	if (!e)
+		ft_strlcpy(world->keys[keys].name, str, NAME_SIZE);
+	e |= csv_next('s', &content, &str);
+	if (!e)
+		ft_strlcpy(map->mods[index].content, str, MOD_CONTENT_MAX);
+	e |= csv_next('s', &content, &str);
+	if (!e)
+		ft_strlcpy(world->keys[keys].doorname, str, NAME_SIZE);
+	e |= csv_next('u', &content, &world->keys[keys].pos.x);
+	e |= csv_next('u', &content, &world->keys[keys].pos.x);
+	e |= csv_next('s', &content, &str);
+	if (!e)
+		world->keys[keys].collected = str[0] == 'C';
+	keys++;
+	return (e);
 }
-
-
-
-
 
 /*
 	while (dr[0][++i] && i < NAME_SIZE)

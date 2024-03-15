@@ -4,14 +4,14 @@
 /*
  * NAME,TARGET,SPEED,XPOS,YPOS,ENEMY_STATE
  */
-void	mod_gen_en(char *content, int index, t_world *world, t_map *map)
+t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 {//still need to add images ill that will be done elsewhere
 	char	**en;
 	int	x;
 	int	y;
 
 	map->mods[index].type = ENEMY;
-	map->mods[index].content = ft_strdup(content);
+	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	en = ft_split(content, ',');
 	x = ft_atoi(en[3]) - 1;
 	y = ft_atoi(en[4]);
@@ -39,6 +39,7 @@ void	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	world->sp_amount++;
 	tile->sp_count++;
 	free_str_array(en);
+	return (0);
 }
 
 /*// if we wanted the enemy to be aprt of the event triggers or to be at leased looped through
@@ -56,7 +57,7 @@ void	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	world->ent_2[world->ent_count].target = NULL;
 //	if (ft_strcmp(en[1], "NULL") != 0)
 //		world->ent_2[world->ent_count].target =	mod_search_name(world, en[1]);
-	map->mods[index].content = ft_strdup(content);
+	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	get_pos_and_surrounding_tiles(world, x, y);
 	world->ent_2[world->ent_count].ref_tile = &map->tiles[y * (map->width +x) - 1];
 	world->ent_2[world->ent_count].speed = ft_atoi(en[2]);

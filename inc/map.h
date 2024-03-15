@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 06:41:21 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 07:37:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <inttypes.h>
+# include "cerror.h"
 # include "player.h"
 # include "enemy.h"
 # include "libft.h"
@@ -31,8 +32,6 @@
 # define MAP_MAX_X MAP_MAX_XY
 # define MAP_MAX_Y MAP_MAX_XY
 # define G_MAPTABLE_LEN 6
-
-typedef int		t_err; // TODO: Move
 
 typedef enum e_tiletype
 {
@@ -67,23 +66,15 @@ typedef struct s_map
 	int		color_floor;
 }				t_map;
 
-typedef uint16_t	t_tid;
-typedef struct s_sprite	t_sprite;
 
-struct	s_sprite
-{
-	t_tid		tex;
-	t_vec2		pos;
-	t_vec2		s1;
-	t_vec2		s2;
-};
 
 typedef struct s_world
 {
 	t_map		map;
 
 	//this might be getting phased out but im still using it for the moment
-	t_entity	ent[MAX_ENT];
+	t_moddoor	ent[MAX_ENT];
+	t_key		keys[MAX_ENT];
 	t_entity_2	ent_2[MAX_ENT];
 	int			ent_count;
 	t_enemy		enemy;

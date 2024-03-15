@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 06:37:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 08:11:57 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	map_tiles_init(t_map *map, t_list *curr)
 // if (raw_map_file == NULL || (int64_t)raw_map_file->content <= 1)
 // 	error_return("File Invalid", 1, 1, &raw_map_file);
 
-#define MSG_FI "File Invalid"
-
 t_err	map_init(t_map *map, char *map_str, t_game *game)
 {
 	t_list	*curr;
@@ -83,7 +81,7 @@ t_err	map_init(t_map *map, char *map_str, t_game *game)
 
 	raw_map_file = ft_lst_readfile(map_str);
 	if (raw_map_file == NULL || (int64_t)raw_map_file->content <= 1)
-		return (deallocate_list(&raw_map_file), err(1, "File Invalid"));
+		return (deallocate_list(&raw_map_file), err(1, "File Invalid\n"));
 	remove_empty_lines(&raw_map_file);
 	replace_tabs(raw_map_file);
 	curr = raw_map_file;
@@ -94,10 +92,11 @@ t_err	map_init(t_map *map, char *map_str, t_game *game)
 	map->width = map_width_size(curr);
 	map->height = map_height_size(curr);
 	if (map->width > 200 || map->height > 200)
-		return (err(1, "Map Exceeds Limits"));
+		return (err(1, "Map Exceeds Limits\n"));
 	player_setup(curr, game);
 	map_tiles_init(map, curr);
-	modifier_setup(raw_map_file, map, game->world);
+	if (modifier_setup(raw_map_file, map, game->world))
+		return (err(1, ": unexpected modifier content\n"));
 	deallocate_list(&raw_map_file);
 	return (0);
 }

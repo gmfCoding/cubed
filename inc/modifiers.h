@@ -1,6 +1,7 @@
 #ifndef MODIFIERS_H
 # define MODIFIERS_H
 
+# define MOD_CONTENT_MAX 100
 # define NAME_SIZE 50
 # define MAX_ENT 100 
 # include <stdbool.h>
@@ -39,7 +40,7 @@ typedef enum	e_ent_type
 typedef struct	s_mod
 {
 	t_modtype	type;
-	char*		content;
+	char		content[MOD_CONTENT_MAX];
 }			t_mod;
 
 typedef struct s_key
@@ -55,7 +56,7 @@ typedef struct s_door
 {
 	char	name[NAME_SIZE];
 	t_vec2	pos;
-	int	speed;
+	int		speed;
 	bool	closed;
 	bool	locked;
 }		t_door;
@@ -69,37 +70,37 @@ typedef struct	s_entity_2
 	t_vec2		pos[9];// 9 is for the event trigger
 	t_tile		*ref_tile;
 	t_mm_tile	*ref_mm_tile;
-	int		speed;
-	int		value;
+	int			speed;
+	int			value;
 	struct		s_entity_2 *target; // would be the door entity for instant or something else
 	bool		state_1;
 	bool		state_2;
 	bool		state_3;//just incase i need something else stored
 }			t_entity_2;
 
-typedef struct	s_entity
+typedef struct	s_moddoor
 {
 	t_door	doors[MAX_ENT];
 	t_key	keys[MAX_ENT];
 
-}		t_entity;
+}		t_moddoor;
 
-typedef void	(*t_ex_action)(char *, int, t_world *, t_map *);
-void		mod_gen_no(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_so(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_we(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_ea(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_c(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_f(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_dr(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_ke(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_mm(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_al(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_en(char *content, int index, t_world *world, t_map *map);
-void		mod_gen_wn(char *content, int index, t_world *world, t_map *map);
+typedef t_err	(*t_ex_action)(char *, int, t_world *, t_map *);
+t_err	mod_gen_no(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_so(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_we(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_ea(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_c(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_f(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_dr(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_ke(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_mm(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_wn(char *content, int index, t_world *world, t_map *map);
 
 void	modifier_after(t_game *game);
-void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
+t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
 void	*get_pos_and_surrounding_tiles(t_world *world, int x, int y);
 t_mod	*mod_get_mod(t_map *map, t_modtype type, int *index);
 #endif

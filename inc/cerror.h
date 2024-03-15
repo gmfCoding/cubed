@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:14:16 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 04:50:35 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 07:02:51 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <stddef.h>
 
 typedef enum e_cerror	t_cerror;
+typedef int				t_err;
 
 enum e_cerror
 {
