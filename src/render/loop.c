@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/19 01:16:31 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 00:17:33 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "state.h"
 #include "texture.h"
 #include "vector2i.h"
+#include "vectorconv.h"
 
 #include "libft.h"
 #include "internal/wall.h"
@@ -81,7 +82,7 @@ void	player_loop(t_game *game)
 	mmap_input(game, &game->mmap);
 }
 
-#define D_SCALE 25
+#define D_SCALE ((float)SCR_WIDTH / (float)game->world->map.width)
 
 
 void draw_debug_view_world_state(t_game *game)
@@ -130,6 +131,24 @@ void draw_debug_view_world_state(t_game *game)
 		printf("%f %f\n", curr->s1.x, curr->s1.y);
 		printf("%f %f\n", curr->s2.x, curr->s2.y);
     }
+
+	static float dir = 0;
+	if (input_keyheld(&game->input, KEY_J))
+		dir -= 0.01;
+	if (input_keyheld(&game->input, KEY_K))
+		dir += 0.01;
+	if (game->input.mouse.x > 0 && game->input.mouse.x < SCR_WIDTH)
+	{
+		if (game->input.mouse.y > 0 && game->input.mouse.y < SCR_HEIGHT)
+		{
+			t_vec2 start = v2new(game->input.mousef.x / D_SCALE, game->input.mousef.y / D_SCALE);
+			t_vec2 vdir = v2new(cos(dir), sin(dir));
+			t_rayinfo info = raycast(game, start, vdir, RAY_MASK_WALL);
+			t_vec2 hit = ray_gethit(&info, 0);
+			hit = v2muls(hit, D_SCALE);
+			texture_draw_line(tex, game->input.mousef, hit, R_GREEN | R_ALPHA);
+		}
+	}
   	//texture_clear(tex, R_RED | R_ALPHA);
 }
 
@@ -149,11 +168,11 @@ void	render(t_game *game)
 	mmap_draw(game);
 	if (game->tasks[0] && game->tasks[0]->show)
 		task_orbit_render(game, game->tasks[0]);
+	draw_debug_view_world_state(game);
 	input_process(&game->input);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);
-	draw_debug_view_world_state(game);
 	texture_draw_debug_view(game, 2);
 	game->fpsc++;
 }

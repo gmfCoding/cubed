@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/18 23:32:49 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 00:41:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -55,6 +55,8 @@ void	ent_door_update(t_door *door, t_game *game)
 	pct = v2muls(pct, door->percent * 2);
 	door->base.sprite->s1 = v2add(door->base.sprite->pos, pct);
 	door->base.sprite->s2 = door->base.sprite->pos;
+	door->base.sprite->vs1 = door->base.sprite->s1;
+	door->base.sprite->vs2 = door->base.sprite->s2;
 }
 
 static const t_fn_entity_update	g_entity_updates[] = {

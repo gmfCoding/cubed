@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/19 01:17:06 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 00:16:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -108,7 +108,7 @@ t_tile		*map_get_tile_refv(t_map *map, t_vec2 v);
 void		map_sprite_clear(t_map *map);
 void		sprite_update(t_map *map, t_sprite *const sprite, int index);
 void		sprite_update_all(t_world *game);
-void		sprite_rotate(t_sprite *curr, t_vec2 dir);
+void		sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir);
 void		sprite_order_distance(t_vec2 centre, t_sprite *array, short *indices, int count);
 // MAP PARSER //
 t_tiletype	get_tiletype(char c);

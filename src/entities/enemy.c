@@ -223,7 +223,7 @@ void	enemy_routine(t_game *game, t_enemy *enemy)
 	if (enemy->state == NOT_ACTIVE)
 		return ;
 	enemy_update_sp_tile_count(game, enemy);
-	sprite_rotate(enemy->sprite_ref, game->player.dir);
+	sprite_rotate(game, enemy->sprite_ref, game->player.dir);
 	if (enemy->state == TARGET_IN_SIGHT)
 		enemy_target_in_sight(game, enemy);
 	else if (enemy->state == GO_PATH_TO_TARGET)

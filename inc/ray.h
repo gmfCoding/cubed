@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:43:16 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 01:57:06 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 00:21:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef RAY_H
@@ -53,6 +53,8 @@ struct s_rayinfo
 {
 	t_hitpoint	depths[MAX_DEPTHS];
 	uint8_t		hits;
+	t_vec2		start;
+	t_vec2		dir;
 };
 
 typedef struct s_dda
@@ -64,5 +66,17 @@ typedef struct s_dda
 }			t_dda;
 
 typedef struct s_game t_game;
-t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir);
+
+# define RAY_MASK_ALL 		0b11
+# define RAY_MASK_SPRITE	0b01
+# define RAY_MASK_WALL		0b10
+
+int		ccw(t_vec2 a, t_vec2 b, t_vec2 c);
+int		test_two_seg_intersect(t_vec2, t_vec2 b1, \
+			t_vec2 a2, t_vec2 b2);
+t_vec2	two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2);
+
+t_vec2 ray_gethit(t_rayinfo *ray, int hit);
+t_rayinfo		raycast(t_game *game, t_vec2 start, t_vec2 dir, int exclude);
+
 #endif

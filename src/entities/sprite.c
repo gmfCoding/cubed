@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:36:58 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/19 01:15:59 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 00:40:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -120,9 +120,11 @@ void	sprite_update(t_map *map, t_sprite *const sprite, int index)
 }
 
 /* Rotates the sprite `curr` to look in `dir` direction. */
-void	sprite_rotate(t_sprite *curr, t_vec2 dir)
+void	sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir)
 {
-	float	temp;
+	t_rayinfo	info;
+	t_vec2		hit;
+	float		temp;
 
 	dir = dir;
 	temp = dir.x;
@@ -130,6 +132,19 @@ void	sprite_rotate(t_sprite *curr, t_vec2 dir)
 	dir.y = -temp;
 	curr->s1 = v2add(curr->pos, v2muls(dir, 0.5));
 	curr->s2 = v2add(curr->pos, v2muls(dir, -0.5));
+	curr->vs1 = curr->s1;
+	curr->vs2 = curr->s2;
+	if (game != NULL)
+	{
+		info = raycast(game, curr->pos, dir, RAY_MASK_WALL);
+		hit = ray_gethit(&info, 0);
+		if (v2dist(curr->s1, curr->pos) > v2dist(hit, curr->pos))
+			curr->vs1 = hit;
+		info = raycast(game, curr->pos, v2rev(dir), RAY_MASK_WALL);
+		hit = ray_gethit(&info, 0);
+		if (v2dist(curr->s2, curr->pos) > v2dist(hit, curr->pos))
+			curr->vs1 = hit;
+	}
 }
 
 /* Orders the sprites from `arr` from closest to furthest from `cent`

@@ -28,6 +28,7 @@ SRCSF = $(TEST) \
 		render/wall_render.c \
 		render/line.c \
 		render/rect_render.c \
+		render/intersect_test.c \
 		render/raycast.c \
 		controls/controls.c \
 		util/time.c \

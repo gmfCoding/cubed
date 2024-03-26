@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:41:22 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/18 22:15:39 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 00:08:42 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* *************** */
@@ -29,7 +29,7 @@ void	render_wall(t_game *game)
 		vert.camera_x = 2 * vert.x / (double)R_WIDTH - 1;
 		vert.dir = v2add(game->player.dir, \
 		v2muls(game->player.plane, vert.camera_x));
-		vert.ray = raycast(game, game->player.pos, vert.dir);
+		vert.ray = raycast(game, game->player.pos, vert.dir, RAY_MASK_ALL);
 		if (vert.x == R_HEIGHT / 2)
 			game->half = vert.ray;
 		render_vertical(game, vert);
