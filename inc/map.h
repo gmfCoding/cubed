@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 07:37:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/19 01:17:06 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -26,6 +26,7 @@
 # include "events.h"
 
 # define TAB_SIZE 4
+# define TILE_SP_MAX 4
 # define FILE_TYPE ".xpm"
 # define MAP_MODIFICATION_SIZE 100
 # define MAP_MAX_XY 200
@@ -50,7 +51,7 @@ typedef struct s_tile
 	/// @brief -1: Nothing, 0: Opaque, 1: Transparent
 	int8_t		vis;
 	char		sp_count;
-	char		sprite[4];
+	char		sprite[TILE_SP_MAX];
 }				t_tile;
 
 typedef struct s_map
@@ -66,20 +67,23 @@ typedef struct s_map
 	int		color_floor;
 }				t_map;
 
-
-
 typedef struct s_world
 {
 	t_map		map;
 
 	//this might be getting phased out but im still using it for the moment
-	t_moddoor	ent[MAX_ENT];
+	t_door		doors[MAX_ENT];
 	t_key		keys[MAX_ENT];
 	t_entity_2	ent_2[MAX_ENT];
 	int			ent_count;
 	t_enemy		enemy;
+
+	// content: t_entity*;
+	t_list		*entities; 
 	t_sprite	sprite[MAX_ENT];
+	short		indices[MAX_ENT]; // The indices of `sprite` in order of distance to player.
 	char		sp_amount;
+	char		sp_id_next;
 }			t_world;
 
 // // TOOD: Move
@@ -99,7 +103,13 @@ typedef struct s_world
 
 t_tile		map_get_tile(t_map *map, int x, int y);
 t_tile		*map_get_tile_ref(t_map *map, int x, int y);
+t_tile		*map_get_tile_refv(t_map *map, t_vec2 v);
 
+void		map_sprite_clear(t_map *map);
+void		sprite_update(t_map *map, t_sprite *const sprite, int index);
+void		sprite_update_all(t_world *game);
+void		sprite_rotate(t_sprite *curr, t_vec2 dir);
+void		sprite_order_distance(t_vec2 centre, t_sprite *array, short *indices, int count);
 // MAP PARSER //
 t_tiletype	get_tiletype(char c);
 
@@ -121,7 +131,6 @@ void		map_default_map_init(t_game *game);
 t_list		*ft_lst_readfile(const char *path);
 void		deallocate_list(t_list **raw_map_file);
 void		free_str_array(char **str);
-void		free_content(t_game *game);
 
 	// MAP_UTILS //
 void		replace_tabs(t_list *curr);

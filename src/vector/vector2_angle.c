@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:47:14 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/08 02:36:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:52:40 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -17,4 +17,9 @@
 double	v2x2ang(t_vec2 vec)
 {
 	return (M_PI - atan2(vec.y, -vec.x));
+}
+
+t_vec2	v2clock(t_vec2 s)
+{
+	return (v2new(s.y, -s.x));
 }

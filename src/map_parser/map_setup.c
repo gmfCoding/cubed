@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 08:11:57 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 13:42:26 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	map_update_vis(t_map *map)
 			tile = map_get_tile_ref(map, x, y);
 			tile->vis = -1;
 			if (tile->type == WALL)
-				tile->vis = 1;
+				tile->vis = 0;
 		}
 	}
 }
@@ -49,8 +49,7 @@ void	map_tiles_init(t_map *map, t_list *curr)
 		while (++x < map->width)
 		{
 			tile = map_get_tile_ref(map, x, y);
-			*tile = (t_tile){0};
-			tile->type = FLOOR;
+			*tile = (t_tile){0, .type = FLOOR, .vis = -1};
 		}
 	}
 	index = 0;

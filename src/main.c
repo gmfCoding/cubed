@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 06:01:13 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 08:28:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ t_err	world_preset(int argc, char **argv, t_game *game)
 
 void generate_textures(t_game *game)
 {
-	t_mod *const north = mod_get_mod(&game->world->map, NORTH_TEXTURE, NULL);
-	t_mod *const south = mod_get_mod(&game->world->map, SOUTH_TEXTURE, NULL);
-	t_mod *const east = mod_get_mod(&game->world->map, EAST_TEXTURE, NULL);
-	t_mod *const west = mod_get_mod(&game->world->map, WEST_TEXTURE, NULL);
+	t_mod *const north = mod_get_mod(&game->world->map, MT_NORTH_TEXTURE, NULL);
+	t_mod *const south = mod_get_mod(&game->world->map, MT_SOUTH_TEXTURE, NULL);
+	t_mod *const east = mod_get_mod(&game->world->map, MT_EAST_TEXTURE, NULL);
+	t_mod *const west = mod_get_mod(&game->world->map, MT_WEST_TEXTURE, NULL);
 
 	game->textures[TEX_WALL] = texture_load(game->app.mlx, "assets/wall.xpm");
 	game->textures[TEX_WALLN] = game->textures[TEX_WALL];
@@ -94,7 +94,7 @@ int	main(int argc, char **argv)
 	game.rt2 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
 //ill move this after vv
-	if (mod_get_mod(&game.world->map, ENEMY, NULL) != NULL)
+	if (mod_get_mod(&game.world->map, MT_ENEMY, NULL) != NULL)
 	{
 		game.world->enemy.path = star_find_path(&game, game.world->enemy.sprite_ref->pos, game.player.pos);
 		game.world->enemy.patrol_target.y = game.world->enemy.old_pos[0].y + 0.5;

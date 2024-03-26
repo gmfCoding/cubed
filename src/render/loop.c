@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/15 21:25:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/19 01:16:31 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,6 @@ void	player_loop(t_game *game)
 	mmap_input(game, &game->mmap);
 }
 
-void	update_segments(t_game *game)
-{
-	t_sprite	*curr;
-	t_vec2		dir;
-	t_vecd		temp;
-	int i;
-
-	i = -1;
-	while (++i < game->world->sp_amount)
-	{
-		curr = &game->world->sprite[i];
-		//dir = v2norm(v2sub(game->player.pos, curr->pos));
-		dir = game->player.dir;
-		temp = dir.x;
-		dir.x = dir.y;
-		dir.y = -temp;
-		curr->s1 = v2add(curr->pos, v2muls(dir, 0.5));
-		curr->s2 = v2add(curr->pos, v2muls(dir, -0.5));
-	//	curr->s1 = v2add(curr->pos, v2muls(dir, 1.25));
-	//	curr->s2 = v2add(curr->pos, v2muls(dir, -1.25));
-	}
-}
-/*
 #define D_SCALE 25
 
 
@@ -113,17 +90,11 @@ void draw_debug_view_world_state(t_game *game)
 
     t_sprite        *curr;
     int             i;
-    i = -1;
 
-    while (++i < game->world->sp_amount)
-    {
-        curr = &game->world->sprite[i];
-        texture_draw_line(tex, v2muls(curr->s1, D_SCALE), v2muls(curr->s2, D_SCALE), R_RED | R_ALPHA);
-    }
+  	texture_clear(tex, 0 | R_ALPHA);
     texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.dir), D_SCALE), R_BLUE | R_ALPHA);
     texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.plane), D_SCALE), R_BLUE | R_ALPHA);
     pixel_set(tex, game->player.pos.x * D_SCALE, game->player.pos.y * D_SCALE, R_GREEN | R_ALPHA);
-
     for (int y = 0; y < game->world->map.height; y++)
     {
         for (int x = 0; x < game->world->map.width; x++)
@@ -150,9 +121,17 @@ void draw_debug_view_world_state(t_game *game)
             }
         }
     }
-  //  texture_clear(tex, R_RED | R_ALPHA);
+	i = -1;
+    while (++i < game->world->sp_amount)
+    {
+        curr = &game->world->sprite[i];
+        texture_draw_line(tex, v2muls(curr->s1, D_SCALE), v2muls(curr->s2, D_SCALE), R_RED | R_ALPHA);
+		printf("debugging sprite:%d\n", i);
+		printf("%f %f\n", curr->s1.x, curr->s1.y);
+		printf("%f %f\n", curr->s2.x, curr->s2.y);
+    }
+  	//texture_clear(tex, R_RED | R_ALPHA);
 }
-*/
 
 void	render(t_game *game)
 {
@@ -160,7 +139,9 @@ void	render(t_game *game)
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	enemy_routine(game, &game->world->enemy);
-	update_segments(game);
+	entity_update(game);
+	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
+	sprite_update_all(game->world);
 	player_loop(game);
 	render_floor(game);
 	render_wall(game);
@@ -172,6 +153,7 @@ void	render(t_game *game)
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);
-//	texture_draw_debug_view(game, 2);
+	draw_debug_view_world_state(game);
+	texture_draw_debug_view(game, 2);
 	game->fpsc++;
 }

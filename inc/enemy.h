@@ -27,18 +27,19 @@ typedef struct	s_enemy_anim
 */
 typedef struct		s_enemy
 {
-	t_vec2		patrol_target;
-	t_vec2i		old_pos[3];
-	int		dir;
-	t_vec2		*path;
-	int		p_index;
-//	t_enemy_anim	*anim;
+	t_entity 		base;
+	t_vec2			patrol_target;
+	t_vec2i			old_pos[3];
+	int				dir;
+	t_vec2			*path;
+	int				p_index;
 	t_enemy_state	state;
-	float		speed;
-//	struct s_tile	*tile_ref[9];
-	struct s_sprite	*sprite_ref;
-}			t_enemy;
+	float			speed;
 
+//	t_enemy_anim	*anim;
+//	struct s_tile	*tile_ref[9];
+	t_sprite		*sprite_ref;
+}			t_enemy;
 
 void	enemy_routine(t_game *game, t_enemy *enemy);
 

@@ -10,7 +10,7 @@ t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	int	x;
 	int	y;
 
-	map->mods[index].type = ENEMY;
+	map->mods[index].type = MT_ENEMY;
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	en = ft_split(content, ',');
 	x = ft_atoi(en[3]) - 1;

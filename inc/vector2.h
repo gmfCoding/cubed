@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:20:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:51:37 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR2_H
@@ -46,8 +46,11 @@ t_vec2			v2sub(t_vec2 f, t_vec2 s);
 /* Inverts the components of a vector, essentially reversing the direction. */
 t_vec2			v2inv(t_vec2 s);
 
+/* Rotates a vector 90 degrees clockwise */
+t_vec2			v2clock(t_vec2 s);
+
 /* Reverse the components of a vector, essentially reversing the direction. */
-t_vec2	v2rev(t_vec2 f);
+t_vec2			v2rev(t_vec2 f);
 
 /* Multiplies a vector by another */
 t_vec2			v2mulv(t_vec2 f, t_vec2 s);
@@ -62,36 +65,39 @@ t_vecd			v2sqrmag(t_vec2 vec);
 t_vecd			v2mag(t_vec2 vec);
 
 /* Returns a normalised (length of 1) copy of a vector */
-t_vec2	v2norm(t_vec2 vec);
+t_vec2			v2norm(t_vec2 vec);
+
+/* Same as v2det but args split */
+t_vecd			f4det(t_vecd x1, t_vecd y1, t_vecd x2, t_vecd y2);
 
 /* Returns the determinate (perp cross product)*/
-t_vecd v2det(t_vec2 a, t_vec2 b);
+t_vecd			v2det(t_vec2 a, t_vec2 b);
 
 /* Returns the dot product. */
-t_vecd v2dot(t_vec2 a, t_vec2 b);
+t_vecd			v2dot(t_vec2 a, t_vec2 b);
 
 /* Returns component wise division c = c / s */
-t_vec2	v2divs(t_vec2 f, t_vecd s);
+t_vec2			v2divs(t_vec2 f, t_vecd s);
 
 /* Returns component-wise inverse division c = s / c */
-t_vec2	v2sdiv(t_vecd s, t_vec2 f);
+t_vec2			v2sdiv(t_vecd s, t_vec2 f);
 
 /* Returns the interpolation of a to b by t, range: `0 <= t <= 1`*/
-t_vec2 v2lerp(t_vec2 a, t_vec2 b, double t);
+t_vec2			v2lerp(t_vec2 a, t_vec2 b, double t);
 
 /* Returns the interpolation factor from a to b at c. (extrapolated) */
-double	v2invlerp(t_vec2 a, t_vec2 b, t_vec2 c);
+double			v2invlerp(t_vec2 a, t_vec2 b, t_vec2 c);
 
-/* Projects c on to the line segment AB. */
-t_vec2	v2proj_line(t_vec2 a, t_vec2 b, t_vec2 c);
+/* Projects A on to the line segment BC. */
+t_vec2			v2proj_line(t_vec2 a, t_vec2 b, t_vec2 c);
 
 /* Returns the distance between two vectors. */
-t_vecd	v2dist(t_vec2 a, t_vec2 b);
+t_vecd			v2dist(t_vec2 a, t_vec2 b);
 
-double	v2x2ang(t_vec2 vec);
+double			v2x2ang(t_vec2 vec);
 
 /* Return the distance between to vectors */
-t_vec2	v2diff(t_vec2 f, t_vec2 s);
+t_vec2			v2diff(t_vec2 f, t_vec2 s);
 
-char	*v2toa(int v[3]);
+char			*v2toa(int v[3]);
 #endif

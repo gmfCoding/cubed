@@ -6,19 +6,20 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 07:19:49 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 07:50:29 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/18 23:29:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cerror.h"
 #include "libft.h"
 #include "csv.h"
+#include <math.h>
 
 int	csv_clen(char **str)
 {
 	int	i;
 
 	i = 0;
-	while ((*str) != NULL && (*str)[0] != '\0' && (*str)[i + 1] != ',')
+	while ((*str) != NULL && (*str)[i] != '\0' && (*str)[i] != ',')
 		i++;
 	return (i);
 }
@@ -26,6 +27,8 @@ int	csv_clen(char **str)
 void	csv_skip(char **str)
 {
 	*str += csv_clen(str);
+	if (**str == ',')
+		(*str)++;
 }
 
 t_err	csv_next(char type, char **str, void *dst)
@@ -43,7 +46,7 @@ t_err	csv_next(char type, char **str, void *dst)
 	else if (type == 'F')
 		*((double *)dst) = ft_atoi(*str);
 	if (type == 's')
-		ft_strlcpy((char *)dst, *str, CSV_LEN);
+		ft_strlcpy((char *)dst, *str, fmin(CSV_LEN, csv_clen(str)));
 	csv_skip(str);
 	return (0);
 }

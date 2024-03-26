@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:31:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/18 22:33:56 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -23,6 +23,8 @@ static void	rotate_player(t_player *player, double angle)
 	player->dir.y = sin(angle);
 	player->plane.x = -player->dir.y / 2.0;
 	player->plane.y = player->dir.x / 2.0;
+	player->plane_start = v2add(player->plane, player->pos);
+	player->plane_end = v2add(v2rev(player->plane), player->pos);
 }
 
 static void	move_player(t_map *map, t_player *pl, t_vec2 dir)

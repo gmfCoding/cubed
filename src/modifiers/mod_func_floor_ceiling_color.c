@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:22:55 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 07:54:36 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 08:28:45 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_err	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 	char	**f;
 
 	(void)world;
-	map->mods[index].type = FLOOR_COLOR;
+	map->mods[index].type = MT_FLOOR_COLOR;
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	f = ft_split(content, ',');
 	map->use_floor = true;
@@ -41,7 +41,7 @@ t_err	mod_gen_c(char *content, int index, t_world *world, t_map *map)
 	char	**c;
 
 	(void)world;
-	map->mods[index].type = CEILING_COLOR;
+	map->mods[index].type = MT_CEILING_COLOR;
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	c = ft_split(content, ',');
 	map->use_ceiling = true;

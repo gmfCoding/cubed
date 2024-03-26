@@ -35,15 +35,14 @@ t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map)
 	if (ft_strcmp(al[1], "NULL") != 0)
 		world->ent_2[world->ent_count].target =	mod_search_name(world, al[1]);
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
-	get_pos_and_surrounding_tiles(world, x, y);
 	world->ent_2[world->ent_count].ref_tile = &map->tiles[y * (map->width + x) - 1];
 		world->ent_2[world->ent_count].speed = ft_atoi(al[5]);
 	if (al[2][0] == 'H')
-		world->ent_2[world->ent_count].type = ALERT_HIGH;
+		world->ent_2[world->ent_count].type = ET_ALERT_HIGH;
 	if (al[2][0] == 'O')
-		world->ent_2[world->ent_count].type = ALERT_OFF;
+		world->ent_2[world->ent_count].type = ET_ALERT_OFF;
 	if (al[2][0] == 'M')
-		world->ent_2[world->ent_count].type = ALERT_MEDIUM;
+		world->ent_2[world->ent_count].type = ET_ALERT_MEDIUM;
 	world->ent_count++;
 	free_str_array(al);
 	return (0);

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event_alert.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/03/16 12:30:32 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "map.h"
 #include "state.h"
 #include "mini_map.h"
@@ -13,7 +24,7 @@ void	event_alert_medium(t_game *game, t_entity_2 *ent)
 {
 	game->mmap.alert_m = true;
 	game->mmap.alert_h = false;
-	game->mmap.al_pos = ent->target->pos[0];
+	game->mmap.al_pos = ent->target->pos;
 	
 }
 
@@ -21,6 +32,6 @@ void	event_alert_high(t_game *game, t_entity_2 *ent)
 {
 	game->mmap.alert_h = true;
 	game->mmap.alert_m = false;
-	game->mmap.al_pos = ent->target->pos[0];
+	game->mmap.al_pos = ent->target->pos;
 
 }

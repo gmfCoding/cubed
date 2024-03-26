@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   config.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/16 08:27:18 by clovell           #+#    #+#             */
+/*   Updated: 2024/03/16 08:27:19 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef CONFIG_H
 # define CONFIG_H
 
@@ -32,5 +43,9 @@
 
 # define TARGET_FRAME_RATE 60.0
 # define R_TFR TARGET_FRAME_RATE
+
+# define MOD_CONTENT_MAX 100
+# define NAME_SIZE 50
+# define MAX_ENT 100 
 
 #endif

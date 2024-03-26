@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:31:27 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 02:33:41 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/18 22:52:07 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /* *************** */
 #include <stdbool.h>
 #include "vector2.h"
+#include "vector3.h"
 #include "vector2i.h"
 #include "state.h"
 #include "ray.h"
@@ -53,14 +54,29 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 	return (dda);
 }
 
-int			ccw(t_vec2 a, t_vec2 b, t_vec2 c)
+static int	ccw(t_vec2 a, t_vec2 b, t_vec2 c)
 {
 	return ((c.y - a.y) * (b.x - a.x) > (b.y - a.y) * (c.x - a.x));
 }
 
-int			two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2)
+static int	test_two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2)
 {
-	return (ccw(a1, a2, b2) != ccw(b1, a2, b2) && ccw(a1, b1, a2) != ccw(a1, b1, b2));
+	return (ccw(a1, a2, b2) != ccw(b1, a2, b2) \
+	&& ccw(a1, b1, a2) != ccw(a1, b1, b2));
+}
+
+// Find the intersection point of a1b1 and a2b2
+t_vec2	two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2)
+{
+	const t_vecd	a = v2det(a1, b1);
+	const t_vecd	b = v2det(a2, b2);
+	const t_vecd	c = f4det(f4det(a1.x, 1, b1.x, 1), f4det(a1.y, 1, b1.y, 1), \
+	f4det(a2.x, 1, b2.x, 1), f4det(a2.y, 1, b2.y, 1));
+	if (c == 0)
+		return (v2new(0, 0));
+	return \
+	(v2new(f4det(a, f4det(a1.x, 1, b1.x, 1), b, f4det(a2.x, 1, b2.x, 1)) / c, \
+	f4det(a, f4det(a1.y, 1, b1.y, 1), b, f4det(a2.y, 1, b2.y, 1)) / c));
 }
 
 /* Preforms a raycast on the tile grid
@@ -69,7 +85,6 @@ int			two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2)
 	0 if there was a hit but no more
 	1 if there was a hit and potentially more
 */
-
 t_hittype raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 {
 	t_tile	*tile;
@@ -107,6 +122,7 @@ t_hittype raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 	}
 	return (-1);
 }
+#include "vectorconv.h"
 
 t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 {
@@ -116,6 +132,7 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 	t_hittype	hit;
 	t_tile		*tile;
 	t_vec2		v2;
+	t_vec2		isect;
 	int			i;
 
 	ray = (t_rayinfo){0};
@@ -134,9 +151,21 @@ t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir)
 		while (++i < tile->sp_count)
 		{
 			sp = &game->world->sprite[tile->sprite[i]];
-			if (two_seg_intersect(sp->s2, sp->s1, start, v2))
+			if (test_two_seg_intersect(sp->s2, sp->s1, start, v2))
 			{
-				ray.depths[ray.hits].depth = v2mag(v2sub(v2proj_line(game->player.pos, sp->s1, sp->s2), game->player.pos));
+				isect = two_seg_intersect(sp->s2, sp->s1, start, v2);
+				if (game->ray == R_WIDTH / 2)
+				{
+					t_texture tex = texture_get_debug_view(game, 2);
+					printf("(%f, %f)\n", isect.x, isect.y);
+					texture_draw_circle(&tex, v2inew(isect.x * 25, isect.y * 25), 2, R_GREEN | R_ALPHA);
+					texture_draw_circle(&tex, v2tov2i(v2muls(game->player.plane_start, 25)), 2, R_RED | R_ALPHA);
+					texture_draw_circle(&tex, v2tov2i(v2muls(game->player.plane_end, 25)), 2, R_RED | R_ALPHA);
+				}
+				//ray.depths[ray.hits].depth = v2mag(v2sub(v2proj_line(game->player.pos, sp->s1, sp->s2), game->player.pos));
+				//ray.depths[ray.hits].depth = v2mag(v2proj_line(isect, sp->s1, sp->s2));
+				ray.depths[ray.hits].depth = v2dist(v2proj_line(isect, game->player.plane_start,  game->player.plane_end), isect);
+				//ray.depths[ray.hits].depth = v2dist(isect, game->player.pos);
 				ray.depths[ray.hits].minX = v2invlerp(sp->s1, sp->s2, v2add(game->player.pos, v2muls(dir, ray.depths[ray.hits].depth)));
 				ray.depths[ray.hits].sp_tex = sp->tex;
 				ray.hits++;
