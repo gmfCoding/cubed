@@ -151,12 +151,16 @@ void draw_debug_view_world_state(t_game *game)
 
 void	render(t_game *game)
 {
+	int x;
 //	const t_texture    tex = texture_get_debug_view(game, 2);
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	enemy_routine(game, &game->world->enemy);
 	update_segments(game);
 	player_loop(game);
+
+	x = v2x2ang(game->player.dir) / 6.28 * 3840;
+	texture_blit(game->textures[TEX_SKYBOX], game->rt1, v2new(-x, 0));
 	render_floor(game);
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);

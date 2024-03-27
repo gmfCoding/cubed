@@ -2,29 +2,69 @@
 #include "map.h"
 #include "state.h"
 #include "vector2.h"
+#include "clmath.h"
+#include "cubed.h"
+#include <math.h>
 
+
+
+/*
 t_vec2	enemy_calculate_direction(t_vec2 enemy_pos, t_vec2 target)
 {
-	double	magnitude;
-	t_vec2	dir;
+	//double	magnitude;
+	//t_vec2	dir;
+	
+//	dir = v2norm(v2sub(enemy, target));
 
-	dir.x = target.x - enemy_pos.x;
-	dir.y = target.y - enemy_pos.y;
-	magnitude = sqrt(dir.x * dir.x + dir.y * dir.y);
-	dir.x /= magnitude;
-	dir.y /= magnitude;
+	//dir.x = target.x - enemy_pos.x;
+	//dir.y = target.y - enemy_pos.y;
+	//magnitude = sqrt(dir.x * dir.x + dir.y * dir.y);
+	//dir.x /= magnitude;
+	//dir.y /= magnitude;
 	return (dir);
 }
+*/
 
-void	enemy_move_to_target(t_enemy *enemy, t_vec2 target)
+
+float	v2v2ang(t_vec2 a, t_vec2 b)
+{
+	a = v2norm(a);
+	b = v2norm(b);
+	return(acosf(v2dot(a, b)));
+}
+
+void	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
 {
 	t_vec2	dir;
+	float	angle;
 
-	dir = enemy_calculate_direction(enemy->sprite_ref->pos, target);
+	dir = v2norm(v2sub(target, enemy->sprite_ref->pos));
+//	printf("enemy-dir = %f,%f\n", dir.x, dir.y);
+	angle = v2x2ang(dir) - v2x2ang(v2norm(v2sub(player_pos, enemy->sprite_ref->pos)));
+	//t_vec2 ep = v2norm(v2sub(player_pos, enemy->sprite_ref->pos));
+	//angle = atan2(ep.y, ep.x) - atan2(dir.y, dir.x);
+	if (angle < 0)
+		angle += M_TAU;
+	enemy->angle_frame = fabs(angle) / M_TAU * 32;
+	printf("enemy angle_frame = %d, angle %f\n", enemy->angle_frame, angle*RAD2DEG);
 	enemy->sprite_ref->pos.x += dir.x * enemy->speed;
 	enemy->sprite_ref->pos.y += dir.y * enemy->speed;
 }
+/*
+void	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
+{
+	t_vec2	dir;
+	float	angle;
 
+	dir = v2norm(v2sub(target, enemy->sprite_ref->pos));
+//	printf("enemy-dir = %f,%f\n", dir.x, dir.y);
+	angle = v2v2ang(dir, v2sub(player_pos, enemy->sprite_ref->pos));
+	enemy->angle_frame = angle / M_TAU * 32;
+	printf("enemy angle_frame = %d\n", enemy->angle_frame);
+	enemy->sprite_ref->pos.x += dir.x * enemy->speed;
+	enemy->sprite_ref->pos.y += dir.y * enemy->speed;
+}
+*/
 t_vec2	enemy_patrol_target(t_game *game, t_enemy *enemy)
 {
 	t_vec2	targets[4];
@@ -64,7 +104,9 @@ int	enemy_has_line_of_sight(t_game *game, t_vec2 start, t_vec2 end)
 	int	x;
 	int	y;
 
-	dir = enemy_calculate_direction(start, end);
+
+	dir = v2norm(v2sub(end, start));
+//	dir = enemy_calculate_direction(start, end);
 	dist = v2dist(end, start);
 	i = 0;
 	while (i < dist)
@@ -165,7 +207,7 @@ void	enemy_traverse_path(t_game *game, t_enemy *enemy)
 	}
 	target = v2new((int)enemy->path[enemy->p_index].x + 0.5, (int)enemy->path[enemy->p_index].y + 0.5);
 	dist = v2dist(enemy->sprite_ref->pos, target);
-	enemy_move_to_target(enemy, target);
+	enemy_move_to_target(enemy, target, game->player.pos);
 	if (dist < 0.01)
 		enemy->p_index++;
 }
@@ -187,7 +229,7 @@ void	enemy_patrol(t_game *game, t_enemy *enemy)
 		enemy->patrol_target = enemy_patrol_target(game, enemy);
 		printf("patrol_target = %f, %f\n", enemy->patrol_target.x, enemy->patrol_target.y);
 	}
-	enemy_move_to_target(enemy, enemy->patrol_target);
+	enemy_move_to_target(enemy, enemy->patrol_target, game->player.pos);
 }
 
 void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
@@ -202,7 +244,7 @@ void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
 			return ;
 		}
 	}
-	enemy_move_to_target(enemy, game->player.pos);
+	enemy_move_to_target(enemy, game->player.pos, game->player.pos);
 }
 
 /*
@@ -219,6 +261,7 @@ void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
  */
 void	enemy_routine(t_game *game, t_enemy *enemy)
 {
+	printf("state = %d\n", enemy->state);
 	if (enemy->state == NOT_ACTIVE)
 		return ;
 	enemy_update_sp_tile_count(game, enemy);
@@ -228,4 +271,6 @@ void	enemy_routine(t_game *game, t_enemy *enemy)
 		enemy_traverse_path(game, enemy);
 	else if (enemy->state == PATROL)
 		enemy_patrol(game, enemy);
+	//enemy_animation(game, enemy);
+	
 }

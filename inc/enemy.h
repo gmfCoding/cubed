@@ -1,6 +1,6 @@
 #ifndef ENEMY_H
 # define ENEMY_H
-
+# include <stdint.h>
 # include <math.h>
 # include "vector2.h"
 # include "vector2i.h"
@@ -18,21 +18,21 @@ typedef enum	e_enemy_state
 		GO_PATH_TO_TARGET,
 		TARGET_IN_SIGHT,
 }		t_enemy_state;
-/*
+
 typedef uint16_t t_tid;
 typedef struct	s_enemy_anim
 {
-	t_tid	tex[100];
+	t_tid	tex[832];
 }		t_enemy_anim;
-*/
+
 typedef struct		s_enemy
 {
 	t_vec2		patrol_target;
 	t_vec2i		old_pos[3];
-	int		dir;
+	int		angle_frame;
 	t_vec2		*path;
 	int		p_index;
-//	t_enemy_anim	*anim;
+	t_enemy_anim	*anim;
 	t_enemy_state	state;
 	float		speed;
 //	struct s_tile	*tile_ref[9];

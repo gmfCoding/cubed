@@ -63,7 +63,7 @@ typedef struct	s_map
 	int			color_floor;
 }				t_map;
 
-typedef uint16_t t_tid;
+//typedef uint16_t t_tid;
 typedef struct s_sprite t_sprite;
 
 struct	s_sprite
