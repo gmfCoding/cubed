@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:36:58 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 00:40:32 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 13:43:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -143,7 +143,7 @@ void	sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir)
 		info = raycast(game, curr->pos, v2rev(dir), RAY_MASK_WALL);
 		hit = ray_gethit(&info, 0);
 		if (v2dist(curr->s2, curr->pos) > v2dist(hit, curr->pos))
-			curr->vs1 = hit;
+			curr->vs2 = hit;
 	}
 }
 

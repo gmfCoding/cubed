@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 00:39:26 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 14:44:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -69,11 +69,13 @@ typedef struct	s_door
 {
 	t_entity	base;
 	char	name[NAME_SIZE];
-	int		speed;
+	float	speed;
 	float	percent;
 	bool	closed;
 	bool	locked;
 } t_door;
+
+# define ENT_DOOR_SPEED 2.0
 
 t_entity	*entity_create(t_world *world, t_entity_type type);
 void		entity_update(t_game *game);

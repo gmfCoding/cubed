@@ -224,6 +224,11 @@ void	enemy_routine(t_game *game, t_enemy *enemy)
 		return ;
 	enemy_update_sp_tile_count(game, enemy);
 	sprite_rotate(game, enemy->sprite_ref, game->player.dir);
+	static bool do_move = true;
+	if (input_keydown(&game->input, KEY_SPACE))
+		do_move = !do_move;
+	if (!do_move)
+		return ;
 	if (enemy->state == TARGET_IN_SIGHT)
 		enemy_target_in_sight(game, enemy);
 	else if (enemy->state == GO_PATH_TO_TARGET)

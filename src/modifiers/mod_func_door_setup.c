@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 13:32:54 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 14:44:43 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	e |= csv_next('s', &content, &str);
 	door = entity_create(wld, ENT_DOOR);
 	door->closed = str[0] == 'C';
+	door->speed = ENT_DOOR_SPEED * (1.0 / R_TFR);
 	e |= csv_next('s', &content, &str);
 	door->locked = str[0] == 'L';
 	door->base.pos = v2itov2(pos);

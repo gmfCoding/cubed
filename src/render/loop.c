@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 00:17:33 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 12:37:39 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,10 @@ void draw_debug_view_world_state(t_game *game)
     {
         curr = &game->world->sprite[i];
         texture_draw_line(tex, v2muls(curr->s1, D_SCALE), v2muls(curr->s2, D_SCALE), R_RED | R_ALPHA);
+        texture_draw_line(tex, v2muls(curr->vs1, D_SCALE), v2muls(curr->vs2, D_SCALE), R_GREEN | R_ALPHA);
+        texture_draw_circle(&tex, v2tov2i(v2muls(curr->pos, D_SCALE)), 2, 0xFFFF33 | R_ALPHA);
+        texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs1, D_SCALE)), 2, 0x55FFFF | R_ALPHA);
+        texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs2, D_SCALE)), 2, 0xFF13FF | R_ALPHA);
 		printf("debugging sprite:%d\n", i);
 		printf("%f %f\n", curr->s1.x, curr->s1.y);
 		printf("%f %f\n", curr->s2.x, curr->s2.y);

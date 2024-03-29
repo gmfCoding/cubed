@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 00:41:14 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/27 14:52:40 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -40,19 +40,21 @@ void	ent_door_update(t_door *door, t_game *game)
 {
 	t_vec2	pct;
 	bool	vert;
-	// if (door->closed)
-	// 	door->percent += door->speed;
-	// else
-	// 	door->percent -= door->speed;
-	// door->percent = fclamp(0.0, 1.0, door->percent);
-	door->percent = 1;
+	if (input_keydown(&game->input, KEY_LALT)) // TODO: Remove (debug)
+		door->closed = !door->closed;
+
+	if (door->closed)
+		door->percent += door->speed;
+	else
+		door->percent -= door->speed;
+	door->percent = fclamp(0.0, 1.0, door->percent);
 	vert = map_get_tile_refv(&game->world->map, \
 	v2add(door->base.pos, v2new(1, 0)))->type == FLOOR;
 	pct = v2new(0.5, 0);
 	if (vert)
 		pct = v2new(0, 0.5);
 	door->base.sprite->pos = v2add(door->base.pos, v2clock(pct));
-	pct = v2muls(pct, door->percent * 2);
+	pct = v2muls(pct, door->percent);
 	door->base.sprite->s1 = v2add(door->base.sprite->pos, pct);
 	door->base.sprite->s2 = door->base.sprite->pos;
 	door->base.sprite->vs1 = door->base.sprite->s1;
@@ -70,7 +72,7 @@ static const size_t	g_entity_sizes[] = {
 
 void	entity_update(t_game *game)
 {
-	t_list	*lst;
+ 	t_list	*lst;
 
 	lst = game->world->entities;
 	while (lst != NULL && lst->content != NULL)
