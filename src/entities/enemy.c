@@ -335,17 +335,7 @@ void	enemy_animate(t_game *game, t_enemy *enemy)
 		enemy->sprite_ref->tex = enemy->angle_frame * 18 + texture_index;
 	}
 }
-/*
-void	enemy_animate(t_game *game, t_enemy *enemy)
-{
-	if (game->fpsc % 4 == 0)
-	{
 
-		printf("this is the frame ----- %d\n", enemy->angle_frame * (TEX_ENEMY_START + ((game->fpsc / 4) % 18)));
-		enemy->sprite_ref->tex = (enemy->angle_frame) * (TEX_ENEMY_START + ((game->fpsc / 4) % 18));
-	}
-}
-*/
 /*
  * the enemy will look for a valid path while in patrol
  * if the path return for a_star in NULL it will continue
