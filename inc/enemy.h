@@ -22,7 +22,7 @@ typedef enum	e_enemy_state
 typedef uint16_t t_tid;
 typedef struct	s_enemy_anim
 {
-	t_tid	tex[832];
+	t_tid	tex[576];
 }		t_enemy_anim;
 
 typedef struct		s_enemy
@@ -40,6 +40,7 @@ typedef struct		s_enemy
 }			t_enemy;
 
 
+void	enemy_load_directory(t_game *game);
 void	enemy_routine(t_game *game, t_enemy *enemy);
 
 #endif

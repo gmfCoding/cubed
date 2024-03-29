@@ -26,6 +26,81 @@ t_vec2	enemy_calculate_direction(t_vec2 enemy_pos, t_vec2 target)
 */
 
 
+#include <string.h>
+void	enemy_load_textures(t_game *game, char *base_path, int index)
+{
+	char file_extension[] = ".xpm";
+	char	path[100];
+	char	index_str[5];
+	int	i;
+
+	i = 0;
+	while (++i <= 18)
+	{
+		path[100];
+		index_str[5];
+		if (i*3-2 < 10)
+		{
+			index_str[0] = '0';
+			index_str[1] = '0';
+			index_str[2] = '0';
+			index_str[3] = '0' + (i*3)-2;
+			index_str[4] = '\0';
+		}
+		else
+		{
+
+			index_str[0] = '0';
+			index_str[1] = '0';
+			index_str[2] = '0' + (i*3-2) / 10;
+			index_str[3] = '0' + (i*3-2) % 10;
+			index_str[4] = '\0';
+		}
+		strcpy(path, base_path);
+		strcat(path, index_str);
+		strcat(path, file_extension);
+	//	printf("%s    index = %d\n", path, ((index-1) * 18)+ i-1);
+		game->textures[((index-1) * 18) + i + TEX_ENEMY_START - 1] = texture_load(game->app.mlx, path);
+	}
+}
+
+
+
+void	enemy_load_directory(t_game *game)
+{
+	char	path[100];
+	char	index_str[5];
+	int	i;
+
+	char base_path[] = "assets/enemy_sprites/";
+	i = 0;
+	while (++i <= 32)
+	{
+		path[100];
+		index_str[5];
+		if (i < 10)
+		{
+			index_str[0] = '0' + i;
+			index_str[1] = '/';
+			index_str[2] = '\0';
+		}
+		else
+		{
+
+			index_str[0] = '0' + i / 10;
+			index_str[1] = '0' + i % 10;
+			index_str[2] = '/';
+			index_str[3] = '\0';
+		}
+		strcpy(path, base_path);
+		strcat(path, index_str);
+		enemy_load_textures(game, path, i);
+	//	game->textures[index + i - 1] = texture_load(game->app.mlx, path);
+	//	game->world->enemy->anim[i +(index * 32)]
+	}
+}
+
+
 float	v2v2ang(t_vec2 a, t_vec2 b)
 {
 	a = v2norm(a);
@@ -40,13 +115,13 @@ void	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
 
 	dir = v2norm(v2sub(target, enemy->sprite_ref->pos));
 //	printf("enemy-dir = %f,%f\n", dir.x, dir.y);
-	angle = v2x2ang(dir) - v2x2ang(v2norm(v2sub(player_pos, enemy->sprite_ref->pos)));
-	//t_vec2 ep = v2norm(v2sub(player_pos, enemy->sprite_ref->pos));
-	//angle = atan2(ep.y, ep.x) - atan2(dir.y, dir.x);
+	//angle = v2x2ang(dir) - v2x2ang(v2norm(v2sub(player_pos, enemy->sprite_ref->pos)));
+	t_vec2 ep = v2norm(v2sub(player_pos, enemy->sprite_ref->pos));
+	angle = atan2(ep.y, ep.x) - atan2(dir.y, dir.x);
 	if (angle < 0)
 		angle += M_TAU;
 	enemy->angle_frame = fabs(angle) / M_TAU * 32;
-	printf("enemy angle_frame = %d, angle %f\n", enemy->angle_frame, angle*RAD2DEG);
+//	printf("enemy angle_frame = %d, angle %f\n", enemy->angle_frame, angle*RAD2DEG);
 	enemy->sprite_ref->pos.x += dir.x * enemy->speed;
 	enemy->sprite_ref->pos.y += dir.y * enemy->speed;
 }
@@ -79,7 +154,7 @@ t_vec2	enemy_patrol_target(t_game *game, t_enemy *enemy)
 	targets[1] = v2new(x, y + 1);
 	targets[2] = v2new(x - 1, y);
 	targets[3] = v2new(x, y - 1);
-	printf("our rand number = %d\n", i);
+//	printf("our rand number = %d\n", i);
 	while (i < 4)
 	{
 		if (game->world->map.tiles[(int)targets[i].x + (int)targets[i].y * game->world->map.width].vis == -1)
@@ -227,7 +302,7 @@ void	enemy_patrol(t_game *game, t_enemy *enemy)
 			return ;
 		}
 		enemy->patrol_target = enemy_patrol_target(game, enemy);
-		printf("patrol_target = %f, %f\n", enemy->patrol_target.x, enemy->patrol_target.y);
+	//	printf("patrol_target = %f, %f\n", enemy->patrol_target.x, enemy->patrol_target.y);
 	}
 	enemy_move_to_target(enemy, enemy->patrol_target, game->player.pos);
 }
@@ -247,6 +322,30 @@ void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
 	enemy_move_to_target(enemy, game->player.pos, game->player.pos);
 }
 
+
+void	enemy_animate(t_game *game, t_enemy *enemy)
+{
+	int	animation_frame;
+	int	texture_index;
+
+	if (game->fpsc % 4 == 0)
+	{
+		animation_frame = game->fpsc / 4;
+		texture_index = TEX_ENEMY_START + (animation_frame % 18);
+		enemy->sprite_ref->tex = enemy->angle_frame * 18 + texture_index;
+	}
+}
+/*
+void	enemy_animate(t_game *game, t_enemy *enemy)
+{
+	if (game->fpsc % 4 == 0)
+	{
+
+		printf("this is the frame ----- %d\n", enemy->angle_frame * (TEX_ENEMY_START + ((game->fpsc / 4) % 18)));
+		enemy->sprite_ref->tex = (enemy->angle_frame) * (TEX_ENEMY_START + ((game->fpsc / 4) % 18));
+	}
+}
+*/
 /*
  * the enemy will look for a valid path while in patrol
  * if the path return for a_star in NULL it will continue
@@ -261,16 +360,15 @@ void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
  */
 void	enemy_routine(t_game *game, t_enemy *enemy)
 {
-	printf("state = %d\n", enemy->state);
+//	printf("state = %d\n", enemy->state);
 	if (enemy->state == NOT_ACTIVE)
 		return ;
 	enemy_update_sp_tile_count(game, enemy);
+	enemy_animate(game, enemy);
 	if (enemy->state == TARGET_IN_SIGHT)
 		enemy_target_in_sight(game, enemy);
 	else if (enemy->state == GO_PATH_TO_TARGET)
 		enemy_traverse_path(game, enemy);
 	else if (enemy->state == PATROL)
 		enemy_patrol(game, enemy);
-	//enemy_animation(game, enemy);
-	
 }

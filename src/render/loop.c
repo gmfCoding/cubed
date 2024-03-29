@@ -159,8 +159,8 @@ void	render(t_game *game)
 	update_segments(game);
 	player_loop(game);
 
-	x = v2x2ang(game->player.dir) / 6.28 * 3840;
-	texture_blit(game->textures[TEX_SKYBOX], game->rt1, v2new(-x, 0));
+//	x = v2x2ang(game->player.dir) / 6.28 * 3840;
+//	texture_blit(game->textures[TEX_SKYBOX], game->rt1, v2new(-x, 0));
 	render_floor(game);
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);

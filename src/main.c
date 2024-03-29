@@ -37,6 +37,9 @@
 // 	mlx_loop(mlx);
 // }
 
+
+
+
 void	world_preset(int argc, char **argv, t_game *game)
 {
 	game->world->ent_count = 0;
@@ -48,6 +51,10 @@ void	world_preset(int argc, char **argv, t_game *game)
 
 void generate_textures(t_game *game)
 {
+
+	enemy_load_directory(game);
+
+
 	t_mod *const north = mod_get_mod(&game->world->map, NORTH_TEXTURE, NULL);
 	t_mod *const south = mod_get_mod(&game->world->map, SOUTH_TEXTURE, NULL);
 	t_mod *const east = mod_get_mod(&game->world->map, EAST_TEXTURE, NULL);
@@ -63,7 +70,7 @@ void generate_textures(t_game *game)
 	game->textures[TEX_FLOOR] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
 	game->textures[TEX_CEILING] = game->textures[TEX_FLOOR];
 
-
+/*
 	game->textures[TEX_ENEMY_1] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0001.xpm");
 	game->textures[TEX_ENEMY_2] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0003.xpm");
 	game->textures[TEX_ENEMY_3] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0005.xpm");
@@ -90,7 +97,7 @@ void generate_textures(t_game *game)
 	game->textures[TEX_ENEMY_24] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0047.xpm");
 	game->textures[TEX_ENEMY_25] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0049.xpm");
 	game->textures[TEX_ENEMY_26] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0051.xpm");
-
+*/
 	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
 
 
@@ -150,6 +157,7 @@ int	main(int argc, char **argv)
 	}
 //ill move this after ^^
 	generate_textures(&game);
+	
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	shutdown_input_setup(&game);
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
