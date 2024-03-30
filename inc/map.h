@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 00:16:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 00:21:11 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -26,7 +26,7 @@
 # include "events.h"
 
 # define TAB_SIZE 4
-# define TILE_SP_MAX 4
+# define TILE_SP_MAX 7
 # define FILE_TYPE ".xpm"
 # define MAP_MODIFICATION_SIZE 100
 # define MAP_MAX_XY 200

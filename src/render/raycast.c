@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:31:27 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 00:44:15 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 15:14:51 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,17 @@ void	raycast_sprite(t_game *game, t_rayinfo *ray, t_vec2i map)
 	const t_tile	*tile = map_get_tile_ref(&game->world->map, map.x, map.y);
 
 	i = -1;
-	while (++i < tile->sp_count)
+	while (++i < tile->sp_count && ray->hits < MAX_DEPTHS)
 	{
 		sp = &game->world->sprite[tile->sprite[i]];
+		if (!sp->visible)
+			continue ;
 		if (test_two_seg_intersect(sp->vs2, sp->vs1, ray->start, v2))
 		{
 			isect = two_seg_intersect(sp->s2, sp->s1, ray->start, v2);
 			if (game->ray == R_WIDTH / 2)
 			{
 				t_texture tex = texture_get_debug_view(game, 2);
-				printf("(%f, %f)\n", isect.x, isect.y);
 				texture_draw_circle(&tex, v2inew(isect.x * 25, isect.y * 25), 2, R_GREEN | R_ALPHA);
 				texture_draw_circle(&tex, v2tov2i(v2muls(game->player.plane_start, 25)), 2, R_RED | R_ALPHA);
 				texture_draw_circle(&tex, v2tov2i(v2muls(game->player.plane_end, 25)), 2, R_RED | R_ALPHA);

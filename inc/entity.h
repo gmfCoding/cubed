@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 14:44:32 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 15:13:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -38,6 +38,7 @@ struct	s_sprite
 	char		id;
 	t_tid		tex;
 	t_vec2		pos;
+	bool		visible;
 
 	// Segment 1
 	t_vec2		s1;
@@ -45,6 +46,8 @@ struct	s_sprite
 	// Segment 2
 	t_vec2		s2;
 
+	// Visual segement fall back
+	bool		vsfb;
 	// Visual segment 1
 	t_vec2		vs1;
 	// Visual segment 2
@@ -73,6 +76,8 @@ typedef struct	s_door
 	float	percent;
 	bool	closed;
 	bool	locked;
+
+	t_sprite *sprites[4];
 } t_door;
 
 # define ENT_DOOR_SPEED 2.0

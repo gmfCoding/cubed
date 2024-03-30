@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/27 14:44:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 15:39:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,28 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	door->locked = str[0] == 'L';
 	door->base.pos = v2itov2(pos);
 	door->base.sprite = &wld->sprite[wld->sp_amount++];
+
+	door->sprites[0] = door->base.sprite;
+	door->sprites[0]->pos = v2itov2(pos);
+	door->sprites[1] = &wld->sprite[wld->sp_amount++];
+	door->sprites[1]->pos = v2itov2(pos);
+	door->sprites[2] = &wld->sprite[wld->sp_amount++];
+	door->sprites[2]->pos = v2itov2(pos);
+	door->sprites[3] = &wld->sprite[wld->sp_amount++];
+	door->sprites[3]->pos = v2itov2(pos);
+
+	door->sprites[0]->tex = TEX_WINDOW;
+	door->sprites[1]->tex = TEX_WINDOW;
+	door->sprites[2]->tex = TEX_WINDOW;
+	door->sprites[3]->tex = TEX_WINDOW;
+	door->sprites[0]->visible = true;
+	door->sprites[2]->visible = true;
+
+	//door->sprites[0]->vsfb = true;
+	// door->sprites[0]->vsfb = false;
+	door->sprites[1]->vsfb = true;
+	// door->sprites[2]->vsfb = true;
+	door->sprites[3]->vsfb = true;
 	doors++;
 	wld->ent_count++;
 	return (0);

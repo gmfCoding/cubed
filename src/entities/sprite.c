@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:36:58 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 13:43:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 01:40:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -49,6 +49,11 @@ void	sprite_update_all(t_world *world)
 	i = -1;
 	while (++i <world->sp_amount)
 	{
+		if (world->sprite[i].vsfb)
+		{
+			world->sprite[i].vs1 = world->sprite[i].s1;
+			world->sprite[i].vs2 = world->sprite[i].s2;
+		}
 		j = world->indices[i];
 		sprite_update(&world->map, &world->sprite[j], j);
 	}

@@ -68,7 +68,8 @@ t_hitpoint hit)
 		col.type = C_SPRITE;
 		col.uv.x = hit.minX;
 		col.texture = hit.sp_tex;
-		col.tex_size = 32;
+		col.tex_size = game->textures[hit.sp_tex].width;
+		//col.tex_size = 32;
 		calculate_column_common(game, vertical, &col, hit);
 		col.shaded = 0;
 	}

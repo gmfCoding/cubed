@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 13:42:26 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/29 23:52:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	map_tiles_init(t_map *map, t_list *curr)
 		while (++x < map->width)
 		{
 			tile = map_get_tile_ref(map, x, y);
-			*tile = (t_tile){0, .type = FLOOR, .vis = -1};
+			*tile = (t_tile){.type = FLOOR, .vis = -1, 0};
 		}
 	}
 	index = 0;
