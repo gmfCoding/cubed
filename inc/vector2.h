@@ -89,6 +89,7 @@ t_vec2	v2proj_line(t_vec2 a, t_vec2 b, t_vec2 c);
 t_vecd	v2dist(t_vec2 a, t_vec2 b);
 
 double	v2x2ang(t_vec2 vec);
+float	v2v2ang(t_vec2 a, t_vec2 b);
 
 /* Return the distance between to vectors */
 t_vec2	v2diff(t_vec2 f, t_vec2 s);

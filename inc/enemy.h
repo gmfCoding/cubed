@@ -6,6 +6,7 @@
 # include "vector2i.h"
 
 
+
 typedef struct	s_game t_game;
 typedef struct	s_world t_world;
 typedef struct	s_map t_map;
@@ -39,8 +40,16 @@ typedef struct		s_enemy
 	struct s_sprite	*sprite_ref;
 }			t_enemy;
 
-
-void	enemy_load_directory(t_game *game);
+void	enemy_load_directory(t_game *game, char *base_path);
 void	enemy_routine(t_game *game, t_enemy *enemy);
+void	enemy_update_path_to_target(t_game *game, t_enemy *enemy);
 
+//t_vec2	enemy_patrol_target(t_game *game, t_enemy *enemy);
+void	enemy_patrol(t_game *game, t_enemy *enemy);
+void	enemy_traverse_path(t_game *game, t_enemy *enemy);
+
+
+void	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos);
+int	enemy_has_line_of_sight(t_game *game, t_vec2 start, t_vec2 end);
+void	enemy_target_in_sight(t_game *game, t_enemy *enemy);
 #endif

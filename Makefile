@@ -63,7 +63,10 @@ SRCSF = $(TEST) \
 		events/event_door.c \
 		events/event_handler.c \
 		entities/player_setup.c \
-		entities/enemy.c \
+		entities/enemy/enemy_go_to_target.c \
+		entities/enemy/enemy_img_setup.c \
+		entities/enemy/enemy_path_and_patrol.c \
+		entities/enemy/enemy_routines.c \
 		a_star/a_star_path_collect.c \
 		a_star/a_star_neighboring.c \
 		a_star/a_star_memory.c \

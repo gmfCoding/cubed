@@ -18,7 +18,9 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 		game->world->map.tiles[(int)(ent->pos[0].x + ent->pos[0].y * game->world->map.width)].vis = 1;
 		game->world->map.tiles[(int)(ent->pos[0].x + ent->pos[0].y * game->world->map.width)].type = FLOOR;
 		ent->ref_mm_tile->img = &game->mmap.mm_img[13];
-		ent->type = DOOR_UNLOCKED;	
+		ent->type = DOOR_UNLOCKED;
+		enemy_update_path_to_target(game, &game->world->enemy);
+		game->world->enemy.p_index = 0;
 	}
 }
 

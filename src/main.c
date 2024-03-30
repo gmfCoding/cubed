@@ -52,7 +52,7 @@ void	world_preset(int argc, char **argv, t_game *game)
 void generate_textures(t_game *game)
 {
 
-	enemy_load_directory(game);
+	enemy_load_directory(game, "assets/enemy_sprites/");
 
 
 	t_mod *const north = mod_get_mod(&game->world->map, NORTH_TEXTURE, NULL);
