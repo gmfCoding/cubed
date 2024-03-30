@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 15:40:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 19:17:06 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -107,6 +107,7 @@ void	ent_door_update(t_door *door, t_game *game)
 		door->percent += door->speed;
 	else
 		door->percent -= door->speed;
+	map_get_tile_refv(&game->world->map, door->base.pos)->vis = -1 - (door->closed);
 	door->percent = fclamp(0.2, 1.0, door->percent);
 	door_update_vis(game, door, map_get_tile_refv(&game->world->map, \
 	v2add(door->base.pos, v2new(1, 0)))->type == FLOOR);

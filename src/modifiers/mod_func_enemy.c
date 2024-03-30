@@ -34,10 +34,9 @@ t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	world->enemy.old_pos[0] = v2inew(x, y);//using to track if we move to a new tile
 	world->enemy.old_pos[1] = v2inew(x, y);//using to track if we move to a new tile
 	world->enemy.old_pos[2] = v2inew(x, y);//using to track if we move to a new tile
-	tile->sprite[tile->sp_count] = world->sp_amount;
-	world->enemy.sprite_ref = &world->sprite[world->sp_amount];
-	world->sp_amount++;
-	tile->sp_count++;
+	world->enemy.sprite_ref = &world->sprite[world->sp_amount++];
+	world->enemy.sprite_ref->uv = (t_uv){.offset = {0, 0}, .scale = {1, 1}};
+	world->enemy.sprite_ref->visible = true;
 	free_str_array(en);
 	return (0);
 }

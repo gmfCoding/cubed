@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 12:37:39 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 19:31:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,12 @@ void draw_debug_view_world_state(t_game *game)
                 texture_draw_line(tex, v2muls(v2new(x + 1, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
                 texture_draw_line(tex, v2muls(v2new(x + 1, y + 1), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
             }
+			if (tile->vis == 0)
+                texture_draw_line(tex, v2muls(v2new(x + 0.1, y+ 0.1), D_SCALE), v2muls(v2new(x + 0.1, y + 0.2), D_SCALE), R_RED | R_ALPHA);
+			if (tile->vis == 1)
+                texture_draw_line(tex, v2muls(v2new(x + 0.1, y+ 0.1), D_SCALE), v2muls(v2new(x + 0.1, y + 0.2), D_SCALE), R_BLUE | R_ALPHA);
+			if (tile->vis == -1)
+                texture_draw_line(tex, v2muls(v2new(x + 0.1, y + 0.1), D_SCALE), v2muls(v2new(x + 0.1, y + 0.2), D_SCALE), R_GREEN | R_ALPHA);
             if (tile->sp_count > 0)
             {
                 texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00DDDDDD | R_ALPHA);
@@ -131,9 +137,6 @@ void draw_debug_view_world_state(t_game *game)
         texture_draw_circle(&tex, v2tov2i(v2muls(curr->pos, D_SCALE)), 2, 0xFFFF33 | R_ALPHA);
         texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs1, D_SCALE)), 2, 0x55FFFF | R_ALPHA);
         texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs2, D_SCALE)), 2, 0xFF13FF | R_ALPHA);
-		printf("debugging sprite:%d\n", i);
-		printf("%f %f\n", curr->s1.x, curr->s1.y);
-		printf("%f %f\n", curr->s2.x, curr->s2.y);
     }
 
 	static float dir = 0;
