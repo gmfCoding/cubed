@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:31:27 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 18:31:35 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 20:08:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,15 @@ void	raycast_sprite(t_game *game, t_rayinfo *ray, t_vec2i map)
 		if (test_two_seg_intersect(sp->vs2, sp->vs1, ray->start, v2))
 		{
 			isect = two_seg_intersect(sp->s2, sp->s1, ray->start, v2);
-			if (game->ray == R_WIDTH / 2)
-			{
-				t_texture tex = texture_get_debug_view(game, 2);
-				texture_draw_circle(&tex, v2inew(isect.x * 25, isect.y * 25), 2, R_GREEN | R_ALPHA);
-				texture_draw_circle(&tex, v2tov2i(v2muls(game->player.plane_start, 25)), 2, R_RED | R_ALPHA);
-				texture_draw_circle(&tex, v2tov2i(v2muls(game->player.plane_end, 25)), 2, R_RED | R_ALPHA);
-			}
+			#ifdef DEBUG
+				if (game->ray == R_WIDTH / 2)
+				{
+					t_texture tex = texture_get_debug_view(game, 2);
+					texture_draw_circle(&tex, v2inew(isect.x * 25, isect.y * 25), 2, R_GREEN | R_ALPHA);
+					texture_draw_circle(&tex, v2tov2i(v2muls(game->player.plane_start, 25)), 2, R_RED | R_ALPHA);
+					texture_draw_circle(&tex, v2tov2i(v2muls(game->player.plane_end, 25)), 2, R_RED | R_ALPHA);
+				}
+			#endif
 			ray->depths[ray->hits].depth = v2dist(v2proj_line(isect, game->player.plane_start,  game->player.plane_end), isect);
 			ray->depths[ray->hits].minX = v2invlerp(sp->s1, sp->s2, v2add(game->player.pos, v2muls(ray->dir, ray->depths[ray->hits].depth)));
 			ray->depths[ray->hits].sprite = tile->sprite[i] + 1;

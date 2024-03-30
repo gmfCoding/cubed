@@ -6,12 +6,13 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 13:15:51 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 20:59:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
 #include "state.h"
 #include "mini_map.h"
+#include "vectorconv.h"
 
 /*
  * a temperoraly function ran straight from loop to display ui
@@ -44,6 +45,7 @@ void	event_interact(t_game *game)
 		pos = v2add(game->events_active[i]->pos, v2new(0.5, 0.5));
 		if (v2dot(v2norm(v2sub(pos, game->player.pos)), game->player.dir) > 0.8)
 		{
+			printf("event: %d\n ", game->events_active[i]->type);
 			if (game->events_active[i]->type == ET_DOOR)
 				event_door(game->events_active[i]->entity, game);
 			else if (game->events_active[i]->type == ET_DOOR_UNLOCKED)
@@ -109,9 +111,10 @@ void	event_check(t_game *game)
 		j = -1;
 		while(++j < 9)
 		{
-			if (v2dist(v2add(game->world->ent_2[i].pos, g_directions[j]), \
-			game->player.pos) < 0.05f)
+			if (v2dist(v2add(game->world->ent_2[i].pos, g_directions[j]), v2itov2(v2tov2i(game->player.pos))) < 0.05f)
 			{
+				printf("TRANSITION\n");
+
 				game->events_active[++k] = &game->world->ent_2[i];
 				game->events_on = true;
 			}
