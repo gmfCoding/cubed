@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:31:27 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 15:14:51 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 18:31:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,13 @@ void	raycast_sprite(t_game *game, t_rayinfo *ray, t_vec2i map)
 			}
 			ray->depths[ray->hits].depth = v2dist(v2proj_line(isect, game->player.plane_start,  game->player.plane_end), isect);
 			ray->depths[ray->hits].minX = v2invlerp(sp->s1, sp->s2, v2add(game->player.pos, v2muls(ray->dir, ray->depths[ray->hits].depth)));
-			ray->depths[ray->hits].sp_tex = sp->tex;
+			ray->depths[ray->hits].sprite = tile->sprite[i] + 1;
 			ray->hits++;
 		}
 	}
 }
 
-t_vec2 ray_gethit(t_rayinfo *ray, int hit)
+t_vec2	ray_gethit(t_rayinfo *ray, int hit)
 {
 	if (hit >= ray->hits)
 		return (v2new(0, 0));

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/30 15:39:04 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 18:40:12 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,25 @@ char    *ft_strcpy(char *s1, char *s2)
 		s1[i] = s2[i];
 	s1[i] = s2[i];
 	return (s1);
+}
+
+static void	door_setup_sprites(t_door *door, t_world *wld)
+{
+	door->sprites[0] = &wld->sprite[wld->sp_amount++];
+	door->sprites[1] = &wld->sprite[wld->sp_amount++];
+	door->sprites[2] = &wld->sprite[wld->sp_amount++];
+	door->sprites[3] = &wld->sprite[wld->sp_amount++];
+	door->base.sprite = door->sprites[0];
+	door->sprites[0]->pos = door->base.pos;
+	door->sprites[0]->tex = TEX_WINDOW;
+	door->sprites[0]->uv = (t_uv){.offset = {0.5, 0}, .scale = {0.5, 1}};
+	door->sprites[0]->visible = true;
+	*door->sprites[1] = *door->sprites[0];
+	*door->sprites[2] = *door->sprites[0];
+	*door->sprites[3] = *door->sprites[0];
+	door->sprites[1]->uv = (t_uv){.offset = {0.25, 0}, .scale = {0.5, 1}};
+	door->sprites[1]->vsfb = true;
+	*door->sprites[3] = *door->sprites[1];
 }
 
 /*
@@ -61,29 +80,7 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	e |= csv_next('s', &content, &str);
 	door->locked = str[0] == 'L';
 	door->base.pos = v2itov2(pos);
-	door->base.sprite = &wld->sprite[wld->sp_amount++];
-
-	door->sprites[0] = door->base.sprite;
-	door->sprites[0]->pos = v2itov2(pos);
-	door->sprites[1] = &wld->sprite[wld->sp_amount++];
-	door->sprites[1]->pos = v2itov2(pos);
-	door->sprites[2] = &wld->sprite[wld->sp_amount++];
-	door->sprites[2]->pos = v2itov2(pos);
-	door->sprites[3] = &wld->sprite[wld->sp_amount++];
-	door->sprites[3]->pos = v2itov2(pos);
-
-	door->sprites[0]->tex = TEX_WINDOW;
-	door->sprites[1]->tex = TEX_WINDOW;
-	door->sprites[2]->tex = TEX_WINDOW;
-	door->sprites[3]->tex = TEX_WINDOW;
-	door->sprites[0]->visible = true;
-	door->sprites[2]->visible = true;
-
-	//door->sprites[0]->vsfb = true;
-	// door->sprites[0]->vsfb = false;
-	door->sprites[1]->vsfb = true;
-	// door->sprites[2]->vsfb = true;
-	door->sprites[3]->vsfb = true;
+	door_setup_sprites(door, wld);
 	doors++;
 	wld->ent_count++;
 	return (0);

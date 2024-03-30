@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:43:16 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/27 00:21:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 18:31:33 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef RAY_H
@@ -41,7 +41,9 @@ struct s_hitpoint
 	float		dist;
 	float		minX;
 	float		minY;
-	int			sp_tex;
+
+	// sprite index + 1
+	int			sprite;
 	int			x;
 	int			y;
 	int			side;

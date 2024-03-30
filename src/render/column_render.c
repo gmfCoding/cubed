@@ -1,15 +1,15 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wall_render.c                                      :+:      :+:    :+:   */
+/*   column_render.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:41:22 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 03:14:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 18:42:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 /* *************** */
 /*  prior: loop.c: */
 /* *************** */
@@ -60,16 +60,17 @@ t_vert *vertical, t_hitpoint hit)
 static inline t_col	calculate_column(t_game *game, t_vert *vertical,
 t_hitpoint hit)
 {
-	t_col	col;
+	t_sprite	*sp;
+	t_col		col;
 
 	col = (t_col){0};
-	if (hit.sp_tex > 0)
+	if (hit.sprite > 0)
 	{
+		sp = &game->world->sprite[hit.sprite - 1];
 		col.type = C_SPRITE;
-		col.uv.x = hit.minX;
-		col.texture = hit.sp_tex;
-		col.tex_size = game->textures[hit.sp_tex].width;
-		//col.tex_size = 32;
+		col.uv.x = (hit.minX * sp->uv.scale.x) + sp->uv.offset.x;
+		col.texture = sp->tex;
+		col.tex_size = game->textures[sp->tex].width;
 		calculate_column_common(game, vertical, &col, hit);
 		col.shaded = 0;
 	}

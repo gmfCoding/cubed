@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 15:13:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 18:22:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -25,6 +25,11 @@ typedef struct s_game t_game; // FORWARD DECLARE
 typedef struct s_world t_world; // FORWARD DECLARE
 typedef void (*t_fn_event_handler)(t_entity *entity, t_game *game);
 
+typedef struct s_uv
+{
+	t_vec2	offset;
+	t_vec2	scale;
+}				t_uv;
 
 /***
  * Position, the position of the sprite.
@@ -39,6 +44,8 @@ struct	s_sprite
 	t_tid		tex;
 	t_vec2		pos;
 	bool		visible;
+
+	t_uv		uv;
 
 	// Segment 1
 	t_vec2		s1;
