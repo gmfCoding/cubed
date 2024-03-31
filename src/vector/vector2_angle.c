@@ -18,3 +18,10 @@ double	v2x2ang(t_vec2 vec)
 {
 	return (M_PI - atan2(vec.y, -vec.x));
 }
+
+float	v2v2ang(t_vec2 a, t_vec2 b)
+{
+	a = v2norm(a);
+	b = v2norm(b);
+	return(acosf(v2dot(a, b)));
+}

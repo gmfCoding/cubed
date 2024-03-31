@@ -63,7 +63,7 @@ typedef struct	s_map
 	int			color_floor;
 }				t_map;
 
-typedef uint16_t t_tid;
+//typedef uint16_t t_tid;
 typedef struct s_sprite t_sprite;
 
 struct	s_sprite
@@ -116,6 +116,8 @@ void		free_content(t_game *game);
 	// MAP_UTILS //
 void		replace_tabs(t_list *curr);
 void		remove_empty_lines(t_list **raw_map_file);
+char	*ft_strcpy(char *s1, char *s2);
+char	*ft_strcat(char *dest, char *src);
 
 int			error_return(char *msg, int exit_code, int print_error, \
 				t_list **free_me);

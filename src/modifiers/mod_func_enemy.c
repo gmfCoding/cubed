@@ -1,4 +1,5 @@
 #include "map.h"
+#include "state.h"
 //#include "vector2i.h"
 
 /*
@@ -27,10 +28,10 @@ void	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 		world->enemy.state = GO_PATH_TO_TARGET;
 	if (en[5][0] == 'P')
 		world->enemy.state = PATROL;
-	world->enemy.dir = 0;
+	world->enemy.angle_frame = 1;
 	world->enemy.p_index = 1;
 	t_tile *tile = &world->map.tiles[x + y * world->map.width]; // TODO: Use map_get_tile_ref (after main merge)
-	world->sprite[world->sp_amount] = (t_sprite){.tex = 7, .pos = v2new((double)x + 0.5, (double )y + 0.5)};
+	world->sprite[world->sp_amount] = (t_sprite){.tex = TEX_ENEMY_START, .pos = v2new((double)x + 0.5, (double )y + 0.5)};
 	world->enemy.old_pos[0] = v2inew(x, y);//using to track if we move to a new tile
 	world->enemy.old_pos[1] = v2inew(x, y);//using to track if we move to a new tile
 	world->enemy.old_pos[2] = v2inew(x, y);//using to track if we move to a new tile
