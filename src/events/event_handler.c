@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/30 20:59:00 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/03 02:52:56 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -45,7 +45,6 @@ void	event_interact(t_game *game)
 		pos = v2add(game->events_active[i]->pos, v2new(0.5, 0.5));
 		if (v2dot(v2norm(v2sub(pos, game->player.pos)), game->player.dir) > 0.8)
 		{
-			printf("event: %d\n ", game->events_active[i]->type);
 			if (game->events_active[i]->type == ET_DOOR)
 				event_door(game->events_active[i]->entity, game);
 			else if (game->events_active[i]->type == ET_DOOR_UNLOCKED)
@@ -127,9 +126,10 @@ void	event_check(t_game *game)
  * checking if the players tile is different from last tile
  * player was in 
  */
-void	event_player(t_game *game)
+void	event_player(t_game *game, bool force)
 {
-	if ((int)game->player.pos.x != game->player.oldp_x || (int)game->player.pos.y != game->player.oldp_y)
+	if ((int)game->player.pos.x != game->player.oldp_x || \
+	(int)game->player.pos.y != game->player.oldp_y || force)
 	{
 		game->display_ui = false;
 		game->events_on = false;

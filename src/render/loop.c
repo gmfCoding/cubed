@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 21:20:06 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 23:36:07 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	draw_debug_info(t_game *game)
 
 void	player_loop(t_game *game)
 {
-	event_player(game);
+	event_player(game, false);
 	control_process(game);
 	if (game->events_on == true)
 		event_interact(game);
@@ -116,6 +116,8 @@ void draw_debug_view_world_state(t_game *game)
 				texture_draw_line(tex, v2muls(v2new(x + 1, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
 				texture_draw_line(tex, v2muls(v2new(x + 1, y + 1), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
 			}
+			else if (tile->type == DOOR)
+				texture_draw_line(tex, v2muls(v2new(x + 0.4, y+ 0.4), D_SCALE), v2muls(v2new(x + 0.4, y + 0.5), D_SCALE), R_RED | R_GREEN | R_ALPHA);
 			if (tile->vis == 0)
 				texture_draw_line(tex, v2muls(v2new(x + 0.1, y+ 0.1), D_SCALE), v2muls(v2new(x + 0.1, y + 0.2), D_SCALE), R_RED | R_ALPHA);
 			if (tile->vis == 1)
@@ -127,7 +129,7 @@ void draw_debug_view_world_state(t_game *game)
 				texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00DDDDDD | R_ALPHA);
 			}
 		}
-	}
+}
 	i = -1;
 	while (++i < game->world->sp_amount)
 	{
@@ -137,6 +139,13 @@ void draw_debug_view_world_state(t_game *game)
 		texture_draw_circle(&tex, v2tov2i(v2muls(curr->pos, D_SCALE)), 2, 0xFFFF33 | R_ALPHA);
 		texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs1, D_SCALE)), 2, 0x55FFFF | R_ALPHA);
 		texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs2, D_SCALE)), 2, 0xFF13FF | R_ALPHA);
+	}
+	t_list *ent_next = game->world->entities;
+	while (ent_next != NULL)
+	{
+		t_entity *entity = ent_next->content;
+		texture_draw_circle(&tex, v2tov2i(v2muls(entity->pos, D_SCALE)), 2, R_GREEN | R_ALPHA);
+		ent_next = ent_next->next;
 	}
 
 	static float dir = 0;

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/18 21:51:37 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 22:04:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR2_H
@@ -48,6 +48,9 @@ t_vec2			v2inv(t_vec2 s);
 
 /* Rotates a vector 90 degrees clockwise */
 t_vec2			v2clock(t_vec2 s);
+
+/* Rotates a vector 90 degrees anti-clockwise */
+t_vec2			v2aclock(t_vec2 s);
 
 /* Reverse the components of a vector, essentially reversing the direction. */
 t_vec2			v2rev(t_vec2 f);

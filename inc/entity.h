@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 18:22:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/30 23:32:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -65,7 +65,7 @@ typedef enum e_entity_type
 {
 	ENT_DOOR,
 	ENT_ENEMY
-} t_entity_type;
+}	t_entity_type;
 
 struct	s_entity
 {
@@ -75,17 +75,31 @@ struct	s_entity
 	t_mm_tile		*mm_tile;
 };
 
-typedef struct	s_door
+typedef struct s_door
 {
 	t_entity	base;
-	char	name[NAME_SIZE];
-	float	speed;
-	float	percent;
-	bool	closed;
-	bool	locked;
+	char		name[NAME_SIZE];
+	float		speed;
+	float		percent;
+	bool		closed;
+	bool		locked;
 
-	t_sprite *sprites[4];
-} t_door;
+	t_sprite	*sprites[4];
+}	t_door;
+
+typedef struct s_door_model
+{
+	t_vec2	wall_left;
+	t_vec2	left_left;
+	t_vec2	door_left;
+	t_vec2	far_left;
+
+	t_vec2	wall_right;
+	t_vec2	right_right;
+	t_vec2	door_right;
+	t_vec2	far_right;
+}	t_door_model;
+
 
 # define ENT_DOOR_SPEED 2.0
 
