@@ -3,16 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:33:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 15:37:08 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:27:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "map.h"
 
-int	mod_strlen(const char *str)
+char	*ft_strcat(char *dest, char *src)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (dest[i] != '\0')
+		i++;
+	j = 0;
+	while (src[j] != '\0')
+	{
+		dest[i + j] = src[j];
+		j++;
+	}
+	dest[i + j] = '\0';
+	return (dest);
+}
+
+char	*ft_strcpy(char *s1, char *s2)
+{
+	int i;
+
+	i = -1;
+	while (s2[++i])
+		s1[i] = s2[i];
+	s1[i] = s2[i];
+	return (s1);
+}
+
+int	strlen_nl(const char *str)
 {
 	int	i;
 
@@ -57,7 +86,7 @@ void	remove_spaces(char *str)
 	str[i + 1] = '\0';
 }
 
-int	is_line(const char *line)
+int	is_empty_line(const char *line)
 {
 	int	i;
 

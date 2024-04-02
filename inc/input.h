@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:18:00 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:32:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:30:39 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <inttypes.h>
 
 # include "vector2i.h"
+# include "vector2.h"
 # include "keys.h"
 
 typedef struct s_inputstate	t_inputstate;
@@ -29,6 +30,7 @@ struct s_inputctx
 
 	t_vec2i	mouse;
 	t_vec2i	mouse_prev;
+	t_vec2	mousef;
 
 	int		frame;
 };

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 00:52:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:42:45 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/25 20:07:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 #include "state.h"
 #include "input.h"
 
-enum {
-	KDOWN = 2,
-	KUP = 3,
-	MDOWN = 4,
-	MUP = 5,
-	MMOVE = 6,
-	EXPOSE = 12,
-	DESTROY = 17
-};
+#define KDOWN 2
+#define KUP 3
+#define MDOWN 4
+#define MUP 5
+#define MMOVE 6
+#define EXPOSE 12
+#define DESTROY 17
 
 void	input_setup(void *mlx, void *win, t_inputctx *input)
 {

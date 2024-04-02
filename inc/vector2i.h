@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/22 20:47:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/05 00:25:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR2I_H
@@ -16,8 +16,17 @@ typedef int	t_veci;
 
 typedef struct s_vec2i
 {
-	t_veci	x;
-	t_veci	y;
+	union
+	{
+		t_veci	x;
+		t_veci	s;
+	};
+	
+	union
+	{
+		t_veci	y;
+		t_veci	e;
+	};
 }				t_vec2i;
 
 t_vec2i	v2inew(t_veci x, t_veci y);
@@ -45,4 +54,6 @@ t_veci	v2imag(t_vec2i vec);
 
 /* Returns a normalised (length of 1) copy of a vector */
 t_vec2i	v2inorm(t_vec2i vec);
+
+char	*v2itoa(int v[3]);
 #endif

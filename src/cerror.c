@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 00:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/22 20:47:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/01/27 05:32:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ void	ft_assert(int cond, t_cerror error, char *file, int line)
 {
 	if (cond)
 		ft_errx(error, file, line);
+}
+
+void	ft_asrt(int cond, char *error)
+{
+	if (!cond)
+		return ;
+	ft_putstr_fd(error, STDERR_FILENO);
+	exit(1);
 }
 
 static void	ft_putbacktrace(void);

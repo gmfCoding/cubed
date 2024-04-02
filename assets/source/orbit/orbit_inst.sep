@@ -1,0 +1,61 @@
+; File path spec format:
+; use python fstring formatting
+; Available variables:
+; x 		- the file number, 1 - amount of files spec'd from `Out`
+; x_count	- is file_count
+; i 		- similar to x_count but -1 (zero indexed)
+; i_count	- similar to x_count but -1 (zero indexed)
+; section	- the name of the section (word inside [WORD])
+; section_u	- similar to section but all upper case
+; section_l	- similar to section but all lower case
+; file		- the source file
+; folder	- the directory of the current .sep 
+; frames	- the amount of frames found
+; rect_n	- the max/min_x/y int format of x_<min_x>_y_<min_x>__X_<max_x>_Y_<max_y>
+; rect		- the max/min_x/y int format of <min_x>_<min_y>__<max_x>_<max_y>
+
+[DEFAULT]
+Img = _panel_frames/{x:04}.png
+Out = panel/{section_l}_{i}.png
+
+[Apply]
+frames = 4
+min_x = 23
+min_y = 301
+max_x = 50
+max_y = 330
+
+[Throttle]
+frames = 20
+min_x = 63
+min_y = 295
+max_x = 106
+max_y = 375
+
+[ThrustIndicator]
+frames = 20
+min_x = 120
+min_y = 326
+max_x = 131
+max_y = 376
+
+[MeanDial]
+frames = 20
+min_x = 157
+min_y = 324
+max_x = 186
+max_y = 350
+
+[Selector]
+frames = 4
+min_x = 210
+min_y = 349
+max_x = 246
+max_y = 375
+
+[ScreenDial]
+frames = 20
+min_x = 286
+min_y = 322
+max_x = 306
+max_y = 341

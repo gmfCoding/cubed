@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:30:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/22 20:47:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/11 20:48:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "texture.h"
@@ -14,6 +14,22 @@
 
 #define SET pixel_set
 #define GET pixel_get
+
+void	texture_clear(t_texture src, int colour)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < src.height)
+	{
+		x = -1;
+		while (++x < src.width)
+		{
+			pixel_set(src, x, y, colour);
+		}
+	}
+}
 
 t_texture	texture_copy(void *mlx, t_texture tex, const t_vec2 reg[2], int scale)
 {
@@ -40,6 +56,7 @@ t_texture	texture_copy(void *mlx, t_texture tex, const t_vec2 reg[2], int scale)
 	}
 	return (new);
 }
+
 
 t_texture	texture_rotate(void *mlx, t_texture t, int rot)
 {

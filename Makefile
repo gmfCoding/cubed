@@ -2,37 +2,110 @@ SRCSF = $(TEST) \
 		texture/texture.c \
 		texture/pixel.c \
 		texture/texture_util.c \
+		texture/texture_blit.c \
+		texture/deferred.c \
+		texture/circle.c \
 		vector/vector2_math_extra.c \
+		vector/vector2_math_div.c \
 		vector/vector2_math.c \
+		vector/vector2_angle.c \
 		vector/vector2.c \
 		vector/vector2i_math_extra.c \
 		vector/vector2i_math.c \
 		vector/vector2i.c \
+		vector/vector3_math_extra.c \
+		vector/vector3_math.c \
+		vector/vector3_math_div.c \
+		vector/vector3.c \
+		vector/vector4_math.c \
+		vector/vtoa.c \
+		vector/vector_conv.c \
+		vector/rect.c \
 		render/render_util.c \
 		render/loop.c \
+		render/floor_render.c \
+		render/column_render.c \
+		render/wall_render.c \
 		render/line.c \
+		render/rect_render.c \
+		render/raycast.c \
+		controls/controls.c \
 		util/time.c \
-		util/error_handler.c \
-		util/string_utils.c \
+		util/math.c \
+		util/random.c \
 		util/memory_utils.c \
+		util/string_utils.c \
+		util/error_handler.c \
 		map_parser/map_setup.c \
 		map_parser/map_dimensions.c \
 		map_parser/map_tile_processing.c \
 		map_parser/map_tools.c \
 		map_parser/map_checker_tile.c \
 		map_parser/map_checker_element.c \
+		map_parser/map_default_map.c \
+		map_parser/map_utils.c \
 		modifiers/modifier_setup.c \
+		modifiers/modifier_utils.c \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_floor_ceiling_color.c \
 		modifiers/mod_func_door_setup.c \
+		modifiers/mod_func_minimap.c \
+		modifiers/mod_func_alert.c \
+		modifiers/mod_func_enemy.c \
+		modifiers/mod_func_window.c \
+		mini_map/mmap_draw.c \
+		mini_map/mmap_draw_anim.c \
+		mini_map/mmap_image_decider.c \
+		mini_map/mmap_input.c \
+		mini_map/mmap_setup.c \
+		mini_map/mmap_tile_assign.c \
+		events/event_alert.c \
+		events/event_door.c \
+		events/event_handler.c \
 		entities/player_setup.c \
+		entities/enemy/enemy_go_to_target.c \
+		entities/enemy/enemy_img_setup.c \
+		entities/enemy/enemy_path_and_patrol.c \
+		entities/enemy/enemy_routines.c \
+		a_star/a_star_path_collect.c \
+		a_star/a_star_neighboring.c \
+		a_star/a_star_memory.c \
 		input/input.c \
 		input/input_hooks.c \
 		input/input_setup.c \
 		input/keys.c \
+		ui/process.c \
+		task/task.c \
+		task/task/five_lights/fl_setup.c \
+		task/task/five_lights/fl_state_manage.c \
+		task/task/five_lights/fl_state_modes.c \
+		task/task/five_lights/fl_state_rules.c \
+		task/task/five_lights/fl_state_rules_down.c \
+		task/task/five_lights/fl_state_rules_up.c \
+		task/orbit/sys/cart_to_kep.c \
+		task/orbit/sys/ktoc_position.c \
+		task/orbit/sys/ktoc_velocity.c \
+		task/orbit/sys/kep_angle.c \
+		task/orbit/sys/kep_angle_util.c \
+		task/orbit/sys/kep_properties.c \
+		task/orbit/sys/transform.c \
+		task/orbit/sys/render.c \
+		task/orbit/sys/render_extra.c \
+		task/orbit/sys/body.c \
+		task/orbit/sys/generate.c \
+		task/orbit/sys/equality.c \
+		task/orbit/ui.c \
+		task/orbit/orbit.c \
+		task/orbit/mui/orbit_mui.c \
+		task/mui.c \
+		task/mui_process.c \
+		task/mui_process_extra.c \
+		task/mui_render.c \
 		cerror.c \
 		mgame_five_lights.c \
-
+		destroy.c \
+#		task/orbit/task2.c
+# TODO: Add other headers?
 INCSF = cubed.h
 
 ifndef $(TEST)
@@ -77,25 +150,35 @@ LIB-L = $(patsubst %,-L$(DIRLIB)/%, $(dir $(LIBSF)))
 CC = cc
 
 WFLAGS =#-Wall -Werror -Wextra
-CPPFLAGS =-I$(DIRINC) $(LIB-I)  -MMD -MP
+CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
-PGFLAGS = #-pg
-OPFLAG = -O4
+OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2 
 
-# REMOVE BEFORE EVAL
-ifeq ($(DEBUG), )
-$(warning USING DEFAULT DEBUG FLAGS (REMOVE BEFORE EVAL))
-DEBUG =1
-OPFLAG =-O0
-endif
+OPTS = $(OPT)
+SAN = address 
 
-# DEBUG LEVEL 1
-ifeq ($(shell test $(DEBUG) -ge 1; echo $$?),0)
-	DFLAGS += -g3 -fsanitize=address
+ifneq (,$(findstring none,$(OPTS)))
+OPFLAG = -O0
 endif
-ifeq ($(shell test $(DEBUG) -ge 2; echo $$?),0)
-	PGFLAGS = -pg
+ifneq (,$(findstring def,$(OPTS)))
+OPTS = fsan,debug
+endif
+ifneq (,$(findstring debug,$(OPTS)))
+	OPFLAG = -O0
+	DFLAGS += -g3
+endif
+ifneq (,$(findstring fsan,$(OPTS)))
+# -fno-sanitize-ignorelist -fsanitize-ignorelist=ignorelist.txt
+# Compile with selected sanitizer:
+# And when using other sanitizers such as memory or undefined, it may be useful to not prematurely stop,
+# Use UBSAN_OPTIONS=halt_on_error=0 (need -fs..-recover=..) or equivelent
+# Also might be nice to redirect stderr to a file
+# USE 
+	DFLAGS += -fsanitize=$(SAN) -fsanitize-recover=$(SAN) 
+endif
+ifneq (,$(findstring gmon,$(OPTS)))
+	PGFLAGS += -pg
 endif
 
 ifeq ($(EXTRA),1)
@@ -124,6 +207,12 @@ $(OBJS): $(DIROBJ)%.o : $(DIRSRC)%.c $(INCS) | $(DIROBJ)
 	-$(CC) $(PGFLAGS) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
 	-@printf "${NC}"
 
+# TODO: Merge with fclean before submitting
+lclean: clean
+	-make -C $(dir $(DIRLIB)/$(LIBFT)) fclean
+	-make -C $(dir $(DIRLIB)/$(LIBMLX)) fclean
+	-make -C $(dir $(DIRLIB)/$(LIBGNL)) fclean
+
 # CLEANING
 fclean: clean
 	-@printf "${BRED}Cleaning executable!\n${RED}"
@@ -141,13 +230,13 @@ re: fclean all
 -include $(DEPS)
 
 $(DIRLIB)/$(LIBFT):
-	make -s -C $(dir $@) all bonus
+	make -s -C $(dir $@) all bonus DFLAGS="$(DFLAGS)"
 
 $(DIRLIB)/$(LIBGNL):
-	make -s -C $(dir $@) all
+	make -s -C $(dir $@) all DFLAGS="$(DFLAGS)"
 
 $(DIRLIB)/$(LIBMLX):
-	make -s -C $(dir $@)
+	make -s -C $(dir $@) DFLAGS="$(DFLAGS)"
 
 $(DIRLIB)/$(LIBMLX_SO): $(LIBMLX)
 	cp $(DIRMLX)/libmlx.so ./libmlx.so
