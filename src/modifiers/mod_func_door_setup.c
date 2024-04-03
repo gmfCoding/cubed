@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/30 20:46:39 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/03 16:12:03 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,29 @@ static void	door_setup_sprites(t_door *door, t_world *wld)
 	door->sprites[1]->vsfb = true;
 	*door->sprites[3] = *door->sprites[1];
 }
+/*
+struct s_mod_door {
+    char name[50];
+    char tex[50];
+    t_vec2i pos;
+    bool locked;
+    bool closed;
+};
+
+struct s_mod_door door;
+int found = ft_sscanf("DR dooor01,./tex,10,25,6,C,L\n", "DR %s,%s,%u,%u,%u,%c,%c",
+    &door.name,
+    &door.tex,
+    &door.pos.x,
+    &door.pos.y,
+    &door.locked,
+    &door.closed
+);
+
+if (found != 7)
+    return;
+
+*/
 
 /*
  * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
