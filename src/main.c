@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/03 18:30:15 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/04 01:17:49 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,9 @@ int	main(int argc, char **argv)
 //ill move this after vv
 	if (mod_get_mod(&game.world->map, MT_ENEMY, NULL) != NULL)
 	{
-		game.world->enemy.path = star_find_path(&game, game.world->enemy.sprite_ref->pos, game.player.pos);
-		game.world->enemy.patrol_target.y = game.world->enemy.old_pos[0].y + 0.5;
-		game.world->enemy.patrol_target.x = game.world->enemy.old_pos[0].x + 0.5;
+		game.world->enemy->path = star_find_path(&game, game.world->enemy->sprite_ref->pos, game.player.pos);
+		game.world->enemy->patrol_target.y = game.world->enemy->old_pos[0].y + 0.5;
+		game.world->enemy->patrol_target.x = game.world->enemy->old_pos[0].x + 0.5;
 	}
 //ill move this after ^^
 	generate_textures(&game);

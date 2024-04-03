@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/03 18:28:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/04 01:16:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -76,7 +76,7 @@ typedef struct s_world
 	t_key		keys[MAX_ENT];
 	t_entity_2	ent_2[MAX_ENT];
 	int			ent_count;
-	t_enemy		enemy;
+	t_enemy		*enemy;
 
 	// content: t_entity*;
 	t_list		*entities; 

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/03 02:52:56 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/04 01:14:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -112,8 +112,6 @@ void	event_check(t_game *game)
 		{
 			if (v2dist(v2add(game->world->ent_2[i].pos, g_directions[j]), v2itov2(v2tov2i(game->player.pos))) < 0.05f)
 			{
-				printf("TRANSITION\n");
-
 				game->events_active[++k] = &game->world->ent_2[i];
 				game->events_on = true;
 			}

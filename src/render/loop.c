@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 23:36:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/04 01:14:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,11 +188,25 @@ void	render(t_game *game)
 	mmap_draw(game);
 	if (game->tasks[0] && game->tasks[0]->show)
 		task_orbit_render(game, game->tasks[0]);
-	draw_debug_view_world_state(game);
-	input_process(&game->input);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);
-	texture_draw_debug_view(game, 2);
+
+	static bool show_debug = false;
+	if (input_keydown(&game->input, KEY_TILDA))
+	{
+		show_debug = !show_debug;
+		if (!show_debug && game->views[2].win)
+		{
+			texture_destroy(game->app.mlx, &game->views[2].rt, NULL, false);
+			mlx_destroy_window(game->app.mlx, game->views[2].win);
+		}
+	}
+	if (show_debug)
+	{
+		draw_debug_view_world_state(game);
+		texture_draw_debug_view(game, 2);
+	}
+	input_process(&game->input);
 	game->fpsc++;
 }
