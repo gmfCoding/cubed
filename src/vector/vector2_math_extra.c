@@ -6,11 +6,16 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:49:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:03:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/19 00:20:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
 #include "vector2.h"
+
+t_vecd	f4det(t_vecd x1, t_vecd y1, t_vecd x2, t_vecd y2)
+{
+	return (x1 * y2 - y1 * x2);
+}
 
 t_vecd	v2det(t_vec2 a, t_vec2 b)
 {

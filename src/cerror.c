@@ -6,12 +6,13 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 00:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/01/27 05:32:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 06:39:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <errno.h>
 #include "cerror.h"
 #include "libft.h"
 
@@ -57,6 +58,19 @@ void	ft_errx(t_cerror err, char *file, int line)
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putbacktrace();
 	exit(err);
+}
+
+int	err(int res, char *str)
+{
+	static int first = 0;
+	if (res && str)
+	{
+		if (first)
+			ft_putstr_fd("Error\n", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putbacktrace();
+	}
+	return (res);
 }
 
 // XXX FT_PUTBACKTRACE XXX

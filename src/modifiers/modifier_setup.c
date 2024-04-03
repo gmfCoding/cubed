@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/11 21:16:21 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/03 17:03:33 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * when adding a new modifier please make changes to
  * g_mapsymbols and g_mapfuncs and add any structs or entities to modifiers.h
  * call the function like this "see modifiers.h for details"
- * void	mod_gen_"__"(char *content, int index, t_world *world, t_map *map);
+ * t_err	mod_gen_"__"(char *content, int index, t_world *world, t_map *map);
  * add detail of how to write modifier above function for instance
  * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED,VERTICLE 
  * DR door01,/assets/debug.xpm,25,10,1,C,L
@@ -75,7 +75,7 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_wn,
 };
 
-void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
+t_err modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 {
 	t_list	*curr;
 	char	*str;
@@ -91,13 +91,15 @@ void	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		i = -1;
 		while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
 		{
-			if (ft_strncmp(g_mapsymbols[i], \
-					str, strlen_nl(g_mapsymbols[i])) == 0)
-				((t_ex_action)g_mapfuncs[i])(str + (strlen_nl(g_mapsymbols[i]) \
-					+ 1), index++, world, map);
+			if (ft_strncmp(g_mapsymbols[i], str, \
+			strlen_nl(g_mapsymbols[i])) == 0)
+				if ((g_mapfuncs[i])(str + (strlen_nl(g_mapsymbols[i]) \
+					+ 1), index++, world, map))
+					return (ft_putstr_fd(g_mapsymbols[i], STDERR_FILENO), 1);
 		}
 		curr = curr->next;
 	}
+	return (0);
 }
 
 t_mm_tile	*mmap_find_tile(t_game *game, t_vec2 pos)
@@ -105,7 +107,7 @@ t_mm_tile	*mmap_find_tile(t_game *game, t_vec2 pos)
 	int	i;
 
 	i = -1;
-	while(game->mmap.tiles[++i].img != NULL)
+	while (game->mmap.tiles[++i].img != NULL)
 		if (game->mmap.tiles[i].ref == (pos.y * game->world->map.width) + pos.x)
 			return (&game->mmap.tiles[i]);
 	return (NULL);
@@ -113,9 +115,22 @@ t_mm_tile	*mmap_find_tile(t_game *game, t_vec2 pos)
 
 void	modifier_after(t_game *game)
 {
-	int	i;
+	t_world *const	w = game->world;
+	int				i;
+	t_list			*ent_iter;
+	t_entity		*ent_curr;
 
 	i = -1;
-	while (++i < game->world->ent_count)
-		game->world->ent_2[i].ref_mm_tile = mmap_find_tile(game, game->world->ent_2[i].pos[0]);
+	while (++i < w->ent_count)
+		w->ent_2[i].ref_mm_tile = mmap_find_tile(game, w->ent_2[i].pos);
+	ent_iter = game->world->entities;
+	while (ent_iter != NULL)
+	{
+		if (ent_iter->content != NULL)
+		{
+			ent_curr = (t_entity *)ent_iter->content;
+			ent_curr->mm_tile = mmap_find_tile(game, ent_curr->pos);	
+		}
+		ent_iter = ent_iter->next;
+	}
 }

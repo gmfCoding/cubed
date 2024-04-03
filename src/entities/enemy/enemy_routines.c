@@ -13,30 +13,30 @@
  */
 void	enemy_update_sp_tile_count(t_game *game, t_enemy *enemy)
 {
-	if ((int)enemy->sprite_ref->s1.x != enemy->old_pos[1].x || (int)enemy->sprite_ref->s1.y != enemy->old_pos[1].y)
-	{
-		game->world->map.tiles[enemy->old_pos[1].x + enemy->old_pos[1].y * game->world->map.width].sp_count--;
-		if (game->world->map.tiles[(int)enemy->sprite_ref->s1.x + (int)enemy->sprite_ref->s1.y * game->world->map.width].vis == -1)
-			game->world->map.tiles[(int)enemy->sprite_ref->s1.x + (int)enemy->sprite_ref->s1.y * game->world->map.width].sp_count++;
-		enemy->old_pos[1].x = (int)enemy->sprite_ref->s1.x;
-		enemy->old_pos[1].y = (int)enemy->sprite_ref->s1.y;
-	}
-	if ((int)enemy->sprite_ref->s2.x != enemy->old_pos[2].x || (int)enemy->sprite_ref->s2.y != enemy->old_pos[2].y)
-	{
-		game->world->map.tiles[enemy->old_pos[2].x + enemy->old_pos[2].y * game->world->map.width].sp_count--;
-		if (game->world->map.tiles[(int)enemy->sprite_ref->s2.x + (int)enemy->sprite_ref->s2.y * game->world->map.width].vis == -1)
-			game->world->map.tiles[(int)enemy->sprite_ref->s2.x + (int)enemy->sprite_ref->s2.y * game->world->map.width].sp_count++;
-		enemy->old_pos[2].x = (int)enemy->sprite_ref->s2.x;
-		enemy->old_pos[2].y = (int)enemy->sprite_ref->s2.y;
-	}
-	if ((int)enemy->sprite_ref->pos.x != enemy->old_pos[0].x || (int)enemy->sprite_ref->pos.y != enemy->old_pos[0].y)
-	{
-		game->world->map.tiles[enemy->old_pos[0].x + enemy->old_pos[0].y * game->world->map.width].sp_count--;
-		if (game->world->map.tiles[(int)enemy->sprite_ref->pos.x + (int)enemy->sprite_ref->pos.y * game->world->map.width].vis == -1)
-			game->world->map.tiles[(int)enemy->sprite_ref->pos.x + (int)enemy->sprite_ref->pos.y * game->world->map.width].sp_count++;
-		enemy->old_pos[0].x = (int)enemy->sprite_ref->pos.x;
-		enemy->old_pos[0].y = (int)enemy->sprite_ref->pos.y;
-	}
+	// if ((int)enemy->sprite_ref->s1.x != enemy->old_pos[1].x || (int)enemy->sprite_ref->s1.y != enemy->old_pos[1].y)
+	// {
+	// 	game->world->map.tiles[enemy->old_pos[1].x + enemy->old_pos[1].y * game->world->map.width].sp_count--;
+	// 	if (game->world->map.tiles[(int)enemy->sprite_ref->s1.x + (int)enemy->sprite_ref->s1.y * game->world->map.width].vis == -1)
+	// 		game->world->map.tiles[(int)enemy->sprite_ref->s1.x + (int)enemy->sprite_ref->s1.y * game->world->map.width].sp_count++;
+	// 	enemy->old_pos[1].x = (int)enemy->sprite_ref->s1.x;
+	// 	enemy->old_pos[1].y = (int)enemy->sprite_ref->s1.y;
+	// }
+	// if ((int)enemy->sprite_ref->s2.x != enemy->old_pos[2].x || (int)enemy->sprite_ref->s2.y != enemy->old_pos[2].y)
+	// {
+	// 	game->world->map.tiles[enemy->old_pos[2].x + enemy->old_pos[2].y * game->world->map.width].sp_count--;
+	// 	if (game->world->map.tiles[(int)enemy->sprite_ref->s2.x + (int)enemy->sprite_ref->s2.y * game->world->map.width].vis == -1)
+	// 		game->world->map.tiles[(int)enemy->sprite_ref->s2.x + (int)enemy->sprite_ref->s2.y * game->world->map.width].sp_count++;
+	// 	enemy->old_pos[2].x = (int)enemy->sprite_ref->s2.x;
+	// 	enemy->old_pos[2].y = (int)enemy->sprite_ref->s2.y;
+	// }
+	// if ((int)enemy->sprite_ref->pos.x != enemy->old_pos[0].x || (int)enemy->sprite_ref->pos.y != enemy->old_pos[0].y)
+	// {
+	// 	game->world->map.tiles[enemy->old_pos[0].x + enemy->old_pos[0].y * game->world->map.width].sp_count--;
+	// 	if (game->world->map.tiles[(int)enemy->sprite_ref->pos.x + (int)enemy->sprite_ref->pos.y * game->world->map.width].vis == -1)
+	// 		game->world->map.tiles[(int)enemy->sprite_ref->pos.x + (int)enemy->sprite_ref->pos.y * game->world->map.width].sp_count++;
+	// 	enemy->old_pos[0].x = (int)enemy->sprite_ref->pos.x;
+	// 	enemy->old_pos[0].y = (int)enemy->sprite_ref->pos.y;
+	// }
 }
 
 /*
@@ -81,7 +81,8 @@ void	enemy_routine(t_game *game, t_enemy *enemy)
 {
 	if (enemy->state == NOT_ACTIVE)
 		return ;
-	enemy_update_sp_tile_count(game, enemy);
+	sprite_rotate(game, enemy->sprite_ref, game->player.dir);
+	//enemy_update_sp_tile_count(game, enemy);
 	enemy_animate(game, enemy);
 	if (enemy->state == TARGET_IN_SIGHT)
 		enemy_target_in_sight(game, enemy);

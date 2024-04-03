@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 13:54:13 by clovell           #+#    #+#             */
-/*   Updated: 2023/03/09 15:42:59 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/16 10:29:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_atoi(const char *str)
 	accum = 0;
 	negative = 1;
 	while (ft_isspace(*str))
-			str++;
+		str++;
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')

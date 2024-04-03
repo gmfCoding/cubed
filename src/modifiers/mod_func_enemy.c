@@ -5,14 +5,14 @@
 /*
  * NAME,TARGET,SPEED,XPOS,YPOS,ENEMY_STATE
  */
-void	mod_gen_en(char *content, int index, t_world *world, t_map *map)
+t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 {//still need to add images ill that will be done elsewhere
 	char	**en;
 	int	x;
 	int	y;
 
-	map->mods[index].type = ENEMY;
-	map->mods[index].content = ft_strdup(content);
+	map->mods[index].type = MT_ENEMY;
+	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	en = ft_split(content, ',');
 	x = ft_atoi(en[3]) - 1;
 	y = ft_atoi(en[4]);
@@ -35,11 +35,11 @@ void	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	world->enemy.old_pos[0] = v2inew(x, y);//using to track if we move to a new tile
 	world->enemy.old_pos[1] = v2inew(x, y);//using to track if we move to a new tile
 	world->enemy.old_pos[2] = v2inew(x, y);//using to track if we move to a new tile
-	tile->sprite[tile->sp_count] = world->sp_amount;
-	world->enemy.sprite_ref = &world->sprite[world->sp_amount];
-	world->sp_amount++;
-	tile->sp_count++;
+	world->enemy.sprite_ref = &world->sprite[world->sp_amount++];
+	world->enemy.sprite_ref->uv = (t_uv){.offset = {0, 0}, .scale = {1, 1}};
+	world->enemy.sprite_ref->visible = true;
 	free_str_array(en);
+	return (0);
 }
 
 /*// if we wanted the enemy to be aprt of the event triggers or to be at leased looped through
@@ -57,7 +57,7 @@ void	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	world->ent_2[world->ent_count].target = NULL;
 //	if (ft_strcmp(en[1], "NULL") != 0)
 //		world->ent_2[world->ent_count].target =	mod_search_name(world, en[1]);
-	map->mods[index].content = ft_strdup(content);
+	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	get_pos_and_surrounding_tiles(world, x, y);
 	world->ent_2[world->ent_count].ref_tile = &map->tiles[y * (map->width +x) - 1];
 	world->ent_2[world->ent_count].speed = ft_atoi(en[2]);
