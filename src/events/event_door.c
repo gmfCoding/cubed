@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/04 01:18:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/04 01:25:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -56,7 +56,7 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 		mmap_door_update(door, &game->mmap);
 		if (game->world->enemy)
 		{
-			enemy_update_path_to_target(game, &game->world->enemy);
+			enemy_update_path_to_target(game, game->world->enemy);
 			game->world->enemy->p_index = 0;
 		}
 	}
