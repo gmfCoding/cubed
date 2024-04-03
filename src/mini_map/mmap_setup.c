@@ -29,7 +29,7 @@ bool	mmap_fog_check(t_game *game)
 {
 	t_mod *mm;
 
-	mm = mod_get_mod(&game->world->map, MINI_MAP, NULL);
+	mm = mod_get_mod(&game->world->map, MT_MINI_MAP, NULL);
 	if (mm == NULL || mm->content == NULL)
 		return (false);
 	if (mm->content[0] == 'F')

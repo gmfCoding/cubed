@@ -28,12 +28,14 @@ SRCSF = $(TEST) \
 		render/wall_render.c \
 		render/line.c \
 		render/rect_render.c \
+		render/intersect_test.c \
 		render/raycast.c \
 		controls/controls.c \
 		util/time.c \
 		util/math.c \
 		util/random.c \
 		util/memory_utils.c \
+		util/csv.c \
 		util/string_utils.c \
 		util/error_handler.c \
 		map_parser/map_setup.c \
@@ -67,6 +69,8 @@ SRCSF = $(TEST) \
 		events/event_five_lights.c \
 		events/event_orbit_task.c \
 		entities/player_setup.c \
+		entities/sprite.c \
+		entities/entity.c \
 		entities/enemy/enemy_go_to_target.c \
 		entities/enemy/enemy_img_setup.c \
 		entities/enemy/enemy_path_and_patrol.c \

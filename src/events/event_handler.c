@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event_handler.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/04 00:45:08 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "map.h"
 #include "state.h"
 #include "mini_map.h"
+#include "vectorconv.h"
 
 /*
  * a temperoraly function ran straight from loop to display ui
@@ -30,24 +42,24 @@ void	event_interact(t_game *game)
 	i = -1;
 	while (game->events_active[++i] != NULL)
 	{
-		pos = v2add(game->events_active[i]->pos[0], v2new(0.5, 0.5));
-		if(v2dot(v2norm(v2sub(pos, game->player.pos)), game->player.dir)> 0.8)
+		pos = v2add(game->events_active[i]->pos, v2new(0.5, 0.5));
+		if (v2dot(v2norm(v2sub(pos, game->player.pos)), game->player.dir) > 0.8)
 		{
-			if (game->events_active[i]->type == DOOR_UNLOCKED)
+			if (game->events_active[i]->type == ET_DOOR_UNLOCKED)
 				event_door_unlocked(game, game->events_active[i]);
-			else if (game->events_active[i]->type == DOOR_OPEN)
+			else if (game->events_active[i]->type == ET_DOOR_OPEN)
 				event_door_open(game, game->events_active[i]);
-			else if (game->events_active[i]->type == DOOR_LOCKED)
+			else if (game->events_active[i]->type == ET_DOOR_LOCKED)
 				event_door_locked(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ALERT_HIGH)
+			else if (game->events_active[i]->type == ET_ALERT_HIGH)
 				event_alert_high(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ALERT_MEDIUM)
+			else if (game->events_active[i]->type == ET_ALERT_MEDIUM)
 				event_alert_medium(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ALERT_OFF)
+			else if (game->events_active[i]->type == ET_ALERT_OFF)
 				event_alert_off(game, game->events_active[i]);
-			else if (game->events_active[i]->type == FIVE_LIGHTS_OPEN)
+			else if (game->events_active[i]->type == ET_FIVE_LIGHTS_OPEN)
 				event_five_lights_open(game, game->events_active[i]);
-			else if (game->events_active[i]->type == FIVE_LIGHTS_CLOSED)
+			else if (game->events_active[i]->type == ET_FIVE_LIGHTS_CLOSED)
 				event_five_lights_closed(game, game->events_active[i]);
 			//else if (game->events_active[i]->type == ORBIT_TASK_OPEN)
 			//	event_orbit_task_on(game, game->events_active[i]);
@@ -58,6 +70,21 @@ void	event_interact(t_game *game)
 		game->display_ui = false;
 	}
 }
+
+// 123
+// 456
+// 789
+const static t_vec2 g_directions[] = {
+{-1, -1},
+{0, -1},
+{1, -1},
+{-1, 0},
+{0, 0},
+{1, 0},
+{-1, 1},
+{0, 1},
+{1, 1},
+};
 
 /*
  * whenever the player moves to a new tile it will set all events
@@ -89,9 +116,10 @@ void	event_check(t_game *game)
 		j = -1;
 		while(++j < 9)
 		{
-			if (game->world->ent_2[i].pos[j].x == (int)game->player.pos.x \
-				&& game->world->ent_2[i].pos[j].y == (int)game->player.pos.y)
+			if (v2dist(v2add(game->world->ent_2[i].pos, g_directions[j]), v2itov2(v2tov2i(game->player.pos))) < 0.05f)
 			{
+				printf("TRANSITION\n");
+
 				game->events_active[++k] = &game->world->ent_2[i];
 				game->events_on = true;
 			}
@@ -104,9 +132,10 @@ void	event_check(t_game *game)
  * checking if the players tile is different from last tile
  * player was in 
  */
-void	event_player(t_game *game)
+void	event_player(t_game *game, bool force)
 {
-	if ((int)game->player.pos.x != game->player.oldp_x || (int)game->player.pos.y != game->player.oldp_y)
+	if ((int)game->player.pos.x != game->player.oldp_x || \
+	(int)game->player.pos.y != game->player.oldp_y || force)
 	{
 		game->display_ui = false;
 		game->events_on = false;

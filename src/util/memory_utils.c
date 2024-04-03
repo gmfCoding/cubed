@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   memory_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/03/16 10:26:12 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "map.h"
 #include "state.h"
 #include "get_next_line.h"
@@ -15,19 +25,6 @@ void	free_str_array(char **str)
 	while (str[i] != NULL)
 		free(str[i++]);
 	free(str);
-}
-
-/*
- * free all the elements that have been allocated for 
- * all have been str_dup from link_list
- */
-void	free_content(t_game *game)
-{
-	int	i;
-
-	i = -1;
-	while(game->world->map.mods[++i].content != NULL)
-		free(game->world->map.mods[i].content);
 }
 
 /*
@@ -48,6 +45,7 @@ void	deallocate_list(t_list **raw_map_file)
 		free(temp->content);
 		free(temp);
 	}
+	*raw_map_file = NULL;
 }
 
 t_list	*ft_lst_readfile(const char *path)

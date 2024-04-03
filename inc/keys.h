@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:10:21 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/23 21:19:18 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/26 22:44:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@
 #  define KEY_H			104
 #  define KEY_I			105
 #  define KEY_J			106
-#  define KEY_K			108
+#  define KEY_K			107
 #  define KEY_L			108
 #  define KEY_M			109
 #  define KEY_N			110

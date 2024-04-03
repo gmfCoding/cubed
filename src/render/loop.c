@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:33:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/04 00:43:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "state.h"
 #include "texture.h"
 #include "vector2i.h"
+#include "vectorconv.h"
 
 #include "libft.h"
 #include "internal/wall.h"
@@ -54,9 +55,14 @@ void	draw_debug_info(t_game *game)
 		ft_strfmt("plane:(%f,%f)", \
 		(double)game->player.plane.x, (double)game->player.plane.y),
 		ft_strfmt("hits:(%d)", game->half.hits),
+		ft_strfmt("type:(%d)", map_get_tile(&game->world->map, game->half.depths[0].x, game->half.depths[0].y).type),
+		ft_strfmt("vis:(%d)", map_get_tile(&game->world->map, game->half.depths[0].x, game->half.depths[0].y).vis),
 	};
 	int					i;
-
+	if (input_keydown( &game->input, KEY_H))
+	{
+		printf("Pausing!");
+	}
 	i = -1;
 	while (++i < (int)(sizeof(debugstr) / sizeof(*debugstr)))
 	{
@@ -69,85 +75,98 @@ void	draw_debug_info(t_game *game)
 
 void	player_loop(t_game *game)
 {
-	event_player(game);
+	event_player(game, false);
 	control_process(game);
 	if (game->events_on == true)
 		event_interact(game);
 	mmap_input(game, &game->mmap);
 }
 
-void	update_segments(t_game *game)
-{
-	t_sprite	*curr;
-	t_vec2		dir;
-	t_vecd		temp;
-	int i;
-
-	i = -1;
-	while (++i < game->world->sp_amount)
-	{
-		curr = &game->world->sprite[i];
-		//dir = v2norm(v2sub(game->player.pos, curr->pos));
-		dir = game->player.dir;
-		temp = dir.x;
-		dir.x = dir.y;
-		dir.y = -temp;
-		curr->s1 = v2add(curr->pos, v2muls(dir, 0.5));
-		curr->s2 = v2add(curr->pos, v2muls(dir, -0.5));
-	//	curr->s1 = v2add(curr->pos, v2muls(dir, 1.25));
-	//	curr->s2 = v2add(curr->pos, v2muls(dir, -1.25));
-	}
-}
-/*
-#define D_SCALE 25
+#define D_SCALE ((float)SCR_WIDTH / (float)game->world->map.width)
 
 
 void draw_debug_view_world_state(t_game *game)
 {
-    const t_texture    tex = texture_get_debug_view(game, 2);
+	const t_texture    tex = texture_get_debug_view(game, 2);
 
-    t_sprite        *curr;
-    int             i;
-    i = -1;
+	t_sprite        *curr;
+	int             i;
 
-    while (++i < game->world->sp_amount)
-    {
-        curr = &game->world->sprite[i];
-        texture_draw_line(tex, v2muls(curr->s1, D_SCALE), v2muls(curr->s2, D_SCALE), R_RED | R_ALPHA);
-    }
-    texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.dir), D_SCALE), R_BLUE | R_ALPHA);
-    texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.plane), D_SCALE), R_BLUE | R_ALPHA);
-    pixel_set(tex, game->player.pos.x * D_SCALE, game->player.pos.y * D_SCALE, R_GREEN | R_ALPHA);
-
-    for (int y = 0; y < game->world->map.height; y++)
-    {
-        for (int x = 0; x < game->world->map.width; x++)
-        {
-            texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y), D_SCALE), 0x00222222 | R_ALPHA);
-            texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00222222 | R_ALPHA);
-        }
-    }
-    for (int y = 0; y < game->world->map.height; y++)
-    {
-        for (int x = 0; x < game->world->map.width; x++)
-        {
-            t_tile *tile = map_get_tile_ref(&game->world->map, x, y); 
-            if (tile->type == WALL)
-            {
-                texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y), D_SCALE), 0x00AAAAAA | R_ALPHA);
-                texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
-                texture_draw_line(tex, v2muls(v2new(x + 1, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
-                texture_draw_line(tex, v2muls(v2new(x + 1, y + 1), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
-            }
-            if (tile->sp_count > 0)
-            {
-                texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00DDDDDD | R_ALPHA);
-            }
-        }
-    }
-  //  texture_clear(tex, R_RED | R_ALPHA);
+	texture_clear(tex, 0 | R_ALPHA);
+	texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.dir), D_SCALE), R_BLUE | R_ALPHA);
+	texture_draw_line(tex, v2muls(game->player.pos, D_SCALE), v2muls(v2add(game->player.pos, game->player.plane), D_SCALE), R_BLUE | R_ALPHA);
+	pixel_set(tex, game->player.pos.x * D_SCALE, game->player.pos.y * D_SCALE, R_GREEN | R_ALPHA);
+	for (int y = 0; y < game->world->map.height; y++)
+	{
+		for (int x = 0; x < game->world->map.width; x++)
+		{
+			texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y), D_SCALE), 0x00222222 | R_ALPHA);
+			texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00222222 | R_ALPHA);
+		}
+	}
+	for (int y = 0; y < game->world->map.height; y++)
+	{
+		for (int x = 0; x < game->world->map.width; x++)
+		{
+			t_tile *tile = map_get_tile_ref(&game->world->map, x, y); 
+			if (tile->type == WALL)
+			{
+				texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y), D_SCALE), 0x00AAAAAA | R_ALPHA);
+				texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
+				texture_draw_line(tex, v2muls(v2new(x + 1, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
+				texture_draw_line(tex, v2muls(v2new(x + 1, y + 1), D_SCALE), v2muls(v2new(x, y + 1), D_SCALE), 0x00AAAAAA | R_ALPHA);
+			}
+			else if (tile->type == DOOR)
+				texture_draw_line(tex, v2muls(v2new(x + 0.4, y+ 0.4), D_SCALE), v2muls(v2new(x + 0.4, y + 0.5), D_SCALE), R_RED | R_GREEN | R_ALPHA);
+			if (tile->vis == 0)
+				texture_draw_line(tex, v2muls(v2new(x + 0.1, y+ 0.1), D_SCALE), v2muls(v2new(x + 0.1, y + 0.2), D_SCALE), R_RED | R_ALPHA);
+			if (tile->vis == 1)
+				texture_draw_line(tex, v2muls(v2new(x + 0.1, y+ 0.1), D_SCALE), v2muls(v2new(x + 0.1, y + 0.2), D_SCALE), R_BLUE | R_ALPHA);
+			if (tile->vis == -1)
+				texture_draw_line(tex, v2muls(v2new(x + 0.1, y + 0.1), D_SCALE), v2muls(v2new(x + 0.1, y + 0.2), D_SCALE), R_GREEN | R_ALPHA);
+			if (tile->sp_count > 0)
+			{
+				texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00DDDDDD | R_ALPHA);
+			}
+		}
 }
-*/
+	i = -1;
+	while (++i < game->world->sp_amount)
+	{
+		curr = &game->world->sprite[i];
+		texture_draw_line(tex, v2muls(curr->s1, D_SCALE), v2muls(curr->s2, D_SCALE), R_RED | R_ALPHA);
+		texture_draw_line(tex, v2muls(curr->vs1, D_SCALE), v2muls(curr->vs2, D_SCALE), R_GREEN | R_ALPHA);
+		texture_draw_circle(&tex, v2tov2i(v2muls(curr->pos, D_SCALE)), 2, 0xFFFF33 | R_ALPHA);
+		texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs1, D_SCALE)), 2, 0x55FFFF | R_ALPHA);
+		texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs2, D_SCALE)), 2, 0xFF13FF | R_ALPHA);
+	}
+	t_list *ent_next = game->world->entities;
+	while (ent_next != NULL)
+	{
+		t_entity *entity = ent_next->content;
+		texture_draw_circle(&tex, v2tov2i(v2muls(entity->pos, D_SCALE)), 2, R_GREEN | R_ALPHA);
+		ent_next = ent_next->next;
+	}
+
+	static float dir = 0;
+	if (input_keyheld(&game->input, KEY_J))
+		dir -= 0.01;
+	if (input_keyheld(&game->input, KEY_K))
+		dir += 0.01;
+	if (game->input.mouse.x > 0 && game->input.mouse.x < SCR_WIDTH)
+	{
+		if (game->input.mouse.y > 0 && game->input.mouse.y < SCR_HEIGHT)
+		{
+			t_vec2 start = v2new(game->input.mousef.x / D_SCALE, game->input.mousef.y / D_SCALE);
+			t_vec2 vdir = v2new(cos(dir), sin(dir));
+			t_rayinfo info = raycast(game, start, vdir, RAY_MASK_WALL);
+			t_vec2 hit = ray_gethit(&info, 0);
+			hit = v2muls(hit, D_SCALE);
+			texture_draw_line(tex, game->input.mousef, hit, R_GREEN | R_ALPHA);
+		}
+	}
+	//texture_clear(tex, R_RED | R_ALPHA);
+}
 
 void	render(t_game *game)
 {
@@ -156,7 +175,9 @@ void	render(t_game *game)
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	enemy_routine(game, &game->world->enemy);
-	update_segments(game);
+	entity_update(game);
+	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
+	sprite_update_all(game->world);
 	player_loop(game);
 
 //	x = v2x2ang(game->player.dir) / 6.28 * 3840;
@@ -167,16 +188,13 @@ void	render(t_game *game)
 	mmap_draw(game);
 	if (game->tasks[0] && game->tasks[0]->show)
 		task_orbit_render(game, game->tasks[0]);
-
-
-
-	texture_draw(game->app, game->rt0, v2new(0, 0));
 	event_display_ui(game);
 	draw_debug_info(game);
 	if (game->five_light.run_game == true)
 		five_lights(game);
+	draw_debug_view_world_state(game);
+	texture_draw_debug_view(game, 2);
+	texture_draw(game->app, game->rt0, v2new(0, 0));
 	input_process(&game->input);
-
-//	texture_draw_debug_view(game, 2);
 	game->fpsc++;
 }

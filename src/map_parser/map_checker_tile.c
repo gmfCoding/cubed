@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker_tile.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:01:10 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 16:09:28 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/03/16 06:39:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
+#include "cerror.h"
 
 /*
  * checks how many players are in map it currently returns
@@ -64,7 +65,7 @@ int	map_check_invalid_char(char *content)
  * making sure each tile is not a FLOOR/0 or anything other then a
  * WALL/1 or EMPTY/2. if it is it will return an error
  */
-int	map_check_surrounded(t_map *map_temp, int pos)
+static t_err	map_check_surrounded(t_map *map_temp, int pos)
 {
 	if (pos >= 0 && pos <= (map_temp->width * map_temp->height) \
 			&& map_temp->tiles[pos].type != WALL \
@@ -86,43 +87,49 @@ int	map_check_surrounded(t_map *map_temp, int pos)
 	return (0);
 }
 
+#define ERR_LINE ":Invalid Line In Map"
+#define ERR_BADELEM ":Invalid Element"
+#define ERR_BADPLAYER ":Invalid Player Count"
+#define ERR_BOARDER ":Invalid Player Count"
+#define ERR_TYPE ":Invalid File Type"
 /*
  * checks content of the map to follow the rules of subject
+ * Return 1 on error 0 on success
  */
-void	map_check_err(t_map *map_temp, t_list *temp, \
-		t_list *raw_map_file, char *map_str)
+static t_err	 map_check_err(t_map *map_temp, t_list *temp, \
+		t_list *file, char *path)
 {
 	const t_list	*curr = temp;
-	int		count_players;
-	int		count_invalid_char;
+	char ***const	cstr = (void *)&curr;
+	int				players;
+	int				count_invalid_char;
+	int				e;
 
-	count_players = 0;
+	players = 0;
 	count_invalid_char = 0;
+	e = 0;
 	while (curr != NULL && curr->content != NULL)
 	{
-		if (is_empty_line((char *)curr->content) \
-			&& ((char *)curr->content)[0] != ' ')
-			error_return(":Invalid Line In Map", 1, 1, &raw_map_file);
-		count_players += map_check_player((char *)curr->content);
-		count_invalid_char += map_check_invalid_char((char *)curr->content);
+		e |= err(is_empty_line(**cstr) && (**cstr)[0] != ' ', ERR_LINE);
+		if (e)
+			break ;
+		players += map_check_player(**cstr);
+		count_invalid_char += map_check_invalid_char(**cstr);
 		curr = curr->next;
 	}
-	if (map_check_elements(raw_map_file) == 1)
-		error_return(":Invalid Element", 1, 0, &raw_map_file);
-	if (count_players > 1 || count_players < 1)
-		error_return(":Invalid Player Count", 1, 1, &raw_map_file);
-	if (count_invalid_char > 0)
-		error_return(":Invalid Character", 1, 1, &raw_map_file);
-	if (map_check_surrounded(map_temp, 0) == 1)
-		error_return(":Invalid Boarder", 1, 1, &raw_map_file);
-	if (ft_strcmp(".cub", ft_strrchr(map_str, '.')) != 0)
-		error_return(":Invalid File Type", 1, 1, &raw_map_file);
+	e = err(map_check_elements(file) == 1, ERR_BADELEM);
+	e |= err(players != 1, ERR_BADPLAYER);
+	e |= err(count_invalid_char > 0, ERR_BADELEM);
+	e |= err(map_check_surrounded(map_temp, 0) == 1, ERR_BOARDER);
+	if (ft_strrchr(path, '.') != NULL)
+		e |= err(ft_strcmp(".cub", ft_strrchr(path, '.')) != 0, ERR_TYPE);
+	return (e);
 }
 
 /*
  * sets up the map ready for checking for map errors
  */
-void	map_check_setup(t_list *curr, t_list *raw_map_file, char *map_str)
+t_err	map_check_setup(t_list *curr, t_list *raw_map_file, char *path)
 {
 	t_list	*temp;
 	t_map	map_temp;
@@ -141,5 +148,5 @@ void	map_check_setup(t_list *curr, t_list *raw_map_file, char *map_str)
 	}
 	while (++index < ((map_temp.width * map_temp.height) + map_temp.width))
 		map_temp.tiles[index].type = get_tiletype(' ');
-	map_check_err(&map_temp, temp, raw_map_file, map_str);
+	return (map_check_err(&map_temp, temp, raw_map_file, path));
 }

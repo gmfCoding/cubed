@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:12:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/18 22:15:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ struct s_game
 	t_rand			task_rand; // TODO: Use t_game::rand instead ?
 	t_rand			rand;
 	unsigned int	fpsc;
+	unsigned int	ray;
 };
 
 

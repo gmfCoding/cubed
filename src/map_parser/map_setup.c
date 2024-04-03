@@ -6,12 +6,60 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/11 20:41:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/29 23:52:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "state.h"
 #include "map.h"
+#include "cerror.h"
+
+static void	map_update_vis(t_map *map)
+{
+	t_tile	*tile;
+	int		x;
+	int		y;
+	int		index;
+
+	y = -1;
+	while (++y < map->height)
+	{
+		x = -1;
+		while (++x < map->width)
+		{
+			tile = map_get_tile_ref(map, x, y);
+			tile->vis = -1;
+			if (tile->type == WALL)
+				tile->vis = 0;
+		}
+	}
+}
+
+void	map_tiles_init(t_map *map, t_list *curr)
+{
+	t_tile	*tile;
+	int		x;
+	int		y;
+	int		index;
+
+	y = -1;
+	while (++y < map->height)
+	{
+		x = -1;
+		while (++x < map->width)
+		{
+			tile = map_get_tile_ref(map, x, y);
+			*tile = (t_tile){.type = FLOOR, .vis = -1, 0};
+		}
+	}
+	index = 0;
+	while (curr != NULL && curr->content != NULL)
+	{
+		index += map_tiles(map, (char *)curr->content, index);
+		curr = curr->next;
+	}
+	map_update_vis(map);
+}
 
 /*
  * creates a link_list and checks if the map file is read
@@ -21,62 +69,35 @@
  * calls setup modifiers and deallocates same link_list
  * the content is str_dup and if freed at a later point
  */
+// TODO: REMOVE
+// if (raw_map_file == NULL || (int64_t)raw_map_file->content <= 1)
+// 	error_return("File Invalid", 1, 1, &raw_map_file);
 
-void	map_init(t_map *map, char *map_str, t_game *game)
+t_err	map_init(t_map *map, char *map_str, t_game *game)
 {
 	t_list	*curr;
 	t_list	*raw_map_file;
-	int		index;
 
 	raw_map_file = ft_lst_readfile(map_str);
-	if ((int64_t)raw_map_file->content <= 1 || raw_map_file == NULL)
-		error_return("File Invalid", 1, 1, NULL);
-	index = 0;
+	if (raw_map_file == NULL || (int64_t)raw_map_file->content <= 1)
+		return (deallocate_list(&raw_map_file), err(1, "File Invalid\n"));
 	remove_empty_lines(&raw_map_file);
 	replace_tabs(raw_map_file);
 	curr = raw_map_file;
 	while (curr != NULL && map_starting_tile((char *)curr->content) == 0)
 		curr = curr->next;
-	map_check_setup(curr, raw_map_file, map_str);
+	if (map_check_setup(curr, raw_map_file, map_str))
+		return (deallocate_list(&raw_map_file), 1);
 	map->width = map_width_size(curr);
 	map->height = map_height_size(curr);
+	if (map->width > 200 || map->height > 200)
+		return (err(1, "Map Exceeds Limits\n"));
 	player_setup(curr, game);
-	while (curr != NULL && curr->content != NULL)
-	{
-		index += map_tiles(map, (char *)curr->content, index);
-		curr = curr->next;
-	}
-	modifier_setup(raw_map_file, map, game->world);
-
+	map_tiles_init(map, curr);
+	if (modifier_setup(raw_map_file, map, game->world))
+		return (err(1, ": unexpected modifier content\n"));
 	deallocate_list(&raw_map_file);
-}
-
-void	map_update_vis(t_map *map)
-{
-	t_tiletype type;
-	int	x;
-	int	y;
-	int index;
-
-	printf("Updating vis array\n");
-	y = -1;
-	while (++y < map->height)
-	{
-		x = -1;
-		while (++x < map->width)
-		{
-			index = x + y * map->width;
-			type = map->tiles[index].type;
-			if (type == WALL)
-				map->tiles[index].vis = 0;
-			else if (type == DOOR)
-				map->tiles[index].vis = 9;
-			else
-				map->tiles[index].vis = -1;
-			printf("%d", map->tiles[index].vis);
-		}
-		printf("\n");
-	}
+	return (0);
 }
 
 /*
@@ -87,7 +108,7 @@ void	map_update_vis(t_map *map)
  * the mapstr or a map number to this fuction
  */
 
-void	map_parse(int argc, char **argv, t_game *game)
+t_err	map_parse(int argc, char **argv, t_game *game)
 {
 	char	*map_str;
 
@@ -97,9 +118,8 @@ void	map_parse(int argc, char **argv, t_game *game)
 		map_str = argv[1];
 	else
 		exit(2);
-	map_init(&game->world->map, map_str, game);
+	if (map_init(&game->world->map, map_str, game))
+		return (1);
 	mmap_init(game);
-	map_update_vis(&game->world->map);
+	return (0);
 }
-
-
