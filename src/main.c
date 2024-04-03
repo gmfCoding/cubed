@@ -61,7 +61,7 @@ void	world_preset(int argc, char **argv, t_game *game)
 {
 //	five_lights_Setup(game);
 	game->five_light.difficulty = 5;
-	game->five_light.run_game = true;
+//	game->five_light.run_game = true;
 	game->world->ent_count = 0;
 	game->world->sp_amount = 0;
 	map_parse(argc, argv, game);
