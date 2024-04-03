@@ -1,4 +1,5 @@
 
+#include "state.h"
 #include "five_light.h"
 
 void	fl_change_state(t_game *game, int click_state, int index)

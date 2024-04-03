@@ -2,6 +2,7 @@
 # define PLAYER_H
 
 # include "vector2.h"
+# include <stdbool.h>
 typedef struct s_game t_game;
 typedef struct s_list t_list;
 
@@ -16,6 +17,7 @@ typedef struct	s_player
 	double	rotSpeed;
 	double	angle;
 	double	key_angle;
+	bool	can_move;
 }		t_player;
 
 void	player_setup(t_list *curr, t_game *game);

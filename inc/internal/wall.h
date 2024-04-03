@@ -26,9 +26,24 @@ typedef struct s_vertical
 	t_rayinfo	ray;
 
 }			t_vert;
-
+/*
+typedef union u_tex_quad
+{
+	// struct s_rect
+	struct
+	{
+		char	n;
+		char	s;
+		char	w;
+		char	e;
+	};
+	char		v[4];
+	int		tex;
+} t_tex_quad;
+*/
 typedef struct s_column
 {
+//	t_tex_quad	texture;
 	int		texture;
 	int		tex_size;
 	int		shaded;

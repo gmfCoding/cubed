@@ -1,4 +1,5 @@
 
+#include "state.h"
 #include "five_light.h"
 
 int	fl_win_mode(t_game *game, int difficulty)
@@ -52,7 +53,7 @@ void	fl_input(t_game *game)
 			fl_input_interact(game);
 		else if (game->five_light.finished == true)
 		{
-			game->five_light.finished = false;
+			//game->five_light.finished = false;
 			fl_leave_mgame(game);
 		}
 	}

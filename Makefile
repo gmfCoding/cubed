@@ -47,6 +47,8 @@ SRCSF = $(TEST) \
 		modifiers/modifier_setup.c \
 		modifiers/modifier_utils.c \
 		modifiers/mod_func_cardinal_texture.c \
+		modifiers/mod_func_fivelights.c \
+		modifiers/mod_func_orbit_task.c \
 		modifiers/mod_func_floor_ceiling_color.c \
 		modifiers/mod_func_door_setup.c \
 		modifiers/mod_func_minimap.c \
@@ -62,6 +64,8 @@ SRCSF = $(TEST) \
 		events/event_alert.c \
 		events/event_door.c \
 		events/event_handler.c \
+		events/event_five_lights.c \
+		events/event_orbit_task.c \
 		entities/player_setup.c \
 		entities/enemy/enemy_go_to_target.c \
 		entities/enemy/enemy_img_setup.c \
@@ -76,12 +80,12 @@ SRCSF = $(TEST) \
 		input/keys.c \
 		ui/process.c \
 		task/task.c \
-		task/task/five_lights/fl_setup.c \
-		task/task/five_lights/fl_state_manage.c \
-		task/task/five_lights/fl_state_modes.c \
-		task/task/five_lights/fl_state_rules.c \
-		task/task/five_lights/fl_state_rules_down.c \
-		task/task/five_lights/fl_state_rules_up.c \
+		task/five_lights/fl_setup.c \
+		task/five_lights/fl_state_manage.c \
+		task/five_lights/fl_state_modes.c \
+		task/five_lights/fl_state_rules.c \
+		task/five_lights/fl_state_rules_down.c \
+		task/five_lights/fl_state_rules_up.c \
 		task/orbit/sys/cart_to_kep.c \
 		task/orbit/sys/ktoc_position.c \
 		task/orbit/sys/ktoc_velocity.c \
@@ -102,7 +106,6 @@ SRCSF = $(TEST) \
 		task/mui_process_extra.c \
 		task/mui_render.c \
 		cerror.c \
-		mgame_five_lights.c \
 		destroy.c \
 #		task/orbit/task2.c
 # TODO: Add other headers?

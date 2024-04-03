@@ -1,4 +1,5 @@
 
+#include "state.h"
 #include "five_light.h"
 
 void	fl_reset_game(t_game *game)
@@ -23,6 +24,7 @@ void	fl_leave_mgame(t_game *game)
 	fl_reset_game(game);
 	game->five_light.run_game = false;
 	game->five_light.run_setup = false;
+	game->player.can_move = true;
 	destroy_five_lights_images(game->app.mlx, &game->five_light);
 }
 

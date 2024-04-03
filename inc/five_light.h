@@ -1,8 +1,8 @@
 #ifndef FIVE_LIGHT_H
 # define FIVE_LIGHT_H
 # include <mlx.h>
-# include "state.h"
-# include "stdio.h"
+# include <stdio.h>
+# include <stdbool.h>
 
 # define SCR_WIDTH  960
 # define SCR_HEIGHT 960

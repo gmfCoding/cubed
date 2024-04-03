@@ -33,7 +33,10 @@ typedef enum	e_ent_type
 	ALERT_MEDIUM,
 	ALERT_HIGH,
 	ALERT_OFF,
-	FIVE_LIGHTS,
+	FIVE_LIGHTS_OPEN,
+	FIVE_LIGHTS_CLOSED,
+	ORBIT_TASK_OPEN,
+	ORBIT_TASK_CLOSED,
 }		t_ent_type;
 
 typedef struct	s_mod

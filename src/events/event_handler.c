@@ -45,6 +45,14 @@ void	event_interact(t_game *game)
 				event_alert_medium(game, game->events_active[i]);
 			else if (game->events_active[i]->type == ALERT_OFF)
 				event_alert_off(game, game->events_active[i]);
+			else if (game->events_active[i]->type == FIVE_LIGHTS_OPEN)
+				event_five_lights_open(game, game->events_active[i]);
+			else if (game->events_active[i]->type == FIVE_LIGHTS_CLOSED)
+				event_five_lights_closed(game, game->events_active[i]);
+			//else if (game->events_active[i]->type == ORBIT_TASK_OPEN)
+			//	event_orbit_task_on(game, game->events_active[i]);
+			//else if (game->events_active[i]->type == ORBIT_TASK_CLOSED)
+			//	event_orbit_task_off(game, game->events_active[i]);
 			return ;
 		}
 		game->display_ui = false;

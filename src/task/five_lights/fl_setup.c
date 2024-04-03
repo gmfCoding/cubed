@@ -1,4 +1,5 @@
 #include "five_light.h"
+#include "state.h"
 
 void	fl_images_ass(t_game *game, int difficulty)
 {
@@ -113,6 +114,7 @@ void	five_lights_Setup(t_game *game, int difficulty)
 	game->five_light.run_game = true;// check here if game should be run could do this in game??
 	game->five_light.enabled = true;
 	game->five_light.broken = false;
+	game->five_light.finished = false;
 	game->five_light.show_assistance = true;
 	game->five_light.g_light_count = 0;
 	game->five_light.pos_y = PANEL_POS_Y + 80;

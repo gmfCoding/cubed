@@ -1,4 +1,5 @@
 
+#include "state.h"
 #include "five_light.h"
 
 int	fl_skip_up_empty_state(t_game *game, int index)
