@@ -1,10 +1,11 @@
 #ifndef ENEMY_H
 # define ENEMY_H
-
+# include <stdint.h>
 # include <math.h>
 # include "vector2.h"
 # include "vector2i.h"
 # include "entity.h"
+
 
 typedef struct	s_game t_game;
 typedef struct	s_world t_world;
@@ -18,21 +19,22 @@ typedef enum	e_enemy_state
 		GO_PATH_TO_TARGET,
 		TARGET_IN_SIGHT,
 }		t_enemy_state;
-/*
+
 typedef uint16_t t_tid;
 typedef struct	s_enemy_anim
 {
-	t_tid	tex[100];
+	t_tid	tex[576];
 }		t_enemy_anim;
-*/
+
 typedef struct		s_enemy
 {
 	t_entity 		base;
 	t_vec2			patrol_target;
 	t_vec2i			old_pos[3];
-	int				dir;
+	int				angle_frame;
 	t_vec2			*path;
 	int				p_index;
+	t_enemy_anim	*anim;
 	t_enemy_state	state;
 	float			speed;
 
@@ -42,5 +44,14 @@ typedef struct		s_enemy
 }			t_enemy;
 
 void	enemy_routine(t_game *game, t_enemy *enemy);
+void	enemy_update_path_to_target(t_game *game, t_enemy *enemy);
 
+//t_vec2	enemy_patrol_target(t_game *game, t_enemy *enemy);
+void	enemy_patrol(t_game *game, t_enemy *enemy);
+void	enemy_traverse_path(t_game *game, t_enemy *enemy);
+
+
+void	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos);
+int	enemy_has_line_of_sight(t_game *game, t_vec2 start, t_vec2 end);
+void	enemy_target_in_sight(t_game *game, t_enemy *enemy);
 #endif

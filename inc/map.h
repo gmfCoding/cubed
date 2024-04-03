@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 00:21:11 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/03 18:28:07 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -135,6 +135,8 @@ void		free_str_array(char **str);
 	// MAP_UTILS //
 void		replace_tabs(t_list *curr);
 void		remove_empty_lines(t_list **raw_map_file);
+char	*ft_strcpy(char *s1, char *s2);
+char	*ft_strcat(char *dest, char *src);
 
 int			error_return(char *msg, int exit_code, int print_error, \
 				t_list **free_me);

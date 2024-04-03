@@ -10,7 +10,6 @@ KE key01,/assets/debug.xpm,door01,26,10,A,N
 AL turd,NULL,O,5,10,120
 AL get_turd,turd,H,25,2,120
 MM F
-
 EN patrick,NULL,1,28,6,P
         1111111111111111111111111
         1000000000110000000000001

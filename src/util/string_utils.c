@@ -12,6 +12,35 @@
 
 #include "map.h"
 
+char	*ft_strcat(char *dest, char *src)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (dest[i] != '\0')
+		i++;
+	j = 0;
+	while (src[j] != '\0')
+	{
+		dest[i + j] = src[j];
+		j++;
+	}
+	dest[i + j] = '\0';
+	return (dest);
+}
+
+char	*ft_strcpy(char *s1, char *s2)
+{
+	int i;
+
+	i = -1;
+	while (s2[++i])
+		s1[i] = s2[i];
+	s1[i] = s2[i];
+	return (s1);
+}
+
 int	strlen_nl(const char *str)
 {
 	int	i;

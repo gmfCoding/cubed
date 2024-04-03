@@ -6,26 +6,16 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/03 16:12:03 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/03 18:43:36 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "render.h"
 #include "state.h"
+
 #include "csv.h"
 #include "vectorconv.h"
-
-char    *ft_strcpy(char *s1, char *s2)
-{
-	int i;
- 
-	i = -1;
-	while (s2[++i])
-		s1[i] = s2[i];
-	s1[i] = s2[i];
-	return (s1);
-}
 
 static void	door_setup_sprites(t_door *door, t_world *wld)
 {

@@ -48,7 +48,10 @@ typedef struct s_mmap t_mmap;
 # define TEX_DOOR 6
 # define TEX_FLOOR 7
 # define TEX_CEILING 8
+# define TEX_ENEMY_START 9
+# define TEX_ENEMY_END 584
 
+# define TEX_SKYBOX 585
 struct s_game
 {
 	t_app			app;
@@ -62,7 +65,7 @@ struct s_game
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
 	t_player		player;
-	t_texture		textures[9];
+	t_texture		textures[586];
 	t_world			*world;
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];
