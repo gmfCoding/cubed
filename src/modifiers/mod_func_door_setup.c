@@ -87,7 +87,8 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	e |= csv_next('u', &content, &wld->ent_2[wld->ent_count].speed);
 	e |= csv_next('s', &content, &str);
 	door = entity_create(wld, ENT_DOOR);
-	door->closed = str[0] == 'C';
+	door->closed = str[0] != 'C';
+	door->percent = door->closed;
 	wld->ent_2[wld->ent_count].state_1 = door->closed;
 	door->speed = ENT_DOOR_SPEED * (1.0 / R_TFR);
 	e |= csv_next('s', &content, &str);

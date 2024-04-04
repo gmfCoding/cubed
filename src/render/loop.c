@@ -174,7 +174,7 @@ void	render(t_game *game)
 //	const t_texture    tex = texture_get_debug_view(game, 2);
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
-	enemy_routine(game, &game->world->enemy);
+	enemy_routine(game, game->world->enemy);
 	entity_update(game);
 	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
 	sprite_update_all(game->world);
