@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:20:49 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:28:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:01:43 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -36,7 +36,7 @@ size_t	ft_intlen(int64_t	nb)
 	return (count);
 }
 
-size_t	ft_strtol(int64_t num, char *str)
+size_t	ft_ltostr(int64_t num, char *str)
 {
 	const char	min[] = "-9223372036854775808";
 	int64_t		n;
@@ -45,7 +45,6 @@ size_t	ft_strtol(int64_t num, char *str)
 	n = num;
 	count = ft_intlen(n);
 	str[count] = '\0';
-
 	if (num == INT64_MIN)
 		return (ft_strlcpy(str, min, sizeof(min)));
 	else if (num == 0)
@@ -70,7 +69,7 @@ char	*ft_itoa(int n)
 	str = ft_calloc(count + 1, sizeof(char));
 	if (str == NULL)
 		return (NULL);
-	ft_strtol(n, str);
+	ft_ltostr(n, str);
 	return (str);
 }
 
@@ -83,6 +82,6 @@ char	*ft_ltoa(long long int n)
 	str = ft_calloc(count + 1, sizeof(char));
 	if (str == NULL)
 		return (NULL);
-	ft_strtol(n, str);
+	ft_ltostr(n, str);
 	return (str);
 }

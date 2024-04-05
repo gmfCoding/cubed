@@ -3,15 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:33:21 by clovell           #+#    #+#             */
-/*   Updated: 2023/03/09 12:35:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:01:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
-
-typedef unsigned char	t_uchar;
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
@@ -31,6 +29,6 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 		if (diff != 0)
 			return (diff);
 		e++;
-	}	
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:54:17 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 00:09:18 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:01:30 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static int	get_append(char **format, va_list *list, char **tmp)
 	return (0);
 }
 
-# define BF_BUFFER 0
-# define BF_APPEND 1
-# define BF_OLDBUF 2
+#define BF_BUFFER 0
+#define BF_APPEND 1
+#define BF_OLDBUF 2
 
 char	*ft_strfmt(char *fmt, ...)
 {

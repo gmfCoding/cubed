@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:27:13 by clovell           #+#    #+#             */
-/*   Updated: 2023/03/09 20:19:33 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:00:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -37,7 +37,7 @@ static unsigned int	count_removal(const char *s1, const char *set, size_t len)
 		{
 			i++;
 		}
-	}		
+	}
 	else
 	{
 		while (s1[i] && contains(s1[i], set))
