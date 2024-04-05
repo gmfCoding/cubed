@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:57:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/05 18:06:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/05 23:17:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdbool.h>
@@ -14,10 +14,21 @@
 #include "sescanf_int.h"
 #include "libft.h"
 
-char	sesc_fmt_gettype(char *fmt, char **type_start)
+char	sesc_fmt_gettype(char *fmt, int step, char **type_start)
 {
 	char		*type;
 
+	while (*fmt && step > 0)
+	{
+		step--;
+		fmt++;
+	}
+	if (step != 0)
+	{
+		if (type_start)
+			*type_start = "\0";
+		return ('\0');
+	}
 	ft_strtol(fmt, &type, 10);
 	if (fmt[-1] != '%')
 		type = ((char *)"\0\0\0\0\0\0\0\0") + 4;
@@ -57,6 +68,9 @@ static bool	sesc_handle_nonfmt(t_sescanf_ctx *ctx)
 	return (false);
 }
 
+/*
+	SEE: ft_sescanf
+*/
 int	ft_vsescanf(char *src, char *fmt, va_list *list)
 {
 	t_sescanf_ctx	ctx;
@@ -69,8 +83,8 @@ int	ft_vsescanf(char *src, char *fmt, va_list *list)
 	{
 		if (ctx.fmt[0] == '%' && ctx.fmt[1])
 		{
-			sesc_fmt_gettype(++ctx.fmt, &ctx.type);
-			sesc_fmt_gettype(ctx.type + 2, &ctx.next_type);
+			sesc_fmt_gettype(++ctx.fmt, 0, &ctx.type);
+			sesc_fmt_gettype(ctx.type, 2, &ctx.next_type);
 			if (sesc_handle_fmt_type(&ctx) == -1)
 				return (-ctx.found);
 		}
@@ -84,6 +98,45 @@ int	ft_vsescanf(char *src, char *fmt, va_list *list)
 	return (ctx.found);
 }
 
+/**
+ * Scan a string for values and extract.
+ * Similar to libc sscanf but with simplified features.
+ ```
+ // Example
+ int d, m, y;
+ char *my_data = ""; // Imagine sourcing from an config file instead.
+ // It would probably be a good idea to end the format string with slash-v
+ ft_sescanf(my_data, "date:%d/%d/%d", &d, &m, &y);
+ ```
+ * ### Format Specifiers:
+  - `%d/i`: `decimal` (`int32_t*`)
+  - `%u`: `decimal` (`uint32_t*`)
+  - `%a`: `decimal` (`int8_t*`)
+  - `%A`: `decimal` (`int16_t*`)
+  - `%p`: `hex` (`int64_t*`)
+  - `%x`: `hex` (`int32_t*`)
+  - `%c`: `char` (`char*`)
+  - `%s`: `string` (`char[#max_next] / char *`)
+ * 
+ * ### Context Specifiers:
+ * (non-ptr) specifiers don't return a result.
+ * 
+ - `%n`: `#max_next` (`size_t`)(non-ptr)
+	Sets the buffer size of the next %s;
+	Resets to `#max_next_all` after each string.
+*
+ - `%N`: `#max_next_all` (`size_t`)(non-ptr)
+	Sets the buffer size of the next `%s`;
+	Resets to `#max_next_all` after each string.
+	default: `MAX_SIZE`
+ - `%r`: current total read characters (`size_t*`)
+ * ### Control Characters (without space):
+ - `\ v` Skips at least one or more whitespace or stops on null-terminator;
+	Fails if no whitespace or no null-terminator.
+	Also used to specify 'no more expected values'.
+ ### Returns
+	The number of specifiers that were successfull completed.
+ */
 int	ft_sescanf(char *from, char *fmt, ...)
 {
 	va_list	list;
@@ -94,7 +147,23 @@ int	ft_sescanf(char *from, char *fmt, ...)
 	va_end(list);
 	return (found);
 }
+
 /*
+#include <stdio.h>
+int main(void)
+{
+	// size_t read = 12312;
+	// int32_t num;
+	// int fnd = ft_sescanf("  \t12345", "%r\v%d", &read, &num);
+	// printf("read: %ld %d\n", read, fnd);
+
+	char 	str[100];
+	size_t read;
+	size_t rest;
+	int fnd = ft_sescanf("12345678", "%r%N%s.\v", &read, sizeof(str), str);
+	printf("read: %d %ld %s\n", fnd, read, str);
+}
+
 typedef struct s_vec2i
 {
 	int x;

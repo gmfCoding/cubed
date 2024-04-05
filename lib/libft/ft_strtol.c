@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 16:59:27 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/05 17:11:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/05 22:52:06 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <inttypes.h>
@@ -63,12 +63,12 @@ int64_t	ft_strtol(char *start, char **end, uint32_t base)
 	*end = start;
 	accum = 0;
 	negative = 1;
-	while (ft_isspace(*start))
+	while (*start && ft_isspace(*start))
 		(start)++;
 	negative = (*start == '-') * -1 + (*start != '-');
 	start += *start == '-' || *start == '+';
 	base = determine_base(start, &start, base);
-	while (ft_baseval(*start, base) != -1)
+	while (*start && ft_baseval(*start, base) != -1)
 	{
 		accum = accum * base + ft_baseval(*start, base);
 		(start)++;

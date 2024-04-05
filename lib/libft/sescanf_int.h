@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:54:15 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/05 18:05:11 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/05 22:57:15 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdarg.h>
@@ -23,6 +23,8 @@ typedef struct s_sescanf_ctx
 	va_list	*list;
 	int64_t	read_total;
 	int64_t	read;
+	size_t	max_next;
+	size_t	max_next_all;
 	int		found;
 	void	*context;
 	int64_t	*read_ptr;
@@ -30,7 +32,7 @@ typedef struct s_sescanf_ctx
 
 typedef int	(*t_fn_sscanf_handle)(char *data, char *fmt_next, void *dest);
 
-char	sesc_fmt_gettype(char *fmt, char **type_start);
+char	sesc_fmt_gettype(char *fmt, int step, char **type_start);
 bool	sesc_nodelim_nextis(t_sescanf_ctx *ctx, char type);
 
 int64_t	sesc_handle_fmt_type(t_sescanf_ctx *ctx);
