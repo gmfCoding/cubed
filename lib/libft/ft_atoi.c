@@ -6,11 +6,11 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 13:54:13 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 10:29:38 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/05 16:54:06 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_isspace(int c)
+int	ft_isspace(int c)
 {
 	int	istab;
 

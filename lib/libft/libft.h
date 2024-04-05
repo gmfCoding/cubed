@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:41:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/17 20:54:14 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:02:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define LIBFT_H
 # include <stddef.h>
 # include <inttypes.h>
+# include <stdarg.h>
+
+typedef unsigned char	t_uchar;
 
 typedef struct s_list
 {
@@ -26,6 +29,7 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
+int		ft_isspace(int c);
 size_t	ft_strlen(const char *s);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
@@ -56,7 +60,7 @@ char	*ft_itoa(int n);
 char	*ft_ltoa(long long int n);
 char	*ft_ftoa(double n, int precision);
 size_t	ft_intlen(int64_t	nb);
-size_t	ft_strtol(int64_t num, char *str);
+size_t	ft_ltostr(int64_t num, char *str);
 
 char	*ft_v3toa(double v[3]);
 char	*ft_v2toa(double v[2]);
@@ -70,6 +74,9 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_strfmt(char *fmt, ...);
+int64_t	ft_strtol(char *start, char **end, uint32_t base);
+int		ft_vsescanf(char *src, char *fmt, va_list *list);
+int		ft_sescanf(char *from, char *fmt, ...);
 
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);
