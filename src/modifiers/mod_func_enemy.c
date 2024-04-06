@@ -20,7 +20,7 @@ t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 //	if (ft_strcmp(en[0], "partick") != 0)//if we have more the one type of enemy
 //		enemy->anim = patrik->anim;
 //	enemy->speed = ft_atoi(en[2]);
-	enemy = entity_create(world, ENT_ENEMY);
+	enemy = (t_enemy *)entity_create(world, ENT_ENEMY);
 	*enemy = (t_enemy){.base = enemy->base};
 	enemy->speed = 0.01;
 	if (en[5][0] == 'N')

@@ -6,14 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:48:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/04 15:48:56 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 19:01:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "render.h"
 #include "texture.h"
 #include "vector2i.h"
 
-static void draw_circle(t_texture *tex, t_vec2i pos, t_vec2i quad, int colour)
+static void draw_circle(const t_texture *tex, t_vec2i pos, t_vec2i quad, int colour)
 {
     t_texture dst;
 
@@ -30,7 +30,7 @@ static void draw_circle(t_texture *tex, t_vec2i pos, t_vec2i quad, int colour)
 
 // Function for circle-generation
 // using Bresenham's algorithm
-void texture_draw_circle(t_texture *tex, t_vec2i pos, int r, int colour)
+void texture_draw_circle(const t_texture *tex, t_vec2i pos, int r, int colour)
 {
     int x = 0, y = r;
     int d = 3 - 2 * r;

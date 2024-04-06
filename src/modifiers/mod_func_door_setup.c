@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/03 18:43:36 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 18:57:17 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	wld->ent_2[wld->ent_count].ref_tile = map_get_tile_ref(map, pos.x, pos.y);
 	e |= csv_next('u', &content, &wld->ent_2[wld->ent_count].speed);
 	e |= csv_next('s', &content, &str);
-	door = entity_create(wld, ENT_DOOR);
+	door = (t_door *)entity_create(wld, ENT_DOOR);
 	door->closed = str[0] != 'C';
 	door->percent = door->closed;
 	wld->ent_2[wld->ent_count].state_1 = door->closed;
@@ -103,7 +103,7 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	if (!door->closed)
 		wld->ent_2[wld->ent_count].type = ET_DOOR_OPEN;
 	door->base.pos = v2itov2(pos);
-	wld->ent_2[wld->ent_count].entity = door;
+	wld->ent_2[wld->ent_count].entity = &door->base;
 	door_setup_sprites(door, wld);
 	doors++;
 	printf("doorname is %s the door is type %d\n", wld->ent_2[wld->ent_count].name, wld->ent_2[wld->ent_count].type);

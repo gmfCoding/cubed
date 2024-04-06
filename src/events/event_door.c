@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/04 00:55:41 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 19:03:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -33,7 +33,7 @@ void mmap_door_update(t_door *door, t_mmap *mmap)
 
 void	event_door_locked(t_game *game, t_entity_2 *ent)
 {
-	t_door *const	door = ent->entity;
+	t_door *const	door = (t_door *)ent->entity;
 
 	game->display_ui = true;
 	if (input_keydown(&game->input, KEY_E))
@@ -46,7 +46,7 @@ void	event_door_locked(t_game *game, t_entity_2 *ent)
 
 void	event_door_open(t_game *game, t_entity_2 *ent)
 {
-	t_door *const	door = ent->entity;
+	t_door *const	door = (t_door *)ent->entity;
 	t_tile *tile;
 
 	game->display_ui = true;
@@ -69,7 +69,7 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 
 void	event_door_unlocked(t_game *game, t_entity_2 *ent)
 {
-	t_door *const	door = ent->entity;
+	t_door *const	door = (t_door *)ent->entity;
 	t_tile *tile;
 
 	game->display_ui = true;

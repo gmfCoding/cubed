@@ -6,11 +6,12 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:11:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/04 01:13:39 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 18:58:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
 #include <stddef.h>
+#include <stdlib.h>
 #include "texture.h"
 
 #ifdef __linux__
