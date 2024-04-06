@@ -28,7 +28,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/cubed",
-		//	"args": ["assets/maps/map1.cub"],
+			"args": ["assets/maps/map1.cub"],
 			"cwd": "${workspaceFolder}"
 		}
 	]

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/06 20:59:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 00:39:33 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -142,20 +142,14 @@ bool	door_is_vertical(t_door *door, t_game *game)
 
 void	ent_door_update(t_door *door, t_game *game)
 {
-	if (input_keydown(&game->input, KEY_LALT)) // TODO: Remove (debug)
-		door->closed = !door->closed;
+	int	vis;
+
 	if (door->closed)
 		door->percent += door->speed;
 	else
 		door->percent -= door->speed;
-	map_get_tile_refv(&game->world->map, door->base.pos)->vis = -1 - (door->closed);
 	door->percent = fclamp(0.2, 1.0, door->percent);
 	door_update_vis(game, door, door_is_vertical(door, game));
-}
-
-void ent_enemy_update(t_enemy *enemy, t_game *game) // Make this
-{
-
 }
 
 static const t_fn_entity_update	g_entity_updates[] = {
