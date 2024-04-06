@@ -38,7 +38,7 @@ void	event_door_locked(t_game *game, t_entity_2 *ent)
 	game->display_ui = true;
 	if (input_keydown(&game->input, KEY_E))
 	{
-		door->closed = false;
+//		door->closed = false;
 		printf("DOOR IS LOCKED\n");
 	}
 	return ;

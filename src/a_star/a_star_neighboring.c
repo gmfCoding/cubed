@@ -33,6 +33,7 @@ int	star_not_in_list(t_star_node **open, t_star_node **close, t_vec2 pos, t_star
 			return (0);
 		}
 		curr = curr->next;
+	}
 	return (1);
 }
 
