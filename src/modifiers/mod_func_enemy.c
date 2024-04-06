@@ -41,6 +41,7 @@ t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	enemy->sprite_ref = &world->sprite[world->sp_amount++];
 	enemy->sprite_ref->uv = (t_uv){.offset = {0, 0}, .scale = {1, 1}};
 	enemy->sprite_ref->visible = true;
+	world->enemy = enemy;
 	free_str_array(en);
 	return (0);
 }
