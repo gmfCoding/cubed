@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:56:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/05 23:13:51 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:42:26 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdbool.h>
@@ -37,7 +37,7 @@ static bool	sesc_should_stop(t_sescanf_ctx *ctx)
 static int	sesc_handle_s(t_sescanf_ctx *ctx)
 {
 	char *const	dest = va_arg(*ctx->list, char *);
-	int			i;
+	size_t		i;
 
 	i = 0;
 	while (*ctx->current && i < (ctx->max_next - 1) && !sesc_should_stop(ctx))
