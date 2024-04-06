@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:33:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 10:29:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:47:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,6 @@ int	ft_strcmp(char *s1, char *s2)
 	while ((s1[i] == s2[i]) && s1[i] && s2[i])
 		i++;
 	return (s1[i] - s2[i]);
-}
-
-int	ft_isspace(int c)
-{
-	c = (unsigned char)c;
-	if (c == '\t' || c == '\n' || c == '\v' \
-		|| c == '\f' || c == '\r' || c == ' ')
-		return (1);
-	return (0);
 }
 
 void	remove_spaces(char *str)

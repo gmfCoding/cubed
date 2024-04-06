@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:13:48 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 18:49:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:43:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "def_tex.h"
@@ -24,7 +24,7 @@ static void	def_tex_load(const t_app *app, t_def_node *node)
 	{
 		insert = &buffer[ft_strlcpy(buffer, node->data.path, sizeof(buffer))];
 		if (node->data.frames > 1)
-			ft_strtol(i, insert);
+			ft_ltostr(i, insert);
 		ft_strlcat(insert, ".xpm", 4096);
 		node->data.tex[i] = texture_load(app->mlx, buffer);
 	}

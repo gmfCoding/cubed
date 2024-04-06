@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:41:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/05 18:02:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:45:30 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_list
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
+int		ft_isspace(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_isspace(int c);
