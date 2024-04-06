@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 23:32:14 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:59:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -160,7 +160,7 @@ void ent_enemy_update(t_enemy *enemy, t_game *game) // Make this
 
 static const t_fn_entity_update	g_entity_updates[] = {
 	[ENT_DOOR] = (void *)ent_door_update,
-	[ENT_ENEMY] = (void *)ent_enemy_update,
+	[ENT_ENEMY] = (void *)NULL,
 };
 
 static const size_t	g_entity_sizes[] = {
@@ -170,12 +170,15 @@ static const size_t	g_entity_sizes[] = {
 
 void	entity_update(t_game *game)
 {
- 	t_list	*lst;
+	t_list				*lst;
+	t_fn_entity_update	fn;
 
 	lst = game->world->entities;
 	while (lst != NULL && lst->content != NULL)
 	{
-		g_entity_updates[((t_entity *)lst->content)->type](lst->content, game);
+		fn = g_entity_updates[((t_entity *)lst->content)->type];
+		if (fn)
+			fn(lst->content, game);
 		lst = lst->next;
 	}
 }
