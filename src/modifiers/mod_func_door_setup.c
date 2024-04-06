@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/06 23:03:26 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 23:24:17 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,18 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 }
 */
 
+
+/*
+ * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
+ */
 t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 {
 	t_mod_door_data	mod;
 	t_door			*door;
 	const int		found = ft_sescanf(content, "%N%s,%s,%u,%u,%u,%c,%c\v",
 			sizeof(mod.name), &mod.name, &mod.tex,
-			&mod.pos.x, &mod.pos.y,
-			&mod.locked, &mod.closed);
+			&mod.pos.x, &mod.pos.y, &mod.speed,
+			&mod.closed, &mod.locked);
 
 	mod.pos.x--;
 	if (found != 8 || \
@@ -129,11 +133,12 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	ft_strcpy(wld->ent_2[wld->ent_count].ui_display_2, "LOCKED");
 	wld->ent_2[wld->ent_count].ref_tile = map_get_tile_ref(map, mod.pos.x, mod.pos.y);
 	door = (t_door *)entity_create(wld, ENT_DOOR);
-	door->closed = mod.closed == 'c';
-	wld->ent_2[wld->ent_count].state_1 = door->closed;
+	door->closed = mod.closed == 'C';
+	door->locked = mod.locked == 'L';
 	door->speed = ENT_DOOR_SPEED * (1.0 / R_TFR);
-	door->locked = mod.locked;
-	wld->ent_2[wld->ent_count].pos = v2itov2(mod.pos);
+	door->base.pos = v2itov2(mod.pos);
+	wld->ent_2[wld->ent_count].pos = door->base.pos;
+	wld->ent_2[wld->ent_count].state_1 = door->closed;
 	wld->ent_2[wld->ent_count].state_2 = door->locked;
 	wld->ent_2[wld->ent_count].state_3 = false;
 	if (door->closed && door->locked)
@@ -142,15 +147,13 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 		wld->ent_2[wld->ent_count].type = ET_DOOR_UNLOCKED;
 	if (!door->closed)
 		wld->ent_2[wld->ent_count].type = ET_DOOR_OPEN;
-	door->base.pos = v2itov2(mod.pos);
 	wld->ent_2[wld->ent_count].entity = &door->base;
 	door_setup_sprites(door, wld);
 	wld->ent_count++;
+	return (0);
 }
 
-// /*
-//  * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
-//  */
+
 // t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 // {
 // 	static int	doors = 0;
