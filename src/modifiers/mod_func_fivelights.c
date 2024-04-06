@@ -1,26 +1,17 @@
-
-
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mod_func_fivelights.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/06 15:20:00 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/07 01:44:25 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "map.h"
-
 #include "state.h"
-
-
-t_entity_2	*mod_search_name_2(t_world *world, char *str)
-{
-	int	i;
-
-	i = -1;
-	while (++i < world->ent_count)
-	{
-		if (ft_strcmp(world->ent_2[i].name, str) == 0)
-			return (&world->ent_2[i]);
-	}
-	return (NULL);
-}
-
-
+#include "modifiers.h"
 /*
  * NAME,TARGET,ACTIVE,XPOS,YPOS
  */
@@ -39,12 +30,11 @@ t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map)
 		world->ent_2[world->ent_count].name[i] = fl[0][i];
 	world->ent_2[world->ent_count].target = NULL;
 	if (ft_strcmp(fl[1], "NULL") != 0)
-		world->ent_2[world->ent_count].target =	mod_search_name_2(world, fl[1]);
+		world->ent_2[world->ent_count].target =	mod_search_name(world, fl[1]);
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	world->ent_2[world->ent_count].pos = v2new(x, y);
-//	world->ent_2[world->ent_count].ref_tile = &map->tiles[y * (map->width + x) - 1];
-	*map_get_tile_ref(map, x, y) = (t_tile){
-		.type = WALL, .vis = 1, .tex = TEX_FIVE_LIGHTS};
+	*map_get_tile_ref(map, x, y) = (t_tile){ .type = WALL, .vis = 0,
+	.tex = TEX_FIVE_LIGHTS};
 	if (fl[2][0] == 'O')
 		world->ent_2[world->ent_count].type = ET_FIVE_LIGHTS_OPEN;
 	else

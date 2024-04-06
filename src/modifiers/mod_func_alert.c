@@ -2,19 +2,6 @@
 #include "vectorconv.h"
 #include "modifier_data.h"
 
-t_entity_2	*mod_search_name(t_world *world, char *str)
-{
-	int	i;
-
-	i = -1;
-	while (++i < world->ent_count)
-	{
-		if (ft_strcmp(world->ent_2[i].name, str) == 0)
-			return (&world->ent_2[i]);
-	}
-	return (NULL);
-}
-
 /*
  * NAME,TARGET,ALERT_TYPE,XPOS,YPOS,TIME
  */

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/07 01:00:15 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 01:43:03 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,22 @@ typedef struct s_entity_2
 }			t_entity_2;
 
 typedef t_err				(*t_ex_action)(char *, int, t_world *, t_map *);
-t_err	mod_gen_no(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_so(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_we(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_ea(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_c(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_f(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_dr(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_ke(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_mm(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_wn(char *content, int index, t_world *world, t_map *map);
-t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_no(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_so(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_we(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_ea(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_c(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_f(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_dr(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_ke(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_mm(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_al(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_en(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_wn(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_fl(char *content, int index, t_world *world, t_map *map);
 
-void	modifier_after(t_game *game);
-t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
-t_mod *mod_get_mod(t_map *map, t_modtype type, int *index);
+void		modifier_after(t_game *game);
+t_err		modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
+t_mod		*mod_get_mod(t_map *map, t_modtype type, int *index);
+t_entity_2	*mod_search_name(t_world *world, char *str);
 #endif
