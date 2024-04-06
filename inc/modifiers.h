@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/06 23:03:14 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 01:00:15 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_entity_2
 {
 	t_ent_type			type;
 	char				name[NAME_SIZE];
+	char				(*ui_display)[NAME_SIZE];
 	char				ui_display_1[NAME_SIZE];
 	char				ui_display_2[NAME_SIZE];
 	t_vec2				pos;// 9 is for the event trigger

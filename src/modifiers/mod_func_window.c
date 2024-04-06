@@ -6,30 +6,27 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:38:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 08:06:36 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 00:59:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
 #include "state.h"
 #include "csv.h"
+#include "modifier_data.h"
 
 /*
  * XPOS, YPOS
  */
 t_err	mod_gen_wn(char *content, int index, t_world *world, t_map *map)
 {
-	char	**al;
-	t_tile	*tile;
-	int		x;
-	int		y;
-	t_err	e;
+	t_vec2i		pos;
+	const int	found = ft_sescanf(content, "%u,%u\v", &pos.x, &pos.y);
+	t_tile		*tile;
 
-	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
-	e = csv_next('u', &content, &x);
-	e |= csv_next('u', &content, &y);
-	if (e || x >= map->width || y >= map->height)
+	if (found != 2 && pos.x >= map->width || pos.y >= map->height)
 		return (1);
-	tile = map_get_tile_ref(map, x, y);
+	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX); // Can I remove this?
+	tile = map_get_tile_ref(map, pos.x, pos.y);
 	tile->tex = TEX_WINDOW;
 	tile->vis = 1;
 	tile->type = WALL;
