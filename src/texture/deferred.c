@@ -24,7 +24,7 @@ static void	def_tex_load(const t_app *app, t_def_node *node)
 	{
 		insert = &buffer[ft_strlcpy(buffer, node->data.path, sizeof(buffer))];
 		if (node->data.frames > 1)
-			ft_ltostr(i, insert);
+			ft_strtol(i, NULL, insert);
 		ft_strlcat(insert, ".xpm", 4096);
 		node->data.tex[i] = texture_load(app->mlx, buffer);
 	}
