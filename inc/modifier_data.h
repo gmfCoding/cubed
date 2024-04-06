@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 23:08:09 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 00:58:03 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 01:07:58 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ typedef struct s_mod_enemy_data
 	char		state;
 }	t_mod_enemy_data;
 
+typedef struct s_mod_alarm_data
+{
+	char		name[50];
+	char		target[50];
+	char		type;
+	t_vec2i		pos;
+	uint32_t	time;
+}	t_mod_alarmdata;
+
 typedef struct s_mod_any
 {
 	union
@@ -54,6 +63,7 @@ typedef struct s_mod_any
 		t_mod_door_data		dr;
 		t_mod_enemy_data	en;
 		t_vec2i				wn;
+		t_mod_alarmdata		al;
 	};
 }	t_mod_any;
 

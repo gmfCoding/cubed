@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/07 00:51:54 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 01:33:37 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 			&mod.closed, &mod.locked);
 
 	mod.pos.x--;
-	if (found != 8 || \
-	mod.pos.x >= map->width || mod.pos.y >= map->height)
+	if (found != 8 || mod.pos.x >= map->width \
+					|| mod.pos.y >= map->height)
 		return (1);
 	*map_get_tile_ref(map, mod.pos.x, mod.pos.y) = (t_tile){
 	.type = DOOR, .vis = -1 - mod.closed == 'C', .tex = TEX_DOOR};

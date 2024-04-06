@@ -16,8 +16,8 @@ t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 			sizeof(mod.name), &mod.name, &mod.target, &mod.speed, 
 			&mod.pos.x, &mod.pos.y, &mod.state);
 
-	if (found != 7 || \
-	mod.pos.x >= map->width || mod.pos.y >= map->height)
+	if (found != 7 || mod.pos.x >= map->width \
+					|| mod.pos.y >= map->height)
 		return (1);
 	map->mods[index].type = MT_ENEMY;
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
