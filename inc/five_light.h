@@ -48,6 +48,7 @@ void	fl_gather_up_state(t_game *game, int index);
 void	fl_pass_state_rules(t_game *game, int click_state);
 int	fl_we_clicked(t_game *game, int x, int y);
 void	fl_reset_game(t_game *game);
+void	fl_leave_mgame(t_game *game);
 void	fl_assign_state(t_game *game, int click_state);
 void	five_lights_Setup(t_game *game, int difficulty);
 

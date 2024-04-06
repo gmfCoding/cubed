@@ -54,6 +54,7 @@ typedef struct s_mmap t_mmap;
 
 # define TEX_SKYBOX 585
 
+# define TEX_FIVE_LIGHTS 586
 struct s_game
 {
 	t_app			app;
@@ -63,7 +64,7 @@ struct s_game
 
 
 	t_mgame 	five_light;
-
+	bool		run_fl;
 	t_vec2			mouse;
 	t_vec2			pos;
 
@@ -71,7 +72,7 @@ struct s_game
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
 	t_player		player;
-	t_texture		textures[586];
+	t_texture		textures[587];
 	t_world			*world;
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];

@@ -15,8 +15,10 @@ void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 	game->display_ui = true;
 	if (input_keydown(&game->input, KEY_E))
 	{
-		game->player.can_move = false;
+	//	game->player.can_move = false;
 		game->five_light.run_game = true;
+
+		printf("in the events five lights run game = %d\n", game->five_light.run_game);
 	}
 	if (game->five_light.run_game = false)
 	{

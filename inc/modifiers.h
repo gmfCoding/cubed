@@ -97,8 +97,9 @@ t_err	mod_gen_mm(char *content, int index, t_world *world, t_map *map);
 t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map);
 t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map);
 t_err	mod_gen_wn(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map);
 
 void	modifier_after(t_game *game);
 t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
-t_mod	*mod_get_mod(t_map *map, t_modtype type, int *index);
+t_modtype *mod_get_mod(t_map *map, t_modtype type, int *index);
 #endif

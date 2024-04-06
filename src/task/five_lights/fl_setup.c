@@ -111,7 +111,7 @@ void	five_lights_Setup(t_game *game, int difficulty)
 	game->five_light.difficulty = difficulty;
 	fl_images(game, difficulty);
 	game->five_light.run_setup = true;
-	game->five_light.run_game = true;// check here if game should be run could do this in game??
+//	game->five_light.run_game = true;// check here if game should be run could do this in game??
 	game->five_light.enabled = true;
 	game->five_light.broken = false;
 	game->five_light.finished = false;

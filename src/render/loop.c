@@ -207,6 +207,7 @@ void	render(t_game *game)
 		draw_debug_view_world_state(game);
 		texture_draw_debug_view(game, 2);
 	}
+	five_lights(game);
 	input_process(&game->input);
 	game->fpsc++;
 }

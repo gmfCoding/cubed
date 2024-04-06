@@ -47,7 +47,8 @@ typedef enum e_tiletype
 typedef struct s_tile
 {
 	t_tiletype	type;
-	uint8_t		tex;
+	int		tex;
+//	uint8_t		tex;
 	/// @brief -1: Nothing, 0: Opaque, 1: Transparent
 	int8_t		vis;
 	char		sp_count;
@@ -133,6 +134,8 @@ void		deallocate_list(t_list **raw_map_file);
 void		free_str_array(char **str);
 
 	// MAP_UTILS //
+
+int	is_empty_line(const char *line);
 void		replace_tabs(t_list *curr);
 void		remove_empty_lines(t_list **raw_map_file);
 char	*ft_strcpy(char *s1, char *s2);

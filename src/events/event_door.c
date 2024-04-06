@@ -47,6 +47,7 @@ void	event_door_locked(t_game *game, t_entity_2 *ent)
 void	event_door_open(t_game *game, t_entity_2 *ent)
 {
 	t_door *const	door = ent->entity;
+	t_tile *tile;
 
 	game->display_ui = true;
 	if (input_keydown(&game->input, KEY_E))
@@ -54,7 +55,9 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 		door->closed = true;
 		ent->type = ET_DOOR_UNLOCKED;	
 		mmap_door_update(door, &game->mmap);
-		game->world->map.tiles[(int)ent->pos.x + (int)ent->pos.y * game->world->map.width].vis = -1;
+		tile = map_get_tile_ref(&game->world->map, ent->pos.x, ent->pos.y);
+		tile->vis = -2;
+	//	game->world->map.tiles[(int)ent->pos.x + (int)ent->pos.y * game->world->map.width].vis = -2;
 		if (game->world->enemy)
 		{
 			enemy_update_path_to_target(game, game->world->enemy);
@@ -67,12 +70,14 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 void	event_door_unlocked(t_game *game, t_entity_2 *ent)
 {
 	t_door *const	door = ent->entity;
+	t_tile *tile;
 
 	game->display_ui = true;
 	if (input_keydown(&game->input, KEY_E))
 	{
-
-		game->world->map.tiles[(int)ent->pos.x + (int)ent->pos.y * game->world->map.width].vis = 1;
+		tile = map_get_tile_ref(&game->world->map, ent->pos.x, ent->pos.y);
+		tile->vis = -1;
+		//game->world->map.tiles[(int)ent->pos.x + (int)ent->pos.y * game->world->map.width].vis = -1;
 		door->closed = false;
 		ent->type = ET_DOOR_OPEN;
 		mmap_door_update(door, &game->mmap);

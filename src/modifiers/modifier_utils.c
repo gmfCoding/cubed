@@ -1,7 +1,7 @@
 
 #include "map.h"
 
-t_mod	*mod_get_mod(t_map *map, t_modtype type, int *index)
+t_modtype *mod_get_mod(t_map *map, t_modtype type, int *index)
 {
 	int	i;
 

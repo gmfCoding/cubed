@@ -58,7 +58,8 @@ t_err	world_preset(int argc, char **argv, t_game *game)
 {
 //	five_lights_Setup(game);
 	game->five_light.difficulty = 5;
-//	game->five_light.run_game = true;
+	game->five_light.run_game = true;
+	game->five_light.finished = false;
 	game->world->ent_count = 0;
 	game->world->sp_amount = 0;
 	game->fpsc = 0;
@@ -114,6 +115,7 @@ void generate_textures(t_game *game)
 */
 	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
 
+	game->textures[TEX_FIVE_LIGHTS] = texture_load(game->app.mlx, "assets/five_lights_wall.xpm");
 
 
 
