@@ -24,17 +24,16 @@ int	star_not_in_list(t_star_node **open, t_star_node **close, t_vec2 pos, t_star
 	{
 		if ((int)curr->pos.x == (int)pos.x && (int)curr->pos.y == (int)pos.y)
 		{
-			if ((int)curr->pos.x == (int)active->pos.x || (int)curr->pos.y == (int)active->pos.y)
-				if (curr->g_cost > active->g_cost + 10)
+			if (((int)curr->pos.x == (int)active->pos.x || (int)curr->pos.y == (int)active->pos.y) \
+				&& curr->g_cost > active->g_cost + 10)
 					curr->g_cost = active->g_cost + 10;
 			else
 				if (curr->g_cost > active->g_cost + 14)
 					curr->g_cost = active->g_cost + 14;
-			return 0;
+			return (0);
 		}
 		curr = curr->next;
-	}
-	return 1;
+	return (1);
 }
 
 /*
