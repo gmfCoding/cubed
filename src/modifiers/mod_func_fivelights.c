@@ -44,13 +44,11 @@ t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map)
 	world->ent_2[world->ent_count].pos = v2new(x, y);
 //	world->ent_2[world->ent_count].ref_tile = &map->tiles[y * (map->width + x) - 1];
 	*map_get_tile_ref(map, x, y) = (t_tile){
-		.type = MODIFIED, .vis = 1, .tex = TEX_FIVE_LIGHTS};
+		.type = WALL, .vis = 1, .tex = TEX_FIVE_LIGHTS};
 	if (fl[2][0] == 'O')
 		world->ent_2[world->ent_count].type = ET_FIVE_LIGHTS_OPEN;
 	else
 		world->ent_2[world->ent_count].type = ET_FIVE_LIGHTS_CLOSED;
-
-
 	world->ent_count++;
 	free_str_array(fl);
 	return (0);
