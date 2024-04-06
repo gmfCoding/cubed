@@ -6,10 +6,11 @@ F 225,100,0
 C 223,20,0 
 
 DR door01,/assets/debug.xpm,25,10,1,C,L
-FL task01,door01,O,29,11
+
 KE key01,/assets/debug.xpm,door01,26,10,A,N
 AL turd,NULL,O,5,10,120
 AL get_turd,turd,H,25,2,120
+FL task01,door01,O,24,11
 MM F
 EN patrick,NULL,1,28,6,P
         1111111111111111111111111

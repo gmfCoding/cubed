@@ -46,7 +46,7 @@ t_err	csv_next(char type, char **str, void *dst)
 	else if (type == 'F')
 		*((double *)dst) = ft_atoi(*str);
 	if (type == 's')
-		ft_strlcpy((char *)dst, *str, fmin(CSV_LEN, csv_clen(str)));
+		ft_strlcpy((char *)dst, *str, fmin(CSV_LEN, csv_clen(str) + 1));
 	csv_skip(str);
 	return (0);
 }

@@ -106,6 +106,8 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	wld->ent_2[wld->ent_count].entity = door;
 	door_setup_sprites(door, wld);
 	doors++;
+	printf("doorname is %s the door is type %d\n", wld->ent_2[wld->ent_count].name, wld->ent_2[wld->ent_count].type);
+
 	wld->ent_count++;
 	return (0);
 }
