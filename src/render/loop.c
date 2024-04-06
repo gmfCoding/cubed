@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/06 19:01:50 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 00:34:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void draw_debug_view_world_state(t_game *game)
 				texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0x00DDDDDD | R_ALPHA);
 			}
 		}
-}
+	}
 	i = -1;
 	while (++i < game->world->sp_amount)
 	{
@@ -147,6 +147,19 @@ void draw_debug_view_world_state(t_game *game)
 		t_entity *entity = ent_next->content;
 		texture_draw_circle(&tex, v2tov2i(v2muls(entity->pos, D_SCALE)), 2, R_GREEN | R_ALPHA);
 		ent_next = ent_next->next;
+	}
+	if (game->world->enemy)
+	{
+		t_vec2 *path;
+		t_vec2 prev;
+		path = game->world->enemy->path;
+		for (size_t i = 0; path && (int)path->x != -1 && (int)path->y != -1; i++)
+		{
+			if (i > 0)
+				texture_draw_line(tex, v2muls(*path, D_SCALE), v2muls(prev, D_SCALE), R_GREEN | R_ALPHA);
+			prev = *path;
+			path++;
+		}
 	}
 
 	static float dir = 0;
@@ -175,8 +188,8 @@ void	render(t_game *game)
 //	const t_texture    tex = texture_get_debug_view(game, 2);
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
-	enemy_routine(game, game->world->enemy);
 	entity_update(game);
+	enemy_routine(game, game->world->enemy);
 	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
 	sprite_update_all(game->world);
 	player_loop(game);

@@ -35,6 +35,7 @@ SRCSF = $(TEST) \
 		util/math.c \
 		util/random.c \
 		util/memory_utils.c \
+		util/debug_functions.c \
 		util/csv.c \
 		util/string_utils.c \
 		util/error_handler.c \
