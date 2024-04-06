@@ -59,7 +59,7 @@ t_err	world_preset(int argc, char **argv, t_game *game)
 //	five_lights_Setup(game);
 	game->five_light.difficulty = 1;
 	game->five_light.run_game = false;
-	game->five_light.run_setup = true;
+//	game->five_light.run_setup == true;
 //	game->five_light.finished = false;
 	game->world->ent_count = 0;
 	game->world->sp_amount = 0;
