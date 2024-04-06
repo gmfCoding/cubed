@@ -58,6 +58,7 @@ char *const			g_mapsymbols[] = {
 	"MM",
 	"EN",
 	"WN", // WINDOW
+	"FL",
 };
 
 t_ex_action const	g_mapfuncs[] = {
@@ -73,6 +74,7 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_mm,
 	&mod_gen_en,
 	&mod_gen_wn,
+	&mod_gen_fl,
 };
 
 t_err modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)

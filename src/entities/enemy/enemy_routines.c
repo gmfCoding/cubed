@@ -79,6 +79,8 @@ void	enemy_animate(t_game *game, t_enemy *enemy)
  */
 void	enemy_routine(t_game *game, t_enemy *enemy)
 {
+	if (enemy == NULL)
+		return ;
 	if (enemy->state == NOT_ACTIVE)
 		return ;
 	sprite_rotate(game, enemy->sprite_ref, game->player.dir);

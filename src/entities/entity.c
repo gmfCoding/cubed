@@ -153,6 +153,11 @@ void	ent_door_update(t_door *door, t_game *game)
 	door_update_vis(game, door, door_is_vertical(door, game));
 }
 
+void ent_enemy_update(t_enemy *enemy, t_game *game) // Make this
+{
+
+}
+
 static const t_fn_entity_update	g_entity_updates[] = {
 	[ENT_DOOR] = (void *)ent_door_update,
 	[ENT_ENEMY] = (void *)NULL,

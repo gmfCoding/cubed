@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/04 01:14:04 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 19:01:50 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,16 @@
 #include "texture.h"
 #include "vector2i.h"
 #include "vectorconv.h"
-
+#include "render.h"
 #include "libft.h"
 #include "internal/wall.h"
+#include "cubed.h"
 
 void	measure_frame_rate(t_app app)
 {
 	static int64_t	timeprev = 0;
 	static char		*fps = NULL;
-
+	// TODO: Remove from mandatory
 	fps = ft_strfmt("fps:%d", \
 	(int)(1.0 / ((time_get_ms() - timeprev) / 1000.0)));
 	mlx_string_put(app.mlx, app.win, 0, 10, 0x00FF00, fps);
@@ -174,7 +175,7 @@ void	render(t_game *game)
 //	const t_texture    tex = texture_get_debug_view(game, 2);
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
-	enemy_routine(game, &game->world->enemy);
+	enemy_routine(game, game->world->enemy);
 	entity_update(game);
 	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
 	sprite_update_all(game->world);
@@ -207,6 +208,7 @@ void	render(t_game *game)
 		draw_debug_view_world_state(game);
 		texture_draw_debug_view(game, 2);
 	}
+	five_lights(game);
 	input_process(&game->input);
 	game->fpsc++;
 }

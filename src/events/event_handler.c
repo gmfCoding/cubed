@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/04 01:14:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/04 00:45:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -45,9 +45,7 @@ void	event_interact(t_game *game)
 		pos = v2add(game->events_active[i]->pos, v2new(0.5, 0.5));
 		if (v2dot(v2norm(v2sub(pos, game->player.pos)), game->player.dir) > 0.8)
 		{
-			if (game->events_active[i]->type == ET_DOOR)
-				event_door(game->events_active[i]->entity, game);
-			else if (game->events_active[i]->type == ET_DOOR_UNLOCKED)
+			if (game->events_active[i]->type == ET_DOOR_UNLOCKED)
 				event_door_unlocked(game, game->events_active[i]);
 			else if (game->events_active[i]->type == ET_DOOR_OPEN)
 				event_door_open(game, game->events_active[i]);
@@ -59,6 +57,14 @@ void	event_interact(t_game *game)
 				event_alert_medium(game, game->events_active[i]);
 			else if (game->events_active[i]->type == ET_ALERT_OFF)
 				event_alert_off(game, game->events_active[i]);
+			else if (game->events_active[i]->type == ET_FIVE_LIGHTS_OPEN)
+				event_five_lights_open(game, game->events_active[i]);
+			else if (game->events_active[i]->type == ET_FIVE_LIGHTS_CLOSED)
+				event_five_lights_closed(game, game->events_active[i]);
+			//else if (game->events_active[i]->type == ORBIT_TASK_OPEN)
+			//	event_orbit_task_on(game, game->events_active[i]);
+			//else if (game->events_active[i]->type == ORBIT_TASK_CLOSED)
+			//	event_orbit_task_off(game, game->events_active[i]);
 			return ;
 		}
 		game->display_ui = false;
@@ -112,6 +118,8 @@ void	event_check(t_game *game)
 		{
 			if (v2dist(v2add(game->world->ent_2[i].pos, g_directions[j]), v2itov2(v2tov2i(game->player.pos))) < 0.05f)
 			{
+				printf("TRANSITION\n");
+
 				game->events_active[++k] = &game->world->ent_2[i];
 				game->events_on = true;
 			}

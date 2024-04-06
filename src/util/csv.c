@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 07:19:49 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/18 23:29:41 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 19:40:33 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cerror.h"
@@ -46,7 +46,7 @@ t_err	csv_next(char type, char **str, void *dst)
 	else if (type == 'F')
 		*((double *)dst) = ft_atoi(*str);
 	if (type == 's')
-		ft_strlcpy((char *)dst, *str, fmin(CSV_LEN, csv_clen(str)));
+		ft_strlcpy((char *)dst, *str, fmin(CSV_LEN, csv_clen(str) + 1));
 	csv_skip(str);
 	return (0);
 }

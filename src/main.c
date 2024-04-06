@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/04 01:17:49 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/04 00:54:02 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,23 @@
 #include "enemy.h"
 #include "destroy.h"
 
+/*
+ * include for mouse movement
+ *
+#include <X11/X.h>
+#include <X11/Xlib.h>
+
+int handle_mouse_move(int x, int y, void *param)
+{
+    printf("mousemoved to: (%d, %d)\n", x, y);
+    return 0;
+}mlx_hook(game.app.win, MotionNotify, PointerMotionMask, &handle_mouse_move, NULL);	
+	
+
+
+
+
+*/
 // int	main(int argc, char **argv)
 // {
 // 	(void)argc;
@@ -39,6 +56,11 @@
 
 t_err	world_preset(int argc, char **argv, t_game *game)
 {
+//	five_lights_Setup(game);
+	game->five_light.difficulty = 1;
+	game->five_light.run_game = false;
+//	game->five_light.run_setup == true;
+//	game->five_light.finished = false;
 	game->world->ent_count = 0;
 	game->world->sp_amount = 0;
 	game->fpsc = 0;
@@ -94,6 +116,7 @@ void generate_textures(t_game *game)
 */
 	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
 
+	game->textures[TEX_FIVE_LIGHTS] = texture_load(game->app.mlx, "assets/five_lights_wall.xpm");
 
 
 
@@ -109,12 +132,21 @@ void generate_textures(t_game *game)
 		game->textures[TEX_WALLE] = texture_load(game->app.mlx, east->content);
 	if (west) 
 		game->textures[TEX_WALLW] = texture_load(game->app.mlx, west->content);
+
 }
+
+
+
 
 
 int	main(int argc, char **argv)
 {
 	t_game	game;
+
+//	printf("%s  %s  %f  %f  %d  %d\n", game.world.ent->keys[0].name, game.world.ent->keys[0].doorname, game.world.ent->keys[0].pos.x, \
+		       	game.world.ent->keys[0].pos.y, game.world.ent->keys[0].auto_open, game.world.ent->keys[0].collected);
+//	free_content(&game);
+
 
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
@@ -131,6 +163,10 @@ int	main(int argc, char **argv)
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+
+//	if (game.five_light.run_game == true)
+//		mlx_mouse_hook(game.app.win, fl_mouse_hook, &game);
+
 //ill move this after vv
 	if (mod_get_mod(&game.world->map, MT_ENEMY, NULL) != NULL)
 	{

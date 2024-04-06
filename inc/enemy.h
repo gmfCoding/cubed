@@ -46,6 +46,7 @@ typedef struct		s_enemy
 void	enemy_routine(t_game *game, t_enemy *enemy);
 void	enemy_update_path_to_target(t_game *game, t_enemy *enemy);
 
+void	enemy_load_directory(t_game *game, char *base_path);
 //t_vec2	enemy_patrol_target(t_game *game, t_enemy *enemy);
 void	enemy_patrol(t_game *game, t_enemy *enemy);
 void	enemy_traverse_path(t_game *game, t_enemy *enemy);

@@ -46,6 +46,8 @@ void	control_player_process(t_game *game)
 	t_player *const		pl = &game->player;
 	t_inputctx *const	i = &game->input;
 
+	if(game->player.can_move == false)
+		return ;
 	if (input_keyheld(i, KEY_W))
 		move_player(&game->world->map, pl, pl->dir);
 	if (input_keyheld(i, KEY_S))

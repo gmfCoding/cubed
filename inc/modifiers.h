@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 12:31:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 18:55:56 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef enum	e_modtype
 
 typedef enum	e_ent_type
 {
-	ET_DOOR,
 	ET_DOOR_OPEN,
 	ET_DOOR_UNLOCKED,
 	ET_DOOR_LOCKED,
@@ -46,7 +45,10 @@ typedef enum	e_ent_type
 	ET_ALERT_MEDIUM,
 	ET_ALERT_HIGH,
 	ET_ALERT_OFF,
-	ET_FIVE_LIGHTS,
+	ET_FIVE_LIGHTS_OPEN,
+	ET_FIVE_LIGHTS_CLOSED,
+	ET_ORBIT_TASK_OPEN,
+	ET_ORBIT_TASK_CLOSED,
 }		t_ent_type;
 
 typedef struct	s_mod
@@ -95,8 +97,9 @@ t_err	mod_gen_mm(char *content, int index, t_world *world, t_map *map);
 t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map);
 t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map);
 t_err	mod_gen_wn(char *content, int index, t_world *world, t_map *map);
+t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map);
 
 void	modifier_after(t_game *game);
 t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
-t_mod	*mod_get_mod(t_map *map, t_modtype type, int *index);
+t_mod *mod_get_mod(t_map *map, t_modtype type, int *index);
 #endif

@@ -73,4 +73,5 @@ struct s_map
 
 /* util/time.c */
 int64_t	time_get_ms(void);
+
 #endif

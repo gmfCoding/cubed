@@ -21,6 +21,7 @@
 # include "player.h"
 # include "enemy.h"
 # include "mini_map.h"
+# include "five_light.h"
 
 // FORWARD DECLARE
 typedef struct s_task t_task;
@@ -52,6 +53,8 @@ typedef struct s_mmap t_mmap;
 # define TEX_ENEMY_END 584
 
 # define TEX_SKYBOX 585
+
+# define TEX_FIVE_LIGHTS 586
 struct s_game
 {
 	t_app			app;
@@ -59,13 +62,17 @@ struct s_game
 	t_texture		rt1;
 	t_texture		rt2;
 
+
+	t_mgame 	five_light;
+	bool		run_fl;
 	t_vec2			mouse;
 	t_vec2			pos;
+
 
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
 	t_player		player;
-	t_texture		textures[586];
+	t_texture		textures[587];
 	t_world			*world;
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];
@@ -80,9 +87,13 @@ struct s_game
 	unsigned int	ray;
 };
 
+
+
+
 void		texture_debug_view_blit(t_game *game, int view, 
 				t_texture tex, t_vec2 pos);
 void		texture_draw_debug_view(t_game *game, int view);
 t_texture	texture_get_debug_view(t_game *game, int view);
 void		control_process(t_game *game);
+
 #endif

@@ -81,9 +81,10 @@ t_player	player_setup(t_list *curr)
 */
 void	player_setup(t_list *curr, t_game *game)
 {
-//	t_player	player;
+//	_player	player;
 
 	player_pos_setup(curr, &game->player);
+	game->player.can_move = true;
 	game->player.oldp_x = game->player.pos.x;
 	game->player.oldp_y = game->player.pos.y;
 	game->player.plane = v2new(0.5,0);

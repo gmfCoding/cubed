@@ -1,7 +1,7 @@
 
 #include "map.h"
 
-t_mod	*mod_get_mod(t_map *map, t_modtype type, int *index)
+t_mod *mod_get_mod(t_map *map, t_modtype type, int *index)
 {
 	int	i;
 
@@ -11,6 +11,6 @@ t_mod	*mod_get_mod(t_map *map, t_modtype type, int *index)
 	if (index != NULL)
 		*index = i;
 	if (i < sizeof(map->mods) / sizeof(*map->mods))
-		return (&map->mods[i].type);
+		return (&map->mods[i]);
 	return (NULL);
 }

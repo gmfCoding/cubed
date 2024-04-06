@@ -8,6 +8,8 @@
  */
 void	enemy_update_path_to_target(t_game *game, t_enemy *enemy)
 {
+	if (enemy == NULL)
+		return ;
 	if (enemy->path != NULL)
 		free(enemy->path);
 	enemy->path = star_find_path(game, enemy->sprite_ref->pos, game->player.pos);

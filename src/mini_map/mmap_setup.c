@@ -27,10 +27,10 @@ t_vec2	v2diff(t_vec2 f, t_vec2 s)
  */
 bool	mmap_fog_check(t_game *game)
 {
-	t_mod *mm;
+	const t_mod *mm;
 
 	mm = mod_get_mod(&game->world->map, MT_MINI_MAP, NULL);
-	if (mm == NULL || mm->content == NULL)
+	if (mm == NULL)// || mm->content == NULL) cc warning: comparison of array 'mm->content' equal to a null pointer is always false
 		return (false);
 	if (mm->content[0] == 'F')
 		return (false);
