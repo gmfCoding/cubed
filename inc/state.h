@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/18 22:15:00 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/08 01:10:30 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ struct s_game
 	t_mgame 	five_light;
 	bool		run_fl;
 	double			mouse_angle;
-	double			angle_offset;
 //	t_vec2			pos;
-
 
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;

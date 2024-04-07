@@ -26,7 +26,7 @@ typedef struct	s_player
 	double		moveSpeed;
 	double		rotSpeed;
 	double		angle;
-	double		key_angle;
+	double		angle_offset;
 	t_p_state	state;
 }		t_player;
 

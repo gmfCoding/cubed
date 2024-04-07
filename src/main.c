@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 02:31:51 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/08 01:11:36 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int handle_mouse_move(int x, int y, void *param)
 t_err	world_preset(int argc, char **argv, t_game *game)
 {
 //	five_lights_Setup(game);
-	game->angle_offset = 0;
 	game->five_light.difficulty = 1;
 	game->five_light.run_game = false;
 //	game->five_light.run_setup == true;
