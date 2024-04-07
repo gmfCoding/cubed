@@ -41,12 +41,22 @@ static void	move_player(t_map *map, t_player *pl, t_vec2 dir)
 		pl->pos.y += vel.y;
 }
 
+int	can_move_player(t_game *game)
+{
+	if(game->player.can_move == false)
+		return (0) ;
+
+	return (1);
+
+
+}
+
 void	control_player_process(t_game *game)
 {
 	t_player *const		pl = &game->player;
 	t_inputctx *const	i = &game->input;
 
-	if(game->player.can_move == false)
+	if(!(can_move_player(game)))
 		return ;
 	if (input_keyheld(i, KEY_W))
 		move_player(&game->world->map, pl, pl->dir);

@@ -65,8 +65,8 @@ struct s_game
 
 	t_mgame 	five_light;
 	bool		run_fl;
-	t_vec2			mouse;
-	t_vec2			pos;
+	t_vec2i			stored_mouse;
+//	t_vec2			pos;
 
 
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
