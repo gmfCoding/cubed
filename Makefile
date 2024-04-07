@@ -30,6 +30,7 @@ SRCSF = $(TEST) \
 		render/rect_render.c \
 		render/intersect_test.c \
 		render/raycast.c \
+		render/skybox.c \
 		controls/controls.c \
 		util/time.c \
 		util/math.c \
