@@ -65,7 +65,8 @@ struct s_game
 
 	t_mgame 	five_light;
 	bool		run_fl;
-	t_vec2i			stored_mouse;
+	double			mouse_angle;
+	double			angle_offset;
 //	t_vec2			pos;
 
 

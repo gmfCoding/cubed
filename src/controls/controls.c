@@ -41,14 +41,23 @@ static void	move_player(t_map *map, t_player *pl, t_vec2 dir)
 		pl->pos.y += vel.y;
 }
 
-int	can_move_player(t_game *game)
+int	can_move_player(t_game *game, t_player *pl, t_inputctx *i)
 {
-	if(game->player.can_move == false)
+	if(game->player.state == START_TASK)
+	{//this only triggers once
+		game->angle_offset = (((double)i->mouse.x / SCR_WIDTH) * M_TAU);
+		game->player.state = CANT_MOVE;
+	}
+	if(game->player.state == DONE_TASK)
+	{//this only trigger once
+	//	pl->angle = game->mouse_angle + game->angle_offset;
+		game->player.state = CAN_MOVE;
+	}
+	if(game->player.state == CANT_MOVE)
+	{//constanly triggers while in task
 		return (0) ;
-
-	return (1);
-
-
+	}
+	return (1);//resume normal controls
 }
 
 void	control_player_process(t_game *game)
@@ -56,8 +65,11 @@ void	control_player_process(t_game *game)
 	t_player *const		pl = &game->player;
 	t_inputctx *const	i = &game->input;
 
-	if(!(can_move_player(game)))
+	if(!(can_move_player(game, pl, i)))
 		return ;
+//	game->mouse_angle = (((double)i->mouse.x / SCR_WIDTH) * M_TAU);
+//	pl->angle = game->mouse_angle + game->angle_offset;
+	
 	if (input_keyheld(i, KEY_W))
 		move_player(&game->world->map, pl, pl->dir);
 	if (input_keyheld(i, KEY_S))
@@ -74,7 +86,11 @@ void	control_player_process(t_game *game)
 			pl->key_angle += pl->rotSpeed;
 	}
 	else
-		pl->angle = ((double)i->mouse.x / SCR_WIDTH) * M_TAU;
+	{
+		game->mouse_angle = (((double)i->mouse.x / SCR_WIDTH) * M_TAU);
+		pl->angle = game->mouse_angle - game->angle_offset;
+	//	pl->angle = ((double)i->mouse.x / SCR_WIDTH) * M_TAU;
+	}
 	rotate_player(pl, ((pl->angle * 2) - pl->key_angle));
 }
 
