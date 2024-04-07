@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/06 18:57:17 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 01:56:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ static void	door_setup_sprites(t_door *door, t_world *wld)
 }
 /*
 struct s_mod_door {
-    char name[50];
-    char tex[50];
-    t_vec2i pos;
-    bool locked;
-    bool closed;
+
 };
 
 struct s_mod_door door;
@@ -113,52 +109,76 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 }
 */
 
+
+/*
+ * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
+ */
 t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 {
-	static int	doors = 0;
-	char		str[CSV_LEN];
-	t_err		e;
-	t_vec2i		pos;
-	t_door		*door;
+	t_mod_door_data		mod;
+	t_door				*door;
+	t_entity_2 *const	ent2 = &wld->ent_2[wld->ent_count];
+	const int			found = ft_sescanf(content, "%N%s,%s,%u,%u,%u,%c,%c\v",
+			sizeof(mod.name), &mod.name, &mod.tex,
+			&mod.pos.x, &mod.pos.y, &mod.speed,
+			&mod.closed, &mod.locked);
 
-	printf("mod door gen!\n");
-	e = csv_next('s', &content, &str);
-	ft_strlcpy(wld->ent_2[wld->ent_count].name, str, NAME_SIZE);
-	e |= csv_next('s', &content, &str);
-	e |= csv_next('u', &content, &pos.x);
-	e |= csv_next('u', &content, &pos.y);
-	pos.x--;
-	if (e || pos.x >= map->width || pos.y >= map->height)
+	if (found != 8 || mod.pos.x >= map->width \
+					|| mod.pos.y >= map->height)
 		return (1);
-	*map_get_tile_ref(map, pos.x, pos.y) = (t_tile){
-	.type = DOOR, .vis = -1, .tex = TEX_DOOR};
-	ft_strcpy(wld->ent_2[wld->ent_count].ui_display_1, "PRESS 'E' TO INTERACT");
-	ft_strcpy(wld->ent_2[wld->ent_count].ui_display_2, "LOCKED");
-	wld->ent_2[wld->ent_count].ref_tile = map_get_tile_ref(map, pos.x, pos.y);
-	e |= csv_next('u', &content, &wld->ent_2[wld->ent_count].speed);
-	e |= csv_next('s', &content, &str);
+	*map_get_tile_ref(map, mod.pos.x, mod.pos.y) = (t_tile){
+	.type = DOOR, .vis = -1 - mod.closed == 'C', .tex = TEX_DOOR};
+	ft_strlcpy(ent2->name, mod.name, NAME_SIZE);
+	ft_strcpy(ent2->ui_display_1, "PRESS 'E' TO INTERACT");
+	ft_strcpy(ent2->ui_display_2, "LOCKED");
+	ent2->ref_tile = map_get_tile_ref(map, mod.pos.x, mod.pos.y);
 	door = (t_door *)entity_create(wld, ENT_DOOR);
-	door->closed = str[0] == 'C';
-	wld->ent_2[wld->ent_count].state_1 = door->closed;
+	door->closed = mod.closed == 'C';
+	door->locked = mod.locked == 'L';
 	door->speed = ENT_DOOR_SPEED * (1.0 / R_TFR);
-	e |= csv_next('s', &content, &str);
-	door->locked = str[0] == 'L';
-	wld->ent_2[wld->ent_count].pos = v2itov2(pos);
-	wld->ent_2[wld->ent_count].state_2 = door->locked;
-	wld->ent_2[wld->ent_count].state_3 = false;
+	door->base.pos = v2itov2(mod.pos);
+	ent2->pos = door->base.pos;
+	ent2->state_1 = door->closed;
+	ent2->state_2 = door->locked;
+	ent2->state_3 = false;
+	ent2->ui_display = &ent2->ui_display_1;
 	if (door->closed && door->locked)
-		wld->ent_2[wld->ent_count].type = ET_DOOR_LOCKED;
+	{
+		ent2->ui_display = &ent2->ui_display_2;
+		ent2->type = ET_DOOR_LOCKED;
+	}
 	if (door->closed && !door->locked)
-		wld->ent_2[wld->ent_count].type = ET_DOOR_UNLOCKED;
+		ent2->type = ET_DOOR_UNLOCKED;
 	if (!door->closed)
-		wld->ent_2[wld->ent_count].type = ET_DOOR_OPEN;
-	door->base.pos = v2itov2(pos);
-	wld->ent_2[wld->ent_count].entity = &door->base;
+		ent2->type = ET_DOOR_OPEN;
+	ent2->entity = &door->base;
 	door_setup_sprites(door, wld);
-	doors++;
 	wld->ent_count++;
 	return (0);
 }
+
+
+// t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
+// {
+// 	static int	doors = 0;
+// 	char		str[CSV_LEN];
+// 	t_err		e;
+// 	t_vec2i		pos;
+
+// 	printf("mod door gen!\n");
+// 	e = csv_next('s', &content, &str);
+	
+// 	e |= csv_next('s', &content, &str);
+// 	e |= csv_next('u', &content, &pos.x);
+// 	e |= csv_next('u', &content, &pos.y);
+
+	
+// 	e |= csv_next('u', &content, &wld->ent_2[wld->ent_count].speed);
+// 	e |= csv_next('s', &content, &str);
+	
+	
+// 	return (0);
+// }
 
 /*
  * NAME,TEXTURE,ACCESSDOORNAMED,XPOS,YPOS,AUTOUNLOCKOPEN,GRABBEDBYPLAYER 
