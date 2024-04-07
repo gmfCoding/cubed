@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 00:34:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 15:51:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,8 +194,8 @@ void	render(t_game *game)
 	sprite_update_all(game->world);
 	player_loop(game);
 
-//	x = v2x2ang(game->player.dir) / 6.28 * 3840;
-//	texture_blit(game->textures[TEX_SKYBOX], game->rt1, v2new(-x, 0));
+	x = v2x2ang(game->player.dir) / 6.28 * 3840;
+	texture_blit(game->textures[TEX_SKYBOX], game->rt1, v2new(-x, 0));
 	render_floor(game);
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
