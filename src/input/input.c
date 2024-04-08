@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:36:29 by clovell           #+#    #+#             */
-/*   Updated: 2023/11/25 19:30:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:20:07 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 #include "state.h"
 #include "vector2i.h"
 #include "input.h"
+
+const int	g_size[] = {
+	sizeof((t_inputctx){0}.mouse_state),
+	sizeof((t_inputctx){0}.key_state),
+	sizeof((t_inputctx){0}.special_state),
+	0,
+};
 
 bool	input_keydown(t_inputctx *input, int key)
 {
@@ -42,13 +49,6 @@ bool	input_keyheld(t_inputctx *input, int key)
 	(state[key] & KEY_MASK_PREV) == KEY_MASK_PREV));
 }
 
-const int	g_size[] = {
-	sizeof((t_inputctx){0}.mouse_state),
-	sizeof((t_inputctx){0}.key_state),
-	sizeof((t_inputctx){0}.special_state),
-	0,
-};
-
 void	input_process(t_inputctx *input)
 {
 	uint8_t *const	states[] = {
@@ -75,9 +75,6 @@ void	input_process(t_inputctx *input)
 	}
 	input->mouse_prev = input->mouse;
 }
-
-//if ((states[j][i] & KEY_MASK_RELEASE) == KEY_MASK_RELEASE)
-//	states[j][i] &= ~KEY_MASK_PREV;
 
 uint8_t	*input_get_state(t_inputctx *input, int *key)
 {

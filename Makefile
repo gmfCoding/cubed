@@ -83,6 +83,7 @@ SRCSF = $(TEST) \
 		input/input_hooks.c \
 		input/input_setup.c \
 		input/keys.c \
+		input/mouse.c \
 		ui/process.c \
 		task/task.c \
 		task/five_lights/fl_setup.c \

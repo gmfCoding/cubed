@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 01:26:12 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:25:18 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -134,7 +134,7 @@ void	control_process(t_game *game)
 	if (!first_time)
 	{
 		first_time = true;
-		mlx_mouse_get_pos(game->app.mlx, game->app.win, &game->input.mouse.x, &game->input.mouse.y);
+		mouse_get_pos(&game->app, &game->input.mouse.x, &game->input.mouse.y);
 		// Make sure we're facing the correct direction no matter where the mouse cursor starts.
 		game->player.angle_offset += window_angle(game->input.mouse.x) * MOUSE_SENSITIVITY;
 	}
