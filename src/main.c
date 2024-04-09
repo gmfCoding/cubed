@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 01:11:36 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/09 14:38:50 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void generate_textures(t_game *game)
 	game->textures[TEX_ENEMY_25] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0049.xpm");
 	game->textures[TEX_ENEMY_26] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0051.xpm");
 */
-	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
+//	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
 
 	game->textures[TEX_FIVE_LIGHTS] = texture_load(game->app.mlx, "assets/five_lights_wall.xpm");
 

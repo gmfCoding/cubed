@@ -26,5 +26,6 @@ void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 			ent->type = ET_FIVE_LIGHTS_CLOSED;
 			ent->target->type = ET_DOOR_UNLOCKED;
 		}
+		game->five_light.finished = false;
 	}
 }
