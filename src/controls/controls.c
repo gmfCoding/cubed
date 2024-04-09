@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 16:25:18 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:07:44 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -99,7 +99,7 @@ void	control_player_process(t_game *game)
 		if (input_keyheld(i, KEY_LARROW))
 			game->player.angle_offset += pl->rotSpeed;
 	}
-	pl->angle = (game->mouse_angle * MOUSE_SENSITIVITY) - game->player.angle_offset;
+	pl->angle = (game->mouse_angle) - game->player.angle_offset;
 	rotate_player(pl, pl->angle);
 }
 
