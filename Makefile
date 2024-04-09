@@ -58,6 +58,7 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_alert.c \
 		modifiers/mod_func_enemy.c \
 		modifiers/mod_func_window.c \
+		modifiers/mod_func_window_line.c \
 		mini_map/mmap_draw.c \
 		mini_map/mmap_draw_anim.c \
 		mini_map/mmap_image_decider.c \

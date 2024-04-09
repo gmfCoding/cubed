@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/07 02:27:03 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/09 14:12:57 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ t_err		mod_gen_mm(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_al(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_en(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_wn(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_wl(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_fl(char *content, int index, t_world *world, t_map *map);
 
 void		modifier_after(t_game *game);
