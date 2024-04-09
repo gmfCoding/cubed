@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:38:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/09 14:21:33 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/09 14:53:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -31,10 +31,10 @@ t_err	mod_gen_wl(char *content, int index, t_world *world, t_map *map)
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX); // Can I remove this?
 	start.y--;
 	start_x = start.x;
-	while (++start.y < map->height)
+	while (++start.y <= end.y)
 	{
 		start.x = start_x - 1;
-		while (++start.x < map->width)
+		while (++start.x <= end.x)
 		{
 			tile = map_get_tile_ref(map, start.x, start.y);
 			tile->tex = TEX_WINDOW;
