@@ -56,11 +56,8 @@ int handle_mouse_move(int x, int y, void *param)
 
 t_err	world_preset(int argc, char **argv, t_game *game)
 {
-//	five_lights_Setup(game);
 	game->five_light.difficulty = 1;
 	game->five_light.run_game = false;
-//	game->five_light.run_setup == true;
-//	game->five_light.finished = false;
 	game->world->ent_count = 0;
 	game->world->sp_amount = 0;
 	game->fpsc = 0;
@@ -85,44 +82,8 @@ void generate_textures(t_game *game)
 	game->textures[TEX_DOOR] = game->textures[TEX_WINDOW];
 	game->textures[TEX_FLOOR] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
 	game->textures[TEX_CEILING] = game->textures[TEX_FLOOR];
-
-/*
-	game->textures[TEX_ENEMY_1] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0001.xpm");
-	game->textures[TEX_ENEMY_2] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0003.xpm");
-	game->textures[TEX_ENEMY_3] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0005.xpm");
-	game->textures[TEX_ENEMY_4] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0007.xpm");
-	game->textures[TEX_ENEMY_5] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0009.xpm");
-	game->textures[TEX_ENEMY_6] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0011.xpm");
-	game->textures[TEX_ENEMY_7] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0013.xpm");
-	game->textures[TEX_ENEMY_8] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0015.xpm");
-	game->textures[TEX_ENEMY_9] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0017.xpm");
-	game->textures[TEX_ENEMY_10] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0019.xpm");
-	game->textures[TEX_ENEMY_11] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0021.xpm");
-	game->textures[TEX_ENEMY_12] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0023.xpm");
-	game->textures[TEX_ENEMY_13] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0025.xpm");
-	game->textures[TEX_ENEMY_14] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0027.xpm");
-	game->textures[TEX_ENEMY_15] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0029.xpm");
-	game->textures[TEX_ENEMY_16] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0031.xpm");
-	game->textures[TEX_ENEMY_17] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0033.xpm");
-	game->textures[TEX_ENEMY_18] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0035.xpm");
-	game->textures[TEX_ENEMY_19] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0037.xpm");
-	game->textures[TEX_ENEMY_20] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0039.xpm");
-	game->textures[TEX_ENEMY_21] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0041.xpm");
-	game->textures[TEX_ENEMY_22] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0043.xpm");
-	game->textures[TEX_ENEMY_23] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0045.xpm");
-	game->textures[TEX_ENEMY_24] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0047.xpm");
-	game->textures[TEX_ENEMY_25] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0049.xpm");
-	game->textures[TEX_ENEMY_26] = texture_load(game->app.mlx, "assets/enemy_sprites/angle0/0051.xpm");
-*/
 //	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
-
 	game->textures[TEX_FIVE_LIGHTS] = texture_load(game->app.mlx, "assets/five_lights_wall.xpm");
-
-
-
-
-
-
 	printf("Loading: %s\n", north->content);
 	if (north) 
 		game->textures[TEX_WALLN] = texture_load(game->app.mlx, north->content);
@@ -132,7 +93,6 @@ void generate_textures(t_game *game)
 		game->textures[TEX_WALLE] = texture_load(game->app.mlx, east->content);
 	if (west) 
 		game->textures[TEX_WALLW] = texture_load(game->app.mlx, west->content);
-
 }
 
 int	main(int argc, char **argv)

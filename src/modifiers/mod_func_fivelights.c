@@ -15,7 +15,6 @@
 #include "modifiers.h"
 #include "events.h"
 
-
 /*
  * NAME,TARGET,ACTIVE,XPOS,YPOS
  */
