@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/04 00:45:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/09 17:12:57 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -27,6 +27,20 @@ void	event_display_ui(t_game *game)
 	}
 }
 
+typedef void (*t_event_fn)(t_game *game, t_entity_2 *ent);
+
+
+t_event_fn g_events[] = {
+	[ET_DOOR_UNLOCKED] = &event_door_unlocked,
+	[ET_DOOR_OPEN] = &event_door_open,
+	[ET_DOOR_LOCKED] = &event_door_locked,
+	[ET_ALERT_HIGH] = &event_alert_high,
+	[ET_ALERT_MEDIUM] = &event_alert_medium,
+	[ET_ALERT_OFF] = &event_alert_off,
+	[ET_FIVE_LIGHTS_OPEN] = &event_five_lights_open,
+	[ET_FIVE_LIGHTS_CLOSED] = &event_five_lights_closed,
+};
+
 /*
  * function is run if the bool events_on is on
  * loops over the referenced events_active and runs the 
@@ -36,7 +50,7 @@ void	event_display_ui(t_game *game)
  */
 void	event_interact(t_game *game)
 {
-	int	i;
+	int		i;
 	t_vec2	pos;
 
 	i = -1;
@@ -45,26 +59,7 @@ void	event_interact(t_game *game)
 		pos = v2add(game->events_active[i]->pos, v2new(0.5, 0.5));
 		if (v2dot(v2norm(v2sub(pos, game->player.pos)), game->player.dir) > 0.8)
 		{
-			if (game->events_active[i]->type == ET_DOOR_UNLOCKED)
-				event_door_unlocked(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ET_DOOR_OPEN)
-				event_door_open(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ET_DOOR_LOCKED)
-				event_door_locked(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ET_ALERT_HIGH)
-				event_alert_high(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ET_ALERT_MEDIUM)
-				event_alert_medium(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ET_ALERT_OFF)
-				event_alert_off(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ET_FIVE_LIGHTS_OPEN)
-				event_five_lights_open(game, game->events_active[i]);
-			else if (game->events_active[i]->type == ET_FIVE_LIGHTS_CLOSED)
-				event_five_lights_closed(game, game->events_active[i]);
-			//else if (game->events_active[i]->type == ORBIT_TASK_OPEN)
-			//	event_orbit_task_on(game, game->events_active[i]);
-			//else if (game->events_active[i]->type == ORBIT_TASK_CLOSED)
-			//	event_orbit_task_off(game, game->events_active[i]);
+			g_events[game->events_active[i]->type](game, game->events_active[i]);
 			return ;
 		}
 		game->display_ui = false;
@@ -96,7 +91,7 @@ const static t_vec2 g_directions[] = {
  * in events active.
  * 
  * this fucntion could be done in segments where the map is split
- * up into more section any then you would only loop through the
+ * up into more section and then you would only loop through the
  * events in that section where the player is located it really 
  * depends on how many events are in a single game round
  */

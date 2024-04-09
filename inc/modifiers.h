@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/09 14:12:57 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/09 19:04:32 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ typedef struct s_entity_2
 	int					speed;
 	int					value;
 	// would be the door entity for instant or something else
+	struct s_entity_2	*parent1;
+	struct s_entity_2	*parent2; 
 	struct s_entity_2	*target; 
+	void				(*handle)(struct s_entity_2 *self, struct s_entity_2 *other);
+
 	t_entity			*entity; // Duct tape fix
 	bool				state_1;
 	bool				state_2;

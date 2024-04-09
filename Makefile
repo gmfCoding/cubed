@@ -67,9 +67,10 @@ SRCSF = $(TEST) \
 		mini_map/mmap_tile_assign.c \
 		events/event_alert.c \
 		events/event_door.c \
-		events/event_handler.c \
 		events/event_five_lights.c \
+		events/event_handler.c \
 		events/event_orbit_task.c \
+		events/event_trigger_handlers.c \
 		entities/player_setup.c \
 		entities/sprite.c \
 		entities/entity.c \
