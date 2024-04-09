@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:43:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/04 00:40:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/09 19:52:49 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EVENTS_H
@@ -28,8 +28,10 @@ void	event_door_locked(t_game *game, t_entity_2 *ent);
 void	event_alert_high(t_game *game, t_entity_2 *ent);
 void	event_alert_medium(t_game *game, t_entity_2 *ent);
 void	event_alert_off(t_game *game, t_entity_2 *ent);
+void	target_handle_door(t_entity_2 *door, t_entity_2 *parent);
 
-
+void	target_handle_five_lights(t_entity_2 *five_lights, t_entity_2 *parent);
+bool entity_target_handle(t_entity_2 *ent);
 void	event_five_lights_open(t_game *game, t_entity_2 *ent);
 void	event_five_lights_closed(t_game *game, t_entity_2 *ent);
 
