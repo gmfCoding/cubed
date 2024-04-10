@@ -6,6 +6,14 @@
 typedef struct s_game t_game;
 typedef struct s_list t_list;
 
+typedef enum e_p_state
+{
+	START_TASK,
+	DONE_TASK,
+	CANT_MOVE,
+	CAN_MOVE,
+}				t_p_state;
+
 typedef struct	s_player
 {
 	t_vec2	pos;
@@ -14,12 +22,12 @@ typedef struct	s_player
 	t_vec2	plane_start;
 	t_vec2	plane_end;
 	int	oldp_x;//this can be a t_vec2i also, or get rid of it all together and come up with another way to see if the player has moved to a new tile
-	int	oldp_y;
-	double	moveSpeed;
-	double	rotSpeed;
-	double	angle;
-	double	key_angle;
-	bool	can_move;
+	int		oldp_y;
+	double		moveSpeed;
+	double		rotSpeed;
+	double		angle;
+	double		angle_offset;
+	t_p_state	state;
 }		t_player;
 
 void	player_setup(t_list *curr, t_game *game);

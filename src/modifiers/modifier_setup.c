@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/03 17:03:33 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/09 14:19:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char *const			g_mapsymbols[] = {
 	"MM",
 	"EN",
 	"WN", // WINDOW
+	"WL", // WINDOW LINE (really box)
 	"FL",
 };
 
@@ -74,6 +75,7 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_mm,
 	&mod_gen_en,
 	&mod_gen_wn,
+	&mod_gen_wl,
 	&mod_gen_fl,
 };
 
