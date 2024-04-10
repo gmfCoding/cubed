@@ -82,7 +82,7 @@ void generate_textures(t_game *game)
 	game->textures[TEX_DOOR] = game->textures[TEX_WINDOW];
 	game->textures[TEX_FLOOR] = texture_load(game->app.mlx, "assets/metal_walkway_acg.xpm");
 	game->textures[TEX_CEILING] = game->textures[TEX_FLOOR];
-//	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
+	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
 	game->textures[TEX_FIVE_LIGHTS] = texture_load(game->app.mlx, "assets/five_lights_wall.xpm");
 	printf("Loading: %s\n", north->content);
 	if (north) 
