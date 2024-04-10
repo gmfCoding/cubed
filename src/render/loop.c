@@ -119,6 +119,10 @@ void draw_debug_view_world_state(t_game *game)
 			}
 			else if (tile->type == DOOR)
 				texture_draw_line(tex, v2muls(v2new(x + 0.4, y+ 0.4), D_SCALE), v2muls(v2new(x + 0.4, y + 0.5), D_SCALE), R_RED | R_GREEN | R_ALPHA);
+			if (tile->type == EMPTY)
+			{
+				texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0xFFAA77 | R_ALPHA);
+			}
 			if (tile->vis == 0)
 				texture_draw_line(tex, v2muls(v2new(x + 0.1, y+ 0.1), D_SCALE), v2muls(v2new(x + 0.1, y + 0.2), D_SCALE), R_RED | R_ALPHA);
 			if (tile->vis == 1)
@@ -184,7 +188,6 @@ void draw_debug_view_world_state(t_game *game)
 
 void	render(t_game *game)
 {
-	int x;
 //	const t_texture    tex = texture_get_debug_view(game, 2);
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
@@ -193,9 +196,7 @@ void	render(t_game *game)
 	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
 	sprite_update_all(game->world);
 	player_loop(game);
-
-//	x = v2x2ang(game->player.dir) / 6.28 * 3840;
-//	texture_blit(game->textures[TEX_SKYBOX], game->rt1, v2new(-x, 0));
+	render_skybox(game->player.dir, game->textures[TEX_SKYBOX], game->rt1);
 	render_floor(game);
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
