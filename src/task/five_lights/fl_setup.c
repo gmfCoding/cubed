@@ -103,7 +103,7 @@ void	fl_click_points(t_game *game)
 	game->five_light.clickables[2][3] = PANEL_POS_Y + 369;
 }
 
-void	five_lights_Setup(t_game *game, int difficulty)
+void	five_lights_setup(t_game *game, int difficulty)
 {
 	int	i;
 

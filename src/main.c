@@ -56,7 +56,7 @@ int handle_mouse_move(int x, int y, void *param)
 
 t_err	world_preset(int argc, char **argv, t_game *game)
 {
-//	five_lights_Setup(game);
+//	five_lights_setup(game);
 	game->five_light.difficulty = 1;
 	game->five_light.run_game = false;
 //	game->five_light.run_setup == true;

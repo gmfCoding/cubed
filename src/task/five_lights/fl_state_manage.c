@@ -87,7 +87,7 @@ void    five_lights(t_game *game)
 	if (game->five_light.run_game == false)
 		return ;
 	if (game->five_light.run_setup == false)
-		five_lights_Setup(game, game->five_light.difficulty);
+		five_lights_setup(game, game->five_light.difficulty);
 	mlx_put_image_to_window(game->app.mlx, game->app.win, game->five_light.back_img, PANEL_POS_X, PANEL_POS_Y);
 	while(++i <10)
 		mlx_put_image_to_window(game->app.mlx, game->app.win, \
