@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:27:18 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 08:27:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/08 01:25:26 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef CONFIG_H
@@ -27,6 +27,8 @@
 // Render resolution Y
 # define R_HEIGHT (SCR_HEIGHT/R_SCALE)
 
+
+# define MOUSE_SENSITIVITY 2 
 
 # define RT0_WIDTH SCR_WIDTH
 # define RT0_HEIGHT SCR_HEIGHT
