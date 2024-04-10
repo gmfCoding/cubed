@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 20:39:14 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 16:28:56 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 18:27:20 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -42,16 +42,12 @@ void	texture_blit(t_texture src, t_texture dst, t_vec2 pos)
 	int	x;
 	int	y;
 	int	col;
-	int	min_x;
-	int	min_y;
 
-	min_x = MIN(dst.width, src.width);
-	min_y = MIN(dst.height, src.height);
 	y = -1;
-	while (++y < min_y)
+	while (++y < src.height)
 	{
 		x = -1;
-		while (++x < min_x)
+		while (++x < src.width)
 		{
 			col = colour_blend(pixel_get_s(src, x, y), \
 				pixel_get_s(dst, pos.x + x, pos.y + y));

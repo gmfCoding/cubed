@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:20:24 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 13:42:17 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 18:41:40 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -18,6 +18,8 @@ t_tiletype	get_tiletype(char c)
 		return (FLOOR);
 	else if (c == '1')
 		return (WALL);
+	else if (c == 'N' || c == 'E' || c == 'S' || c == 'W')
+		return (FLOOR);
 	else
 		return (EMPTY);
 }
