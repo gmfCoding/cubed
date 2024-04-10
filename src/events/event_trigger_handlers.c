@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_trigger_handlers.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/10 01:39:26 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:33:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ t_handle_result	target_handle_splitter(t_entity_2 *self, t_entity_2 *other)
 	if (entity_target_handle_a(self, self->targets[0]) == TARGET_HANDLE_FAILED)
 		return (TARGET_HANDLE_FAILED);
 	if (entity_target_handle_a(self, self->targets[1]) == TARGET_HANDLE_FAILED)
+		return (TARGET_HANDLE_FAILED);
+	if (entity_target_handle_a(self, self->targets[2]) == TARGET_HANDLE_FAILED)
 		return (TARGET_HANDLE_FAILED);
 	return (TARGET_HANDLE_SUCCESS);
 }
