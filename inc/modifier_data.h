@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 23:08:09 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 02:00:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/10 00:44:56 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ typedef enum e_modtype
 	MT_MINI_MAP,
 	MT_DOOR,
 	MT_ENEMY,
+	MT_GATE_AND,
+	MT_GATE_OR,
+	MT_GATE_SPLITTER
 }				t_modtype;
 
 
