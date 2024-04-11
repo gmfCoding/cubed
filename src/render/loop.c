@@ -203,8 +203,8 @@ void	render(t_game *game)
 	mmap_draw(game);
 	if (game->tasks[0] && game->tasks[0]->show)
 		task_orbit_render(game, game->tasks[0]);
-	texture_draw(game->app, game->rt0, v2new(0, 0));
 	event_display_ui(game);
+	texture_draw(game->app, game->rt0, v2new(0, 0));
 	draw_debug_info(game);
 
 	static bool show_debug = false;

@@ -16,15 +16,15 @@
 
 void	event_five_lights_closed(t_game *game, t_entity_2 *ent)
 {
-	game->display_ui = true;
-	if (input_keydown(&game->input, KEY_E))
-		printf("TASK IS COMPLETE\n");
+	game->display_ui = UI_INACTIVE_TASK;
+//	if (input_keydown(&game->input, KEY_E))
+//		printf("TASK IS COMPLETE\n");
 	return ;
 }
 
 void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 {
-	game->display_ui = true;
+	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
 		game->player.state = START_TASK;

@@ -35,9 +35,9 @@ void	event_door_locked(t_game *game, t_entity_2 *ent)
 {
 	t_door *const	door = (t_door *)ent->entity;
 
-	game->display_ui = true;
-	if (input_keydown(&game->input, KEY_E))
-		printf("DOOR IS LOCKED\n");
+	game->display_ui = UI_LOCKED_DOOR;
+//	if (input_keydown(&game->input, KEY_E))
+//		printf("DOOR IS LOCKED\n");
 	return ;
 }
 
@@ -46,7 +46,7 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 	t_door *const	door = (t_door *)ent->entity;
 	t_tile			*tile;
 
-	game->display_ui = true;
+	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
 		door->closed = true;
@@ -67,7 +67,7 @@ void	event_door_unlocked(t_game *game, t_entity_2 *ent)
 	t_door *const	door = (t_door *)ent->entity;
 	t_tile *tile;
 
-	game->display_ui = true;
+	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
 		tile = map_get_tile_ref(&game->world->map, ent->pos.x, ent->pos.y);

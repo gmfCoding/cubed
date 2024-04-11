@@ -55,6 +55,21 @@ typedef struct s_mmap t_mmap;
 # define TEX_SKYBOX 585
 
 # define TEX_FIVE_LIGHTS 586
+
+# define TEX_UI_CONTROLS 587
+# define TEX_UI_INTERACT_BRIGHT 588
+# define TEX_UI_INTERACT_DUL 589
+# define TEX_UI_DOOR_LOCKED 590
+# define TEX_UI_TASK_INACTIVE 591
+
+typedef enum e_ui_state
+{
+	UI_NONE,
+	UI_INTERACT,
+	UI_LOCKED_DOOR,
+	UI_INACTIVE_TASK,
+}				t_ui_state;
+
 struct s_game
 {
 	t_app			app;
@@ -72,12 +87,12 @@ struct s_game
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
 	t_player		player;
-	t_texture		textures[587];
+	t_texture		textures[592];
 	t_world			*world;
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];
 	bool			events_on;
-	bool			display_ui;
+	t_ui_state			display_ui;
 	t_inputctx		input;
 	t_rayinfo		half;
 	t_task			*tasks[TASK_LEN];

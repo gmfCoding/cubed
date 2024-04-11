@@ -21,10 +21,20 @@
  */
 void	event_display_ui(t_game *game)
 {
-	if (game->display_ui == true)
+	if (game->display_ui == UI_INTERACT)
 	{
-		mlx_string_put (game->app.mlx, game->app.win, 400, 400, 0xffffff, "....PRESS 'E' TO INTERACT....");	
+		if (game->fpsc % 50 > 25)
+			texture_blit(game->textures[TEX_UI_INTERACT_DUL], game->rt0, v2new(400, 600));
+		else
+			texture_blit(game->textures[TEX_UI_INTERACT_BRIGHT], game->rt0, v2new(400, 600));
+	//	mlx_string_put (game->app.mlx, game->app.win, 400, 400, 0xffffff, "....PRESS 'E' TO INTERACT....");	
 	}
+	if (game->display_ui == UI_LOCKED_DOOR)
+		texture_blit(game->textures[TEX_UI_DOOR_LOCKED], game->rt0, v2new(380, 600));
+	if (game->display_ui == UI_INACTIVE_TASK)
+		texture_blit(game->textures[TEX_UI_TASK_INACTIVE], game->rt0, v2new(370, 600));
+	
+	texture_blit(game->textures[TEX_UI_CONTROLS], game->rt0, v2new(250, 940));
 }
 
 typedef void (*t_event_fn)(t_game *game, t_entity_2 *ent);
@@ -62,7 +72,7 @@ void	event_interact(t_game *game)
 			g_events[game->events_active[i]->type](game, game->events_active[i]);
 			return ;
 		}
-		game->display_ui = false;
+		game->display_ui = UI_NONE;
 	}
 }
 
@@ -132,7 +142,7 @@ void	event_player(t_game *game, bool force)
 	if ((int)game->player.pos.x != game->player.oldp_x || \
 	(int)game->player.pos.y != game->player.oldp_y || force)
 	{
-		game->display_ui = false;
+		game->display_ui = UI_NONE;
 		game->events_on = false;
 		game->player.oldp_x = game->player.pos.x;
 		game->player.oldp_y = game->player.pos.y;

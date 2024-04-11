@@ -84,6 +84,15 @@ void generate_textures(t_game *game)
 	game->textures[TEX_CEILING] = game->textures[TEX_FLOOR];
 	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
 	game->textures[TEX_FIVE_LIGHTS] = texture_load(game->app.mlx, "assets/five_lights_wall.xpm");
+	
+	game->textures[TEX_UI_CONTROLS] = texture_load(game->app.mlx, "assets/ui/controls.xpm");
+	game->textures[TEX_UI_INTERACT_BRIGHT] = texture_load(game->app.mlx, "assets/ui/interact_bright.xpm");
+	game->textures[TEX_UI_INTERACT_DUL] = texture_load(game->app.mlx, "assets/ui/interact_dal.xpm");
+	game->textures[TEX_UI_DOOR_LOCKED] = texture_load(game->app.mlx, "assets/ui/promt_door_locked.xpm");
+	game->textures[TEX_UI_TASK_INACTIVE] = texture_load(game->app.mlx, "assets/ui/inactive_task.xpm");
+
+
+
 	printf("Loading: %s\n", north->content);
 	if (north) 
 		game->textures[TEX_WALLN] = texture_load(game->app.mlx, north->content);
