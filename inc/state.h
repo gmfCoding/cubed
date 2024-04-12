@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 01:10:30 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:09:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ struct s_game
 	bool			display_ui;
 	t_inputctx		input;
 	t_rayinfo		half;
-	t_task			*tasks[TASK_LEN];
+	t_list			*tasks;
 	t_rand			task_rand; // TODO: Use t_game::rand instead ?
 	t_rand			rand;
 	unsigned int	fpsc;

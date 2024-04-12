@@ -12,10 +12,12 @@ void	event_five_lights_closed(t_game *game, t_entity_2 *ent)
 
 void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 {
+	t_task	*task;
+
 	game->display_ui = true;
 	if (input_keydown(&game->input, KEY_E))
 	{
-		game->stored_mouse = game->input.mouse;
+		task = task_create_or_find(game, "task_fl");
 		game->player.state = START_TASK;
 		game->five_light.run_game = true;
 	}

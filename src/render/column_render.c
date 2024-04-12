@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:41:22 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/03 18:44:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:07:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,13 @@ static inline void	render_column(t_game *game, t_col col)
 	y = col.range.s;
 	while (++y < col.range.e)
 	{
-		col.sample.y = (int)col.uv.y & (col.tex_size - 1); 
-		f = pixel_get(game->textures[col.texture], col.sample.x, col.sample.y);
+		col.sample.y = (int)col.uv.y % (col.tex_size - 1);
+		if (col.sample.x < 0 ||  col.sample.x >= 960 || col.sample.y < 0 || col.sample.y >= 960)
+			printf("Out of range (%d, %d)\n", col.sample.x, col.sample.y);
+		f = pixel_get_s(game->textures[col.texture], col.sample.x, col.sample.y);
 		if ((f & M_APLHA) != R_ALPHA)
 		{
-			s = pixel_get(game->rt1, col.x, y);
+			s = pixel_get_s(game->rt1, col.x, y);
 			f = colour_blend(f, s);
 		}
 		col.uv.y += col.sample_dy;
@@ -103,7 +105,7 @@ static inline void	render_column(t_game *game, t_col col)
 			else
 				f = f & 0xFFFFFF;
 		}
-		pixel_set(game->rt1, col.x, y, R_ALPHA | f);
+		pixel_set_s(game->rt1, col.x, y, R_ALPHA | f);
 	}
 }
 

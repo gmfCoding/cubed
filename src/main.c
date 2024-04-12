@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/09 14:38:50 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:44:43 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ int	main(int argc, char **argv)
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	shutdown_input_setup(&game);
 	event_player(&game, true);
+	task_create_or_find(&game, "task_fl");
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);
 }

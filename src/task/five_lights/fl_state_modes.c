@@ -25,8 +25,6 @@ void	fl_leave_mgame(t_game *game)
 	game->five_light.run_game = false;
 	game->five_light.run_setup = false;
 	game->player.state = DONE_TASK;
-
-	game->input.mouse = game->stored_mouse;
 	destroy_five_lights_images(game->app.mlx, &game->five_light);
 }
 

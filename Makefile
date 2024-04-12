@@ -87,6 +87,7 @@ SRCSF = $(TEST) \
 		input/mouse.c \
 		ui/process.c \
 		task/task.c \
+		task/task_fl_wrapper/task_fl_wrapper.c \
 		task/five_lights/fl_setup.c \
 		task/five_lights/fl_state_manage.c \
 		task/five_lights/fl_state_modes.c \
@@ -176,6 +177,10 @@ OPTS = fsan,debug
 endif
 ifneq (,$(findstring debug,$(OPTS)))
 	OPFLAG = -O0
+	DFLAGS += -g3
+endif
+ifneq (,$(findstring fdeb,$(OPTS)))
+	OPFLAG = -O1 -march=native
 	DFLAGS += -g3
 endif
 ifneq (,$(findstring fsan,$(OPTS)))

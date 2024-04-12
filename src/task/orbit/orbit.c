@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:10:02 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:16:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -119,6 +119,8 @@ int	task_orbit_render(t_game *game, t_task *base)
 		rt = texture_create(game->app.mlx, 400, 400);
 		rtl = true;
 	}
+	if (base->show == false)
+		return (0);
 	//texture_blit_rect(&rt, scr, (t_rect){45, 37, 274, 266});
 	texture_blit(*scr, rt, v2new(0, 0));
 	texture_draw_circle(&rt, v2tov2i(task->scr_offset), task->zoom * 1/10, ORB_PLANET | R_ALPHA);

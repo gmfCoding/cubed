@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 16:25:18 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:55:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -81,7 +81,7 @@ void	control_player_process(t_game *game)
 {
 	t_player *const		pl = &game->player;
 	t_inputctx *const	i = &game->input;
-	game->mouse_angle = window_angle(i->mouse.x);
+	game->mouse_angle = window_angle(i->mouse.x) * MOUSE_SENSITIVITY;
 	if (!(can_move_player(game, pl, i)))
 		return ;
 	if (input_keyheld(i, KEY_W))
@@ -99,20 +99,28 @@ void	control_player_process(t_game *game)
 		if (input_keyheld(i, KEY_LARROW))
 			game->player.angle_offset += pl->rotSpeed;
 	}
-	pl->angle = (game->mouse_angle * MOUSE_SENSITIVITY) - game->player.angle_offset;
+	pl->angle = (game->mouse_angle) - game->player.angle_offset;
 	rotate_player(pl, pl->angle);
 }
 
 void	control_core_process(t_game *game)
 {
+	t_task	*task;
+
 	if (input_keyheld(&game->input, KEY_ESC))
 		game_destroy(game);
-	if(input_keydown(&game->input, KEY_T))
+
+	// TODO: Debug remove.
+	if (input_keydown(&game->input, KEY_T))
 	{
-		game->tasks[0] = malloc(sizeof(t_task_orbit));
-		*game->tasks[0] = *g_tasks[0];
-		task_orbit_setup(game, game->tasks[0]);
-		game->tasks[0]->show = true;
+		task = task_find(game, "task_orbit");
+		if (task)
+			task->show = true;
+		else
+		{
+			task = task_create_or_find(game, "task_orbit");
+			task->show = true;
+		}
 	}
 }
 
