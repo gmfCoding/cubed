@@ -132,5 +132,5 @@ void		texture_debug_view_blit(t_game *game, int view,
 void		texture_draw_debug_view(t_game *game, int view);
 t_texture	texture_get_debug_view(t_game *game, int view);
 void		control_process(t_game *game);
-
+void	control_core_process(t_game *game);
 #endif

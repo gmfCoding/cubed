@@ -171,7 +171,9 @@ void	game_screen_states(t_game *game)
 		game_update(game);
 	else
 	{
-		control_process(game);
+		control_core_process(game);
+
+	//	control_process(game);
 		if (game->title.state == TITLE)
 			title_show_title(game);
 		else if (game->title.state == SELECT_START)
