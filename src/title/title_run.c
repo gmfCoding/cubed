@@ -19,7 +19,15 @@ void	title_back_to_title(t_game *game)
 {
 	int i;
 	i = -1;
-	free(game->world->enemy->path);
+	if (game->world->enemy != NULL)
+	{
+		if (game->world->enemy->path != NULL)
+			free(game->world->enemy->path);
+		free(game->world->enemy);
+	}
+	//need to free from entiry create change to a function for freeing
+//	if (game->world->enemy->path != NULL)
+//		free(game->world->enemy->path);
 	while (game->mmap.tiles[++i].img != NULL)//i have to set the tiles back to null coz i use null to assign images
 		game->mmap.tiles[i].img = NULL;
 	free(game->world);
