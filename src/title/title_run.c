@@ -6,8 +6,42 @@
 #include <string.h>
 
 
-//			ft_strcat(path, index_str);
+void	title_end_screen(t_game *game)
+{
+	texture_blit(game->textures[TEX_TITLE_SPACE_BACK], game->rt0, v2new(0, 0));
+	
+//write credits here and a button to go back to title screen
+	if(input_keydown(&game->input, KEY_ENTER))
+		game->title.state = BACK_TO_TITLE;
+}
 
+void	title_back_to_title(t_game *game)
+{
+	int i;
+	i = -1;
+	free(game->world->enemy->path);
+	while (game->mmap.tiles[++i].img != NULL)//i have to set the tiles back to null coz i use null to assign images
+		game->mmap.tiles[i].img = NULL;
+	free(game->world);
+	game->world = malloc(sizeof(t_world));
+	*game->world = (t_world){0};
+
+	game->title.state = TITLE;
+}
+
+void	title_load_and_run(t_game *game)
+{
+	char path[50];
+	char *argv[2];
+	ft_strcpy(path, "maps/");
+	ft_strcat(path, game->title.map_str[game->title.anim_forward]);
+	argv[0] = "";
+	argv[1] = path;
+	printf("file load%s\n", argv[1]);
+	
+	setup_world(2, argv, game);
+	game->title.state = RUNNING_GAME;
+}
 void	title_display_maps(t_game *game)
 {
 	int	y = 200;
@@ -36,8 +70,8 @@ void	title_show_load_map(t_game *game)
 		game->title.anim_forward = game->title.map_str_amount - 1;
 	if(game->title.anim_forward > game->title.map_str_amount - 1)
 		game->title.anim_forward = 0;
-//	if(input_keydown(&game->input, KEY_ENTER))
-//		game->title.state = RUN_GAME;
+	if(input_keydown(&game->input, KEY_ENTER))
+		game->title.state = LOAD_AND_RUN;
 }
 
 void	title_show_options(t_game *game)
@@ -48,8 +82,6 @@ void	title_show_options(t_game *game)
 		game->title.state = SELECT_OPTIONS;
 //	if(input_keydown(&game->input, KEY_UARROW) || input_keydown(&game->input, KEY_W))
 //		game->title.state = SELECT_QUIT;
-//	if(input_keydown(&game->input, KEY_ENTER))
-//		game->title.state = RUN_GAME;
 }
 
 void	title_show_select_quit(t_game *game)
@@ -133,41 +165,50 @@ void	title_show_title(t_game *game)
 	}
 }
 
-void	title_state(t_game *game)
+void	game_screen_states(t_game *game)
 {
-	if (game->title.state == TITLE)
-		title_show_title(game);
-	
-	else if (game->title.state == SELECT_START)
-		title_show_select_start(game);
-	else if (game->title.state == LOAD_MAP)
-		title_show_load_map(game);
-	else if (game->title.state == SELECT_OPTIONS)
-		title_show_select_options(game);
-	else if (game->title.state == OPTIONS)
-		title_show_options(game);
-	else if (game->title.state == SELECT_QUIT)
-		title_show_select_quit(game);
-//	else if (game->title.state == RUN_GAME)
-//		title_show_title(game);
+	if (game->title.state == RUNNING_GAME)
+		game_update(game);
+	else
+	{
+		control_process(game);
+		if (game->title.state == TITLE)
+			title_show_title(game);
+		else if (game->title.state == SELECT_START)
+			title_show_select_start(game);
+		else if (game->title.state == LOAD_MAP)
+			title_show_load_map(game);
+		else if (game->title.state == SELECT_OPTIONS)
+			title_show_select_options(game);
+		else if (game->title.state == OPTIONS)
+			title_show_options(game);
+		else if (game->title.state == SELECT_QUIT)
+			title_show_select_quit(game);
+		else if (game->title.state == LOAD_AND_RUN)
+			title_load_and_run(game);
+		else if (game->title.state == END_SCREEN)
+			title_end_screen(game);
+		else if (game->title.state == BACK_TO_TITLE)
+			title_back_to_title(game);
+		texture_draw(game->app, game->rt0, v2new(0, 0));
+	}
 }
 
 
+/*
 void	render_title(t_game *game)
 {
-	control_process(game);
-//	if(input_keyheld(&game->input, KEY_K))
-//	{
-//	//	game->in_title = false;
-//	}
-	title_state(game);
-	texture_draw(game->app, game->rt0, v2new(0, 0));
+//	control_process(game);
+	game_screen_state(game);
+
+
+//	texture_draw(game->app, game->rt0, v2new(0, 0));
 	if (game->title.state == LOAD_MAP)
 		title_display_maps(game);
-	input_process(&game->input);
-	game->fpsc++;//ill use this to help load textures
+//	input_process(&game->input);
+//	game->fpsc++;//ill use this to help load textures
 }
-
+*/
 void	title_imgs_load(t_game *game)
 {
 	game->textures[TEX_TITLE_BACKDROP] = texture_load(game->app.mlx, "assets/menu/backdrop.xpm");
@@ -192,7 +233,10 @@ void	load_map_str(t_game *game)
 {
 	DIR		*dir;
 	struct dirent	*ent;
-	char		*folder_path = "./maps/"; // Replace this with the path to your folder
+	char		*folder_path;
+	
+
+	folder_path = "./maps/";
 	if ((dir = opendir(folder_path)) != NULL)
 	{
 		while ((ent = readdir(dir)) != NULL)
@@ -200,22 +244,19 @@ void	load_map_str(t_game *game)
 			if (strcmp(ent->d_name, ".") == 0 || strcmp(ent->d_name, "..") == 0)
 				continue;
 			ft_strcpy(game->title.map_str[game->title.map_str_amount++], ent->d_name);
-	//		printf("%s\n", game->title.map_str[i]);
 		}
 		closedir(dir);
 	}
 	else
 		printf("Error\n failed to opening map directory\n");
-//	game->title.map_str[i] = NULL;
 }
 
 void	title_variable_assign(t_game *game)
 {
-	game->fpsc = 0;//this is for all
 	game->title.anim_frame = 0;
 	game->title.anim_forward = 0;
 	game->title.map_str_amount = 0;
-	game->title.state = TITLE;
+
 	load_map_str(game);
 }
 
@@ -229,13 +270,13 @@ void	title_screen(t_game *game)
 	//load tite textures and set title state and init variables
 	title_imgs_load(game);
 	//set up window
-	game->rt0 = texture_create(game->app.mlx, SCR_WIDTH, SCR_HEIGHT);
-	game->app.win = mlx_new_window(game->app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+//	game->rt0 = texture_create(game->app.mlx, SCR_WIDTH, SCR_HEIGHT);
+//	game->app.win = mlx_new_window(game->app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
+	title_variable_assign(game);
 
 	//assign variables
-	title_variable_assign(game);
 	//input setup
-	input_setup(game->app.mlx, game->app.win, &game->input);
+//	input_setup(game->app.mlx, game->app.win, &game->input);
 	//title screen loop
-	mlx_loop_hook(game->app.mlx, (void *)render_title, game);
+//	mlx_loop_hook(game->app.mlx, (void *)render_title, game);
 }

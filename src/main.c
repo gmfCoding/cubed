@@ -61,28 +61,6 @@ int handle_mouse_move(int x, int y, void *param)
 // }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 t_err	world_preset(int argc, char **argv, t_game *game)
 {
 	game->five_light.difficulty = 1;
@@ -91,20 +69,30 @@ t_err	world_preset(int argc, char **argv, t_game *game)
 	game->world->sp_amount = 0;
 	game->fpsc = 0;
 	game->display_ui = false;
-//	if (argc == 1)
-//	{
-//		mlx_loop_hook(game->app.mlx, (void *)render_title, game);
-//	}
+	printf("how do you do sir\n");
 	return (map_parse(argc, argv, game));
+}
+
+void	nsew_textures(t_game *game)
+{
+	t_mod *const north = mod_get_mod(&game->world->map, MT_NORTH_TEXTURE, NULL);
+	t_mod *const south = mod_get_mod(&game->world->map, MT_SOUTH_TEXTURE, NULL);
+	t_mod *const east = mod_get_mod(&game->world->map, MT_EAST_TEXTURE, NULL);
+	t_mod *const west = mod_get_mod(&game->world->map, MT_WEST_TEXTURE, NULL);
+
+	if (north) 
+		game->textures[TEX_WALLN] = texture_load(game->app.mlx, north->content);
+	if (south)
+		game->textures[TEX_WALLS] = texture_load(game->app.mlx, south->content);
+	if (east) 
+		game->textures[TEX_WALLE] = texture_load(game->app.mlx, east->content);
+	if (west) 
+		game->textures[TEX_WALLW] = texture_load(game->app.mlx, west->content);
 }
 
 void generate_textures(t_game *game)
 {
 	enemy_load_directory(game, "assets/enemy_sprites/");
-	t_mod *const north = mod_get_mod(&game->world->map, MT_NORTH_TEXTURE, NULL);
-	t_mod *const south = mod_get_mod(&game->world->map, MT_SOUTH_TEXTURE, NULL);
-	t_mod *const east = mod_get_mod(&game->world->map, MT_EAST_TEXTURE, NULL);
-	t_mod *const west = mod_get_mod(&game->world->map, MT_WEST_TEXTURE, NULL);
 
 	game->textures[TEX_WALL] = texture_load(game->app.mlx, "assets/wall.xpm");
 	game->textures[TEX_WALLN] = game->textures[TEX_WALL];
@@ -117,27 +105,37 @@ void generate_textures(t_game *game)
 	game->textures[TEX_CEILING] = game->textures[TEX_FLOOR];
 	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
 	game->textures[TEX_FIVE_LIGHTS] = texture_load(game->app.mlx, "assets/five_lights_wall.xpm");
-	
+
 	game->textures[TEX_UI_CONTROLS] = texture_load(game->app.mlx, "assets/ui/controls.xpm");
 	game->textures[TEX_UI_INTERACT_BRIGHT] = texture_load(game->app.mlx, "assets/ui/interact_bright.xpm");
 	game->textures[TEX_UI_INTERACT_DUL] = texture_load(game->app.mlx, "assets/ui/interact_dal.xpm");
 	game->textures[TEX_UI_DOOR_LOCKED] = texture_load(game->app.mlx, "assets/ui/promt_door_locked.xpm");
 	game->textures[TEX_UI_TASK_INACTIVE] = texture_load(game->app.mlx, "assets/ui/inactive_task.xpm");
 
-
-
-	printf("Loading: %s\n", north->content);
-	if (north) 
-		game->textures[TEX_WALLN] = texture_load(game->app.mlx, north->content);
-	if (south)
-		game->textures[TEX_WALLS] = texture_load(game->app.mlx, south->content);
-	if (east) 
-		game->textures[TEX_WALLE] = texture_load(game->app.mlx, east->content);
-	if (west) 
-		game->textures[TEX_WALLW] = texture_load(game->app.mlx, west->content);
+//	printf("Loading: %s\n", north->content);
 }
 
 
+
+void	setup_world(int argc, char **argv, t_game *game)
+{
+	game->title.state = RUNNING_GAME;
+	if (world_preset(argc, argv, game))
+	{
+		free(game->world);
+		return ;
+	}
+	map_print(&game->world->map);
+	modifier_after(game);
+	if (mod_get_mod(&game->world->map, MT_ENEMY, NULL) != NULL)
+	{
+		game->world->enemy->path = star_find_path(game, game->world->enemy->sprite_ref->pos, game->player.pos);
+		game->world->enemy->patrol_target.y = game->world->enemy->old_pos[0].y + 0.5;
+		game->world->enemy->patrol_target.x = game->world->enemy->old_pos[0].x + 0.5;
+	}
+	event_player(game, true);
+	nsew_textures(game);
+}
 
 
 
@@ -151,35 +149,24 @@ int	main(int argc, char **argv)
 	game.app.mlx = mlx_init();
 
 	title_screen(&game);
-/*
-	if (world_preset(argc, argv, &game))
+	game.title.state = TITLE;
+	game.five_light.difficulty = 1;
+	game.five_light.run_game = false;
+	game.world->ent_count = 0;
+	game.world->sp_amount = 0;
+	game.fpsc = 0;
+	game.display_ui = false;
+	if (argc == 2)
 	{
-		free(game.world);
-		return (-1);
+		setup_world(argc, argv, &game);
 	}
-	game.in_title = true;
-	map_print(&game.world->map);
-	modifier_after(&game);
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
-	//ill move this after vv
-	if (mod_get_mod(&game.world->map, MT_ENEMY, NULL) != NULL)
-	{
-		game.world->enemy->path = star_find_path(&game, game.world->enemy->sprite_ref->pos, game.player.pos);
-		game.world->enemy->patrol_target.y = game.world->enemy->old_pos[0].y + 0.5;
-		game.world->enemy->patrol_target.x = game.world->enemy->old_pos[0].x + 0.5;
-	}
-	//ill move this after ^^
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	shutdown_input_setup(&game);
-	event_player(&game, true);
-
 	generate_textures(&game);
-
-
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
-*/
 	mlx_loop(game.app.mlx);
 }

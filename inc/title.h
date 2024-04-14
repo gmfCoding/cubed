@@ -10,7 +10,10 @@ typedef enum	e_menu_state
 	SELECT_OPTIONS,
 	OPTIONS,
 	SELECT_QUIT,
-	RUN_GAME,
+	LOAD_AND_RUN,
+	RUNNING_GAME,
+	END_SCREEN,
+	BACK_TO_TITLE,
 }		t_menu_state;
 
 
@@ -30,6 +33,7 @@ typedef struct	s_title
 
 
 void	title_screen(t_game *game);
+void	game_screen_states(t_game *game);
 
-
+void	title_display_maps(t_game *game);
 #endif
