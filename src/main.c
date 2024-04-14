@@ -21,6 +21,9 @@
 #include "enemy.h"
 #include "destroy.h"
 
+
+
+
 /*
  * include for mouse movement
  *
@@ -35,7 +38,10 @@ int handle_mouse_move(int x, int y, void *param)
 	
 
 
-
+	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
+	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
+	game.rt2 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
+	
 
 */
 // int	main(int argc, char **argv)
@@ -54,6 +60,29 @@ int handle_mouse_move(int x, int y, void *param)
 // 	mlx_loop(mlx);
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 t_err	world_preset(int argc, char **argv, t_game *game)
 {
 	game->five_light.difficulty = 1;
@@ -62,6 +91,10 @@ t_err	world_preset(int argc, char **argv, t_game *game)
 	game->world->sp_amount = 0;
 	game->fpsc = 0;
 	game->display_ui = false;
+//	if (argc == 1)
+//	{
+//		mlx_loop_hook(game->app.mlx, (void *)render_title, game);
+//	}
 	return (map_parse(argc, argv, game));
 }
 
@@ -104,19 +137,27 @@ void generate_textures(t_game *game)
 		game->textures[TEX_WALLW] = texture_load(game->app.mlx, west->content);
 }
 
+
+
+
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
-
+	
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
 	*game.world = (t_world){0};
 	game.app.mlx = mlx_init();
+
+	title_screen(&game);
+/*
 	if (world_preset(argc, argv, &game))
 	{
 		free(game.world);
 		return (-1);
 	}
+	game.in_title = true;
 	map_print(&game.world->map);
 	modifier_after(&game);
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
@@ -131,10 +172,14 @@ int	main(int argc, char **argv)
 		game.world->enemy->patrol_target.x = game.world->enemy->old_pos[0].x + 0.5;
 	}
 	//ill move this after ^^
-	generate_textures(&game);
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	shutdown_input_setup(&game);
 	event_player(&game, true);
+
+	generate_textures(&game);
+
+
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
+*/
 	mlx_loop(game.app.mlx);
 }

@@ -117,6 +117,7 @@ SRCSF = $(TEST) \
 		task/mui_render.c \
 		cerror.c \
 		destroy.c \
+		title_run.c \
 #		task/orbit/task2.c
 # TODO: Add other headers?
 INCSF = cubed.h

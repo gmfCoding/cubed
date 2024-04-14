@@ -22,6 +22,7 @@
 # include "enemy.h"
 # include "mini_map.h"
 # include "five_light.h"
+# include "title.h"
 
 // FORWARD DECLARE
 typedef struct s_task t_task;
@@ -39,6 +40,8 @@ typedef struct s_inputctx t_inputctx;
 
 typedef struct s_world t_world;
 typedef struct s_mmap t_mmap;
+
+
 
 # define TEX_WALLN 0
 # define TEX_WALLS 1
@@ -62,6 +65,23 @@ typedef struct s_mmap t_mmap;
 # define TEX_UI_DOOR_LOCKED 590
 # define TEX_UI_TASK_INACTIVE 591
 
+# define TEX_TITLE_ENTER_00 592
+# define TEX_TITLE_ENTER_01 593
+# define TEX_TITLE_ENTER_02 594
+# define TEX_TITLE_ENTER_03 595
+# define TEX_TITLE_ENTER_04 596
+# define TEX_TITLE_ENTER_05 597
+# define TEX_TITLE_ENTER_06 598
+# define TEX_TITLE_LOADMAP 599
+# define TEX_TITLE_OPTIONS_0 600
+# define TEX_TITLE_OPTIONS_1 601
+# define TEX_TITLE_QUIT_0 602
+# define TEX_TITLE_QUIT_1 603
+# define TEX_TITLE_SPACE_BACK 604
+# define TEX_TITLE_START_0 605
+# define TEX_TITLE_START_1 606
+# define TEX_TITLE_BACKDROP 607
+
 typedef enum e_ui_state
 {
 	UI_NONE,
@@ -77,6 +97,8 @@ struct s_game
 	t_texture		rt1;
 	t_texture		rt2;
 
+	t_title		title;
+
 
 	t_mgame 	five_light;
 	bool		run_fl;
@@ -87,7 +109,7 @@ struct s_game
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
 	t_player		player;
-	t_texture		textures[592];
+	t_texture		textures[608];
 	t_world			*world;
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];
