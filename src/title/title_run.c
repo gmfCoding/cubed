@@ -44,22 +44,13 @@ void	title_lose_screen(t_game *game)
 void	title_back_to_title(t_game *game)
 {
 	int i;
+
 	i = -1;
-	if (game->world->enemy != NULL)
-	{
-		if (game->world->enemy->path != NULL)
-			free(game->world->enemy->path);
-		free(game->world->enemy);
-	}
-	//need to free from entiry create change to a function for freeing
-//	if (game->world->enemy->path != NULL)
-//		free(game->world->enemy->path);
 	while (game->mmap.tiles[++i].img != NULL)//i have to set the tiles back to null coz i use null to assign images
 		game->mmap.tiles[i].img = NULL;
-	free(game->world);
+	world_destroy(game);
 	game->world = malloc(sizeof(t_world));
 	*game->world = (t_world){0};
-
 	game->title.state = TITLE;
 }
 
@@ -282,12 +273,18 @@ void	game_title_states(t_game *game)
 void	game_screen_states(t_game *game)
 {
 	if (game->title.state == RUNNING_GAME)
+	{
+		while (game->loaded_index[0] < TEX_ARRAY_SIZE)
+			load_image_at_index(game);
 		game_update(game);
+	}
 	else
 	{
 		control_core_process(game);
 		game_title_states(game);
 		texture_draw(game->app, game->rt0, v2new(0, 0));
+		if (game->loaded_index[0] < TEX_ARRAY_SIZE)
+			load_image_at_index(game); 
 	}
 }
 
@@ -306,6 +303,8 @@ void	render_title(t_game *game)
 //	game->fpsc++;//ill use this to help load textures
 }
 */
+
+
 void	title_imgs_load(t_game *game)
 {
 	game->textures[TEX_TITLE_BACKDROP] = texture_load(game->app.mlx, "assets/menu/backdrop.xpm");
@@ -324,16 +323,8 @@ void	title_imgs_load(t_game *game)
 	game->textures[TEX_TITLE_SPACE_BACK] = texture_load(game->app.mlx, "assets/menu/space_back.xpm");
 	game->textures[TEX_TITLE_START_0] = texture_load(game->app.mlx, "assets/menu/start_0.xpm");
 	game->textures[TEX_TITLE_START_1] = texture_load(game->app.mlx, "assets/menu/start_1.xpm");
-	game->textures[TEX_TITLE_MISSION_COMPLETED] = texture_load(game->app.mlx, "assets/menu/mission_competed.xpm");
-	game->textures[TEX_TITLE_MISSION_FAILED] = texture_load(game->app.mlx, "assets/menu/mission_failed.xpm");
-	game->textures[TEX_TITLE_NEXT_LEVEL_0] = texture_load(game->app.mlx, "assets/menu/next_level_0.xpm");
-	game->textures[TEX_TITLE_NEXT_LEVEL_1] = texture_load(game->app.mlx, "assets/menu/next_level_1.xpm");
-	game->textures[TEX_TITLE_RETRY_0] = texture_load(game->app.mlx, "assets/menu/retry_0.xpm");
-	game->textures[TEX_TITLE_RETRY_1] = texture_load(game->app.mlx, "assets/menu/retry_1.xpm");
-	game->textures[TEX_TITLE_CREATED_CHRIS_KYLE] = texture_load(game->app.mlx, "assets/menu/created_chris_kyle.xpm");
-	game->textures[TEX_TITLE_MAIN_MENU_0] = texture_load(game->app.mlx, "assets/menu/main_menu_0.xpm");
-	game->textures[TEX_TITLE_MAIN_MENU_1] = texture_load(game->app.mlx, "assets/menu/main_menu_1.xpm");
 }
+
 
 void	load_map_str(t_game *game)
 {

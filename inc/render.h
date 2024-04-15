@@ -42,4 +42,5 @@ void	render(t_game *ctx);
 void	game_update(t_game *game);
 void	setup_world(int argc, char **argv, t_game *game);
 void generate_textures(t_game *game);
+void load_image_at_index(t_game *game);
 #endif
