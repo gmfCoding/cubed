@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/09 16:36:16 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:44:21 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 					|| mod.pos.y >= map->height)
 		return (1);
 	*map_get_tile_ref(map, mod.pos.x, mod.pos.y) = (t_tile){
-	.type = DOOR, .vis = -1 - mod.closed == 'C', .tex = TEX_DOOR};
+	.type = DOOR, .vis = -1 - (mod.closed == 'C'), .tex = TEX_DOOR};
 	ft_strlcpy(ent2->name, mod.name, NAME_SIZE);
 	ft_strcpy(ent2->ui_display_1, "PRESS 'E' TO INTERACT");
 	ft_strcpy(ent2->ui_display_2, "LOCKED");
@@ -81,6 +81,7 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	door = (t_door *)entity_create(wld, ENT_DOOR);
 	door->closed = mod.closed == 'C';
 	door->locked = mod.locked == 'L';
+	door->percent = door->closed;
 	door->speed = ENT_DOOR_SPEED * (1.0 / R_TFR);
 	door->base.pos = v2itov2(mod.pos);
 	ent2->pos = door->base.pos;

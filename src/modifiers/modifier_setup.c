@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/10 01:20:35 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/15 15:45:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,13 @@ void	modifier_after(t_game *game)
 	i = -1;
 	while (++i < w->ent_count)
 	{
-		printf("%s : %p\n", w->ent_2[i].name, &w->ent_2[i]);
+		//printf("%s : %p\n", w->ent_2[i].name, &w->ent_2[i]);
 		j = -1;
 		while (j++ < EVENT_ENT_MAX_TARGETS)
 		{
 			if (w->ent_2[i].target_names[j] && w->ent_2[i].target_names[j][0] && ft_strcmp(w->ent_2[i].target_names[j], "NULL") != 0)
 				w->ent_2[i].targets[j] = mod_search_name(w, w->ent_2[i].target_names[j]);
-			printf("\t%d: %p / %s\n", j, w->ent_2[i].targets[j], w->ent_2[i].target_names[j]);
+			//printf("\t%d: %p / %s\n", j, w->ent_2[i].targets[j], w->ent_2[i].target_names[j]);
 		}
 		w->ent_2[i].ref_mm_tile = mmap_find_tile(game, w->ent_2[i].pos);
 	}
