@@ -164,7 +164,7 @@ WFLAGS =#-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
-OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2 
+OPFLAG = -O3 -flto -march=native -mtune=native -msse4.2 
 
 OPTS = $(OPT)
 SAN = address 
