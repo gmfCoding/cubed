@@ -72,5 +72,5 @@ void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
 		return ;
 	}
 	if (enemy_move_to_target(enemy, game->player.pos, game->player.pos))
-		game->title.state = END_SCREEN;
+		game->title.state = LOSE_SCREEN;
 }

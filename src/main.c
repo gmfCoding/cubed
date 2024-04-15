@@ -89,7 +89,7 @@ void	nsew_textures(t_game *game)
 	if (west) 
 		game->textures[TEX_WALLW] = texture_load(game->app.mlx, west->content);
 }
-
+/*
 void generate_textures(t_game *game)
 {
 	enemy_load_directory(game, "assets/enemy_sprites/");
@@ -114,7 +114,7 @@ void generate_textures(t_game *game)
 
 //	printf("Loading: %s\n", north->content);
 }
-
+*/
 
 
 void	setup_world(int argc, char **argv, t_game *game)

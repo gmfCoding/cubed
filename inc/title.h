@@ -12,7 +12,8 @@ typedef enum	e_menu_state
 	SELECT_QUIT,
 	LOAD_AND_RUN,
 	RUNNING_GAME,
-	END_SCREEN,
+	LOSE_SCREEN,
+	WIN_SCREEN,
 	BACK_TO_TITLE,
 }		t_menu_state;
 

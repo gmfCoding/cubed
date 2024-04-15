@@ -6,15 +6,41 @@
 #include <string.h>
 
 
-void	title_end_screen(t_game *game)
+
+
+
+/*
+void	title_lose_screen(t_game *game)
 {
+	int on[3];
+
+	on[0] = 0;
+	on[1] = 0;
+	on[2] = 0;
 	texture_blit(game->textures[TEX_TITLE_SPACE_BACK], game->rt0, v2new(0, 0));
-	
-//write credits here and a button to go back to title screen
+	texture_blit(game->textures[TEX_TITLE_MISSION_COMPLETED], game->rt0, v2new(40,250));
+	texture_blit(game->textures[TEX_TITLE_CREATED_CHRIS_KYLE], game->rt0, v2new(200,900));
+	if (input_keydown(&game->input, KEY_UARROW) || input_keydown(&game->input, KEY_W))
+		game->title.anim_frame--;
+	if (input_keydown(&game->input, KEY_DARROW) || input_keydown(&game->input, KEY_S))
+		game->title.anim_frame++;
+	if (game->title.anim_frame < 0)
+		game->title.anim_frame = 2;
+	if (game->title.anim_frame > 2)
+		game->title.anim_frame = 0;
+	if (game->title.anim_frame == 0)
+		on[0] = 1;
+	if (game->title.anim_frame == 1)
+		on[1] = 1;
+	if (game->title.anim_frame == 2)
+		on[2] = 1;
+	texture_blit(game->textures[TEX_TITLE_NEXT_LEVEL_0 + on[0]], game->rt0, v2new(200,500));
+	texture_blit(game->textures[TEX_TITLE_MAIN_MENU_0 + on[1]], game->rt0, v2new(200,600));
+	texture_blit(game->textures[TEX_TITLE_QUIT_0 + on[2]], game->rt0, v2new(200,700));
 	if(input_keydown(&game->input, KEY_ENTER))
 		game->title.state = BACK_TO_TITLE;
 }
-
+*/
 void	title_back_to_title(t_game *game)
 {
 	int i;
@@ -46,10 +72,67 @@ void	title_load_and_run(t_game *game)
 	argv[0] = "";
 	argv[1] = path;
 	printf("file load%s\n", argv[1]);
-	
+	game->title.anim_frame = 0;
 	setup_world(2, argv, game);
 	game->title.state = RUNNING_GAME;
 }
+
+void	title_lose_screen(t_game *game)
+{
+	texture_blit(game->textures[TEX_TITLE_SPACE_BACK], game->rt0, v2new(0, 0));
+	texture_blit(game->textures[TEX_TITLE_MISSION_FAILED], game->rt0, v2new(140, 250));
+	texture_blit(game->textures[TEX_TITLE_CREATED_CHRIS_KYLE], game->rt0, v2new(200, 900));
+ 	if (input_keydown(&game->input, KEY_UARROW) || input_keydown(&game->input, KEY_W))
+		game->title.anim_frame--;
+	if (input_keydown(&game->input, KEY_DARROW) || input_keydown(&game->input, KEY_S))
+		game->title.anim_frame++;
+	game->title.anim_frame = (game->title.anim_frame + 3) % 3;
+	texture_blit(game->textures[TEX_TITLE_RETRY_0 + (game->title.anim_frame == 0)], game->rt0, v2new(200, 500));
+	texture_blit(game->textures[TEX_TITLE_MAIN_MENU_0 + (game->title.anim_frame == 1)], game->rt0, v2new(200, 600));
+	texture_blit(game->textures[TEX_TITLE_QUIT_0 + (game->title.anim_frame == 2)], game->rt0, v2new(200, 700));
+	if (input_keydown(&game->input, KEY_ENTER))
+	{
+		if(game->title.anim_frame == 0)
+		{
+			title_back_to_title(game);
+			title_load_and_run(game);
+		}
+		if(game->title.anim_frame == 1)
+			game->title.state = BACK_TO_TITLE;
+		if(game->title.anim_frame == 2)
+			game_destroy(game);
+	}
+}
+
+void	title_win_screen(t_game *game)
+{
+	texture_blit(game->textures[TEX_TITLE_SPACE_BACK], game->rt0, v2new(0, 0));
+	texture_blit(game->textures[TEX_TITLE_MISSION_COMPLETED], game->rt0, v2new(40, 250));
+	texture_blit(game->textures[TEX_TITLE_CREATED_CHRIS_KYLE], game->rt0, v2new(200, 900));
+ 	if (input_keydown(&game->input, KEY_UARROW) || input_keydown(&game->input, KEY_W))
+		game->title.anim_frame--;
+	if (input_keydown(&game->input, KEY_DARROW) || input_keydown(&game->input, KEY_S))
+		game->title.anim_frame++;
+	game->title.anim_frame = (game->title.anim_frame + 3) % 3;
+	if (game->title.anim_forward != game->title.map_str_amount)
+		texture_blit(game->textures[TEX_TITLE_NEXT_LEVEL_0 + (game->title.anim_frame == 0)], game->rt0, v2new(200, 500));
+	texture_blit(game->textures[TEX_TITLE_MAIN_MENU_0 + (game->title.anim_frame == 1)], game->rt0, v2new(200, 600));
+	texture_blit(game->textures[TEX_TITLE_QUIT_0 + (game->title.anim_frame == 2)], game->rt0, v2new(200, 700));
+	if (input_keydown(&game->input, KEY_ENTER))
+	{
+		if(game->title.anim_frame == 0 && game->title.anim_forward != game->title.map_str_amount)
+		{
+			game->title.anim_forward++;
+			title_back_to_title(game);
+			title_load_and_run(game);
+		}
+		if(game->title.anim_frame == 1)
+			game->title.state = BACK_TO_TITLE;
+		if(game->title.anim_frame == 2)
+			game_destroy(game);
+	}
+}
+
 void	title_display_maps(t_game *game)
 {
 	int	y = 200;
@@ -173,6 +256,29 @@ void	title_show_title(t_game *game)
 	}
 }
 
+void	game_title_states(t_game *game)
+{
+	if (game->title.state == TITLE)
+		title_show_title(game);
+	else if (game->title.state == SELECT_START)
+		title_show_select_start(game);
+	else if (game->title.state == LOAD_MAP)
+		title_show_load_map(game);
+	else if (game->title.state == SELECT_OPTIONS)
+		title_show_select_options(game);
+	else if (game->title.state == OPTIONS)
+		title_show_options(game);
+	else if (game->title.state == SELECT_QUIT)
+		title_show_select_quit(game);
+	else if (game->title.state == LOAD_AND_RUN)
+		title_load_and_run(game);
+	else if (game->title.state == LOSE_SCREEN)
+		title_lose_screen(game);
+	else if (game->title.state == WIN_SCREEN)
+		title_win_screen(game);
+	else if (game->title.state == BACK_TO_TITLE)
+		title_back_to_title(game);
+}
 void	game_screen_states(t_game *game)
 {
 	if (game->title.state == RUNNING_GAME)
@@ -180,26 +286,7 @@ void	game_screen_states(t_game *game)
 	else
 	{
 		control_core_process(game);
-
-	//	control_process(game);
-		if (game->title.state == TITLE)
-			title_show_title(game);
-		else if (game->title.state == SELECT_START)
-			title_show_select_start(game);
-		else if (game->title.state == LOAD_MAP)
-			title_show_load_map(game);
-		else if (game->title.state == SELECT_OPTIONS)
-			title_show_select_options(game);
-		else if (game->title.state == OPTIONS)
-			title_show_options(game);
-		else if (game->title.state == SELECT_QUIT)
-			title_show_select_quit(game);
-		else if (game->title.state == LOAD_AND_RUN)
-			title_load_and_run(game);
-		else if (game->title.state == END_SCREEN)
-			title_end_screen(game);
-		else if (game->title.state == BACK_TO_TITLE)
-			title_back_to_title(game);
+		game_title_states(game);
 		texture_draw(game->app, game->rt0, v2new(0, 0));
 	}
 }
@@ -237,6 +324,15 @@ void	title_imgs_load(t_game *game)
 	game->textures[TEX_TITLE_SPACE_BACK] = texture_load(game->app.mlx, "assets/menu/space_back.xpm");
 	game->textures[TEX_TITLE_START_0] = texture_load(game->app.mlx, "assets/menu/start_0.xpm");
 	game->textures[TEX_TITLE_START_1] = texture_load(game->app.mlx, "assets/menu/start_1.xpm");
+	game->textures[TEX_TITLE_MISSION_COMPLETED] = texture_load(game->app.mlx, "assets/menu/mission_competed.xpm");
+	game->textures[TEX_TITLE_MISSION_FAILED] = texture_load(game->app.mlx, "assets/menu/mission_failed.xpm");
+	game->textures[TEX_TITLE_NEXT_LEVEL_0] = texture_load(game->app.mlx, "assets/menu/next_level_0.xpm");
+	game->textures[TEX_TITLE_NEXT_LEVEL_1] = texture_load(game->app.mlx, "assets/menu/next_level_1.xpm");
+	game->textures[TEX_TITLE_RETRY_0] = texture_load(game->app.mlx, "assets/menu/retry_0.xpm");
+	game->textures[TEX_TITLE_RETRY_1] = texture_load(game->app.mlx, "assets/menu/retry_1.xpm");
+	game->textures[TEX_TITLE_CREATED_CHRIS_KYLE] = texture_load(game->app.mlx, "assets/menu/created_chris_kyle.xpm");
+	game->textures[TEX_TITLE_MAIN_MENU_0] = texture_load(game->app.mlx, "assets/menu/main_menu_0.xpm");
+	game->textures[TEX_TITLE_MAIN_MENU_1] = texture_load(game->app.mlx, "assets/menu/main_menu_1.xpm");
 }
 
 void	load_map_str(t_game *game)

@@ -117,6 +117,7 @@ SRCSF = $(TEST) \
 		task/mui_render.c \
 		title/title_run.c \
 		cerror.c \
+		image_loader.c \
 		destroy.c \
 
 #		task/orbit/task2.c

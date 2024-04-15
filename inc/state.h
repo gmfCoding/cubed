@@ -81,6 +81,16 @@ typedef struct s_mmap t_mmap;
 # define TEX_TITLE_START_0 605
 # define TEX_TITLE_START_1 606
 # define TEX_TITLE_BACKDROP 607
+# define TEX_TITLE_MISSION_COMPLETED 608
+# define TEX_TITLE_MISSION_FAILED 609
+# define TEX_TITLE_NEXT_LEVEL_0 610
+# define TEX_TITLE_NEXT_LEVEL_1 611
+# define TEX_TITLE_RETRY_0 612
+# define TEX_TITLE_RETRY_1 613
+# define TEX_TITLE_CREATED_CHRIS_KYLE 614
+# define TEX_TITLE_MAIN_MENU_0 615
+# define TEX_TITLE_MAIN_MENU_1 616
+
 
 typedef enum e_ui_state
 {
@@ -109,7 +119,7 @@ struct s_game
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
 	t_player		player;
-	t_texture		textures[608];
+	t_texture		textures[617];
 	t_world			*world;
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];
