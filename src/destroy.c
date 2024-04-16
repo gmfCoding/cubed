@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:18:31 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 20:52:26 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 17:27:20 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -42,17 +42,21 @@ void	textures_destroy(t_game *game)
 
 }
 
+
+void	destroy_entity(void *ent)
+{
+	const t_entity *entity = (t_entity *)ent; // maybe use cast fn pointer instead
+	const t_enemy *as_enemy = (t_enemy *)entity;
+	if (entity->type == ENT_ENEMY)
+	{
+		if (as_enemy->path != NULL)
+			free(as_enemy->path);
+	}
+}
+
 void	world_destroy(t_game *game)
 {
-	int i;
-
-	i = -1;
-	if (game->world->enemy != NULL)
-	{
-		if (game->world->enemy->path != NULL)
-			free(game->world->enemy->path);
-		free(game->world->enemy);
-	}
+	ft_lstclear(&game->world->entities, destroy_entity);
 	//need to free from entiry create change to a function for freeing
 	free(game->world);
 }

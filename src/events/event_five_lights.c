@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:21 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/10 00:29:28 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 17:55:40 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 		if (game->five_light.finished == true)
 		{
 			ent->type = ET_FIVE_LIGHTS_CLOSED;
-			if (entity_target_handle(ent) == TARGET_HANDLE_FAILED)
+			if (entity_target_handle(game, ent) == TARGET_HANDLE_FAILED)
 				printf("HANDLE ERROR!\n");// TODO: How handle error/exits?
 		}
 		game->five_light.finished = false;

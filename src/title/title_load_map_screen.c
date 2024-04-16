@@ -26,7 +26,7 @@ void	title_load_and_run(t_game *game)
 	argv[1] = path;
 	printf("file load%s\n", argv[1]);
 	game->title.anim_frame = 10;
-	game->title.anim_forward = 0;
+	//game->title.anim_forward = 0;
 	setup_world(2, argv, game);
 	game->title.state = RUNNING_GAME;
 }
