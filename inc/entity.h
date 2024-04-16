@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 23:32:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:08:07 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -99,6 +99,18 @@ typedef struct s_door_model
 	t_vec2	door_right;
 	t_vec2	far_right;
 }	t_door_model;
+
+typedef struct s_wm_task_orbit
+{
+	t_vec2 m1;
+	t_vec2 m2;
+
+	t_vec2 o1;
+	t_vec2 o2;
+
+	t_vec2 dir;
+}	t_wm_task_orbit;
+
 
 
 # define ENT_DOOR_SPEED 2.0
