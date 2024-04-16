@@ -169,7 +169,7 @@ LIB-L = $(patsubst %,-L$(DIRLIB)/%, $(dir $(LIBSF)))
 
 CC = cc
 
-WFLAGS =#-Wall -Werror -Wextra
+WFLAGS = #-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 

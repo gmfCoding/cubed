@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:59:35 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/19 19:34:39 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 18:36:31 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -15,7 +15,7 @@
 #include "texture.h"
 #include "render.h"
 
-static void	mui_frame_buttons(t_mui_ctx *ctx, const t_texture *rt)
+static void	mui_frame_buttons(t_mui_ctx *ctx)
 {
 	t_mui_button	*curr;
 	int				i;
@@ -30,7 +30,7 @@ static void	mui_frame_buttons(t_mui_ctx *ctx, const t_texture *rt)
 	}
 }
 
-static void	mui_frame_dials(t_mui_ctx *ctx, const t_texture *rt)
+static void	mui_frame_dials(t_mui_ctx *ctx)
 {
 	t_mui_dial	*curr;
 	double		angle;
@@ -50,10 +50,9 @@ static void	mui_frame_dials(t_mui_ctx *ctx, const t_texture *rt)
 	}
 }
 
-static void	mui_frame_sliders(t_mui_ctx *ctx, const t_texture *rt)
+static void	mui_frame_sliders(t_mui_ctx *ctx)
 {
 	t_mui_slider	*curr;
-	int				frame;
 	int				i;
 
 	i = -1;
@@ -87,8 +86,8 @@ static void	mui_render_all(t_mui_ctx *ctx, const t_texture *rt)
 
 void	mui_render(t_mui_ctx *ctx, const t_texture *rt)
 {
-	mui_frame_dials(ctx, rt);
-	mui_frame_sliders(ctx, rt);
-	mui_frame_buttons(ctx, rt);
+	mui_frame_dials(ctx);
+	mui_frame_sliders(ctx);
+	mui_frame_buttons(ctx);
 	mui_render_all(ctx, rt);
 }

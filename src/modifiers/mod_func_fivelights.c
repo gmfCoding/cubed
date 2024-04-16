@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:20:00 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/10 01:14:44 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:43:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -20,6 +20,7 @@
  */
 t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map)
 {
+	printf("FL %s\n", content);
 	t_mod_fl_data	mod;
 	t_entity_2 *const	ent2 = &world->ent_2[world->ent_count];
 	const int			found = ft_sescanf(content, "%N%s,%s,%c,%u,%u\v",

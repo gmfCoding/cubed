@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:22:55 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 08:28:45 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:41:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_err	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 {
 	char	**f;
 
+	printf("F %s\n", content);
 	(void)world;
 	map->mods[index].type = MT_FLOOR_COLOR;
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
