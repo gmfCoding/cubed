@@ -17,6 +17,8 @@ DR door07,/assets/debug.xpm,25,8,1,C,U
 DR door08,/assets/debug.xpm,35,7,1,O,U
 
 KE key01,/assets/debug.xpm,door01,26,10,A,N
+
+
 AL turd,NULL,O,3,17,120
 AL get_turd,turd,M,38,4,120
 FL task01,door01,O,27,11
