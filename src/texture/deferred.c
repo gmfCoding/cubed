@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:13:48 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 17:05:00 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:43:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "def_tex.h"
@@ -34,6 +34,7 @@ static void	def_tex_load(const t_app *app, t_def_node *node)
 t_def_ctx	*def_ctx_memman(bool destroy)
 {
 	static t_def_ctx	context = {.head = NULL};
+
 	if (destroy)
 	{
 	}

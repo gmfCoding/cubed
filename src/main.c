@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 18:29:54 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/09 16:34:17 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,22 @@ void	nsew_textures(t_game *game)
 
 	if (north) 
 		game->textures[TEX_WALLN] = texture_load(game->app.mlx, north->content);
-	else
-		game->textures[TEX_WALLN] = texture_load(game->app.mlx, "assets/wall.xpm");
 	if (south)
 		game->textures[TEX_WALLS] = texture_load(game->app.mlx, south->content);
-	else
-		game->textures[TEX_WALLS] = texture_load(game->app.mlx, "assets/wall.xpm");
 	if (east) 
 		game->textures[TEX_WALLE] = texture_load(game->app.mlx, east->content);
-	else
-		game->textures[TEX_WALLE] = texture_load(game->app.mlx, "assets/wall.xpm");
 	if (west) 
 		game->textures[TEX_WALLW] = texture_load(game->app.mlx, west->content);
-	else
-		game->textures[TEX_WALLW] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
 
 void generate_textures(t_game *game)
 {
-	//game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
-	game->textures[TEX_SKYBOX] = texture_create(game->app.mlx, 1000, 5000);
+	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
 	game->textures[TEX_WALL] = texture_load(game->app.mlx, "assets/wall.xpm");
+	game->textures[TEX_WALLN] = game->textures[TEX_WALL];
+	game->textures[TEX_WALLE] = texture_load(game->app.mlx, "assets/debug.xpm");
+	game->textures[TEX_WALLS] = game->textures[TEX_WALL];
+	game->textures[TEX_WALLW] = game->textures[TEX_WALL];
 }
 
 void	setup_world(int argc, char **argv, t_game *game)

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 01:07:12 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 19:03:32 by clovell          ###   ########.fr       */
+/*   Updated: 2024/02/12 01:07:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "orbit.h"
@@ -24,6 +24,6 @@ void	orbit_obj_render_at(t_kep_path *path, double mean,
 	pos[1].x = orb_transform_x(path, pos[0].x, pos[0].y);
 	pos[1].y = orb_transform_y(path, pos[0].x, pos[0].y);
 	pos[1].z = orb_transform_z(path, pos[0].x, pos[0].y);
-	pos[0] = orb_to_ndc(pos[1], v3new(200, 200, 0), 100);
+	pos[0] = orb_to_ndc(path, pos[1], v3new(200, 200, 0), 100);
 	pixel_set_s(*rt, pos[0].x, pos[0].y, R_ALPHA | R_GREEN);
 }

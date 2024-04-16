@@ -24,20 +24,6 @@ void	title_imgs_load(t_game *game)
 	game->textures[TEX_TITLE_START_1] = texture_load(game->app.mlx, "assets/menu/start_1.xpm");
 }
 
-#ifndef BONUS
-void	load_map_str(t_game *game)
-{
-	ft_strcpy(game->title.map_str[0], "./maps/map1.cub");
-	ft_strcpy(game->title.map_str[1], "./maps/map1.cub");
-	ft_strcpy(game->title.map_str[2], "./maps/map1.cub");
-	ft_strcpy(game->title.map_str[3], "./maps/map1.cub");
-	ft_strcpy(game->title.map_str[4], "./maps/map1.cub");
-	ft_strcpy(game->title.map_str[5], "./maps/map1.cub");
-	ft_strcpy(game->title.map_str[6], "./maps/map1.cub");
-}
-#endif
-
-#ifdef BONUS
 //using forbidden functions here
 void	load_map_str(t_game *game)
 {
@@ -59,7 +45,6 @@ void	load_map_str(t_game *game)
 	else
 		printf("Error\n failed to opening map directory\n");
 }
-#endif
 
 //TODO change name to title_Setup
 void	title_setup_screens(t_game *game)

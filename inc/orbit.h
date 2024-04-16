@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 19:03:58 by clovell          ###   ########.fr       */
+/*   Updated: 2024/03/04 18:59:11 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -90,7 +90,7 @@ double			kep_time(t_kep_ang *ang);
 double			kep_period(t_kep_path *path);
 
 /* Clamps the values of  */
-void			kep_clamp(t_kep_path *path);
+void			kep_clamp(t_kep_path *path, t_kep_ang *kep);
 
 /*** task/orbit/sys/ktoc_position.c ***/
 
@@ -123,7 +123,8 @@ void			orbit_obj_render_at(t_kep_path *path, double mean,
 					t_angt angt, t_texture *rt);
 
 /* Scales the orbit into screen space. */
-t_vec3			orb_to_ndc(t_vec3 cart, t_vec3 offset, t_vecd scale);
+t_vec3			orb_to_ndc(t_kep_path *path, \
+t_vec3 cart, t_vec3 offset, t_vecd scale);
 
 /*** task/orbit/sys/transform.c ***/
 double			orb_transform_x(t_kep_path *p, double x, double y);
