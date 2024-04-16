@@ -69,7 +69,6 @@ t_err	world_preset(int argc, char **argv, t_game *game)
 	game->world->sp_amount = 0;
 	game->fpsc = 0;
 	game->display_ui = false;
-	printf("how do you do sir\n");
 	return (map_parse(argc, argv, game));
 }
 
