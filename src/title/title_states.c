@@ -100,9 +100,9 @@ void	game_screen_states(t_game *game)
 		control_core_process(game);
 		game_title_states(game);
 		texture_draw(game->app, game->rt0, v2new(0, 0));
-		if (game->loaded_index[0] < TEX_ARRAY_SIZE)
-			load_image_at_index(game);
 		if (game->title.state == LOAD_MAP)
 			title_display_maps(game);
+		if (game->loaded_index[0] < TEX_ARRAY_SIZE)
+			load_image_at_index(game);
 	}
 }
