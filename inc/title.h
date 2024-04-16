@@ -7,9 +7,7 @@ typedef enum	e_menu_state
 	TITLE,
 	SELECT_START,
 	LOAD_MAP,
-	SELECT_OPTIONS,
 	OPTIONS,
-	SELECT_QUIT,
 	LOAD_AND_RUN,
 	RUNNING_GAME,
 	LOSE_SCREEN,
@@ -31,10 +29,13 @@ typedef struct	s_title
 
 
 
-
-
-void	title_screen(t_game *game);
+void	title_show_load_map(t_game *game);
+void	title_show_options(t_game *game);
+void	title_load_and_run(t_game *game);
+void	title_lose_screen(t_game *game);
+void	title_win_screen(t_game *game);
+void	title_back_to_title(t_game *game);
+void	title_setup_screens(t_game *game);
 void	game_screen_states(t_game *game);
-
 void	title_display_maps(t_game *game);
 #endif

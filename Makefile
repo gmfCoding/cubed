@@ -115,7 +115,11 @@ SRCSF = $(TEST) \
 		task/mui_process.c \
 		task/mui_process_extra.c \
 		task/mui_render.c \
-		title/title_run.c \
+		title/title_end_screen.c \
+		title/title_load_map_screen.c \
+		title/title_options.c \
+		title/title_setup.c \
+		title/title_states.c \
 		cerror.c \
 		image_loader.c \
 		destroy.c \

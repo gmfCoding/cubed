@@ -231,8 +231,7 @@ void	game_update(t_game *game)
 void	render(t_game *game)
 {
 	game_screen_states(game);
-	if (game->title.state == LOAD_MAP)
-		title_display_maps(game);
+
 	input_process(&game->input);
 	game->fpsc++;
 }
