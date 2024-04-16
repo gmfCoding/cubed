@@ -6,13 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:20:00 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/07 02:01:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/10 01:14:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
 #include "state.h"
 #include "vectorconv.h"
 #include "modifiers.h"
+#include "events.h"
 
 /*
  * NAME,TARGET,ACTIVE,XPOS,YPOS
@@ -31,8 +32,7 @@ t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map)
 	*ent2 = (t_entity_2){0};
 	ft_strlcpy(ent2->name, mod.name, NAME_SIZE);
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
-	if (ft_strcmp(mod.target, "NULL") != 0)
-		ent2->target =	mod_search_name(world, mod.target);
+	ent2->target_names[0] = ft_strdup(mod.target);
 	ent2->pos = v2itov2(mod.pos);
 	*map_get_tile_refv(map, ent2->pos) = (t_tile){ .type = WALL, .vis = 0,
 	.tex = TEX_FIVE_LIGHTS};
@@ -40,6 +40,7 @@ t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map)
 		ent2->type = ET_FIVE_LIGHTS_OPEN;
 	else
 		ent2->type = ET_FIVE_LIGHTS_CLOSED;
+	ent2->handle = target_handle_five_lights;
 	world->ent_count++;
 	return (0);
 }

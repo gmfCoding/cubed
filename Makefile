@@ -30,6 +30,7 @@ SRCSF = $(TEST) \
 		render/rect_render.c \
 		render/intersect_test.c \
 		render/raycast.c \
+		render/skybox.c \
 		controls/controls.c \
 		util/time.c \
 		util/math.c \
@@ -58,6 +59,8 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_alert.c \
 		modifiers/mod_func_enemy.c \
 		modifiers/mod_func_window.c \
+		modifiers/mod_func_window_line.c \
+		modifiers/mod_func_target_handles.c \
 		mini_map/mmap_draw.c \
 		mini_map/mmap_draw_anim.c \
 		mini_map/mmap_image_decider.c \
@@ -66,9 +69,10 @@ SRCSF = $(TEST) \
 		mini_map/mmap_tile_assign.c \
 		events/event_alert.c \
 		events/event_door.c \
-		events/event_handler.c \
 		events/event_five_lights.c \
+		events/event_handler.c \
 		events/event_orbit_task.c \
+		events/event_trigger_handlers.c \
 		entities/player_setup.c \
 		entities/sprite.c \
 		entities/entity.c \
@@ -83,6 +87,7 @@ SRCSF = $(TEST) \
 		input/input_hooks.c \
 		input/input_setup.c \
 		input/keys.c \
+		input/mouse.c \
 		ui/process.c \
 		task/task.c \
 		task/five_lights/fl_setup.c \
@@ -110,8 +115,15 @@ SRCSF = $(TEST) \
 		task/mui_process.c \
 		task/mui_process_extra.c \
 		task/mui_render.c \
+		title/title_end_screen.c \
+		title/title_load_map_screen.c \
+		title/title_options.c \
+		title/title_setup.c \
+		title/title_states.c \
 		cerror.c \
+		image_loader.c \
 		destroy.c \
+
 #		task/orbit/task2.c
 # TODO: Add other headers?
 INCSF = cubed.h

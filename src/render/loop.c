@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 00:34:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/08 00:59:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 #include "mini_map.h"
 #include "input.h"
+
 #include "state.h"
 #include "texture.h"
 #include "vector2i.h"
@@ -26,6 +27,7 @@
 #include "libft.h"
 #include "internal/wall.h"
 #include "cubed.h"
+
 
 void	measure_frame_rate(t_app app)
 {
@@ -119,6 +121,10 @@ void draw_debug_view_world_state(t_game *game)
 			}
 			else if (tile->type == DOOR)
 				texture_draw_line(tex, v2muls(v2new(x + 0.4, y+ 0.4), D_SCALE), v2muls(v2new(x + 0.4, y + 0.5), D_SCALE), R_RED | R_GREEN | R_ALPHA);
+			if (tile->type == EMPTY)
+			{
+				texture_draw_line(tex, v2muls(v2new(x, y), D_SCALE), v2muls(v2new(x + 1, y + 1), D_SCALE), 0xFFAA77 | R_ALPHA);
+			}
 			if (tile->vis == 0)
 				texture_draw_line(tex, v2muls(v2new(x + 0.1, y+ 0.1), D_SCALE), v2muls(v2new(x + 0.1, y + 0.2), D_SCALE), R_RED | R_ALPHA);
 			if (tile->vis == 1)
@@ -182,9 +188,8 @@ void draw_debug_view_world_state(t_game *game)
 	//texture_clear(tex, R_RED | R_ALPHA);
 }
 
-void	render(t_game *game)
+void	game_update(t_game *game)
 {
-	int x;
 //	const t_texture    tex = texture_get_debug_view(game, 2);
 //	texture_clear(tex, 0 | R_ALPHA);
 	//mlx_mouse_hide(game->app.mlx, game->app.win);
@@ -193,17 +198,64 @@ void	render(t_game *game)
 	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
 	sprite_update_all(game->world);
 	player_loop(game);
-
-//	x = v2x2ang(game->player.dir) / 6.28 * 3840;
-//	texture_blit(game->textures[TEX_SKYBOX], game->rt1, v2new(-x, 0));
+	render_skybox(game->player.dir, game->textures[TEX_SKYBOX], game->rt1);
 	render_floor(game);
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 	mmap_draw(game);
 	if (game->tasks[0] && game->tasks[0]->show)
 		task_orbit_render(game, game->tasks[0]);
-	texture_draw(game->app, game->rt0, v2new(0, 0));
 	event_display_ui(game);
+	texture_draw(game->app, game->rt0, v2new(0, 0));
+	draw_debug_info(game);
+	static bool show_debug = false;
+	if (input_keydown(&game->input, KEY_TILDA))
+	{
+		show_debug = !show_debug;
+		if (!show_debug && game->views[2].win)
+		{
+			texture_destroy(game->app.mlx, &game->views[2].rt, NULL, false);
+			mlx_destroy_window(game->app.mlx, game->views[2].win);
+		}
+	}
+	if (input_keydown(&game->input, KEY_Q))
+		game->title.state = BACK_TO_TITLE;
+	if (show_debug)
+	{
+		draw_debug_view_world_state(game);
+		texture_draw_debug_view(game, 2);
+	}
+	five_lights(game);
+}
+
+void	render(t_game *game)
+{
+	game_screen_states(game);
+
+	input_process(&game->input);
+	game->fpsc++;
+}
+
+/*
+void	render(t_game *game)
+{
+//	const t_texture    tex = texture_get_debug_view(game, 2);
+//	texture_clear(tex, 0 | R_ALPHA);
+	//mlx_mouse_hide(game->app.mlx, game->app.win);
+	entity_update(game);
+	enemy_routine(game, game->world->enemy);
+	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
+	sprite_update_all(game->world);
+	player_loop(game);
+	render_skybox(game->player.dir, game->textures[TEX_SKYBOX], game->rt1);
+	render_floor(game);
+	render_wall(game);
+	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
+	mmap_draw(game);
+	if (game->tasks[0] && game->tasks[0]->show)
+		task_orbit_render(game, game->tasks[0]);
+	event_display_ui(game);
+	texture_draw(game->app, game->rt0, v2new(0, 0));
 	draw_debug_info(game);
 
 	static bool show_debug = false;
@@ -225,3 +277,4 @@ void	render(t_game *game)
 	input_process(&game->input);
 	game->fpsc++;
 }
+*/

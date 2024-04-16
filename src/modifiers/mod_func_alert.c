@@ -29,6 +29,8 @@ t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map)
 		world->ent_2[world->ent_count].type = ET_ALERT_HIGH;
 	if (mod.type == 'M')
 		world->ent_2[world->ent_count].type = ET_ALERT_MEDIUM;
+
+//	world->ent_2[world->ent_count]->handle = NULL;
 	world->ent_count++;
 	return (0);
 }
