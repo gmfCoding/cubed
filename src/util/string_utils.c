@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:33:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/06 20:47:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:12:55 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strcat(char *dest, char *src)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (dest[i] != '\0')
@@ -32,7 +32,7 @@ char	*ft_strcat(char *dest, char *src)
 
 char	*ft_strcpy(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (s2[++i])
