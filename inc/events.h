@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:43:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 17:52:59 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 19:06:58 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EVENTS_H
@@ -15,6 +15,9 @@
 
 typedef struct	s_world t_world;
 typedef struct	s_map t_map;
+typedef void (*t_event_fn)(t_game *game, t_entity_2 *ent);
+
+
 
 void			event_player(t_game *game, bool force);
 void			event_interact(t_game *game);
