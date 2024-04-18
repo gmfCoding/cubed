@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mmap_image_decider.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/28 18:09:07 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/18 18:18:27 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "mini_map.h"
 #include "texture.h"
@@ -51,15 +62,15 @@ void	mmap_init_img_1(t_mmap *mmap, void *mlx)
 int	mmap_img_number_2(bool t, bool l, bool r, bool b)
 {
 	if (t == false && l == false && r == false && b == true)
-		return(15);
+		return (15);
 	if (t == false && l == false && r == true && b == false)
-		return(16);
+		return (16);
 	if (t == true && l == false && r == false && b == false)
-		return(17);
+		return (17);
 	if (t == false && l == true && r == false && b == false)
-		return(18);
+		return (18);
 	if (t == false && l == false && r == false && b == false)
-		return(19);
+		return (19);
 	return (2);
 }
 
@@ -73,28 +84,28 @@ int	mmap_img_number_2(bool t, bool l, bool r, bool b)
 int	mmap_img_number_1(bool t, bool l, bool r, bool b)
 {
 	if (t == true && l == false && r == false && b == true)
-		return(0);
+		return (0);
 	if (t == false && l == true && r == true && b == false)
-		return(1);
+		return (1);
 	if (t == true && l == true && r == true && b == true)
-		return(2);
+		return (2);
 	if (t == true && l == false && r == true && b == true)
-		return(3);
+		return (3);
 	if (t == true && l == true && r == true && b == false)
-		return(4);
+		return (4);
 	if (t == true && l == true && r == false && b == true)
-		return(5);
+		return (5);
 	if (t == false && l == true && r == true && b == true)
-		return(6);
+		return (6);
 	if (t == false && l == false && r == true && b == true)
-		return(7);
+		return (7);
 	if (t == true && l == false && r == true && b == false)
-		return(8);
+		return (8);
 	if (t == true && l == true && r == false && b == false)
-		return(9);
+		return (9);
 	if (t == false && l == true && r == false && b == true)
-		return(10);
-	return(mmap_img_number_2(t, l, r, b));
+		return (10);
+	return (mmap_img_number_2(t, l, r, b));
 }
 
 /*
@@ -109,18 +120,22 @@ int	mmap_decide_img(t_tile *tile, int w, int h, int pos)
 	bool	l;
 	bool	r;
 	bool	b;
-	
+
 	t = false;
 	l = false;
 	r = false;
 	b = false;
-	if (pos - w >= 0 && (tile[pos-w].type == WALL || tile[pos-w].type == DOOR))
+	if (pos - w >= 0 && (tile[pos - w].type == WALL \
+			|| tile[pos - w].type == DOOR))
 		t = true;
-	if (pos - 1 >= 0 && (tile[pos-1].type == WALL || tile[pos-1].type == DOOR) && pos % w != 0)
+	if (pos - 1 >= 0 && (tile[pos - 1].type == WALL \
+			|| tile[pos - 1].type == DOOR) && pos % w != 0)
 		l = true;
-	if (pos + 1 < (w * h) && (tile[pos + 1].type == WALL || tile[pos + 1].type == DOOR) && (pos + 1) % w != 0)
+	if (pos + 1 < (w * h) && (tile[pos + 1].type == WALL \
+			|| tile[pos + 1].type == DOOR) && (pos + 1) % w != 0)
 		r = true;
-	if (pos + w < (w * h) && (tile[pos + w].type == WALL || tile[pos + w].type == DOOR))
+	if (pos + w < (w * h) && (tile[pos + w].type == WALL \
+			|| tile[pos + w].type == DOOR))
 		b = true;
-	return (mmap_img_number_1(t,l,r,b));
+	return (mmap_img_number_1(t, l, r, b));
 }
