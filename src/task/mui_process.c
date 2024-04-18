@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/28 17:25:13 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 18:38:03 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -20,6 +20,7 @@
 
 void	mui_press_button(t_mui_button *curr, t_vec2 mouse)
 {
+	(void)mouse;
 	curr->on = !curr->on;
 	curr->base.anim = 0;
 }
@@ -39,9 +40,6 @@ void	mui_hold_dial(t_mui_dial *curr, t_vec2 mouse)
 
 void	mui_hold_slider(t_mui_slider *curr, t_vec2 mouse)
 {
-	int				i;
-	bool			held;
-
 	curr->value = fmax(0, fmin(0.99, v2invlerp(curr->start, curr->end, mouse)));
 }
 
@@ -81,7 +79,7 @@ void	mui_process(t_mui_ctx *ctx, t_inputctx *in)
 	if (base->type == MUI_BUTTON && (key & 1))
 	{
 		mui_press_button((void *)base, in->mousef);
-		mui_button_group_off(ctx, in, (void *)base);
+		mui_button_group_off(ctx, (void *)base);
 	}
 	else if (base->type == MUI_DIAL && (key & 2))
 		mui_hold_dial((void *)base, in->mousef);

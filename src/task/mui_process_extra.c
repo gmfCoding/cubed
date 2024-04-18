@@ -6,12 +6,12 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:24:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/28 17:25:00 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 18:36:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
 
-void	mui_button_group_off(t_mui_ctx *ctx, t_inputctx *in, t_mui_button *last)
+void	mui_button_group_off(t_mui_ctx *ctx, t_mui_button *last)
 {
 	int	i;
 
