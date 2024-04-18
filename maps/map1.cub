@@ -18,14 +18,24 @@ DR door08,/assets/debug.xpm,35,7,1,O,U
 
 KE key01,/assets/debug.xpm,door01,26,10,A,N
 
+AL at_door03,NULL,O,39,4,120
+AL al_task03,at_door03,M,0,0,120
+AL at_task05,NULL,O,23,7,120
+AL al_task04,at_task05,M,0,0,120
 
-AL turd,NULL,O,3,17,120
-AL get_turd,turd,M,38,4,120
+AL al_win,NULL,O,3,17,120
+AL at_door04,al_win,H,15,17,120
+AL al_task05,at_door04,M,0,0,120
+
 FL task01,door01,O,27,11
 FL task02,door02,O,19,0
-FL task03,door03,O,30,3
-FL task05,door04,C,23,8
-FL task04,task05,O,42,4
+FL task03,t_d03,O,30,3
+FL task05,t_t05,C,23,8
+FL task04,t_t04,O,42,4
+
+GM t_d03,door03,al_task03,NULL
+GM t_t04,al_task04,task05,NULL
+GM t_t05,al_task05,door04,NULL
 
 WL 32,12,32,18
 WL 6,18,31,18
