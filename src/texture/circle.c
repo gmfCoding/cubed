@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:48:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/06 19:01:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:32:56 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "render.h"
@@ -34,7 +34,7 @@ void texture_draw_circle(const t_texture *tex, t_vec2i pos, int r, int colour)
 {
     int x = 0, y = r;
     int d = 3 - 2 * r;
-    draw_circle(tex, pos, (t_vec2i){x, y}, colour);
+    draw_circle(tex, pos, (t_vec2i){.v = {x, y}}, colour);
     while (y >= x)
     {
         x++;
@@ -48,6 +48,6 @@ void texture_draw_circle(const t_texture *tex, t_vec2i pos, int r, int colour)
         }
         else
             d = d + 4 * x + 6;
-        draw_circle(tex, pos, (t_vec2i){x, y}, colour);
+        draw_circle(tex, pos, (t_vec2i){.v = {x, y}}, colour);
     }
 }

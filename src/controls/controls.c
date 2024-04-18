@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/09 18:07:44 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:23:51 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -46,29 +46,29 @@ static void	move_player(t_map *map, t_player *pl, t_vec2 dir)
 		pl->pos.y += vel.y;
 }
 
-int	can_move_player(t_game *game, t_player *pl, t_inputctx *i)
+int	can_move_player(t_game *game, t_player *pl)
 {
 	static double	store;
 
-	if (game->player.state == START_TASK)
+	if (pl->state == START_TASK)
 	{
 		// Trigger once, start
 		//printf("enter angle: %f - %f, %f\n", game->mouse_angle, game->angle_offset, (game->mouse_angle) - game->angle_offset);
 		// Store the angle of when we enter the task.
 		store = game->mouse_angle;
-		game->player.state = CANT_MOVE;
+		pl->state = CANT_MOVE;
 	}
-	if (game->player.state == DONE_TASK)
+	if (pl->state == DONE_TASK)
 	{
 		// Trigger once, end
 		//printf("task %f\n", game->angle_offset);
 		// Subtract the change in angle since we started the task.
-		game->player.angle_offset += game->mouse_angle - store;
+		pl->angle_offset += game->mouse_angle - store;
 		//printf("leave angle: %f - %f, %f\n", game->mouse_angle, game->angle_offset, (game->mouse_angle) - game->angle_offset);
 		//game->angle_offset -= (game->mouse_angle - store);
-		game->player.state = CAN_MOVE;
+		pl->state = CAN_MOVE;
 	}
-	if (game->player.state == CANT_MOVE)
+	if (pl->state == CANT_MOVE)
 	{
 		// Trigger every frame
 		return (0) ;
@@ -82,7 +82,7 @@ void	control_player_process(t_game *game)
 	t_player *const		pl = &game->player;
 	t_inputctx *const	i = &game->input;
 	game->mouse_angle = window_angle(i->mouse.x);
-	if (!(can_move_player(game, pl, i)))
+	if (!(can_move_player(game, pl)))
 		return ;
 	if (input_keyheld(i, KEY_W))
 		move_player(&game->world->map, pl, pl->dir);

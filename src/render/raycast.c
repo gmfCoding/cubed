@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:31:27 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 20:08:01 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:31:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
 	t_dda	dda;
 
 	dda = (t_dda){0};
-	dda.map = (t_vec2i){start.x, start.y};
+	dda.map = (t_vec2i){.v = {start.x, start.y}};
 	dda.delta.x = 1e30;
 	if (dda.delta.x != 0)
 		dda.delta.x = 1.0 / fabs(dir.x);

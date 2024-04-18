@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 00:25:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:28:30 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR2I_H
@@ -18,14 +18,18 @@ typedef struct s_vec2i
 {
 	union
 	{
-		t_veci	x;
-		t_veci	s;
-	};
-	
-	union
-	{
-		t_veci	y;
-		t_veci	e;
+		struct
+		{
+			t_veci	x;
+			t_veci	y;
+
+		};
+		struct
+		{
+			t_veci	s;
+			t_veci	e;
+		};
+		t_veci	v[2];
 	};
 }				t_vec2i;
 

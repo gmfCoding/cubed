@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/10 01:46:25 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 17:52:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct s_entity_2
 		};
 	};
 	
-	t_handle_result		(*handle)(struct s_entity_2 *self, struct s_entity_2 *other);
+	t_handle_result		(*handle)(t_game *game, struct s_entity_2 *self, struct s_entity_2 *other);
 
 	t_entity			*entity; // Duct tape fix
 	bool				state_1;

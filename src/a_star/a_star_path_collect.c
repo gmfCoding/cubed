@@ -82,7 +82,7 @@ t_vec2	*star_find_path(t_game *game, t_vec2 start, t_vec2 target)
 
 	open = NULL;
 	close = NULL;
-	star_insert_node(game, &open, NULL, start);
+	star_insert_node(&open, NULL, start);
 	while (open != NULL)
 	{
 		smallest = star_get_smallest_cost(&open, &close, target);

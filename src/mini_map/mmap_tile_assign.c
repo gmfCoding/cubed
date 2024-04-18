@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mmap_tile_assign.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/18 17:56:37 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/18 17:57:28 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_map.h"
 #include "texture.h"
 #include "state.h"
@@ -6,7 +18,8 @@ t_texture	*mmap_get_img(t_game *game, int pos)
 {
 	int	index;
 
-	index = mmap_decide_img(game->world->map.tiles, game->world->map.width, game->world->map.height, pos);
+	index = mmap_decide_img(game->world->map.tiles, \
+		game->world->map.width, game->world->map.height, pos);
 	return (&game->mmap.mm_img[index]);
 }
 
@@ -19,7 +32,7 @@ t_texture	*mmap_get_img(t_game *game, int pos)
  */
 t_texture	*mmap_get_door_img(t_game *game, int pos, int i)
 {
-	if (game->world->map.tiles[pos+1].type == FLOOR)
+	if (game->world->map.tiles[pos + 1].type == FLOOR)
 	{
 		game->mmap.tiles[i].vertical = true;
 		return (&game->mmap.mm_img[13]);

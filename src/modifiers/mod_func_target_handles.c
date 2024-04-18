@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:38:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/10 01:37:04 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:22:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -24,6 +24,8 @@ t_err	mod_gen_go(char *content, int index, t_world *world, t_map *map)
 	const int	found = ft_sescanf(content, "%N%s,%s\v", \
 									NAME_SIZE, ent->name, target);
 
+	(void)index;
+	(void)map;
 	if (found != 3)
 		return (1);
 	ent->target_names[0] = ft_strdup(target);
@@ -39,12 +41,13 @@ t_err	mod_gen_go(char *content, int index, t_world *world, t_map *map)
  */
 t_err	mod_gen_ga(char *content, int index, t_world *world, t_map *map)
 {
-	char				name[NAME_SIZE];
 	char				targets[3][NAME_SIZE];
 	t_entity_2 *const	ent = &world->ent_2[world->ent_count];
 	const int			found = ft_sescanf(content, "%N%s,%s,%s,%s\v", \
 									NAME_SIZE, ent->name, targets[0], targets[1],targets[2]);
 
+	(void)index;
+	(void)map;
 	if (found != 5)
 		return (1);
 	ent->target_names[0] = ft_strdup(targets[0]);
@@ -70,6 +73,9 @@ t_err	mod_gen_gm(char *content, int index, t_world *world, t_map *map)
 	t_entity_2 *const	ent = &world->ent_2[world->ent_count];
 	const int			found = ft_sescanf(content, "%N%s,%s,%s,%s\v", \
 									sizeof(*targets), ent->name, targets[0], targets[1], targets[2]);
+
+	(void)index;
+	(void)map;
 	if (found != 5)
 		return (1);
 	ent->target_names[0] = ft_strdup(targets[0]);

@@ -25,7 +25,7 @@ t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 //		enemy->anim = patrik->anim;
 	enemy = (t_enemy *)entity_create(world, ENT_ENEMY);
 	*enemy = (t_enemy){.base = enemy->base};
-	enemy->speed = 0.01; // TODO: Use mod.speed in calculation maybe speed is in milliseconds?
+	enemy->speed = mod.speed; // TODO: Use mod.speed in calculation maybe speed is in milliseconds?
 	if (mod.state == 'N')
 		enemy->state = NOT_ACTIVE;
 	if (mod.state == 'T')
@@ -40,10 +40,9 @@ t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	enemy->old_pos[0] = mod.pos;
 	enemy->old_pos[1] = mod.pos;
 	enemy->old_pos[2] = mod.pos;
-	t_tile *tile = map_get_tile_refv(&world->map, v2itov2(mod.pos));
 	world->sprite[world->sp_amount] = (t_sprite){.tex = TEX_ENEMY_START, .pos = v2new((double)mod.pos.x + 0.5, (double )mod.pos.y + 0.5)};
 	enemy->sprite_ref = &world->sprite[world->sp_amount++];
-	enemy->sprite_ref->uv = (t_uv){.offset = {0, 0}, .scale = {1, 1}};
+	enemy->sprite_ref->uv = (t_uv){.offset = { .x = 0, .y = 0}, .scale = {.x = 1, .y = 1}};
 	enemy->sprite_ref->visible = true;
 	world->enemy = enemy;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:46:18 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:33:26 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 19:04:50 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "orbit.h"
@@ -68,5 +68,5 @@ void	orb_cart_to_kep(t_orb_cart *cart, t_kep_path *path, t_kep_ang *ang)
 	wrap_angle(e.z < 0, &path->aop);
 	path->sma = fabs(1.0 / \
 	(2.0 / v3mag(cart->pos) - v3sqrmag(cart->vel) / path->sgp_u));
-	kep_clamp(path, ang);
+	kep_clamp(path);
 }

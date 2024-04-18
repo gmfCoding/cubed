@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   title_states.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/18 17:39:01 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/18 17:44:05 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "texture.h"
 #include "state.h"
 #include "destroy.h"
@@ -6,21 +18,26 @@ void	title_show_select_start(t_game *game)
 {
 	game->title.anim_forward = 0;
 	texture_blit(game->textures[TEX_TITLE_SPACE_BACK], game->rt0, v2new(0, 0));
-	if (input_keydown(&game->input, KEY_UARROW) || input_keydown(&game->input, KEY_W))
+	if (input_keydown(&game->input, KEY_UARROW) \
+		|| input_keydown(&game->input, KEY_W))
 		game->title.anim_frame--;
-	if (input_keydown(&game->input, KEY_DARROW) || input_keydown(&game->input, KEY_S))
+	if (input_keydown(&game->input, KEY_DARROW) \
+		|| input_keydown(&game->input, KEY_S))
 		game->title.anim_frame++;
 	game->title.anim_frame = (game->title.anim_frame + 3) % 3;
-	texture_blit(game->textures[TEX_TITLE_START_0 +  (game->title.anim_frame == 0)], game->rt0, v2new(295, 105));
-	texture_blit(game->textures[TEX_TITLE_OPTIONS_0 + (game->title.anim_frame == 1)], game->rt0, v2new(295, 305));
-	texture_blit(game->textures[TEX_TITLE_QUIT_0 + (game->title.anim_frame == 2)], game->rt0, v2new(295, 505));
+	texture_blit(game->textures[TEX_TITLE_START_0 + \
+		(game->title.anim_frame == 0)], game->rt0, v2new(295, 105));
+	texture_blit(game->textures[TEX_TITLE_OPTIONS_0 + \
+		(game->title.anim_frame == 1)], game->rt0, v2new(295, 305));
+	texture_blit(game->textures[TEX_TITLE_QUIT_0 + \
+		(game->title.anim_frame == 2)], game->rt0, v2new(295, 505));
 	if (input_keydown(&game->input, KEY_ENTER))
 	{
-		if(game->title.anim_frame == 0)
+		if (game->title.anim_frame == 0)
 			game->title.state = LOAD_MAP;
-		if(game->title.anim_frame == 1)
+		if (game->title.anim_frame == 1)
 			game->title.state = OPTIONS;
-		if(game->title.anim_frame == 2)
+		if (game->title.anim_frame == 2)
 			game_destroy(game);
 	}
 }

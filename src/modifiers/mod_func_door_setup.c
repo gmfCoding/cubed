@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/15 15:44:21 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:22:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static void	door_setup_sprites(t_door *door, t_world *wld)
 	door->base.sprite = door->sprites[0];
 	door->sprites[0]->pos = door->base.pos;
 	door->sprites[0]->tex = TEX_WINDOW;
-	door->sprites[0]->uv = (t_uv){.offset = {0.5, 0}, .scale = {0.5, 1}};
+	door->sprites[0]->uv = (t_uv){.offset.v = {0.5, 0}, .scale.v = {0.5, 1}};
 	door->sprites[0]->visible = true;
 	*door->sprites[1] = *door->sprites[0];
 	*door->sprites[2] = *door->sprites[0];
 	*door->sprites[3] = *door->sprites[0];
-	door->sprites[1]->uv = (t_uv){.offset = {0.25, 0}, .scale = {0.5, 1}};
+	door->sprites[1]->uv = (t_uv){.offset.v = {0.25, 0}, .scale.v = {0.5, 1}};
 	door->sprites[1]->vsfb = true;
 	*door->sprites[3] = *door->sprites[1];
 }
@@ -69,6 +69,9 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 			&mod.pos.x, &mod.pos.y, &mod.speed,
 			&mod.closed, &mod.locked);
 
+	(void)index;
+	(void)wld;
+	(void)map;
 	if (found != 8 || mod.pos.x >= map->width \
 					|| mod.pos.y >= map->height)
 		return (1);

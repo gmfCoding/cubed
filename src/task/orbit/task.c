@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/04 18:58:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:52:46 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -29,8 +29,7 @@ static void	l_draw_debug_info_active(t_task_orbit *task, char **str)
 	pos.x = orb_transform_x(path, pos.x, pos.y);
 	pos.y = orb_transform_y(path, pos.x, pos.y);
 	pos.z = orb_transform_z(path, pos.x, pos.y);
-	pos = orb_to_ndc(&task->paths[task->active_path], pos, \
-	v3new(200, 200, 0), 100);
+	pos = orb_to_ndc(pos, v3new(200, 200, 0), 100);
 	vel.x = orb_transform_x(path, vel.x, vel.y);
 	vel.y = orb_transform_y(path, vel.x, vel.y);
 	vel.z = orb_transform_z(path, vel.x, vel.y);

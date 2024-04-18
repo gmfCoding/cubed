@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/07 14:57:03 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:23:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	map_update_vis(t_map *map)
 	t_tile	*tile;
 	int		x;
 	int		y;
-	int		index;
 
 	y = -1;
 	while (++y < map->height)

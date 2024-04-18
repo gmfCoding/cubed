@@ -2,6 +2,18 @@
 #include "vectorconv.h"
 #include "modifier_data.h"
 
+t_handle_result target_handle_alert(t_game *game, t_entity_2 *self, t_entity_2 *parent)
+{
+	(void)parent;
+	if (self->type == ET_ALERT_HIGH)
+		event_alert_high(game, self);
+	else if (self->type == ET_ALERT_MEDIUM)
+		event_alert_medium(game, self);
+	else if (self->type == ET_ALERT_OFF)
+		event_alert_off(game, self);
+	return (TARGET_HANDLE_SUCCESS);
+}
+
 /*
  * NAME,TARGET,ALERT_TYPE,XPOS,YPOS,TIME
  */
@@ -12,14 +24,15 @@ t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map)
 			sizeof(mod.name), &mod.name, &mod.target, &mod.type,
 			&mod.pos.x, &mod.pos.y, &mod.time);
 
+	(void)index;
 	if (found != 7 || mod.pos.x >= map->width \
 					|| mod.pos.y >= map->height)
 		return (1);
 	world->ent_2[world->ent_count] = (t_entity_2){0};
 	ft_strlcpy(world->ent_2[world->ent_count].name, mod.name, NAME_SIZE);
-	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX); // Is this required?
-	if (ft_strcmp(mod.target, "NULL") != 0)  // Could be removed as mod_search_name returns null anyways, without it would induce an overhead though from searching through the mods.
-		world->ent_2[world->ent_count].target =	mod_search_name(world, mod.target); // What if the mod hasn't been loaded yet?
+	world->ent_2[world->ent_count].target_names[0] = ft_strdup(mod.target);
+	// if (ft_strcmp(mod.target, "NULL") != 0)  // Could be removed as mod_search_name returns null anyways, without it would induce an overhead though from searching through the mods.
+	// 	world->ent_2[world->ent_count].target =	mod_search_name(world, mod.target); // What if the mod hasn't been loaded yet?
 	world->ent_2[world->ent_count].pos = v2itov2(mod.pos);
 	world->ent_2[world->ent_count].ref_tile = map_get_tile_ref(&world->map, mod.pos.x, mod.pos.y);
 	world->ent_2[world->ent_count].speed = mod.time;
@@ -29,8 +42,7 @@ t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map)
 		world->ent_2[world->ent_count].type = ET_ALERT_HIGH;
 	if (mod.type == 'M')
 		world->ent_2[world->ent_count].type = ET_ALERT_MEDIUM;
-
-//	world->ent_2[world->ent_count]->handle = NULL;
+	world->ent_2[world->ent_count].handle = &target_handle_alert;
 	world->ent_count++;
 	return (0);
 }

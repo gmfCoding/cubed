@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   title_setup.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/18 17:22:15 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/18 17:55:31 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "texture.h"
 #include "state.h"
 #include "destroy.h"
@@ -27,18 +39,24 @@ void	title_imgs_load(t_game *game)
 //using forbidden functions here
 void	load_map_str(t_game *game)
 {
-	DIR		*dir;
+	DIR				*dir;
 	struct dirent	*ent;
-	char		*folder_path;
-	
+	char			*folder_path;
+
 	folder_path = "./maps/";
-	if ((dir = opendir(folder_path)) != NULL)
+	dir = opendir(folder_path);
+	if (dir != NULL)
 	{
-		while ((ent = readdir(dir)) != NULL)
+		ent = readdir(dir);
+		while (ent != NULL)
 		{
 			if (ft_strcmp(ent->d_name, ".") == 0 || ft_strcmp(ent->d_name, "..") == 0)
+			{
+				ent = readdir(dir);
 				continue ;
+			}
 			ft_strcpy(game->title.map_str[game->title.map_str_amount++], ent->d_name);
+			ent = readdir(dir);
 		}
 		closedir(dir);
 	}

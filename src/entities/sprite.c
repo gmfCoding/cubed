@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:36:58 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 01:40:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:02:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -109,7 +109,7 @@ void	sprite_update(t_map *map, t_sprite *const sprite, int index)
 		i = (int)min_x - (1 + 1);
 		while (++i <= min_x + 1)
 		{
-			if (rect_contains_seg((t_rect){i, j, i + 1, j + 1}, \
+			if (rect_contains_seg((t_rect){.v = {i, j, i + 1, j + 1}}, \
 			(t_vec4){.min = sprite->s1, .max = sprite->s2}) && \
 			i >= 0 && j >= 0 && i < map->width && j < map->height)
 			{
@@ -131,7 +131,6 @@ void	sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir)
 	t_vec2		hit;
 	float		temp;
 
-	dir = dir;
 	temp = dir.x;
 	dir.x = dir.y;
 	dir.y = -temp;
@@ -155,7 +154,7 @@ void	sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir)
 /* Orders the sprites from `arr` from closest to furthest from `cent`
  *	and stores the sorted indices into `ind`.
  */
-void	sprite_order_distance(t_vec2 cent, t_sprite *arr, short *ind, int size)
+void	sprite_order_distance(t_vec2 cent, t_sprite *arr, int16_t *ind, int size)
 {
 	int				i;
 	int				j;

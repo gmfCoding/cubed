@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:10:02 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 19:01:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -17,12 +17,17 @@
 #include "vectorconv.h"
 #include "state.h"
 
+static const t_orb_gen	g_orbgen = {
+	.sma = {.x = 0.5 * KM_AU, .y = 1.25 * KM_AU}, 
+	.ecc = {.x = 0.0001, .y = 0.8},
+	.inc = {.x = 0.0001, .y = 0.0001}, 
+	.aop = {.x = 0.0001, .y = M_TAU}, 
+	.lan = {.x = 0.0001, .y = 0.0001}
+};
+
 int	task_orbit_setup(t_game *game, t_task *base)
 {
-	static t_orb_gen	g_orbgen = {
-		.sma = {0.5 * KM_AU, 1.25 * KM_AU}, .ecc = {0.0001, 0.8},
-		.inc = {0.0001, 0.0001}, .aop = {0.0001, M_TAU}, .lan = {0.0001, 0.0001}
-	};
+
 	t_task_orbit *const	task = (t_task_orbit*)base;
 
 	mrand(&game->task_rand);
@@ -48,7 +53,6 @@ void	orbit_thrust_apply(t_kep_path *path,
 t_kep_ang *node, double thrust)
 {
 	t_orb_cart	cart;
-	t_vec3		ecv;
 
 	cart = (t_orb_cart){0};
 	orb_cart_pos(path, node, &cart);
@@ -60,7 +64,6 @@ t_kep_ang *node, double thrust)
 
 void	update_paths(t_task_orbit *t)
 {
-	t_orb_cart	cart;
 	int			i;
 
 	i = -1;
@@ -121,8 +124,10 @@ int	task_orbit_render(t_game *game, t_task *base)
 	}
 	//texture_blit_rect(&rt, scr, (t_rect){45, 37, 274, 266});
 	texture_blit(*scr, rt, v2new(0, 0));
-	texture_draw_circle(&rt, v2tov2i(task->scr_offset), task->zoom * 1/10, ORB_PLANET | R_ALPHA);
-	render_paths(task, &rt, (t_rect){task->scr_offset, {task->zoom, 0}});
+	texture_draw_circle(&rt, v2tov2i(task->scr_offset), \
+									task->zoom * 1/10, ORB_PLANET | R_ALPHA);
+	render_paths(task, &rt, (t_rect){.min = task->scr_offset, \
+									.max = {.x = task->zoom, .y = 0}});
 	texture_blit(*tex, rt, v2new(0, 0));
 	mui_render(&task->mui, &rt);
 	texture_blit_s(rt, game->rt0, v2new(90, 90), 2);
