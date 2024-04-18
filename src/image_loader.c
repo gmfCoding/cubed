@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:57:15 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 18:39:02 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:42:51 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ void	load_image_at_index(t_game *game)
 		if (g_image_paths[game->loaded_index[0]] != NULL)
 		{
 			mlx_string_put(game->app.mlx, game->app.win, 400, 900, 0xffffff, \
-				g_image_paths[game->loaded_index[0]]);
+				(char *)g_image_paths[game->loaded_index[0]]);
 			game->textures[game->loaded_index[0]] = texture_load(game->app.mlx, \
-				g_image_paths[game->loaded_index[0]]);
+				(char *)g_image_paths[game->loaded_index[0]]);
 		}
 	}
 	if (game->loaded_index[0] >= TEX_ENEMY_START && game->loaded_index[0] <= TEX_ENEMY_END)

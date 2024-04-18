@@ -25,7 +25,7 @@ t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 //		enemy->anim = patrik->anim;
 	enemy = (t_enemy *)entity_create(world, ENT_ENEMY);
 	*enemy = (t_enemy){.base = enemy->base};
-	enemy->speed = 0.01; // TODO: Use mod.speed in calculation maybe speed is in milliseconds?
+	enemy->speed = mod.speed; // TODO: Use mod.speed in calculation maybe speed is in milliseconds?
 	if (mod.state == 'N')
 		enemy->state = NOT_ACTIVE;
 	if (mod.state == 'T')

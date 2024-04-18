@@ -17,8 +17,8 @@ int	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
 	if (angle < 0)
 		angle += M_TAU;
 	enemy->angle_frame = fabs(angle) / M_TAU * 32;
-	enemy->sprite_ref->pos.x += dir.x * enemy->speed;
-	enemy->sprite_ref->pos.y += dir.y * enemy->speed;
+	enemy->sprite_ref->pos.x += dir.x * (enemy->speed * 0.01);
+	enemy->sprite_ref->pos.y += dir.y * (enemy->speed * 0.01);
 	dist = v2dist(enemy->sprite_ref->pos, player_pos);
 	if (dist < 1.1)
 	{
