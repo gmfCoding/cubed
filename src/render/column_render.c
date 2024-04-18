@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:41:22 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/09 13:44:15 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:44:04 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 #include "vector2i.h"
 #include "ray.h"
 
-static inline void	calculate_column_common(t_game *game,
-t_vert *vertical, t_col *col, t_hitpoint hit)
+static inline void	calculate_column_common(t_col *col, t_hitpoint hit)
 {
 	col->uv.x -= floor(col->uv.x);
 	col->sample.x = (int)(col->uv.x * (double)col->tex_size);
@@ -50,7 +49,7 @@ t_vert *vertical, t_hitpoint hit)
 	col.uv.x = game->player.pos.x + hit.depth * vertical->dir.x;
 	if (hit.side == 2 || hit.side == 3)
 		col.uv.x = game->player.pos.y + hit.depth * vertical->dir.y;
-	calculate_column_common(game, vertical, &col, hit);
+	calculate_column_common(&col, hit);
 	if ((hit.side == 1 || hit.side == 2))
 		col.sample.x = col.tex_size - col.sample.x - 1;
 	col.shaded = hit.side == 1;
@@ -71,7 +70,7 @@ t_hitpoint hit)
 		col.uv.x = (hit.minX * sp->uv.scale.x) + sp->uv.offset.x;
 		col.texture = sp->tex;
 		col.tex_size = game->textures[sp->tex].width;
-		calculate_column_common(game, vertical, &col, hit);
+		calculate_column_common(&col, hit);
 		col.shaded = 0;
 	}
 	else

@@ -20,9 +20,9 @@ void    star_deallocate_node(t_star_node **node)
  * or close and the parent node is used for when the target is found and can trace back the steps 
  * made to get to that location the allocated nodes a dealloacted with the above fucntion
  */
-void    star_insert_node(t_game *game, t_star_node **node, t_star_node *parent, t_vec2 pos)
+void    star_insert_node(t_star_node **node, t_star_node *parent, t_vec2 pos)
 {
-        t_star_node *temp;
+	t_star_node	*temp;
 
 	temp = malloc(sizeof(t_star_node));
         if (temp == NULL)

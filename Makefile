@@ -88,7 +88,6 @@ SRCSF = $(TEST) \
 		input/input_setup.c \
 		input/keys.c \
 		input/mouse.c \
-		ui/process.c \
 		task/task.c \
 		task/five_lights/fl_setup.c \
 		task/five_lights/fl_state_manage.c \
@@ -108,7 +107,6 @@ SRCSF = $(TEST) \
 		task/orbit/sys/body.c \
 		task/orbit/sys/generate.c \
 		task/orbit/sys/equality.c \
-		task/orbit/ui.c \
 		task/orbit/orbit.c \
 		task/orbit/mui/orbit_mui.c \
 		task/mui.c \
@@ -169,7 +167,7 @@ LIB-L = $(patsubst %,-L$(DIRLIB)/%, $(dir $(LIBSF)))
 
 CC = cc
 
-WFLAGS =#-Wall -Werror -Wextra
+WFLAGS = #-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/09 17:12:57 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:21:37 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -79,16 +79,16 @@ void	event_interact(t_game *game)
 // 123
 // 456
 // 789
-const static t_vec2 g_directions[] = {
-{-1, -1},
-{0, -1},
-{1, -1},
-{-1, 0},
-{0, 0},
-{1, 0},
-{-1, 1},
-{0, 1},
-{1, 1},
+const static t_vec2	g_directions[] = {
+{.v = {-1, -1}},
+{.v = {0, -1}},
+{.v = {1, -1}},
+{.v = {-1, 0}},
+{.v = {0, 0}},
+{.v = {1, 0}},
+{.v = {-1, 1}},
+{.v = {0, 1}},
+{.v = {1, 1}},
 };
 
 /*
@@ -116,7 +116,7 @@ void	event_check(t_game *game)
 	while (game->events_active[++k] != NULL)
 		game->events_active[k] = NULL;
 	k = -1;
-	while (++i < game->world->ent_count)
+	while ((size_t)++i < game->world->ent_count)
 	{
 		j = -1;
 		while(++j < 9)

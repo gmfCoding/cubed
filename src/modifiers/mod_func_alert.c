@@ -4,6 +4,7 @@
 
 t_handle_result target_handle_alert(t_game *game, t_entity_2 *self, t_entity_2 *parent)
 {
+	(void)parent;
 	if (self->type == ET_ALERT_HIGH)
 		event_alert_high(game, self);
 	else if (self->type == ET_ALERT_MEDIUM)
@@ -23,6 +24,7 @@ t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map)
 			sizeof(mod.name), &mod.name, &mod.target, &mod.type,
 			&mod.pos.x, &mod.pos.y, &mod.time);
 
+	(void)index;
 	if (found != 7 || mod.pos.x >= map->width \
 					|| mod.pos.y >= map->height)
 		return (1);

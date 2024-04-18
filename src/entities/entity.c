@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 00:39:33 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:16:15 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -119,10 +119,10 @@ static void	door_update_vis(t_game *game, t_door *d, bool vert)
 bool	door_is_vertical(t_door *door, t_game *game)
 {
 	const static t_vec2	directions[4] = {
-	{0, -1},
-	{0, 1},
-	{-1, 0},
-	{1, 0}};
+	{.v = {0, -1}},
+	{.v = {0, 1}},
+	{.v = {-1, 0}},
+	{.v = {1, 0}}};
 	int					i;
 	t_tile				*tile;
 
@@ -142,8 +142,6 @@ bool	door_is_vertical(t_door *door, t_game *game)
 
 void	ent_door_update(t_door *door, t_game *game)
 {
-	int	vis;
-
 	if (door->closed)
 		door->percent += door->speed;
 	else

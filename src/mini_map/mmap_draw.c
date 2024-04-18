@@ -58,7 +58,7 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, t_mmap mmap)
 void	mmap_draw_player(t_game *game, t_vec2 m_pos, bool draw_full)
 {
 	t_vec2	pos;
-	if (game->mmap.mm_big == true)
+	if (draw_full)
 	{
 		pos.x = (SCR_WIDTH / 2 - 7); 
 		pos.y = (SCR_HEIGHT / 2 - 7);

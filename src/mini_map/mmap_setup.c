@@ -42,9 +42,7 @@ bool	mmap_fog_check(t_game *game)
  */
 void	mmap_init(t_game *game)
 {
-	int	x;
 	int	y;
-	int	index;
 	int	i;
 
 	game->mmap.mm_big = false;

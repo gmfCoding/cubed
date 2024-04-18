@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/16 18:11:57 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:58:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@
 
 t_handle_result target_handle_five_lights(t_game *game, t_entity_2 *five_lights, t_entity_2 *parent)
 {
+	(void)game;
+	(void)parent;
 	five_lights->type = ET_FIVE_LIGHTS_OPEN;
 	return (TARGET_HANDLE_SUCCESS);
 }
 
 t_handle_result target_handle_door(t_game *game, t_entity_2 *door, t_entity_2 *parent)
 {
+	(void)game;
+	(void)parent;
 	door->type = ET_DOOR_UNLOCKED;
 	return (TARGET_HANDLE_SUCCESS);
 }
@@ -56,6 +60,7 @@ t_handle_result	entity_target_handle(t_game *game, t_entity_2 *ent)
 t_handle_result	target_handle_or(t_game *game, t_entity_2 *self, t_entity_2 *other)
 {
 	(void)game;
+	(void)other;
 	//if (self->parent1 == other || other == self->parent2)
     if (entity_target_handle(game, self) == TARGET_HANDLE_FAILED)
 		return (TARGET_HANDLE_FAILED);

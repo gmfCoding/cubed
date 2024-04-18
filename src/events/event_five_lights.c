@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:21 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/16 17:55:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:01:28 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 
 void	event_five_lights_closed(t_game *game, t_entity_2 *ent)
 {
+	(void)ent;
 	game->display_ui = UI_INACTIVE_TASK;
-//	if (input_keydown(&game->input, KEY_E))
-//		printf("TASK IS COMPLETE\n");
-	return ;
 }
 
 void	event_five_lights_open(t_game *game, t_entity_2 *ent)

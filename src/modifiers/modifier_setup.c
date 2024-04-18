@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/16 18:14:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:21:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_err modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		str = (char *)curr->content;
 		remove_spaces(str);
 		i = -1;
-		while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
+		while ((size_t)++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
 		{
 			if (ft_strncmp(g_mapsymbols[i], str, \
 			strlen_nl(g_mapsymbols[i])) == 0)
@@ -132,7 +132,7 @@ void	modifier_after(t_game *game)
 	t_entity		*ent_curr;
 
 	i = -1;
-	while (++i < w->ent_count)
+	while ((size_t)++i < w->ent_count)
 	{
 		//printf("%s : %p\n", w->ent_2[i].name, &w->ent_2[i]);
 		j = -1;

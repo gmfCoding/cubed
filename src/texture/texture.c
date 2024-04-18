@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:11:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/06 18:58:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:46:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -37,7 +37,7 @@ static void	texture_init(t_texture tex)
 
 static void	texture_init(t_texture tex)
 {
-
+	(void)tex;
 }
 #endif
 

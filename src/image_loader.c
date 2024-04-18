@@ -1,7 +1,7 @@
 #include "texture.h"
 #include "state.h"
 
-void	load_enemy_textures(t_game *game, char *base_path, char *file_type,int index)
+void	load_enemy_textures(t_game *game, char *base_path, char *file_type)
 {
 	char	path[100];
 	char	index_str[5];
@@ -53,7 +53,7 @@ void	load_enemy_directory(t_game *game, char *base_path)
 		}
 		ft_strcpy(path, base_path);
 		ft_strcat(path, index_str);
-		load_enemy_textures(game, path, ".xpm",i);
+		load_enemy_textures(game, path, ".xpm");
 	}
 }
 
