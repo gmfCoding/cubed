@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/04 19:15:46 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:34:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -256,6 +256,7 @@ void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
 {
 	const int	g_len_tex = sizeof(g_orb_textures) / sizeof(t_def_tex);
 
+	*mui = (t_mui_ctx){0};
 	mui_clone(&g_orbit_mui, mui);
 	def_tex_add(g_orb_textures, g_len_tex);
 	mui_def_preload(app, mui);
@@ -281,6 +282,13 @@ void	orbit_mui_control_action(t_mui_ctx *ctx)
 	i = -1;
 	t->delta[t->active_path] += (ctx->sliders[0].value - 0.5) / 100.0;
 	if (orb_deviation(&t->target_path, &t->paths[t->maneuvers - 1]) < 0.05)
+	{
 		t->task.show = !(ctx->buttons[ORB_MUI_BTN_APPLY].on);
+		if (t->task.show == false)
+		{
+			printf("Orbit task completed\n");
+			t->task.completed = true;
+		}
+	}
 	update_paths(t);
 }

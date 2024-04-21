@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 20:16:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/10 17:44:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:36:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -73,8 +73,10 @@ t_task	*task_create_or_find(t_game *game, char *name)
 	if (name == NULL)
 		return (NULL);
 	task = task_find(game, name);
+	if (task && task->init == false)
+		task->setup(game, task);
 	if (task)
-		return (task->setup(game, task), task);
+		return (task);
 	printf("Couldn't find task: %s\n", name);
 	i = -1;
 	while (++i < sizeof(g_tasks) / sizeof(*g_tasks))
@@ -84,9 +86,8 @@ t_task	*task_create_or_find(t_game *game, char *name)
 		task = malloc(g_tasks[i]->size);
 		*task = *g_tasks[i];
 		ft_lstadd_front(&game->tasks, ft_lstnew(task));
-		task->setup(game, task);
 		printf("Creating task: %s\n", name);
-		return (task);
+		return (task->setup(game, task), task);
 	}
 	return (NULL);
 }

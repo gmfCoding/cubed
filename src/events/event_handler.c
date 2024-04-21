@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/04 00:45:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:04:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -61,10 +61,10 @@ void	event_interact(t_game *game)
 				event_five_lights_open(game, game->events_active[i]);
 			else if (game->events_active[i]->type == ET_FIVE_LIGHTS_CLOSED)
 				event_five_lights_closed(game, game->events_active[i]);
-			//else if (game->events_active[i]->type == ORBIT_TASK_OPEN)
-			//	event_orbit_task_on(game, game->events_active[i]);
-			//else if (game->events_active[i]->type == ORBIT_TASK_CLOSED)
-			//	event_orbit_task_off(game, game->events_active[i]);
+			else if (game->events_active[i]->type == ET_ORBIT_TASK_OPEN)
+				event_task_orbit_open(game, game->events_active[i]);
+			else if (game->events_active[i]->type == ET_ORBIT_TASK_CLOSED)
+				event_task_orbit_closed(game, game->events_active[i]);
 			return ;
 		}
 		game->display_ui = false;

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/10 17:16:13 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:58:43 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -17,25 +17,31 @@
 #include "vectorconv.h"
 #include "state.h"
 
+static const t_orb_gen	g_orbgen = {
+	.sma = {0.5 * KM_AU, 1.25 * KM_AU}, .ecc = {0.0001, 0.8},
+	.inc = {0.0001, 0.0001}, .aop = {0.0001, M_TAU}, .lan = {0.0001, 0.0001}
+};
+
 int	task_orbit_setup(t_game *game, t_task *base)
 {
-	static t_orb_gen	g_orbgen = {
-		.sma = {0.5 * KM_AU, 1.25 * KM_AU}, .ecc = {0.0001, 0.8},
-		.inc = {0.0001, 0.0001}, .aop = {0.0001, M_TAU}, .lan = {0.0001, 0.0001}
-	};
 	t_task_orbit *const	task = (t_task_orbit*)base;
+	const t_orb_body	sun = orb_body_create_rm(6.96340e8, 1.9891e30);
 
+	if (base->init)
+		return (0);
 	mrand(&game->task_rand);
-	task->rand = game->task_rand;
+	*task = (t_task_orbit)
+	{
+		.task = *base,
+		.rand = game->task_rand,
+		.start_ang = (t_kep_ang){0}, .target_path.sgp_u = sun.u,
+		.start_path = (t_kep_path){.sma = KM_AU, .ecc = 0.0001, .inc = 0.0001,
+		.lan = 0.0001, .aop = 0.0001, .sgp_u = sun.u},
+		.sun = sun, .maneuvers = 5, .active_path = 0,
+	};
+	base->init = true;
+	base->completed = false;
 	orb_generate(&task->target_path, &g_orbgen, &task->rand);
-	task->sun = orb_body_create_rm(6.96340e8, 1.9891e30);
-	task->target_path.sgp_u = task->sun.u;
-	task->start_path = (t_kep_path){
-		.sma = KM_AU, .ecc = 0.0001, .inc = 0.0001,
-		.lan = 0.0001, .aop = 0.0001, .sgp_u = task->sun.u};
-	task->start_ang = (t_kep_ang){0};
-	task->maneuvers = 5;
-	task->active_path = 0;
 	ft_memsetf64(task->delta, 1.0, T_ORBIT_MAX_MAN);
 	ft_memsetf64(task->mean, 0.0, T_ORBIT_MAX_MAN);
 	mui_orbit_setup(&game->app, &task->mui);
