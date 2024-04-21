@@ -3,7 +3,7 @@ SO ./assets/wall.xpm
 WE ./assets/wall.xpm
 EA ./assets/wall.xpm
 F 225,100,0
-C 223,20,0 
+C 223,20,0
 
 DR door01,/assets/debug.xpm,25,11,1,C,L
 DR door02,/assets/debug.xpm,20,1,1,C,L

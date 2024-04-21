@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/09 14:19:04 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/21 00:01:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char *const			g_mapsymbols[] = {
 	"SO",
 	"WE",
 	"EA",
-	"F",
-	"C",
+	"F ",
+	"C ",
 	"DR",
 	"KE",
 	"AL",
@@ -59,7 +59,8 @@ char *const			g_mapsymbols[] = {
 	"EN",
 	"WN", // WINDOW
 	"WL", // WINDOW LINE (really box)
-	"FL",
+	"FL", // Five lights
+	"OB", // Orbit task
 };
 
 t_ex_action const	g_mapfuncs[] = {
@@ -77,6 +78,7 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_wn,
 	&mod_gen_wl,
 	&mod_gen_fl,
+	&mod_gen_ob,
 };
 
 t_err modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)

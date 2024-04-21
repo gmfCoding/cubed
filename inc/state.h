@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/10 17:09:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:22:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_mmap t_mmap;
 # define TEX_SKYBOX 585
 
 # define TEX_FIVE_LIGHTS 586
+
+# define TEX_WALL_OB 587
 struct s_game
 {
 	t_app			app;
@@ -72,7 +74,7 @@ struct s_game
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
 	t_player		player;
-	t_texture		textures[587];
+	t_texture		textures[588];
 	t_world			*world;
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];

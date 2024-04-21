@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/04 00:47:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:53:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -81,8 +81,9 @@ typedef struct s_world
 
 	// content: t_entity*;
 	t_list		*entities; 
-	t_sprite	sprite[MAX_ENT];
-	short		indices[MAX_ENT]; // The indices of `sprite` in order of distance to player.
+	t_sprite	sprite[MAX_ENT * TILE_SP_MAX];
+	// The indices of `sprite` in order of distance to player.
+	short		indices[MAX_ENT * TILE_SP_MAX]; 
 	char		sp_amount;
 	char		sp_id_next;
 }			t_world;

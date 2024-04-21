@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/10 17:44:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/20 19:59:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,8 @@ void generate_textures(t_game *game)
 //	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
 
 	game->textures[TEX_FIVE_LIGHTS] = texture_load(game->app.mlx, "assets/five_lights_wall.xpm");
+	game->textures[TEX_WALL_OB] = texture_load(game->app.mlx, "assets/orbit/orbit_wall_task.xpm");
 
-
-
-
-
-
-	printf("Loading: %s\n", north->content);
 	if (north) 
 		game->textures[TEX_WALLN] = texture_load(game->app.mlx, north->content);
 	if (south)

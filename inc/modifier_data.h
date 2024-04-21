@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 23:08:09 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/09 18:36:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:23:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,17 @@ typedef struct s_mod_enemy_data
 	char		state;
 }	t_mod_enemy_data;
 
-typedef struct s_mod_fl_data
+typedef struct s_mod_task_data
 {
 	char		name[50];
 	char		target[50];
 	char		active;
 	t_vec2i		pos;
-}	t_mod_fl_data;
+	char		dir; 
+}	t_mod_task_data;
 
-// We can use the same mod data from fl atm
-typedef t_mod_fl_data t_mod_ob_data;
+typedef t_mod_task_data	t_mod_fl_data;
+typedef t_mod_task_data	t_mod_ob_data;
 
 typedef struct s_mod_alarm_data
 {

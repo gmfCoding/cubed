@@ -77,6 +77,7 @@ SRCSF = $(TEST) \
 		entities/enemy/enemy_img_setup.c \
 		entities/enemy/enemy_path_and_patrol.c \
 		entities/enemy/enemy_routines.c \
+		entities/models/orbit_task_model.c \
 		a_star/a_star_path_collect.c \
 		a_star/a_star_neighboring.c \
 		a_star/a_star_memory.c \

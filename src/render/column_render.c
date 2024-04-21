@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:41:22 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/12 15:34:29 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:20:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_vert *vertical, t_hitpoint hit)
 {
 	t_col	col;
 
-	col.type = C_WALL;
+	col = (t_col){.type = C_WALL, .uvys = 1, .shaded = hit.side == 1, 0};
 	col.texture = map_get_tile(&game->world->map, hit.x, hit.y).tex;
 	if (col.texture == 0)
 		col.texture = hit.side;
@@ -53,7 +53,6 @@ t_vert *vertical, t_hitpoint hit)
 	calculate_column_common(game, vertical, &col, hit);
 	if ((hit.side == 1 || hit.side == 2))
 		col.sample.x = col.tex_size - col.sample.x - 1;
-	col.shaded = hit.side == 1;
 	return (col);
 }
 
@@ -71,6 +70,8 @@ t_hitpoint hit)
 		col.uv.x = (hit.minX * sp->uv.scale.x) + sp->uv.offset.x;
 		col.texture = sp->tex;
 		col.tex_size = game->textures[sp->tex].width;
+		col.uvyo = sp->uv.offset.y;
+		col.uvys = sp->uv.scale.y;
 		calculate_column_common(game, vertical, &col, hit);
 		col.shaded = 0;
 	}
@@ -88,8 +89,9 @@ static inline void	render_column(t_game *game, t_col col)
 	y = col.range.s;
 	while (++y < col.range.e)
 	{
-		col.sample.y = (int)col.uv.y % (col.tex_size - 1);
-		f = pixel_get_s(game->textures[col.texture], col.sample.x, col.sample.y);
+		col.sample.y = (int)((col.uv.y * col.uvys) + col.uvyo);
+		f = pixel_get_s(game->textures[col.texture], col.sample.x, \
+						col.sample.y % (col.tex_size - 1));
 		if ((f & M_APLHA) != R_ALPHA)
 		{
 			s = pixel_get_s(game->rt1, col.x, y);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 16:08:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:22:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -16,14 +16,15 @@
 # include "config.h"
 # include "vector2.h"
 
-typedef uint16_t		t_tid;
-typedef struct s_sprite	t_sprite;
-typedef struct s_entity	t_entity;
+typedef uint16_t			t_tid;
+typedef struct s_sprite		t_sprite;
+typedef struct s_entity		t_entity;
 typedef struct s_mm_tile	t_mm_tile;
 
-typedef struct s_game t_game; // FORWARD DECLARE
-typedef struct s_world t_world; // FORWARD DECLARE
-typedef void (*t_fn_event_handler)(t_entity *entity, t_game *game);
+typedef struct s_game		t_game; // FORWARD DECLARE
+typedef struct s_world		t_world; // FORWARD DECLARE
+typedef void				(*t_fn_event_handler)(t_entity *, t_game *);
+typedef void				(*t_fn_entity_update)(t_entity *, t_game *);
 
 typedef struct s_uv
 {
@@ -40,7 +41,6 @@ typedef struct s_uv
  * ***/
 struct	s_sprite
 {
-	char		id;
 	t_tid		tex;
 	t_vec2		pos;
 	bool		visible;
@@ -64,7 +64,8 @@ struct	s_sprite
 typedef enum e_entity_type
 {
 	ENT_DOOR,
-	ENT_ENEMY
+	ENT_ENEMY,
+	ENT_TASK_ORBIT
 }	t_entity_type;
 
 struct	s_entity
@@ -102,16 +103,25 @@ typedef struct s_door_model
 
 typedef struct s_wm_task_orbit
 {
-	t_vec2 m1;
-	t_vec2 m2;
+	t_vec2		m1;
+	t_vec2		m2;
 
-	t_vec2 o1;
-	t_vec2 o2;
+	t_vec2		o1;
+	t_vec2		o2;
 
-	t_vec2 dir;
+	t_vec2		b1;
+	t_vec2		b2;
+
+
+	t_vec2		dir;
 }	t_wm_task_orbit;
 
-
+typedef struct s_ent_task_orbit
+{
+	t_entity	base;
+	t_sprite	*sprites[5];
+	t_vec2		dir;
+}	t_ent_task_orbit;
 
 # define ENT_DOOR_SPEED 2.0
 

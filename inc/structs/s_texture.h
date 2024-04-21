@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 03:32:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 03:32:59 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:06:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef S_TEXTURE_H
@@ -22,4 +22,10 @@ typedef struct s_texture
 	int		line_size;
 	int		endian;
 }				t_texture;
+
+typedef union u_colour
+{
+	int		rgba;
+	char	channels[4];
+}			t_ucolour;
 #endif
