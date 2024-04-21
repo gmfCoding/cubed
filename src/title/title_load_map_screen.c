@@ -65,17 +65,29 @@ void	title_show_load_map(t_game *game)
 	texture_blit(game->textures[TEX_TITLE_SPACE_BACK], game->rt0, v2new(0, 0));
 	texture_blit(game->textures[TEX_TITLE_LOADMAP], game->rt0, v2new(270, 105));
 	if (input_keydown(&game->input, KEY_BACKSPACE))
+	{
+		play_sound(game->app.sfx, SFX_SELECT, PLAY);
 		game->title.state = SELECT_START;
+	}
 	if (input_keydown(&game->input, KEY_UARROW) \
 		|| input_keydown(&game->input, KEY_W))
+	{
+		play_sound(game->app.sfx, SFX_SELECTION, PLAY);
 		game->title.anim_forward--;
+	}
 	if (input_keydown(&game->input, KEY_DARROW) \
 		|| input_keydown(&game->input, KEY_S))
+	{
+		play_sound(game->app.sfx, SFX_SELECTION, PLAY);
 		game->title.anim_forward++;
+	}
 	if (game->title.anim_forward < 0)
 		game->title.anim_forward = game->title.map_str_amount - 1;
 	if (game->title.anim_forward > game->title.map_str_amount - 1)
 		game->title.anim_forward = 0;
 	if (input_keydown(&game->input, KEY_ENTER))
+	{
+		play_sound(game->app.sfx, SFX_SELECT, PLAY);
 		game->title.state = LOAD_AND_RUN;
+	}
 }

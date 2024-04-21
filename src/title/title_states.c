@@ -20,10 +20,16 @@ void	title_show_select_start(t_game *game)
 	texture_blit(game->textures[TEX_TITLE_SPACE_BACK], game->rt0, v2new(0, 0));
 	if (input_keydown(&game->input, KEY_UARROW) \
 		|| input_keydown(&game->input, KEY_W))
+	{
+		play_sound(game->app.sfx, SFX_SELECTION, PLAY);
 		game->title.anim_frame--;
+	}
 	if (input_keydown(&game->input, KEY_DARROW) \
 		|| input_keydown(&game->input, KEY_S))
+	{
+		play_sound(game->app.sfx, SFX_SELECTION, PLAY);
 		game->title.anim_frame++;
+	}
 	game->title.anim_frame = (game->title.anim_frame + 3) % 3;
 	texture_blit(game->textures[TEX_TITLE_START_0 + \
 		(game->title.anim_frame == 0)], game->rt0, v2new(295, 105));
@@ -33,6 +39,7 @@ void	title_show_select_start(t_game *game)
 		(game->title.anim_frame == 2)], game->rt0, v2new(295, 505));
 	if (input_keydown(&game->input, KEY_ENTER))
 	{
+		play_sound(game->app.sfx, SFX_SELECT, PLAY);
 		if (game->title.anim_frame == 0)
 			game->title.state = LOAD_MAP;
 		if (game->title.anim_frame == 1)
@@ -79,6 +86,7 @@ void	title_show_title(t_game *game)
 		|| input_keyheld(&game->input, KEY_ENTER) \
 		|| input_keydown(&game->input, MB_LEFT))
 	{
+		play_sound(game->app.sfx, SFX_SELECTION, PLAY);
 		game->title.anim_frame = 0;
 		game->title.state = SELECT_START;
 	}

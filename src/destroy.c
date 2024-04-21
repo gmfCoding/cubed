@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
+#include "sound.h"
+
 
 #define KDOWN 2
 #define KUP 3
@@ -65,6 +67,8 @@ void	game_destroy(t_game *game)
 {
 	textures_destroy(game);
 	world_destroy(game);
+	sound_manager_deallocate(game->app.sfx);
+
 	//TODO: Leak cleanup
 	exit(0);
 }

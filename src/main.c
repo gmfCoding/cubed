@@ -12,7 +12,6 @@
 
 #include <mlx.h>
 #include <stdio.h>
-
 #include "texture.h"
 #include "state.h"
 #include "mini_map.h"
@@ -20,6 +19,10 @@
 #include "a_star.h"
 #include "enemy.h"
 #include "destroy.h"
+#include "sound.h"
+
+
+
 
 
 
@@ -127,12 +130,17 @@ void	setup_world(int argc, char **argv, t_game *game)
 int	main(int argc, char **argv)
 {
 	t_game	game;
-	
+
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
 	*game.world = (t_world){0};
+	sound_init(&game);
+	if(game.app.sfx == NULL)
+		printf("Sound not enabled\n");
 	game.app.mlx = mlx_init();
 	title_setup_screens(&game);
+
+	play_sound(game.app.sfx, SFX_INTRO, PLAY);
 	game.loaded_index[0] = 0;
 	game.loaded_index[1] = 1;
 	game.loaded_index[2] = 0;

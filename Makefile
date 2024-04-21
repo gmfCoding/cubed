@@ -88,6 +88,7 @@ SRCSF = $(TEST) \
 		input/input_setup.c \
 		input/keys.c \
 		input/mouse.c \
+		sound/sound_setup.c \
 		task/task.c \
 		task/five_lights/fl_setup.c \
 		task/five_lights/fl_state_manage.c \
@@ -170,7 +171,7 @@ CC = cc
 WFLAGS = #-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
-LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
+LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm -lpthread -ldl
 OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2 
 
 OPTS = $(OPT)

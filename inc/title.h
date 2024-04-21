@@ -1,6 +1,6 @@
 #ifndef TITLE_H
 # define TITLE_H
-
+#include "sound.h"
 
 typedef enum	e_menu_state
 {
@@ -13,6 +13,9 @@ typedef enum	e_menu_state
 	LOSE_SCREEN,
 	WIN_SCREEN,
 	BACK_TO_TITLE,
+	TO_TITLE,
+	TO_GAME,
+	TO_LOSE,
 }		t_menu_state;
 
 
