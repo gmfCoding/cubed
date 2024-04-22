@@ -25,7 +25,7 @@ void	textures_destroy(t_game *game)
 {
 	int i;
 
-	i = TEX_ARRAY_SIZE;
+	i = game->loaded_index[0];
 	while (--i > 3)
 		texture_destroy(game->app.mlx, &game->textures[i], NULL, 0);
 	if (game->mmap.img_case[0].img != NULL)
