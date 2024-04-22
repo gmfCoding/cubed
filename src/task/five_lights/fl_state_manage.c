@@ -42,9 +42,12 @@ void	fl_input_interact(t_game *game)
 	click_state = fl_we_clicked(game, game->input.mouse.x, game->input.mouse.y);
 	if (click_state == 66)
 		return ;
+
+	play_sound(game->app.sfx, SFX_SWITCH, PLAY);
 	fl_assign_state(game, click_state);
 	if (fl_win_mode(game, game->five_light.difficulty))
 	{
+		play_sound(game->app.sfx, SFX_TASK_COMPLETE, PLAY);
 		game->five_light.finished = true;
 		game->five_light.enabled = false;
 		game->five_light.difficulty++;

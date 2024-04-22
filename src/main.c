@@ -109,6 +109,7 @@ void generate_textures(t_game *game)
 
 void	setup_world(int argc, char **argv, t_game *game)
 {
+	stop_all_sound(game->app.sfx);
 	game->title.state = RUNNING_GAME;
 	if (world_preset(argc, argv, game))
 	{
@@ -125,6 +126,7 @@ void	setup_world(int argc, char **argv, t_game *game)
 	}
 	event_player(game, true);
 	nsew_textures(game);
+	play_sound(game->app.sfx, SFX_GAME_01, LOOP);
 }
 
 int	main(int argc, char **argv)

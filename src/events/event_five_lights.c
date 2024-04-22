@@ -25,6 +25,8 @@ void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
+		play_sound(game->app.sfx, SFX_HEARTBEAT, LOOP);
+		play_sound(game->app.sfx, SFX_TASK, PLAY);
 		game->player.state = START_TASK;
 		game->five_light.run_game = true;
 	}
@@ -32,6 +34,7 @@ void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 	{
 		if (game->five_light.finished == true)
 		{
+			play_sound(game->app.sfx, SFX_HEARTBEAT, STOP);
 			ent->type = ET_FIVE_LIGHTS_CLOSED;
 			if (entity_target_handle(game, ent) == TARGET_HANDLE_FAILED)
 				printf("HANDLE ERROR!\n");// TODO: How handle error/exits?

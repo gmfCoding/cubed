@@ -3,8 +3,44 @@
 #include "state.h"
 #include "clmath.h"
 
+
+
+/*
+void	enemy_adjust_step_volume(t_game *game, double dist)
+{
+	int i;
+	double v_set;
+
+	v_set = 0.0;
+	i = SFX_ESTEP01;
+	if (dist < 8.0)
+	{
+		v_set = 0.4;
+		if (dist < 6.0)
+			v_set = 0.5;
+		if (dist < 5.0)
+			v_set = 0.6;
+		if (dist < 4.0)
+			v_set = 0.7;
+		if (dist < 3.0)
+			v_set = 0.8;
+	}
+	while(i < SFX_ESTEP03)
+		set_sound_volume(game->app.sfx, i++, v_set);
+}
+*/
+
+void	enemy_adjust_step_volume(t_game *game, double dist)
+{
+	if (dist < 6.0)
+		game->world->enemy->hear_steps = true;
+	else
+		game->world->enemy->hear_steps = false;
+}
+
+
 //angle = v2x2ang(dir) - v2x2ang(v2norm(v2sub(player_pos, enemy->sprite_ref->pos)));//if we wanna rotate the other way 
-int	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
+int	enemy_move_to_target(t_game *game, t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
 {
 	t_vec2	dir;
 	t_vec2	ep;
@@ -20,10 +56,12 @@ int	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
 	enemy->sprite_ref->pos.x += dir.x * (enemy->speed * 0.01);
 	enemy->sprite_ref->pos.y += dir.y * (enemy->speed * 0.01);
 	dist = v2dist(enemy->sprite_ref->pos, player_pos);
+	enemy_adjust_step_volume(game, dist);
 	if (dist < 1.1)
 	{
+		stop_all_sound(game->app.sfx);
+		play_sound(game->app.sfx, SFX_HEARTBEAT, LOOP);
 		return (1);
-		printf("player dead load end screen and retry button\n");
 	}
 	return (0);
 }
@@ -71,6 +109,6 @@ void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
 		enemy->state = GO_PATH_TO_TARGET;
 		return ;
 	}
-	if (enemy_move_to_target(enemy, game->player.pos, game->player.pos))
+	if (enemy_move_to_target(game, enemy, game->player.pos, game->player.pos))
 		game->title.state = LOSE_SCREEN;
 }

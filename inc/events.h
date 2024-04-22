@@ -12,6 +12,7 @@
 #ifndef EVENTS_H
 # define EVENTS_H
 # include "entity.h"
+# include "sound.h"
 
 typedef struct	s_world t_world;
 typedef struct	s_map t_map;

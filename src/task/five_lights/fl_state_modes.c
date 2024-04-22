@@ -33,6 +33,7 @@ void	fl_show_help_menu(t_game *game)
 
 void	fl_leave_mgame(t_game *game)
 {
+	play_sound(game->app.sfx, SFX_HEARTBEAT, STOP);
 	fl_reset_game(game);
 	game->five_light.run_game = false;
 	game->five_light.run_setup = false;

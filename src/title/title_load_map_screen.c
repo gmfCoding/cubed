@@ -19,6 +19,8 @@ void	title_back_to_title(t_game *game)
 	int	i;
 
 	i = -1;
+
+	stop_all_sound(game->app.sfx);
 	while (game->mmap.tiles[++i].img != NULL)
 		game->mmap.tiles[i].img = NULL;
 	world_destroy(game);
@@ -26,6 +28,7 @@ void	title_back_to_title(t_game *game)
 	*game->world = (t_world){0};
 	game->title.anim_frame = 10;
 	game->title.state = TITLE;
+	play_sound(game->app.sfx, SFX_INTRO, PLAY);
 }
 
 void	title_load_and_run(t_game *game)

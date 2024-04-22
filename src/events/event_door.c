@@ -45,6 +45,8 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
+
+		play_sound(game->app.sfx, SFX_DOOR, PLAY);
 		door->closed = true;
 		ent->type = ET_DOOR_UNLOCKED;	
 		mmap_door_update(door, &game->mmap);
@@ -66,6 +68,7 @@ void	event_door_unlocked(t_game *game, t_entity_2 *ent)
 	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
+		play_sound(game->app.sfx, SFX_DOOR, PLAY);
 		tile = map_get_tile_ref(&game->world->map, ent->pos.x, ent->pos.y);
 		tile->vis = -1;
 		door->closed = false;

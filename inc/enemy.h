@@ -49,6 +49,7 @@ typedef struct		s_enemy
 	t_enemy_anim	*anim;
 	t_enemy_state	state;
 	float			speed;
+	bool			hear_steps;
 
 //	t_enemy_anim	*anim;
 //	struct s_tile	*tile_ref[9];
@@ -64,7 +65,7 @@ void	enemy_patrol(t_game *game, t_enemy *enemy);
 void	enemy_traverse_path(t_game *game, t_enemy *enemy);
 
 
-int	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos);
+int	enemy_move_to_target(t_game *game, t_enemy *enemy, t_vec2 target, t_vec2 player_pos);
 int	enemy_has_line_of_sight(t_game *game, t_vec2 start, t_vec2 end);
 void	enemy_target_in_sight(t_game *game, t_enemy *enemy);
 #endif

@@ -24,6 +24,8 @@ void	event_alert_off(t_game *game, t_entity_2 *ent)
 void	event_alert_medium(t_game *game, t_entity_2 *ent)
 {
 	(void)ent;
+
+	play_sound(game->app.sfx, SFX_ALERT, PLAY);
 	game->mmap.alert_m = true;
 	game->mmap.alert_h = false;
 	game->mmap.al_pos = ent->target->pos;
@@ -32,6 +34,7 @@ void	event_alert_medium(t_game *game, t_entity_2 *ent)
 void	event_alert_high(t_game *game, t_entity_2 *ent)
 {
 	(void)ent;
+	play_sound(game->app.sfx, SFX_ALERT, PLAY);
 	game->mmap.alert_h = true;
 	game->mmap.alert_m = false;
 	game->mmap.al_pos = ent->target->pos;

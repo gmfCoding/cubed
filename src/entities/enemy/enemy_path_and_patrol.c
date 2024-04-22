@@ -77,7 +77,7 @@ void	enemy_traverse_path(t_game *game, t_enemy *enemy)
 	}
 	target = v2new((int)enemy->path[enemy->p_index].x + 0.5, (int)enemy->path[enemy->p_index].y + 0.5);
 	dist = v2dist(enemy->sprite_ref->pos, target);
-	if (enemy_move_to_target(enemy, target, game->player.pos))
+	if (enemy_move_to_target(game, enemy, target, game->player.pos))
 		game->title.state = LOSE_SCREEN;
 	if (dist < 0.01)
 		enemy->p_index++;
@@ -99,6 +99,6 @@ void	enemy_patrol(t_game *game, t_enemy *enemy)
 		}
 		enemy->patrol_target = enemy_patrol_target(game, enemy);
 	}
-	if (enemy_move_to_target(enemy, enemy->patrol_target, game->player.pos))
+	if (enemy_move_to_target(game, enemy, enemy->patrol_target, game->player.pos))
 		game->title.state = LOSE_SCREEN;
 }
