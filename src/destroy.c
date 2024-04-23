@@ -21,6 +21,27 @@
 #define EXPOSE 12
 #define DESTROY 17
 
+void event_ent2_destroy(t_world *world)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	while (i < world->ent_count)
+	{
+		j = 0;
+	//	printf("%s we here babay\n", world->ent_2[i].name);
+		while (j < EVENT_ENT_MAX_TARGETS)
+		{
+	//		printf("free target_name: %p\n", world->ent_2[i].target_names[j]);
+			if (world->ent_2[i].target_names[j] != NULL)
+				free(world->ent_2[i].target_names[j]);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	textures_destroy(t_game *game)
 {
 	int i;
@@ -55,6 +76,7 @@ void	destroy_entity(void *ent)
 		if (as_enemy->path != NULL)
 			free(as_enemy->path);
 	}
+	free(ent);
 }
 
 void	world_destroy(t_game *game)
@@ -67,11 +89,14 @@ void	world_destroy(t_game *game)
 void	game_destroy(t_game *game)
 {
 	textures_destroy(game);
+	//event_ent2_destroy(game->world);
 	world_destroy(game);
 	sound_manager_deallocate(game->app.sfx);
-
+	mlx_destroy_window(game->app.mlx, game->app.win);
 	//TODO: Leak cleanup
+//	__lsan_do_leak_check();
 	exit(0);
+	//abort();
 }
 
 void	shutdown_input_setup(t_game *game)
