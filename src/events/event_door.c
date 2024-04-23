@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 17:01:17 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/23 20:14:45 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -48,7 +48,7 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 
 		play_sound(game->app.sfx, SFX_DOOR, PLAY);
 		door->closed = true;
-		ent->type = ET_DOOR_UNLOCKED;	
+		ent->type = ET_DOOR_UNLOCKED;
 		mmap_door_update(door, &game->mmap);
 		tile = map_get_tile_ref(&game->world->map, ent->pos.x, ent->pos.y);
 		tile->vis = -2;

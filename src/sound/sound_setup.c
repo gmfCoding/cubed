@@ -1,4 +1,5 @@
 #include "sound.h"
+#define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio_wrapper.h"
 #include "state.h"
 #define SAMPLE_FORMAT   ma_format_f32

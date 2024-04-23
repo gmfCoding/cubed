@@ -2,7 +2,6 @@
 # define MINIAUDIO_WRAPPER_H
 
 #include "sound.h"
-#define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
 
 
