@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:18:31 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 17:27:20 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:25:19 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -26,10 +26,11 @@ void	textures_destroy(t_game *game)
 	int i;
 
 	i = game->loaded_index[0];
-	while (--i > 3)
+	while (--i > -1)
 		texture_destroy(game->app.mlx, &game->textures[i], NULL, 0);
 	if (game->mmap.img_case[0].img != NULL)
 	{
+		i = 2;
 		while (i > -1)
 			texture_destroy(game->app.mlx, &game->mmap.img_case[i--], NULL, 0);
 		while (++i < 26)

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:11:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 17:46:01 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:23:39 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -59,7 +59,7 @@ void	texture_destroy(void *mlx, t_texture *tex, t_texture **tex_ptr, bool use_fr
 		tex = *tex_ptr;
 	if (tex == NULL)
 		return ;
-	if (tex != NULL)
+	if (tex != NULL && tex->img != NULL)
 		mlx_destroy_image(mlx, tex->img);
 	tex->img = NULL;
 	if (tex_ptr != NULL)
