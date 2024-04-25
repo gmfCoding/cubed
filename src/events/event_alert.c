@@ -17,25 +17,34 @@
 void	event_alert_off(t_game *game, t_entity_2 *ent)
 {
 	(void)ent;
+	if (ent->state_3 == false)
+		return ;
 	game->mmap.alert_m = false;
 	game->mmap.alert_h = false;
+	ent->state_3 = false;
 }
 
 void	event_alert_medium(t_game *game, t_entity_2 *ent)
 {
 	(void)ent;
 
+	if (ent->state_3 == false)
+		return ;
 	play_sound(game->app.sfx, SFX_ALERT, PLAY);
 	game->mmap.alert_m = true;
 	game->mmap.alert_h = false;
 	game->mmap.al_pos = ent->target->pos;
+	ent->state_3 = false;
 }
 
 void	event_alert_high(t_game *game, t_entity_2 *ent)
 {
+	if (ent->state_3 == false)
+		return ;
 	(void)ent;
 	play_sound(game->app.sfx, SFX_ALERT, PLAY);
 	game->mmap.alert_h = true;
 	game->mmap.alert_m = false;
 	game->mmap.al_pos = ent->target->pos;
+	ent->state_3 = false;
 }
