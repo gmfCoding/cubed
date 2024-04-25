@@ -102,8 +102,8 @@ void	nsew_textures(t_game *game)
 
 void generate_textures(t_game *game)
 {
-	//game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
-	game->textures[TEX_SKYBOX] = texture_create(game->app.mlx, 1000, 5000);
+	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/new_skybox.xpm");
+//	game->textures[TEX_SKYBOX] = texture_create(game->app.mlx, 1000, 5000);
 	game->textures[TEX_WALL] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
 
