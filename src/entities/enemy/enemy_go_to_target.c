@@ -5,14 +5,15 @@
 
 
 
-/*
+
 void	enemy_adjust_step_volume(t_game *game, double dist)
 {
 	int i;
-	double v_set;
+	float v_set;
 
-	v_set = 0.0;
+	v_set = 0.1;
 	i = SFX_ESTEP01;
+	
 	if (dist < 8.0)
 	{
 		v_set = 0.4;
@@ -25,19 +26,24 @@ void	enemy_adjust_step_volume(t_game *game, double dist)
 		if (dist < 3.0)
 			v_set = 0.8;
 	}
-	while(i < SFX_ESTEP03)
+	
+	while(i <= SFX_ESTEP03)
+	{
+		//printf("i = %d, and volume = %f\n", i,v_set);
 		set_sound_volume(game->app.sfx, i++, v_set);
+	}
 }
-*/
 
-void	enemy_adjust_step_volume(t_game *game, double dist)
+
+/*
+void	enemy_adjust_step_volume(t_game *game, double dist)//enable this if you cant get volume working
 {
 	if (dist < 6.0)
 		game->world->enemy->hear_steps = true;
 	else
 		game->world->enemy->hear_steps = false;
 }
-
+*/
 
 //angle = v2x2ang(dir) - v2x2ang(v2norm(v2sub(player_pos, enemy->sprite_ref->pos)));//if we wanna rotate the other way 
 int	enemy_move_to_target(t_game *game, t_enemy *enemy, t_vec2 target, t_vec2 player_pos)

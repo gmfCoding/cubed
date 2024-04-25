@@ -35,57 +35,26 @@ static void	rotate_player(t_player *player, double angle)
 void player_step_sound(t_game *game)
 {
 	int step_type = -1;
-//	static int last_step_time = 0;
 	t_inputctx *const	i = &game->input;
-	if (input_keyheld(i, KEY_W) || input_keyheld(i, KEY_S) \
-		|| input_keyheld(i, KEY_A) || input_keyheld(i, KEY_D))
-	{
-		if (game->fpsc % 35 == 0)
-		{
-			step_type = SFX_ESTEP01 + (mrand(&game->rand) % 3);
-			play_sound(game->app.sfx, step_type, PLAY);
-		//	last_step_time = game->fpsc;
-		}
-	}
-	else if (input_keydown(i, KEY_W) || input_keydown(i, KEY_S) \
+	
+	if (input_keydown(i, KEY_W) || input_keydown(i, KEY_S) \
 		|| input_keydown(i, KEY_A) || input_keydown(i, KEY_D))
 	{
-		step_type = SFX_ESTEP01 + (mrand(&game->rand) % 3);
+		step_type = SFX_PSTEP01 + (mrand(&game->rand) % 3);
 		play_sound(game->app.sfx, step_type, PLAY);
-	//	last_step_time = game->fpsc;
 	}
-}
-
-/*
-void	player_step_sound(t_game *game)
-{
-	int	step;
-	int	step_type;
-
 	if (input_keyheld(i, KEY_W) || input_keyheld(i, KEY_S) \
 		|| input_keyheld(i, KEY_A) || input_keyheld(i, KEY_D))
 	{
-			step = game->player->moveSpeed
-	step_type = SFX_PSTEP01 + (mrand(&game->rand) % 4);
-	if (step == 4 || step == 13)
-		play_sound(game->app.sfx, step_type, PLAY);
-
-
-
-
-	}
-	if (input_keyup(i, KEY_W) || input_keyup(i, KEY_S) \
-		|| input_keyup(i, KEY_A) || input_keyup(i, KEY_D))
-	{
-		step_type = SFX_PSTEP01 + (mrand(&game->rand) % 4);
-		if (step == 4 || step == 13)
+		if (game->fpsc % (int)35*game->player.moveSpeed == 0)
+		{
+			step_type = SFX_PSTEP01 + (mrand(&game->rand) % 3);
 			play_sound(game->app.sfx, step_type, PLAY);
-
-
+		}
 	}
-	
 }
-*/
+
+
 static void	move_player(t_map *map, t_player *pl, t_vec2 dir)
 {
 	const t_vec2	vel = v2muls(dir, pl->moveSpeed);

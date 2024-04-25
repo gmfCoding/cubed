@@ -1,7 +1,6 @@
 #ifndef SOUND_H
 # define SOUND_H
 
-
 #define SFX_DOOR 0
 #define SFX_GAME_01 1
 #define SFX_HEARTBEAT 2
@@ -21,7 +20,9 @@
 #define SFX_TASK_COMPLETE 16
 #define SFX_CLANK 17
 #define SFX_ORBIT 18
-#define SFX_AMOUNT 19
+#define SFX_ORBIT_THRUSTUP 19
+#define SFX_ORBIT_THRUSTDOWN 20
+#define SFX_AMOUNT 21
 
 typedef enum	e_sound_state
 {
@@ -35,10 +36,10 @@ typedef struct s_game t_game;
 //typedef struct s_sound_manager t_sound_manager;
 typedef enum e_sound_state t_sound_state;
 
-void	sound_init(t_game *game);
+void	*sound_manager_init();
 void	sound_manager_deallocate(void *s_mgr);
 void	play_sound(void *s_sfx, unsigned int index, t_sound_state sfc_ctrl);
 void	stop_all_sound(void *s_sfx);
-void	set_sound_volume(void *s_sfx, unsigned int index, double volume);
+void	set_sound_volume(void *s_sfx, unsigned int index, float volume);
 
 #endif

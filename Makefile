@@ -89,6 +89,7 @@ SRCSF = $(TEST) \
 		input/keys.c \
 		input/mouse.c \
 		sound/sound_setup.c \
+		sound/sound_use.c \
 		task/task.c \
 		task/five_lights/fl_setup.c \
 		task/five_lights/fl_state_manage.c \

@@ -136,7 +136,7 @@ int	main(int argc, char **argv)
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
 	*game.world = (t_world){0};
-	sound_init(&game);
+	game.app.sfx = sound_manager_init();
 	if(game.app.sfx == NULL)
 		printf("Sound not enabled\n");
 	game.app.mlx = mlx_init();

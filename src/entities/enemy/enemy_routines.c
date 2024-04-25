@@ -10,8 +10,8 @@ void	enemy_step_sound(t_game *game, int step)
 {
 	int	step_type;
 
-	if (game->world->enemy->hear_steps == false)
-		return ;
+	//if (game->world->enemy->hear_steps == false)//changes this back if you cant get volume working
+	//	return ;
 	step_type = SFX_ESTEP01 + (mrand(&game->rand) % 3);
 	if (step == 4 || step == 13)
 		play_sound(game->app.sfx, step_type, PLAY);
