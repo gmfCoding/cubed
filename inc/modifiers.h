@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 14:34:21 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:30:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_mm_tile	t_mm_tile;
 
 typedef enum e_ent_type
 {
+	ET_EMPTY,
 	ET_DOOR_OPEN,
 	ET_DOOR_UNLOCKED,
 	ET_DOOR_LOCKED,
@@ -44,6 +45,29 @@ typedef struct s_mod
 	t_modtype	type;
 	char		content[MOD_CONTENT_MAX];
 }			t_mod;
+
+enum e_mod_id
+{
+	MOD_ID_NO,
+	MOD_ID_SO,
+	MOD_ID_WE,
+	MOD_ID_EA,
+	MOD_ID_F,
+	MOD_ID_C,
+	MOD_ID_DR,
+	MOD_ID_KE,
+	MOD_ID_AL,
+	MOD_ID_MM,
+	MOD_ID_EN,
+	MOD_ID_WN,
+	MOD_ID_WL,
+	MOD_ID_FL,
+	MOD_ID_OB,
+	MOD_ID_GO,
+	MOD_ID_GA,
+	MOD_ID_GM,
+	MOD_ID_TA,
+};
 
 typedef struct s_key
 {
@@ -120,6 +144,7 @@ t_err		mod_gen_ob(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_go(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_ga(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_gm(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_ta(char *content, int index, t_world *world, t_map *map);
 
 void		modifier_after(t_game *game);
 t_err		modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);

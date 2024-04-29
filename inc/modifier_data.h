@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 23:08:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 15:00:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:12:40 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,21 @@ typedef struct s_mod_task_data
 	char		dir; 
 }	t_mod_task_data;
 
+
 typedef t_mod_task_data	t_mod_fl_data;
 typedef t_mod_task_data	t_mod_ob_data;
+
+typedef struct s_mod_trigger_area
+{
+	char			name[50];
+	char			target[50];
+	char			active;
+	t_vec2i			pos;
+	char			watch;
+	char			dist_mode;
+	unsigned int	radius;
+}	t_mod_trigger_area;
+
 
 typedef struct s_mod_alarm_data
 {

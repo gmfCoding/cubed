@@ -9,6 +9,8 @@ SRCSF = $(TEST) \
 		vector/vector2_math_div.c \
 		vector/vector2_math.c \
 		vector/vector2_angle.c \
+		vector/vector2_dist.c \
+		vector/vector2_lerp.c \
 		vector/vector2.c \
 		vector/vector2i_math_extra.c \
 		vector/vector2i_math.c \
@@ -61,6 +63,7 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_window.c \
 		modifiers/mod_func_window_line.c \
 		modifiers/mod_func_target_handles.c \
+		modifiers/mod_func_trigger_area.c \
 		mini_map/mmap_draw.c \
 		mini_map/mmap_draw_anim.c \
 		mini_map/mmap_image_decider.c \

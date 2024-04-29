@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 14:49:51 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:37:51 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	event_display_ui(t_game *game)
 }
 
 t_event_fn			g_events[] = {
+[ET_EMPTY] = NULL,
 [ET_DOOR_UNLOCKED] = &event_door_unlocked,
 [ET_DOOR_OPEN] = &event_door_open,
 [ET_DOOR_LOCKED] = &event_door_locked,
@@ -68,14 +69,15 @@ void	event_interact(t_game *game)
 	i = -1;
 	while (game->events_active[++i] != NULL)
 	{
+		game->display_ui = UI_NONE;
 		pos = v2add(game->events_active[i]->pos, v2new(0.5, 0.5));
 		if (v2dot(v2norm(v2sub(pos, game->player.pos)), game->player.dir) > 0.8)
 		{
-			g_events[game->events_active[i]->type](game, \
-				game->events_active[i]);
+			if (g_events[game->events_active[i]->type] != NULL)
+				g_events[game->events_active[i]->type](game, \
+					game->events_active[i]);
 			return ;
 		}
-		game->display_ui = UI_NONE;
 	}
 }
 

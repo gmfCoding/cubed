@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:43:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 15:00:15 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:40:39 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EVENTS_H
@@ -40,11 +40,18 @@ void			event_task_orbit_closed(t_game *game, t_entity_2 *ent);
 
 t_handle_result	entity_target_handle(t_game *game, t_entity_2 *ent);
 
-t_handle_result	target_handle_door(t_game *game, t_entity_2 *door, t_entity_2 *parent);
-t_handle_result	target_handle_five_lights(t_game *game, t_entity_2 *five_lights, \
-											t_entity_2 *parent);
-t_handle_result	target_handle_or(t_game *game, t_entity_2 *self, t_entity_2 *other);
-t_handle_result	target_handle_and(t_game *game, t_entity_2 *self, t_entity_2 *other);
-t_handle_result	target_handle_splitter(t_game *game, t_entity_2 *self, t_entity_2 *other);
-
+t_handle_result	target_handle_door(t_game *game, t_entity_2 *door, \
+										t_entity_2 *parent);
+t_handle_result	target_handle_five_lights(t_game *game, t_entity_2 *fl, \
+										t_entity_2 *parent);
+t_handle_result	target_handle_orbit_task(t_game *game, t_entity_2 *orbit, \
+										t_entity_2 *parent);
+t_handle_result	target_handle_or(t_game *game, t_entity_2 *self, \
+										t_entity_2 *other);
+t_handle_result	target_handle_and(t_game *game, t_entity_2 *self, \
+										t_entity_2 *other);
+t_handle_result	target_handle_splitter(t_game *game, t_entity_2 *self, \
+										t_entity_2 *other);
+t_handle_result	target_handle_trigger_area(t_game *game, t_entity_2 *area, \
+										t_entity_2 *parent);
 #endif

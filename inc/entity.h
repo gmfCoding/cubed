@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/20 20:22:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 18:22:54 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -23,6 +23,7 @@ typedef struct s_mm_tile	t_mm_tile;
 
 typedef struct s_game		t_game; // FORWARD DECLARE
 typedef struct s_world		t_world; // FORWARD DECLARE
+typedef struct s_entity_2	t_entity_2; // FORWARD DECLARE
 typedef void				(*t_fn_event_handler)(t_entity *, t_game *);
 typedef void				(*t_fn_entity_update)(t_entity *, t_game *);
 
@@ -65,7 +66,8 @@ typedef enum e_entity_type
 {
 	ENT_DOOR,
 	ENT_ENEMY,
-	ENT_TASK_ORBIT
+	ENT_TASK_ORBIT,
+	ENT_TRIGGER_AREA,
 }	t_entity_type;
 
 struct	s_entity
@@ -122,6 +124,22 @@ typedef struct s_ent_task_orbit
 	t_sprite	*sprites[5];
 	t_vec2		dir;
 }	t_ent_task_orbit;
+
+enum e_dynamic_ent
+{
+	DYN_ENT_PLAYER,
+	DYN_ENT_ENEMY,
+};
+
+typedef struct s_ent_trigger_area
+{
+	t_entity			base;
+	bool				enabled;
+	bool				manhattan;
+	enum e_dynamic_ent	watch;
+	float				radius;
+	t_entity_2			*ent2;
+}	t_ent_trigger_area;
 
 # define ENT_DOOR_SPEED 2.0
 

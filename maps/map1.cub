@@ -37,6 +37,11 @@ GM t_d03,door03,al_task03,NULL
 GM t_t04,al_task04,task05,NULL
 GM t_t05,al_task05,door04,NULL
 
+TA ta01,orbit01,O,12,17,05,P,M
+OB orbit01,gm_fin,C,1,17,E
+GM gm_fin,dr_fin,al_win,NULL
+DR dr_fin,/assets/debug.xpm,1,14,1,C,L
+
 WL 32,12,32,18
 WL 6,18,31,18
 WL 0,14,6,20

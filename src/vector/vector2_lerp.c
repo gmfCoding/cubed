@@ -1,48 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector2_math.c                                     :+:      :+:    :+:   */
+/*   vector2_lerp.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 15:49:54 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 17:48:09 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/08 03:07:14 by clovell           #+#    #+#             */
+/*   Updated: 2024/04/29 18:37:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "vector2.h"
+#include <math.h>
 
-t_vec2	v2add(t_vec2 f, t_vec2 s)
+t_vec2	v2lerp(t_vec2 a, t_vec2 b, double t)
 {
-	t_vec2	vec;
-
-	vec.x = f.x + s.x;
-	vec.y = f.y + s.y;
-	return (vec);
+	return (v2add(a, v2muls(v2sub(b, a), fmin(1, fmax(0, t)))));
 }
 
-t_vec2	v2sub(t_vec2 f, t_vec2 s)
+double	v2invlerp(t_vec2 a, t_vec2 b, t_vec2 c)
 {
-	t_vec2	vec;
+	const t_vec2	ac = v2sub(c, a);
+	const t_vec2	ab = v2sub(b, a);
 
-	vec.x = f.x - s.x;
-	vec.y = f.y - s.y;
-	return (vec);
-}
-
-t_vec2	v2mulv(t_vec2 f, t_vec2 s)
-{
-	t_vec2	vec;
-
-	vec.x = f.x * s.x;
-	vec.y = f.y * s.y;
-	return (vec);
-}
-
-t_vec2	v2muls(t_vec2 f, t_vecd s)
-{
-	t_vec2	vec;
-
-	vec.x = f.x * s;
-	vec.y = f.y * s;
-	return (vec);
+	return (v2dot(ac, ab) / v2dot(ab, ab));
 }
