@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:41:22 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/20 20:20:32 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:53:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static inline void	render_column(t_game *game, t_col col)
 	int	s;
 	int	y;
 
-	y = col.range.s;
+	y = col.range.s - 1;
 	while (++y < col.range.e)
 	{
 		col.sample.y = (int)((col.uv.y * col.uvys) + col.uvyo);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/21 16:58:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:56:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -54,7 +54,6 @@ void	orbit_thrust_apply(t_kep_path *path,
 t_kep_ang *node, double thrust)
 {
 	t_orb_cart	cart;
-	t_vec3		ecv;
 
 	cart = (t_orb_cart){0};
 	orb_cart_pos(path, node, &cart);
@@ -66,7 +65,6 @@ t_kep_ang *node, double thrust)
 
 void	update_paths(t_task_orbit *t)
 {
-	t_orb_cart	cart;
 	int			i;
 
 	i = -1;
@@ -129,8 +127,10 @@ int	task_orbit_render(t_game *game, t_task *base)
 		return (0);
 	//texture_blit_rect(&rt, scr, (t_rect){45, 37, 274, 266});
 	texture_blit(*scr, rt, v2new(0, 0));
-	texture_draw_circle(&rt, v2tov2i(task->scr_offset), task->zoom * 1/10, ORB_PLANET | R_ALPHA);
-	render_paths(task, &rt, (t_rect){task->scr_offset, {task->zoom, 0}});
+	texture_draw_circle(&rt, v2tov2i(task->scr_offset), \
+									task->zoom * 1/10, ORB_PLANET | R_ALPHA);
+	render_paths(task, &rt, (t_rect){.min = task->scr_offset, \
+									.max = {.x = task->zoom, .y = 0}});
 	texture_blit(*tex, rt, v2new(0, 0));
 	mui_render(&task->mui, &rt);
 	texture_blit_s(rt, game->rt0, v2new(90, 90), 2);

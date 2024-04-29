@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/29 23:52:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:23:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	map_update_vis(t_map *map)
 	t_tile	*tile;
 	int		x;
 	int		y;
-	int		index;
 
 	y = -1;
 	while (++y < map->height)
@@ -113,7 +112,7 @@ t_err	map_parse(int argc, char **argv, t_game *game)
 	char	*map_str;
 
 	if (argc == 1)
-		map_str = "assets/maps/default.cub";
+		map_str = "maps/default.cub";
 	else if (argc == 2)
 		map_str = argv[1];
 	else

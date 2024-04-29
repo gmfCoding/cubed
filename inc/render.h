@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:50:37 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 20:55:16 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/07 18:32:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef RENDER_H
@@ -34,7 +34,13 @@ void	render_floor(t_game *game);
 */
 void	render_wall(t_game *game);
 
+void	render_skybox(t_vec2 dir, t_texture src, t_texture rt);
+
 /* loop.c */
 // TODO: Rename as game_update
 void	render(t_game *ctx);
+void	game_update(t_game *game);
+void	setup_world(int argc, char **argv, t_game *game);
+void generate_textures(t_game *game);
+void load_image_at_index(t_game *game);
 #endif

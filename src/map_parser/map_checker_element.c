@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:00:56 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 16:02:01 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:22:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int	map_check_elements(t_list *raw_map_files)
 		if (str[1] && (str[0] == 'C' || str[0] == 'F') && str[1] == ' ')
 			if (map_check_element_colors(str + 2) == 1)
 				return (error_with("Color", 1, 0));
-		if (str[2] && !ft_strncmp(str, "NO", 2) || !ft_strncmp(str, "SO", 2) \
-			|| !ft_strncmp(str, "WE", 2) || !ft_strncmp(str, "EA", 2))
+		if (str[2] && (!ft_strncmp(str, "NO", 2) || !ft_strncmp(str, "SO", 2) \
+			|| !ft_strncmp(str, "WE", 2) || !ft_strncmp(str, "EA", 2)))
 			if (map_check_element_texture(str + 3) == 1)
 				return (error_with("Texture", 1, 0));
 		curr = curr->next;

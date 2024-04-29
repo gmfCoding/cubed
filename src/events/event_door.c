@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/07 00:40:21 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:01:17 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -33,12 +33,8 @@ void mmap_door_update(t_door *door, t_mmap *mmap)
 
 void	event_door_locked(t_game *game, t_entity_2 *ent)
 {
-	t_door *const	door = (t_door *)ent->entity;
-
-	game->display_ui = true;
-	if (input_keydown(&game->input, KEY_E))
-		printf("DOOR IS LOCKED\n");
-	return ;
+	(void)ent;
+	game->display_ui = UI_LOCKED_DOOR;
 }
 
 void	event_door_open(t_game *game, t_entity_2 *ent)
@@ -46,7 +42,7 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 	t_door *const	door = (t_door *)ent->entity;
 	t_tile			*tile;
 
-	game->display_ui = true;
+	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
 		door->closed = true;
@@ -67,7 +63,7 @@ void	event_door_unlocked(t_game *game, t_entity_2 *ent)
 	t_door *const	door = (t_door *)ent->entity;
 	t_tile *tile;
 
-	game->display_ui = true;
+	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
 		tile = map_get_tile_ref(&game->world->map, ent->pos.x, ent->pos.y);

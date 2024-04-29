@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/28 17:40:12 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/16 18:36:18 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -88,7 +88,7 @@ void	mui_def_preload(t_app *app, t_mui_ctx *ctx)
 	}
 }
 
-void	mui_destroy(t_mui_ctx *mui, t_mui_ctx **store, bool heap)
+void	mui_destroy(t_mui_ctx *mui, t_mui_ctx **store)
 {
 	free(mui->sliders);
 	free(mui->buttons);

@@ -113,10 +113,10 @@ static void	door_update_vis(t_game *game, t_door *d, bool vert)
 bool	door_is_vertical(t_door *door, t_game *game)
 {
 	const static t_vec2	directions[4] = {
-	{0, -1},
-	{0, 1},
-	{-1, 0},
-	{1, 0}};
+	{.v = {0, -1}},
+	{.v = {0, 1}},
+	{.v = {-1, 0}},
+	{.v = {1, 0}}};
 	int					i;
 	t_tile				*tile;
 
@@ -135,8 +135,6 @@ bool	door_is_vertical(t_door *door, t_game *game)
 
 void	ent_door_update(t_door *door, t_game *game)
 {
-	int	vis;
-
 	if (door->closed)
 		door->percent += door->speed;
 	else

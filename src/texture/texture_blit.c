@@ -6,12 +6,15 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 20:39:14 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/20 17:48:29 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/07 18:27:20 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
 #include "texture.h"
 #include "rect.h"
+#include <math.h>
+#include "clmath.h"
+#include <sys/param.h>
 
 /* Copies pixel data from one texture to another, minimally. */
 void	texture_blit_rect(t_texture *dst, t_texture *src, t_rect area)
@@ -20,13 +23,12 @@ void	texture_blit_rect(t_texture *dst, t_texture *src, t_rect area)
 	int	i;
 	int	max_j;
 	int	max_i;
-
-	max_j = fmin(area.max.y, fmin(src->height, dst->height));
-	max_i = fmin(area.max.x, fmin(src->width, dst->width));
-	j = fmin(0, area.min.y) - 1;
+	max_j = MIN(area.max.y, MIN(src->height, dst->height));
+	max_i = MIN(area.max.x, MIN(src->width, dst->width));
+	j = MIN(0, area.min.y) - 1;
 	while (++j < max_j)
 	{
-		i = fmin(0, area.min.x) - 1;
+		i = MIN(0, area.min.x) - 1;
 		while (++i < area.max.x)
 		{
 			pixel_set(*dst, i, j, pixel_get(*src, i, j));

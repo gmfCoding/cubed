@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enemy.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 19:59:50 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/09 20:00:00 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ENEMY_H
 # define ENEMY_H
 # include <stdint.h>
@@ -52,7 +64,7 @@ void	enemy_patrol(t_game *game, t_enemy *enemy);
 void	enemy_traverse_path(t_game *game, t_enemy *enemy);
 
 
-void	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos);
+int	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos);
 int	enemy_has_line_of_sight(t_game *game, t_vec2 start, t_vec2 end);
 void	enemy_target_in_sight(t_game *game, t_enemy *enemy);
 #endif

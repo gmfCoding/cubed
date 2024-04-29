@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modifier_data.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/06 23:08:09 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/20 17:23:19 by clovell          ###   ########.fr       */
+/*   Created: 2024/04/06 23:08:09 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/29 15:00:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ typedef enum e_modtype
 	MT_DOOR,
 	MT_ENEMY,
 	MT_FIVELIGHT_TASK,
-	MT_ORBIT_TASK
+	MT_ORBIT_TASK,
+	MT_GATE_AND,
+	MT_GATE_OR,
+	MT_GATE_SPLITTER
 }				t_modtype;
 
 

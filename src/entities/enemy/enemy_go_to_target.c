@@ -4,7 +4,7 @@
 #include "clmath.h"
 
 //angle = v2x2ang(dir) - v2x2ang(v2norm(v2sub(player_pos, enemy->sprite_ref->pos)));//if we wanna rotate the other way 
-void	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
+int	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
 {
 	t_vec2	dir;
 	t_vec2	ep;
@@ -17,11 +17,15 @@ void	enemy_move_to_target(t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
 	if (angle < 0)
 		angle += M_TAU;
 	enemy->angle_frame = fabs(angle) / M_TAU * 32;
-	enemy->sprite_ref->pos.x += dir.x * enemy->speed;
-	enemy->sprite_ref->pos.y += dir.y * enemy->speed;
+	enemy->sprite_ref->pos.x += dir.x * (enemy->speed * 0.01);
+	enemy->sprite_ref->pos.y += dir.y * (enemy->speed * 0.01);
 	dist = v2dist(enemy->sprite_ref->pos, player_pos);
 	if (dist < 1.1)
+	{
+		return (1);
 		printf("player dead load end screen and retry button\n");
+	}
+	return (0);
 }
 
 /*
@@ -67,5 +71,6 @@ void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
 		enemy->state = GO_PATH_TO_TARGET;
 		return ;
 	}
-	enemy_move_to_target(enemy, game->player.pos, game->player.pos);
+	if (enemy_move_to_target(enemy, game->player.pos, game->player.pos))
+		game->title.state = LOSE_SCREEN;
 }

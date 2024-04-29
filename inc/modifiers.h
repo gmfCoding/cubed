@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/20 17:21:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:34:21 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ typedef struct s_key
 	bool	collected;
 }		t_key;
 
+# define TARGET_HANDLE_MAX_DEPTH 10
+# define EVENT_ENT_MAX_TARGETS 4
+
+typedef enum e_handle_result
+{
+	TARGET_HANDLE_NONE,
+	TARGET_HANDLE_SUCCESS,
+	TARGET_HANDLE_FAILED,
+} t_handle_result;
+
 typedef struct s_entity_2
 {
 	t_ent_type			type;
@@ -67,7 +77,24 @@ typedef struct s_entity_2
 	int					speed;
 	int					value;
 	// would be the door entity for instant or something else
-	struct s_entity_2	*target; 
+
+	union
+	{
+		struct
+		{		
+			struct s_entity_2	*target; // targets[0]
+			struct s_entity_2	*parent1; // targets[1]
+			struct s_entity_2	*parent2; // targets[2]
+		};
+		struct
+		{
+			struct s_entity_2	*targets[EVENT_ENT_MAX_TARGETS]; // stores all targets
+			char				*target_names[EVENT_ENT_MAX_TARGETS]; // stores all target names
+		};
+	};
+	
+	t_handle_result		(*handle)(t_game *game, struct s_entity_2 *self, struct s_entity_2 *other);
+
 	t_entity			*entity; // Duct tape fix
 	bool				state_1;
 	bool				state_2;
@@ -90,6 +117,9 @@ t_err		mod_gen_wn(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_wl(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_fl(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_ob(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_go(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_ga(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_gm(char *content, int index, t_world *world, t_map *map);
 
 void		modifier_after(t_game *game);
 t_err		modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);

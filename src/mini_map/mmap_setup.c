@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mmap_setup.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/18 17:57:50 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/18 18:08:06 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "mini_map.h"
 #include "texture.h"
@@ -27,10 +38,10 @@ t_vec2	v2diff(t_vec2 f, t_vec2 s)
  */
 bool	mmap_fog_check(t_game *game)
 {
-	const t_mod *mm;
+	const t_mod	*mm;
 
 	mm = mod_get_mod(&game->world->map, MT_MINI_MAP, NULL);
-	if (mm == NULL)// || mm->content == NULL) cc warning: comparison of array 'mm->content' equal to a null pointer is always false
+	if (mm == NULL)
 		return (false);
 	if (mm->content[0] == 'F')
 		return (false);
@@ -42,9 +53,7 @@ bool	mmap_fog_check(t_game *game)
  */
 void	mmap_init(t_game *game)
 {
-	int	x;
 	int	y;
-	int	index;
 	int	i;
 
 	game->mmap.mm_big = false;
@@ -56,6 +65,6 @@ void	mmap_init(t_game *game)
 	i = 0;
 	while (++y < game->world->map.height)
 		i = mmap_tile_assign(game, i, y);
-	while(i > -1)
+	while (i > -1)
 		game->mmap.tiles[i--].vis = mmap_fog_check(game);
 }

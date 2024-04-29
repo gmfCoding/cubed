@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modifier_setup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/21 00:01:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:50:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ char *const			g_mapsymbols[] = {
 	"WL", // WINDOW LINE (really box)
 	"FL", // Five lights
 	"OB", // Orbit task
+	"GO", // Or-Gate / Redirect
+	"GA", // And-Gate
+	"GM", // Multi Gate Splitter
 };
 
 t_ex_action const	g_mapfuncs[] = {
@@ -79,6 +82,9 @@ t_ex_action const	g_mapfuncs[] = {
 	&mod_gen_wl,
 	&mod_gen_fl,
 	&mod_gen_ob,
+	&mod_gen_go,
+	&mod_gen_ga,
+	&mod_gen_gm,
 };
 
 t_err modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
@@ -95,7 +101,7 @@ t_err modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		str = (char *)curr->content;
 		remove_spaces(str);
 		i = -1;
-		while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
+		while ((size_t)++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
 		{
 			if (ft_strncmp(g_mapsymbols[i], str, \
 			strlen_nl(g_mapsymbols[i])) == 0)
@@ -123,12 +129,23 @@ void	modifier_after(t_game *game)
 {
 	t_world *const	w = game->world;
 	int				i;
+	int				j;
 	t_list			*ent_iter;
 	t_entity		*ent_curr;
 
 	i = -1;
-	while (++i < w->ent_count)
+	while ((size_t)++i < w->ent_count)
+	{
+		//printf("%s : %p\n", w->ent_2[i].name, &w->ent_2[i]);
+		j = -1;
+		while (j++ < EVENT_ENT_MAX_TARGETS)
+		{
+			if (w->ent_2[i].target_names[j] && w->ent_2[i].target_names[j][0] && ft_strcmp(w->ent_2[i].target_names[j], "NULL") != 0)
+				w->ent_2[i].targets[j] = mod_search_name(w, w->ent_2[i].target_names[j]);
+			//printf("\t%d: %p / %s\n", j, w->ent_2[i].targets[j], w->ent_2[i].target_names[j]);
+		}
 		w->ent_2[i].ref_mm_tile = mmap_find_tile(game, w->ent_2[i].pos);
+	}
 	ent_iter = game->world->entities;
 	while (ent_iter != NULL)
 	{

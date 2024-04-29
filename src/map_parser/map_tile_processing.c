@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:20:24 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 13:42:17 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:36:34 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -14,10 +14,12 @@
 
 t_tiletype	get_tiletype(char c)
 {
-	if (c == '0')//ft_strchr("NESW", c) != NULL)
+	if (c == '0')
 		return (FLOOR);
 	else if (c == '1')
 		return (WALL);
+	else if (c == 'N' || c == 'E' || c == 'S' || c == 'W')
+		return (FLOOR);
 	else
 		return (EMPTY);
 }

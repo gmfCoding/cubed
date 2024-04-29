@@ -58,7 +58,7 @@ void star_check_cardinal_neighbors(t_game *game, t_star_node *curr, t_star_node 
             game->world->map.tiles[(int)pos.y * game->world->map.width + (int)pos.x].vis == -1 &&
             star_not_in_list(open, close, pos, curr))
         {
-            star_insert_node(game, open, curr, pos);
+            star_insert_node(open, curr, pos);
         }
     }
 }
@@ -89,7 +89,7 @@ void star_check_diagonal_neighbors(t_game *game, t_star_node *curr, t_star_node 
 			pos.x = curr->pos.x + ((i % 2 == 0) ? -1 : 1);
 			pos.y = curr->pos.y + ((i < 2) ? -1 : 1);
 			if (star_not_in_list(open, close, pos, curr))
-				star_insert_node(game, open, curr, pos);
+				star_insert_node(open, curr, pos);
 		}
 	}
 }
@@ -121,7 +121,7 @@ void	star_get_neighbors(t_game *game, t_star_node *curr, t_star_node **open, t_s
 		if (pos.x >= 0 && pos.x < game->world->map.width && pos.y >= 0 && pos.y < game->world->map.height \
 			&& game->world->map.tiles[(int)pos.y * game->world->map.width + (int)pos.x].vis == -1)
 			if (star_not_in_list(open, close, pos, curr))
-				star_insert_node(game, open, curr, pos);
+				star_insert_node(open, curr, pos);
 	}
 }
 

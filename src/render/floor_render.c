@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:31:56 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 09:28:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:55:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "vector2.h"
@@ -31,12 +31,15 @@ static void	render_floor_row(t_game *game, int y, t_vec2 step, t_vec2 *floor)
 		cell = v2inew(floor->x, floor->y);
 		uv.x = (int)(WALL_TEX_SIZE * (floor->x - cell.x)) & (WALL_TEX_SIZE - 1);
 		uv.y = (int)(WALL_TEX_SIZE * (floor->y - cell.y)) & (WALL_TEX_SIZE - 1);
-		if (floor->x >= 0 && floor->x < game->world->map.width && floor->y >= 0 && floor->y < game->world->map.height)
+		if (floor->x >= 0 && floor->x < game->world->map.width && floor->y >= 0 \
+			&& floor->y < game->world->map.height && \
+			map_get_tile(&game->world->map, floor->x, floor->y).type != EMPTY)
 		{
 			colour = game->world->map.color_ceiling;
 			if (!game->world->map.use_ceiling)
 				colour = pixel_get(game->textures[TEX_CEILING], uv.x, uv.y);
-			pixel_set(game->rt1, x, R_HEIGHT - y - 1, (colour >> 1) & 0x3F3F3F | R_ALPHA);
+			//mod_ob //pixel_set(game->rt1, x, R_HEIGHT - y - 1, (colour >> 1) & 0x3F3F3F | R_ALPHA); // TODO: Select
+			pixel_set(game->rt1, x, y, ((colour >> 1) & 8355711) | R_ALPHA);
 			colour = game->world->map.color_floor;
 			if (!game->world->map.use_floor)
 				colour = pixel_get(game->textures[TEX_FLOOR], uv.x, uv.y);
@@ -50,16 +53,16 @@ static void	render_floor_row(t_game *game, int y, t_vec2 step, t_vec2 *floor)
 
 static void	render_floor_cols(t_game *game, t_vec2 dir, t_vec2 diff)
 {
-	const float	pos_z = R_HEIGHT / 2.0;
+	const float	pos_z = 0.5 * -R_HEIGHT;
 	t_vec2		floor;
 	t_vec2		step;
 	int			y;
 	int			p;
 
-	y = (R_HEIGHT / 2.0) - 1;
-	while (++y < R_HEIGHT)
+	y = -1;
+	while (++y < R_HEIGHT / 2)
 	{
-		p = y - R_HEIGHT / 2;
+		p = (y - R_HEIGHT / 2);
 		step = v2muls(v2muls(diff, pos_z / p), 1.0f / R_WIDTH);
 		floor = v2add(game->player.pos, v2muls(dir, pos_z / p));
 		render_floor_row(game, y, step, &floor);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/20 16:53:55 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:33:16 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -51,21 +51,21 @@ typedef struct s_tile
 //	uint8_t		tex;
 	/// @brief -1: Nothing, 0: Opaque, 1: Transparent
 	int8_t		vis;
-	char		sp_count;
-	char		sprite[TILE_SP_MAX];
+	uint8_t		sp_count;
+	uint8_t		sprite[TILE_SP_MAX];
 }				t_tile;
 
 typedef struct s_map
 {
-	t_tile	tiles[MAP_MAX_X * MAP_MAX_Y];
-	t_mod	mods[MAP_MODIFICATION_SIZE];
-	t_vec2	s_pos;
-	uint8_t	width;
-	uint8_t	height;
-	bool	use_ceiling;
-	bool	use_floor;
-	int		color_ceiling;
-	int		color_floor;
+	t_tile		tiles[MAP_MAX_X * MAP_MAX_Y];
+	t_mod		mods[MAP_MODIFICATION_SIZE];
+	t_vec2		s_pos;
+	uint8_t		width;
+	uint8_t		height;
+	bool		use_ceiling;
+	bool		use_floor;
+	uint32_t	color_ceiling;
+	uint32_t	color_floor;
 }				t_map;
 
 typedef struct s_world
@@ -76,16 +76,17 @@ typedef struct s_world
 	t_door		doors[MAX_ENT];
 	t_key		keys[MAX_ENT];
 	t_entity_2	ent_2[MAX_ENT];
-	int			ent_count;
+	uint32_t	ent_count;
 	t_enemy		*enemy;
 
 	// content: t_entity*;
 	t_list		*entities; 
+
 	t_sprite	sprite[MAX_ENT * TILE_SP_MAX];
 	// The indices of `sprite` in order of distance to player.
-	short		indices[MAX_ENT * TILE_SP_MAX]; 
-	char		sp_amount;
-	char		sp_id_next;
+	int16_t		indices[MAX_ENT * TILE_SP_MAX];
+	uint8_t		sp_amount;
+	uint8_t		sp_id_next;
 }			t_world;
 
 // // TOOD: Move
@@ -111,7 +112,7 @@ void		map_sprite_clear(t_map *map);
 void		sprite_update(t_map *map, t_sprite *const sprite, int index);
 void		sprite_update_all(t_world *game);
 void		sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir);
-void		sprite_order_distance(t_vec2 centre, t_sprite *array, short *indices, int count);
+void		sprite_order_distance(t_vec2 centre, t_sprite *array, int16_t *indices, int count);
 // MAP PARSER //
 t_tiletype	get_tiletype(char c);
 

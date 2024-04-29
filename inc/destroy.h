@@ -13,3 +13,4 @@
 
 void	shutdown_input_setup(t_game *game);
 void	game_destroy(t_game *game);
+void	world_destroy(t_game *game);

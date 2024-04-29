@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:50:56 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/06 19:27:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:45:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "vector2.h"
@@ -37,7 +37,7 @@ t_vecd	v2mag(t_vec2 vec)
 	return (sqrt(v2sqrmag(vec)));
 }
 
-const t_vec2	v2proj2(t_vec2 a, t_vec2 b, t_vec2 c)
+t_vec2	v2proj2(t_vec2 a, t_vec2 b, t_vec2 c)
 {
 	const t_vec2	diff = v2sub(a, b);
 	const t_vecd	scale = v2dot(diff, v2sub(c, a)) / v2mag(diff);

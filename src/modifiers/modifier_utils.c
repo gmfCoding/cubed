@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modifier_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 16:48:43 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/20 17:21:13 by clovell          ###   ########.fr       */
+/*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/29 14:51:49 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_vec2	mod_dir_to_vec2(char dir)
 
 t_mod	*mod_get_mod(t_map *map, t_modtype type, int *index)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < sizeof(map->mods) / sizeof(t_mod) && map->mods[i].type != type)
@@ -43,7 +43,7 @@ t_entity_2	*mod_search_name(t_world *world, char *str)
 	int	i;
 
 	i = -1;
-	while (++i < world->ent_count)
+	while ((size_t)++i < world->ent_count)
 	{
 		if (ft_strcmp(world->ent_2[i].name, str) == 0)
 			return (&world->ent_2[i]);
