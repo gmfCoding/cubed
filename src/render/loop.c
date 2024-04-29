@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 14:56:01 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:38:15 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,9 +190,6 @@ void draw_debug_view_world_state(t_game *game)
 
 void	game_update(t_game *game)
 {
-//	const t_texture    tex = texture_get_debug_view(game, 2);
-//	texture_clear(tex, 0 | R_ALPHA);
-	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	entity_update(game);
 	enemy_routine(game, game->world->enemy);
 	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
@@ -224,7 +221,7 @@ void	game_update(t_game *game)
 		draw_debug_view_world_state(game);
 		texture_draw_debug_view(game, 2);
 	}
-	five_lights(game);
+	task_process(game);
 }
 
 void	render(t_game *game)
