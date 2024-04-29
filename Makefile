@@ -138,7 +138,7 @@ endif
 
 $(info Compiling for OS:$(OS))
 
-NAME = cubed
+NAME = cub3D
 
 DIRSRC = src
 DIROBJ = obj
