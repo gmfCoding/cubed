@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:22:55 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/20 17:06:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:45:49 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,7 @@ t_err	mod_get_colour(char *content, union u_colour *colour)
 t_err	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 {
 	union u_colour	colour;
-	static bool		stop = false;
 
-	if (stop)
-		return (1);
-	stop = true;
 	if (mod_get_colour(content, &colour))
 		return (1);
 	world->map.color_floor = colour.rgba;
@@ -51,11 +47,7 @@ t_err	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 t_err	mod_gen_c(char *content, int index, t_world *world, t_map *map)
 {
 	union u_colour	colour;
-	static bool		stop = false;
 
-	if (stop)
-		return (1);
-	stop = true;
 	if (mod_get_colour(content, &colour))
 		return (1);
 	world->map.color_ceiling = colour.rgba;
