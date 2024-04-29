@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:11:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 17:46:01 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:02:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -68,11 +68,11 @@ void	texture_destroy(void *mlx, t_texture *tex, t_texture **tex_ptr, bool use_fr
 		free(tex);
 }
 
-t_texture	texture_load(void *mlx, char *path)
+t_texture	texture_load(void *mlx, const char *const path)
 {
 	t_texture	t;
 
-	t.img = mlx_xpm_file_to_image(mlx, path, &t.width, &t.height);
+	t.img = mlx_xpm_file_to_image(mlx, (char *)path, &t.width, &t.height);
 	t.data = (int *)mlx_get_data_addr(t.img, &t.bpp, &t.line_size, &t.endian);
 	texture_init(t);
 	return (t);
