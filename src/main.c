@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 18:29:54 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:54:04 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@
 #include "enemy.h"
 #include "destroy.h"
 #include "sound.h"
-
-
-
-
-
-
 
 /*
  * include for mouse movement

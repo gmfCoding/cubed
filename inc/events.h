@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   events.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 09:43:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 19:06:58 by kmordaun         ###   ########.fr       */
+/*   Created: 2024/03/16 09:43:53 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/30 20:44:09 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef EVENTS_H
 # define EVENTS_H
 # include "entity.h"
