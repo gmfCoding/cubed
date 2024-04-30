@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sound_setup.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/30 16:54:01 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/30 17:14:25 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sound.h"
 #define MINIAUDIO_IMPLEMENTATION
 /*
@@ -88,7 +100,7 @@ ma_uint32	read_and_mix_pcm_frames_f32(ma_decoder* pDecoder, float* pOutputF32, m
 		if (result != MA_SUCCESS || framesReadThisIteration == 0)
 			break;
 		for (iSample = 0; iSample < framesReadThisIteration * CHANNEL_COUNT; ++iSample)
-			pOutputF32[totalFramesRead * CHANNEL_COUNT + iSample] += temp[iSample];// * volume;
+			pOutputF32[totalFramesRead * CHANNEL_COUNT + iSample] += temp[iSample] * volume;
 		totalFramesRead += (ma_uint32)framesReadThisIteration;
 		if (framesReadThisIteration < framesToReadThisIteration)
 			break;
@@ -118,8 +130,8 @@ void	data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 			}
 		}
 	}
-//	if (are_all_decoders_at_end(s_sfx))
-//		ma_event_signal(&s_sfx->stop_event);
+	if (are_all_decoders_at_end(s_sfx))
+		ma_event_signal(&s_sfx->stop_event);
 	(void)pInput;
 }
 
@@ -168,7 +180,7 @@ void	*sound_manager_init()
 		printf("Failed to open playback device.\n");
 		return (NULL);
 	}
-//	ma_event_init(&s_mgr->stop_event);
+	ma_event_init(&s_mgr->stop_event);
 	if (ma_device_start(&s_mgr->device) != MA_SUCCESS)
 	{
 		sound_manager_deallocate(s_mgr);

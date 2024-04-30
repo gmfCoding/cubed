@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:43:28 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/11 21:16:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:35:40 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void	remove_int_from_list(t_list **raw_map_file)
 		error_return("File Empty", 1, 1, NULL);
 	temp = *raw_map_file;
 	*raw_map_file = temp->next;
+	free(temp->content);
 	free(temp);
 }
 
