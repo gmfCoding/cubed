@@ -31,16 +31,68 @@ int	map_starting_tile(char *content)
 	return (0);
 }
 
+void	tabs_change_to_space(char *new_line, char *line)
+{
+	int		i;
+	int		k;
+	int		j;
+
+	i = -1;
+	j = 0;
+	while (line[++i] != '\0')
+	{
+		if (line[i] == '\t')
+		{
+			k = -1;
+			while (++k < 4)
+				new_line[j++] = ' ';
+		}
+		else
+			new_line[j++] = line[i];
+	}
+	new_line[j] = '\0';
+}
+
 /*
  * used to replace all taps with spaces to avoid error
  * when parsing the map and modifiers
  */
+int	replace_tabs(t_list *curr)
+{
+	size_t	new_size;
+	char	*new_line;
+	char	*line;
+	int		num_tabs;
+	int		i;
+
+	while (curr != NULL && curr->content != NULL)
+	{
+		line = (char *)curr->content;
+		num_tabs = 0;
+		i = -1;
+		while (line[++i] != '\0')
+			if (line[i] == '\t')
+				++num_tabs;
+		new_size = ft_strlen(line) + (num_tabs * (TAB_SIZE - 1)) + 1;
+		char *new_line = malloc(new_size);
+		if (new_line == NULL)
+			return (1);
+		tabs_change_to_space(new_line, line);
+		free(line);
+		curr->content = new_line;
+		curr = curr->next;
+	}
+	return (0);
+}
+
+/*//can get rid of this not using memmove anymore now allowcating for new str
 void	replace_tabs(t_list *curr)
 {
 	int		i;
 	int		j;
 	char	*line;
 
+	printf("\n");
 	while (curr != NULL && curr->content != NULL)
 	{
 		line = (char *)curr->content;
@@ -53,7 +105,14 @@ void	replace_tabs(t_list *curr)
 					&line[i + 1], ft_strlen(&line[i + 1]) + 1);
 				j = 0;
 				while (j < TAB_SIZE)
+				{
+					if (line[i + j] == '\0')
+						break;
 					line[i + j++] = ' ';
+					printf("|space|");
+					if(line[i + j++] == '\t')
+						printf("ts a tab here\n");
+				}
 				i += TAB_SIZE;
 			}
 			else
@@ -61,7 +120,12 @@ void	replace_tabs(t_list *curr)
 		}
 		curr = curr->next;
 	}
+	printf("\n");
+	printf("\n");
 }
+*/
+
+
 
 /*
  * a small fucntion used to print the map in terminal

@@ -46,9 +46,11 @@ void	textures_destroy(t_game *game)
 {
 	int i;
 
-	i = game->loaded_index[0];
+	//i = game->loaded_index[0];
+	i = TEX_ARRAY_SIZE;
 	while (--i > -1)
-		texture_destroy(game->app.mlx, &game->textures[i], NULL, 0);
+		if (&game->textures[i] != NULL)
+			texture_destroy(game->app.mlx, &game->textures[i], NULL, 0);
 	if (game->mmap.img_case[0].img != NULL)
 	{
 		i = 2;
@@ -65,7 +67,6 @@ void	textures_destroy(t_game *game)
 	//need to sort out walls NSEW and free coz some walls are pointing to other walls
 
 }
-
 
 void	destroy_entity(void *ent)
 {
@@ -91,10 +92,12 @@ void	game_destroy(t_game *game)
 	textures_destroy(game);
 	//event_ent2_destroy(game->world);
 	world_destroy(game);
-	sound_manager_deallocate(game->app.sfx);
-	mlx_destroy_window(game->app.mlx, game->app.win);
+	if (game->app.sfx != NULL)
+		sound_manager_deallocate(game->app.sfx);
+	if (game->app.win != NULL)
+		mlx_destroy_window(game->app.mlx, game->app.win);
 	//TODO: Leak cleanup
-//	__lsan_do_leak_check();
+	//__lsan_do_leak_check();
 	exit(0);
 	//abort();
 }

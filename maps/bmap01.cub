@@ -2,19 +2,19 @@ NO ./assets/wall.xpm
 SO ./assets/wall.xpm
 WE ./assets/wall.xpm
 EA ./assets/wall.xpm
-F 225,100,0
-C 223,20,0 
+F 225,300,0
+C 223,20,0
 
-DR door01,/assets/debug.xpm,25,11,1,C,L
-DR door02,/assets/debug.xpm,20,1,1,C,L
+DR             door01,/assets/debug.xpm,25,11,1,C,L
+DR door02,/ass  et s/d ebug. xpm,20,1,1,C,L
 DR door03,/assets/debug.xpm,40,4,1,C,L
-DR door04,/assets/debug.xpm,16,17,1,C,L
+DR door04,/  assets/debug.xpm,16,17,1,C,L
 
-DR door05,/assets/debug.xpm,30,11,1,C,U
+DR door05,/assets/debug.xpm,30,11,  1,C,U
 DR door06,/assets/debug.xpm,32,9,1,C,U
-DR door07,/assets/debug.xpm,25,8,1,C,U
+DR door07,/assets/debug.xpm,25,8,1,C,U   
 
-DR door08,/assets/debug.xpm,35,7,1,O,U
+   DR door08,/assets/debug.xpm,35,7,1,O,U
 
 KE key01,/assets/debug.xpm,door01,26,10,A,N
 
@@ -46,7 +46,7 @@ WN 44,4
 MM F
 EN patrick,NULL,2,35,16,P
                 111111111111111
-                100000000000001
+	            100000000000001
                 100010000000001         11111
                 10001000000000111111111110001
                 10001000000000100000000000001
@@ -58,11 +58,17 @@ EN patrick,NULL,2,35,16,P
                 110000010001000010001
                 111110011011110110001
                 100000000000000010001
-                100000000000000010001
+                100000000S00000010001
 1111111         100000000000000010001
 1000001         100000000000000010001
-100000111111111110000000000S000010001
+1000001111111111100000000000000010001
 1000000000000000000000000000000010001
 1000001111111111111111111111111111111
 1000001
 1111111
+
+
+
+
+
+			

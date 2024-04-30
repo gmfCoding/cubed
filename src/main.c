@@ -113,7 +113,9 @@ void	setup_world(int argc, char **argv, t_game *game)
 	game->title.state = RUNNING_GAME;
 	if (world_preset(argc, argv, game))
 	{
-		free(game->world);
+		printf("\n\ndo we go here on every error?\n");
+		//free(game->world);
+		game_destroy(game);
 		return ;
 	}
 	map_print(&game->world->map);
@@ -140,9 +142,6 @@ int	main(int argc, char **argv)
 	if(game.app.sfx == NULL)
 		printf("Sound not enabled\n");
 	game.app.mlx = mlx_init();
-	title_setup_screens(&game);
-
-	play_sound(game.app.sfx, SFX_INTRO, PLAY);
 	game.loaded_index[0] = 0;
 	game.loaded_index[1] = 1;
 	game.loaded_index[2] = 0;
@@ -156,6 +155,9 @@ int	main(int argc, char **argv)
 	generate_textures(&game);
 	if (argc == 2)
 		setup_world(argc, argv, &game);
+	title_setup_screens(&game);
+	play_sound(game.app.sfx, SFX_INTRO, PLAY);
+
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);

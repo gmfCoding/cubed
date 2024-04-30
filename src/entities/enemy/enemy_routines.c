@@ -1,17 +1,23 @@
 #include "enemy.h"
-# include "map.h"
-# include "state.h"
-# include "clmath.h"
-# include "cubed.h"
-# include <math.h>
+#include "map.h"
+#include "state.h"
+#include "clmath.h"
+#include "cubed.h"
+#include <math.h>
 
-
+//if (game->world->enemy->hear_steps == false)
+//changes this back if you cant get volume working
+//	return ;
+/*
+ * this is where i play the sound for the enemysteps
+ * there is 18 frames in the animations on the 4 frame
+ * and the 13 frame is pretty close to when the animation
+ * for the left and right leg touch the ground
+ */
 void	enemy_step_sound(t_game *game, int step)
 {
 	int	step_type;
 
-	//if (game->world->enemy->hear_steps == false)//changes this back if you cant get volume working
-	//	return ;
 	step_type = SFX_ESTEP01 + (mrand(&game->rand) % 3);
 	if (step == 4 || step == 13)
 		play_sound(game->app.sfx, step_type, PLAY);

@@ -1,6 +1,6 @@
 #include "sound.h"
 #define MINIAUDIO_IMPLEMENTATION
-
+/*
 #define MA_ENABLE_ONLY_SPECIFIC_BACKENDS
 //#define MA_ENABLE_WASAPI
 //#define MA_ENABLE_DSOUND
@@ -27,7 +27,7 @@
 #define MA_NO_ENGINE
 #define MA_NO_GENERATION
 //#define MA_DEBUG_OUTPUT
-
+*/
 #include "miniaudio_wrapper.h"
 #define SAMPLE_FORMAT   ma_format_f32
 #define CHANNEL_COUNT   2
@@ -88,7 +88,7 @@ ma_uint32	read_and_mix_pcm_frames_f32(ma_decoder* pDecoder, float* pOutputF32, m
 		if (result != MA_SUCCESS || framesReadThisIteration == 0)
 			break;
 		for (iSample = 0; iSample < framesReadThisIteration * CHANNEL_COUNT; ++iSample)
-			pOutputF32[totalFramesRead * CHANNEL_COUNT + iSample] += temp[iSample] * volume;
+			pOutputF32[totalFramesRead * CHANNEL_COUNT + iSample] += temp[iSample];// * volume;
 		totalFramesRead += (ma_uint32)framesReadThisIteration;
 		if (framesReadThisIteration < framesToReadThisIteration)
 			break;
@@ -118,8 +118,8 @@ void	data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 			}
 		}
 	}
-	if (are_all_decoders_at_end(s_sfx))
-		ma_event_signal(&s_sfx->stop_event);
+//	if (are_all_decoders_at_end(s_sfx))
+//		ma_event_signal(&s_sfx->stop_event);
 	(void)pInput;
 }
 
@@ -132,7 +132,8 @@ void	*sound_manager_init()
 	int			j;
 
 	i = 0;
-	t_sound_manager* s_mgr = (t_sound_manager*)malloc(sizeof(t_sound_manager));
+	t_sound_manager *s_mgr = (t_sound_manager *)malloc(sizeof(t_sound_manager));
+	//s_mgr = (t_sound_manager*){0};
 	if (s_mgr == NULL)
 		return (NULL);
 	decoderConfig = ma_decoder_config_init(SAMPLE_FORMAT, CHANNEL_COUNT, SAMPLE_RATE);
@@ -167,7 +168,7 @@ void	*sound_manager_init()
 		printf("Failed to open playback device.\n");
 		return (NULL);
 	}
-	ma_event_init(&s_mgr->stop_event);
+//	ma_event_init(&s_mgr->stop_event);
 	if (ma_device_start(&s_mgr->device) != MA_SUCCESS)
 	{
 		sound_manager_deallocate(s_mgr);

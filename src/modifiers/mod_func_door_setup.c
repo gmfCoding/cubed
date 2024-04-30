@@ -68,7 +68,6 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 			sizeof(mod.name), &mod.name, &mod.tex,
 			&mod.pos.x, &mod.pos.y, &mod.speed,
 			&mod.closed, &mod.locked);
-
 	(void)index;
 	(void)wld;
 	(void)map;

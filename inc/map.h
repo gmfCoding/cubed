@@ -135,9 +135,9 @@ void		free_str_array(char **str);
 
 	// MAP_UTILS //
 
-int	is_empty_line(const char *line);
-void		replace_tabs(t_list *curr);
-void		remove_empty_lines(t_list **raw_map_file);
+int		is_empty_line(const char *line);
+int		replace_tabs(t_list *curr);
+void	remove_empty_lines(t_list **raw_map_file);
 char	*ft_strcpy(char *s1, char *s2);
 char	*ft_strcat(char *dest, char *src);
 

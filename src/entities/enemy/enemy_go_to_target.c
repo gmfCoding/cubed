@@ -3,17 +3,13 @@
 #include "state.h"
 #include "clmath.h"
 
-
-
-
 void	enemy_adjust_step_volume(t_game *game, double dist)
 {
-	int i;
-	float v_set;
+	int		i;
+	float	v_set;
 
-	v_set = 0.1;
+	v_set = 0.0;
 	i = SFX_ESTEP01;
-	
 	if (dist < 8.0)
 	{
 		v_set = 0.4;
@@ -26,17 +22,12 @@ void	enemy_adjust_step_volume(t_game *game, double dist)
 		if (dist < 3.0)
 			v_set = 0.8;
 	}
-	
-	while(i <= SFX_ESTEP03)
-	{
-		//printf("i = %d, and volume = %f\n", i,v_set);
+	while (i <= SFX_ESTEP03)
 		set_sound_volume(game->app.sfx, i++, v_set);
-	}
 }
-
-
 /*
-void	enemy_adjust_step_volume(t_game *game, double dist)//enable this if you cant get volume working
+void	enemy_adjust_step_volume(t_game *game, \
+	double dist)//enable this if you cant get volume working
 {
 	if (dist < 6.0)
 		game->world->enemy->hear_steps = true;
@@ -45,8 +36,10 @@ void	enemy_adjust_step_volume(t_game *game, double dist)//enable this if you can
 }
 */
 
-//angle = v2x2ang(dir) - v2x2ang(v2norm(v2sub(player_pos, enemy->sprite_ref->pos)));//if we wanna rotate the other way 
-int	enemy_move_to_target(t_game *game, t_enemy *enemy, t_vec2 target, t_vec2 player_pos)
+//angle = v2x2ang(dir) - v2x2ang(v2norm(v2sub(player_pos, \
+//	enemy->sprite_ref->pos)));//if we wanna rotate the other way 
+int	enemy_move_to_target(t_game *game, t_enemy *enemy, \
+	t_vec2 target, t_vec2 player_pos)
 {
 	t_vec2	dir;
 	t_vec2	ep;
@@ -82,8 +75,8 @@ int	enemy_has_line_of_sight(t_game *game, t_vec2 start, t_vec2 end)
 	t_vec2	dir;
 	double	dist;
 	double	i;
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 
 	dir = v2norm(v2sub(end, start));
 	dist = v2dist(end, start);
@@ -101,14 +94,16 @@ int	enemy_has_line_of_sight(t_game *game, t_vec2 start, t_vec2 end)
 
 void	enemy_target_in_sight(t_game *game, t_enemy *enemy)
 {
-	if (!(enemy_has_line_of_sight(game, enemy->sprite_ref->s1, game->player.pos)))
+	if (!(enemy_has_line_of_sight(game, \
+		enemy->sprite_ref->s1, game->player.pos)))
 	{
 		enemy_update_path_to_target(game, enemy);
 		enemy->p_index = 1;
 		enemy->state = GO_PATH_TO_TARGET;
 		return ;
 	}
-	if (!(enemy_has_line_of_sight(game, enemy->sprite_ref->s2, game->player.pos)))
+	if (!(enemy_has_line_of_sight(game, \
+		enemy->sprite_ref->s2, game->player.pos)))
 	{
 		enemy_update_path_to_target(game, enemy);
 		enemy->p_index = 1;

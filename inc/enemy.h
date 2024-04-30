@@ -18,7 +18,6 @@
 # include "vector2i.h"
 # include "entity.h"
 
-
 typedef struct	s_game t_game;
 typedef struct	s_world t_world;
 typedef struct	s_map t_map;

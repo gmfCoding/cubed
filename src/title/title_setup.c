@@ -39,16 +39,18 @@ void	title_imgs_load(t_game *game)
 //using forbidden functions here
 void	load_map_str(t_game *game)
 {
+	int				i;
 	DIR				*dir;
 	struct dirent	*ent;
 	char			*folder_path;
 
+	i = 0;
 	folder_path = "./maps/";
 	dir = opendir(folder_path);
 	if (dir != NULL)
 	{
 		ent = readdir(dir);
-		while (ent != NULL)
+		while (ent != NULL && i++ < 20)
 		{
 			if (ft_strcmp(ent->d_name, ".") == 0 || ft_strcmp(ent->d_name, "..") == 0)
 			{

@@ -4,9 +4,6 @@
 #include "sound.h"
 #include "miniaudio.h"
 
-
-
-
 typedef enum e_sound_state t_sound_state;
 
 typedef	struct		s_sound
@@ -15,8 +12,6 @@ typedef	struct		s_sound
     t_sound_state	state;
     float			volume;
 }		t_sound;
-
-
 
 typedef struct	s_sound_manager
 {
