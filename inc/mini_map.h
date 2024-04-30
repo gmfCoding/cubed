@@ -21,14 +21,13 @@
 #include "config.h"
 
 //int mapX=6,mapY=6,mapS=32,mapSS=24;
-
 //# define MAP_WIDTH 6
 //# define MAP_HEIGHT 6
 //# define SCR_CENTER_X (SCR_WIDTH / 2)
 //# define SCR_CENTER_X (SCR_HEIGHT / 2)
-# define MAP_CASE 128
-# define MAP_POS_X (140 - MAP_CASE)
-# define MAP_POS_Y (SCR_HEIGHT - 140 - MAP_CASE)
+# define M_CAS 128
+# define M_P_X (140 - M_CAS)
+# define M_P_Y (SCR_HEIGHT - 140 - M_CAS)
 # define MAP_S 24
 
 typedef struct s_game t_game;

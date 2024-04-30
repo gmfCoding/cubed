@@ -96,7 +96,7 @@ static t_err	map_check_surrounded(t_map *map_temp, int pos)
  * checks content of the map to follow the rules of subject
  * Return 1 on error 0 on success
  */
-static t_err	 map_check_err(t_map *map_temp, t_list *temp, \
+static t_err	map_check_err(t_map *map_temp, t_list *temp, \
 		t_list *file, char *path)
 {
 	const t_list	*curr = temp;

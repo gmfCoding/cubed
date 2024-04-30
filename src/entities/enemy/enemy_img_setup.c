@@ -13,7 +13,7 @@
 #include "enemy.h"
 #include "map.h"
 #include "state.h"
-
+/*
 void	enemy_load_textures(t_game *game, char *base_path, \
 	char *file_type, int index)
 {
@@ -40,10 +40,13 @@ void	enemy_load_textures(t_game *game, char *base_path, \
 		ft_strcpy(path, base_path);
 		ft_strcat(path, index_str);
 		ft_strcat(path, file_type);
-		game->textures[((index - 1) * 18) + i + TEX_ENEMY_START - 1] = texture_load(game->app.mlx, path);
+		game->textures[((index - 1) * 18)
+	   	+ i + TEX_ENEMY_START - 1] =
+	   	texture_load(game->app.mlx, path);
 	}
 }
-
+*/
+/*
 void	enemy_load_directory(t_game *game, char *base_path)
 {
 	char	path[100];
@@ -71,3 +74,4 @@ void	enemy_load_directory(t_game *game, char *base_path)
 		enemy_load_textures(game, path, ".xpm", i);
 	}
 }
+*/

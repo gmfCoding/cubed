@@ -36,7 +36,7 @@ typedef struct s_mgame
 	void	*assistance_img[2];
 	void	*win_img[2];
 	void	*back_img;
-	void	*switch_s_img[8];
+	void	*swit_img[8];
 	void	*lights_img[5];
 	void	*lever_up_anim[5];
 	void	*lever_down_anim[5];
@@ -62,6 +62,6 @@ int	fl_we_clicked(t_game *game, int x, int y);
 void	fl_reset_game(t_game *game);
 void	fl_leave_mgame(t_game *game);
 void	fl_assign_state(t_game *game, int click_state);
-void	five_lights_Setup(t_game *game, int difficulty);
+void	five_lights_setup(t_game *game, int difficulty);
 
 #endif

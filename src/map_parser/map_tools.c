@@ -31,28 +31,6 @@ int	map_starting_tile(char *content)
 	return (0);
 }
 
-void	tabs_change_to_space(char *new_line, char *line)
-{
-	int		i;
-	int		k;
-	int		j;
-
-	i = -1;
-	j = 0;
-	while (line[++i] != '\0')
-	{
-		if (line[i] == '\t')
-		{
-			k = -1;
-			while (++k < 4)
-				new_line[j++] = ' ';
-		}
-		else
-			new_line[j++] = line[i];
-	}
-	new_line[j] = '\0';
-}
-
 /*
  * used to replace all taps with spaces to avoid error
  * when parsing the map and modifiers
@@ -74,7 +52,7 @@ int	replace_tabs(t_list *curr)
 			if (line[i] == '\t')
 				++num_tabs;
 		new_size = ft_strlen(line) + (num_tabs * (TAB_SIZE - 1)) + 1;
-		char *new_line = malloc(new_size);
+		new_line = malloc(new_size);
 		if (new_line == NULL)
 			return (1);
 		tabs_change_to_space(new_line, line);
@@ -83,66 +61,6 @@ int	replace_tabs(t_list *curr)
 		curr = curr->next;
 	}
 	return (0);
-}
-
-/*//can get rid of this not using memmove anymore now allowcating for new str
-void	replace_tabs(t_list *curr)
-{
-	int		i;
-	int		j;
-	char	*line;
-
-	printf("\n");
-	while (curr != NULL && curr->content != NULL)
-	{
-		line = (char *)curr->content;
-		i = 0;
-		while (line[i] != '\0')
-		{
-			if (line[i] == '\t')
-			{
-				ft_memmove(&line[i + TAB_SIZE], \
-					&line[i + 1], ft_strlen(&line[i + 1]) + 1);
-				j = 0;
-				while (j < TAB_SIZE)
-				{
-					if (line[i + j] == '\0')
-						break;
-					line[i + j++] = ' ';
-					printf("|space|");
-					if(line[i + j++] == '\t')
-						printf("ts a tab here\n");
-				}
-				i += TAB_SIZE;
-			}
-			else
-				i++;
-		}
-		curr = curr->next;
-	}
-	printf("\n");
-	printf("\n");
-}
-*/
-
-
-
-/*
- * a small fucntion used to print the map in terminal
- * only useful for debugging not needed in release
- */
-void	map_print(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < (map->width * map->height))
-	{
-		if (i % map->width == 0)
-			printf("\n");
-		printf("%d", map->tiles[i].type);
-		i++;
-	}
 }
 
 /*
@@ -195,17 +113,3 @@ void	remove_empty_lines(t_list **raw_map_file)
 			curr = curr->next;
 	}
 }
-/*
-int	map_skip_over_modifiers(char *content)
-{
-	int	i;
-
-	i = -1;
-	while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
-	{
-		if (ft_strncmp(g_mapsymbols[i], content, strlen_nl(g_mapsymbols[i])) == 0)
-			return (1);
-	}
-	return (0);
-}
-*/

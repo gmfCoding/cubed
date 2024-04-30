@@ -46,8 +46,8 @@ t_texture	*mmap_get_door_img(t_game *game, int pos, int i)
 
 void	mmap_tile_assign_set(t_game *game, int i, int x, int y)
 {
-	game->mmap.tiles[i].pos.x = x * MAP_S + MAP_POS_X + MAP_CASE;
-	game->mmap.tiles[i].pos.y = y * MAP_S + MAP_POS_Y + MAP_CASE;
+	game->mmap.tiles[i].pos.x = x * MAP_S + M_P_X + M_CAS;
+	game->mmap.tiles[i].pos.y = y * MAP_S + M_P_Y + M_CAS;
 	game->mmap.tiles[i++].vis = false;
 }
 
