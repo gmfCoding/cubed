@@ -19,7 +19,6 @@ void	title_back_to_title(t_game *game)
 	int	i;
 
 	i = -1;
-
 	stop_all_sound(game->app.sfx);
 	while (game->mmap.tiles[++i].img != NULL)
 		game->mmap.tiles[i].img = NULL;
@@ -36,7 +35,7 @@ void	title_load_and_run(t_game *game)
 	char	path[50];
 	char	*argv[2];
 
-	ft_strcpy(path, "maps/");
+	ft_strcpy(path, MAP_PATH);
 	ft_strcat(path, game->title.map_str[game->title.anim_forward]);
 	argv[0] = "";
 	argv[1] = path;
@@ -72,18 +71,12 @@ void	title_show_load_map(t_game *game)
 		play_sound(game->app.sfx, SFX_SELECT, PLAY);
 		game->title.state = SELECT_START;
 	}
-	if (input_keydown(&game->input, KEY_UARROW) \
-		|| input_keydown(&game->input, KEY_W))
-	{
+	if ((input_keydown(&game->input, KEY_UARROW) \
+		|| input_keydown(&game->input, KEY_W)) && game->title.anim_forward--)
 		play_sound(game->app.sfx, SFX_SELECTION, PLAY);
-		game->title.anim_forward--;
-	}
-	if (input_keydown(&game->input, KEY_DARROW) \
-		|| input_keydown(&game->input, KEY_S))
-	{
+	if ((input_keydown(&game->input, KEY_DARROW) \
+		|| input_keydown(&game->input, KEY_S)) && game->title.anim_forward++)
 		play_sound(game->app.sfx, SFX_SELECTION, PLAY);
-		game->title.anim_forward++;
-	}
 	if (game->title.anim_forward < 0)
 		game->title.anim_forward = game->title.map_str_amount - 1;
 	if (game->title.anim_forward > game->title.map_str_amount - 1)

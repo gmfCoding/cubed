@@ -49,5 +49,5 @@
 # define MOD_CONTENT_MAX 100
 # define NAME_SIZE 50
 # define MAX_ENT 100 
-
+# define MAP_PATH "./maps/"
 #endif

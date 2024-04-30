@@ -37,7 +37,6 @@ void	deallocate_list(t_list **raw_map_file)
 	t_list	*curr;
 	t_list	*temp;
 
-
 	curr = *raw_map_file;
 	while (curr != NULL)
 	{

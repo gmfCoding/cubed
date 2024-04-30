@@ -66,7 +66,7 @@ int	ft_isupper(int c)
 	return (c >= 'A' && c <= 'Z');
 }
 
-void remove_spaces(char *new_str)
+void	remove_spaces(char *new_str)
 {
 	char	*str;
 	size_t	new_len;
@@ -75,15 +75,15 @@ void remove_spaces(char *new_str)
 	str = ft_strdup(new_str);
 	new_len = 0;
 	i = -1;
-	while(str[i + 1] == ' ')
+	while (str[i + 1] == ' ')
 		i++;
 	while (ft_isupper(str[++i]))
-        new_str[new_len++] = str[i];
+		new_str[new_len++] = str[i];
 	new_str[new_len++] = ' ';
 	while (str[++i])
 	{
 		if (ft_isspace(str[i]))
-			continue;
+			continue ;
 		new_str[new_len++] = str[i];
 	}
 	new_str[new_len] = '\0';
@@ -106,6 +106,7 @@ void	remove_spaces(char *str)
 	str[i + 1] = '\0';
 }
 */
+
 int	is_empty_line(const char *line)
 {
 	int	i;

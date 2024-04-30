@@ -12,7 +12,6 @@
 #include "state.h"
 #include "sound.h"
 
-
 #define KDOWN 2
 #define KUP 3
 #define MDOWN 4
@@ -21,19 +20,17 @@
 #define EXPOSE 12
 #define DESTROY 17
 
-void event_ent2_destroy(t_world *world)
+void	event_ent2_destroy(t_world *world)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 0;
 	while (i < world->ent_count)
 	{
 		j = 0;
-	//	printf("%s we here babay\n", world->ent_2[i].name);
 		while (j < EVENT_ENT_MAX_TARGETS)
 		{
-	//		printf("free target_name: %p\n", world->ent_2[i].target_names[j]);
 			if (world->ent_2[i].target_names[j] != NULL)
 				free(world->ent_2[i].target_names[j]);
 			j++;
@@ -44,9 +41,8 @@ void event_ent2_destroy(t_world *world)
 
 void	textures_destroy(t_game *game)
 {
-	int i;
+	int	i;
 
-	//i = game->loaded_index[0];
 	i = TEX_ARRAY_SIZE;
 	while (--i > -1)
 		if (&game->textures[i] != NULL)
@@ -63,15 +59,13 @@ void	textures_destroy(t_game *game)
 	}
 	if (game->five_light.run_game == true)
 		destroy_five_lights_images(game->app.mlx, &game->five_light);
-
-	//need to sort out walls NSEW and free coz some walls are pointing to other walls
-
 }
 
 void	destroy_entity(void *ent)
 {
-	const t_entity *entity = (t_entity *)ent; // maybe use cast fn pointer instead
-	const t_enemy *as_enemy = (t_enemy *)entity;
+	const t_entity	*entity = (t_entity *)ent;
+	const t_enemy	*as_enemy = (t_enemy *)entity;
+
 	if (entity->type == ENT_ENEMY)
 	{
 		if (as_enemy->path != NULL)
@@ -83,23 +77,19 @@ void	destroy_entity(void *ent)
 void	world_destroy(t_game *game)
 {
 	ft_lstclear(&game->world->entities, destroy_entity);
-	//need to free from entiry create change to a function for freeing
 	free(game->world);
 }
 
+//__lsan_do_leak_check();
 void	game_destroy(t_game *game)
 {
 	textures_destroy(game);
-	//event_ent2_destroy(game->world);
 	world_destroy(game);
 	if (game->app.sfx != NULL)
 		sound_manager_deallocate(game->app.sfx);
 	if (game->app.win != NULL)
 		mlx_destroy_window(game->app.mlx, game->app.win);
-	//TODO: Leak cleanup
-	//__lsan_do_leak_check();
 	exit(0);
-	//abort();
 }
 
 void	shutdown_input_setup(t_game *game)
