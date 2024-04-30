@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 19:53:11 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 17:13:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_handle_result	entity_target_handle_a(t_game *game, t_entity_2 *ent, t_entity_2
 
 	count++;
 	if (count >= TARGET_HANDLE_MAX_DEPTH)
-		return (TARGET_HANDLE_FAILED);
+		return (TARGET_HANDLE_FAILED); // Maybe game destroy here?
 	if (!ent)
 		return (TARGET_HANDLE_NONE);
 	if (target == NULL)

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 20:16:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/21 16:36:23 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 18:56:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -24,11 +24,11 @@ static const t_task *const	g_tasks[TASK_LEN] = {
 	.task.func = task_orbit_render,
 	.task.setup = task_orbit_setup},
 
-	(t_task*)&(t_task_fl){.task.name = "task_fl",
-	.task.size = sizeof(t_task_orbit),
-	.task.key = KEY_E,
-	.task.func = task_fl_render,
-	.task.setup = task_fl_setup},
+	// (t_task*)&(t_task_fl){.task.name = "task_fl",
+	// .task.size = sizeof(t_task_orbit),
+	// .task.key = KEY_E,
+	// .task.func = task_fl_render,
+	// .task.setup = task_fl_setup},
 };
 
 t_task	*task_find(t_game *game, char *name)

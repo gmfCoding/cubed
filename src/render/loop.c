@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 15:38:15 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 18:52:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,8 +200,8 @@ void	game_update(t_game *game)
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 	mmap_draw(game);
-	texture_draw(game->app, game->rt0, v2new(0, 0));
 	event_display_ui(game);
+	task_process(game);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	draw_debug_info(game);
 	static bool show_debug = false;
@@ -221,7 +221,7 @@ void	game_update(t_game *game)
 		draw_debug_view_world_state(game);
 		texture_draw_debug_view(game, 2);
 	}
-	task_process(game);
+	five_lights(game);
 }
 
 void	render(t_game *game)

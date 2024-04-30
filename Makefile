@@ -144,7 +144,7 @@ $(info Compiling for OS:$(OS))
 NAME = cubed
 
 DIRSRC = src
-DIROBJ = obj
+DIROBJ = obj/$(CONF)
 DIRINC = inc
 DIRLIB = lib
 
@@ -181,11 +181,15 @@ OPFLAG = -O3 -flto -march=native -mtune=native -msse4.2
 OPTS = $(OPT)
 SAN = address 
 
+CONF = release
+CONF_TARGET = .target
+
+ifneq (,$(findstring debug,$(CONF)))
+OPTS = fsan,debug
+endif
+
 ifneq (,$(findstring none,$(OPTS)))
 OPFLAG = -O0
-endif
-ifneq (,$(findstring def,$(OPTS)))
-OPTS = fsan,debug
 endif
 ifneq (,$(findstring debug,$(OPTS)))
 	OPFLAG = -O0
@@ -221,8 +225,19 @@ endif
 # RULES
 all: $(NAME)
 
+# EVALUATE:
+# 	grep -v -q $(CONF) $(CONF_TARGET) && echo $(CONF) > $(CONF_TARGET)
+
+
+# marker for the last built architecture
+BUILT_MARKER := $(CONF).built
+
+$(BUILT_MARKER):
+	@-rm -f *.built
+	@touch $(BUILT_MARKER)
+
 # OBJ TO PROJECT
-$(NAME): $(LIBS) $(OBJS)
+$(NAME): $(LIBS) $(OBJS) $(BUILT_MARKER)
 	-@printf "${BLUE}"
 	$(CC) $(PGFLAGS) $(OBJS) $(LDFLAGS) -o $@
 	-@printf "${NC}"

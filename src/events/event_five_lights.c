@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_five_lights.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmordaun <kmordaun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:21 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 14:46:03 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:48:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,9 @@ void	event_five_lights_closed(t_game *game, t_entity_2 *ent)
 
 void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 {
-	t_task	*task;
-
 	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
-		task = task_create_or_find(game, "task_fl");
 		game->player.state = START_TASK;
 		game->five_light.run_game = true;
 	}
