@@ -107,8 +107,6 @@ void	setup_world(int argc, char **argv, t_game *game)
 	game->title.state = RUNNING_GAME;
 	if (world_preset(argc, argv, game))
 	{
-		printf("\n\ndo we go here on every error?\n");
-		//free(game->world);
 		game_destroy(game);
 		return ;
 	}

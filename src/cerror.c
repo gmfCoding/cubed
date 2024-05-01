@@ -40,7 +40,7 @@ void	ft_asrt(int cond, char *error)
 	if (!cond)
 		return ;
 	ft_putstr_fd(error, STDERR_FILENO);
-	exit(1);
+	//exit(1);
 }
 
 static void	ft_putbacktrace(void);
@@ -57,7 +57,7 @@ void	ft_errx(t_cerror err, char *file, int line)
 	ft_putnbr_fd(line, STDERR_FILENO);
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putbacktrace();
-	exit(err);
+//	exit(err);
 }
 
 int	err(int res, char *str)

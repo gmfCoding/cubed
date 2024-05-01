@@ -2,8 +2,8 @@ NO ./assets/wall.xpm
 SO ./assets/wall.xpm
 WE ./assets/wall.xpm
 EA ./assets/wall.xpm
-F 225,300,0
-C 223,20,0
+F 225,200,0
+C 225,200,0
 
 DR             door01,/assets/debug.xpm,25,11,1,C,L
 DR door02,/ass  et s/d ebug. xpm,20,1,1,C,L
