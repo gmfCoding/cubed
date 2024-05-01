@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mod_func_alert.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/30 20:47:31 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/30 20:47:33 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
 #include "vectorconv.h"
 #include "modifier_data.h"
@@ -31,18 +43,16 @@ t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map)
 	world->ent_2[world->ent_count] = (t_entity_2){0};
 	ft_strlcpy(world->ent_2[world->ent_count].name, mod.name, NAME_SIZE);
 	world->ent_2[world->ent_count].target_names[0] = ft_strdup(mod.target);
-	// if (ft_strcmp(mod.target, "NULL") != 0)  // Could be removed as mod_search_name returns null anyways, without it would induce an overhead though from searching through the mods.
-	// 	world->ent_2[world->ent_count].target =	mod_search_name(world, mod.target); // What if the mod hasn't been loaded yet?
 	world->ent_2[world->ent_count].pos = v2itov2(mod.pos);
 	world->ent_2[world->ent_count].ref_tile = map_get_tile_ref(&world->map, mod.pos.x, mod.pos.y);
 	world->ent_2[world->ent_count].speed = mod.time;
-	world->ent_2[world->ent_count].type = ET_ALERT_OFF; // Default to off
-	// No longer need mod.type == 'O' because it defaults to off
+	world->ent_2[world->ent_count].type = ET_ALERT_OFF;
 	if (mod.type == 'H')
 		world->ent_2[world->ent_count].type = ET_ALERT_HIGH;
 	if (mod.type == 'M')
 		world->ent_2[world->ent_count].type = ET_ALERT_MEDIUM;
 	world->ent_2[world->ent_count].handle = &target_handle_alert;
+	world->ent_2[world->ent_count].state_3 = true;
 	world->ent_count++;
 	return (0);
 }

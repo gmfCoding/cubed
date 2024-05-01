@@ -22,5 +22,8 @@ void	title_show_options(t_game *game)
 	texture_blit(game->textures[TEX_TITLE_OPTIONS_0], \
 		game->rt0, v2new(270, 105));
 	if (input_keydown(&game->input, KEY_BACKSPACE))
+	{
+		play_sound(game->app.sfx, SFX_SELECT, PLAY);
 		game->title.state = SELECT_START;
+	}
 }

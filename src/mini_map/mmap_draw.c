@@ -23,8 +23,8 @@ int	mmap_is_inside_case(int x, int y)
 	t_vec2	tile_pos;
 
 	tile_pos = v2new(x, y);
-	tile_pos = v2sub(tile_pos, v2new(MAP_POS_X, MAP_POS_Y));
-	if (v2mag(tile_pos) > (MAP_CASE * 0.91))
+	tile_pos = v2sub(tile_pos, v2new(M_P_X, M_P_Y));
+	if (v2mag(tile_pos) > (M_CAS * 0.91))
 		return (0);
 	return (1);
 }
@@ -36,7 +36,8 @@ int	mmap_is_inside_case(int x, int y)
  * wall and door images also set the wall seen if mini map
  * fog is turned on
  */
-void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, t_mmap mmap)
+void	mmap_draw_walls(t_texture dst, \
+		t_mm_tile *tile, t_vec2 p_pos, t_mmap mmap)
 {
 	int		i;
 	t_vec2	pos;
@@ -47,9 +48,10 @@ void	mmap_draw_walls(t_texture dst, t_mm_tile *tile, t_vec2 p_pos, t_mmap mmap)
 		pos = v2sub(tile[i].pos, v2muls(p_pos, MAP_S));
 		if (mmap.mm_big == true)
 		{
-			pos.x = ((tile[i].pos.x - MAP_POS_X - MAP_CASE) + (SCR_WIDTH / 2)) - p_pos.x * MAP_S;
-			pos.y = ((tile[i].pos.y - MAP_POS_Y - MAP_CASE) + (SCR_HEIGHT / 2)) - p_pos.y * MAP_S;
-			if (tile[i].vis == true || mmap_is_inside_case(pos.x - 455, pos.y + 225) == 1)
+			pos.x = ((tile[i].pos.x - M_P_X - M_CAS) + (480)) - p_pos.x * MAP_S;
+			pos.y = ((tile[i].pos.y - M_P_Y - M_CAS) + (480)) - p_pos.y * MAP_S;
+			if (tile[i].vis == true \
+				|| mmap_is_inside_case(pos.x - 455, pos.y + 225) == 1)
 			{
 				texture_blit(*(tile[i].img), dst, pos);
 				tile[i].vis = true;
@@ -124,7 +126,7 @@ void	mmap_draw_alert(t_game *game, t_vec2 p_pos, t_mmap *mmap)
 /*
  * these mmap_draw functions are run at runtime
  * mostly to draw images based on condtions i may
- * need to change th define values of MAP_POS_X and Y
+ * need to change th define values of M_P_X and Y
  * and store them in the struct and then change those 
  * values in the modifier on start up based apon what
  * the map.bur file postions say for the MM minimap
@@ -133,8 +135,8 @@ void	mmap_draw(t_game *game)
 {
 	t_vec2	pos;
 
-	pos.x = MAP_POS_X;
-	pos.y = MAP_POS_Y;
+	pos.x = M_P_X;
+	pos.y = M_P_Y;
 	if (game->mmap.mm_small == true)
 	{
 		mmap_draw_case_anim(game, pos);

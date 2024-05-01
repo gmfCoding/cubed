@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 00:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/16 06:39:35 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:22:57 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -65,8 +65,8 @@ int	err(int res, char *str)
 	static int first = 0;
 	if (res && str)
 	{
-		if (first)
-			ft_putstr_fd("Error\n", STDERR_FILENO);
+		//if (first)
+		ft_putstr_fd("Error\n", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putbacktrace();
 	}
@@ -79,6 +79,7 @@ int	err(int res, char *str)
 
 //FIRST VARIANT 
 #include <execinfo.h>
+/*
 static void ft_putbacktrace(void)
 {
  	int nptrs;
@@ -89,9 +90,9 @@ static void ft_putbacktrace(void)
 	ft_putstr_fd("Backtrace: \n", STDERR_FILENO);
     backtrace_symbols_fd(buffer, nptrs, STDOUT_FILENO);
 }
-
+*/
 // SECOND VARIANT
-// static void	ft_putbacktrace(void)
-// {
-// 	ft_putstr_fd("backtrace unavailable!\n", STDERR_FILENO);
-// }
+static void	ft_putbacktrace(void)
+{
+ 	ft_putstr_fd("backtrace unavailable!\n", STDERR_FILENO);
+}

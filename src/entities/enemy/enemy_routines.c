@@ -1,9 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enemy_routines.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/30 16:55:31 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/30 16:55:33 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "enemy.h"
-# include "map.h"
-# include "state.h"
-# include "clmath.h"
-# include "cubed.h"
-# include <math.h>
+#include "map.h"
+#include "state.h"
+#include "clmath.h"
+#include "cubed.h"
+#include <math.h>
+
+//if (game->world->enemy->hear_steps == false)
+//changes this back if you cant get volume working
+//	return ;
+/*
+ * this is where i play the sound for the enemysteps
+ * there is 18 frames in the animations on the 4 frame
+ * and the 13 frame is pretty close to when the animation
+ * for the left and right leg touch the ground
+ */
+void	enemy_step_sound(t_game *game, int step)
+{
+	int	step_type;
+
+	step_type = SFX_ESTEP01 + (mrand(&game->rand) % 3);
+	if (step == 4 || step == 13)
+		play_sound(game->app.sfx, step_type, PLAY);
+}
 
 /*
  * animates the enemy the speed of the animation should be adjusted
@@ -22,12 +52,13 @@ void	enemy_animate(t_game *game, t_enemy *enemy)
 	int	texture_index;
 	int	animation_speed;
 
-	animation_speed = 4;
+	animation_speed = 5 / (int)game->world->enemy->speed;
 	if (game->fpsc % animation_speed == 0)
 	{
 		animation_frame = game->fpsc / animation_speed;
 		texture_index = TEX_ENEMY_START + (animation_frame % 18);
 		enemy->sprite_ref->tex = enemy->angle_frame * 18 + texture_index;
+		enemy_step_sound(game, animation_frame % 18);
 	}
 }
 

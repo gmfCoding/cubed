@@ -87,7 +87,7 @@ void	player_setup(t_list *curr, t_game *game)
 	game->player.oldp_x = game->player.pos.x;
 	game->player.oldp_y = game->player.pos.y;
 	game->player.plane = v2new(0.5,0);
-	game->player.moveSpeed = (1.0 / R_TFR) * 2.0;
-	game->player.rotSpeed =  (1.0 / R_TFR) * 1.0;
+	game->player.move_speed = (1.0 / R_TFR) * 2.0;
+	game->player.rot_speed =  (1.0 / R_TFR) * 1.0;
 //	return (player);
 }

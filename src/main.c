@@ -6,13 +6,12 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 18:29:54 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:54:04 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include <stdio.h>
-
 #include "texture.h"
 #include "state.h"
 #include "mini_map.h"
@@ -20,9 +19,7 @@
 #include "a_star.h"
 #include "enemy.h"
 #include "destroy.h"
-
-
-
+#include "sound.h"
 
 /*
  * include for mouse movement
@@ -99,17 +96,20 @@ void	nsew_textures(t_game *game)
 
 void generate_textures(t_game *game)
 {
-	//game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/skybox.xpm");
-	game->textures[TEX_SKYBOX] = texture_create(game->app.mlx, 1000, 5000);
+	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/new_skybox.xpm");
+//	game->textures[TEX_SKYBOX] = texture_create(game->app.mlx, 1000, 5000);
 	game->textures[TEX_WALL] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
 
 void	setup_world(int argc, char **argv, t_game *game)
 {
+	stop_all_sound(game->app.sfx);
 	game->title.state = RUNNING_GAME;
 	if (world_preset(argc, argv, game))
 	{
-		free(game->world);
+		printf("\n\ndo we go here on every error?\n");
+		//free(game->world);
+		game_destroy(game);
 		return ;
 	}
 	map_print(&game->world->map);
@@ -122,17 +122,20 @@ void	setup_world(int argc, char **argv, t_game *game)
 	}
 	event_player(game, true);
 	nsew_textures(game);
+	play_sound(game->app.sfx, SFX_GAME_01, LOOP);
 }
 
 int	main(int argc, char **argv)
 {
 	t_game	game;
-	
+
 	game = (t_game){0};
 	game.world = malloc(sizeof(t_world));
 	*game.world = (t_world){0};
+	game.app.sfx = sound_manager_init();
+	if(game.app.sfx == NULL)
+		printf("Sound not enabled\n");
 	game.app.mlx = mlx_init();
-	title_setup_screens(&game);
 	game.loaded_index[0] = 0;
 	game.loaded_index[1] = 1;
 	game.loaded_index[2] = 0;
@@ -146,6 +149,9 @@ int	main(int argc, char **argv)
 	generate_textures(&game);
 	if (argc == 2)
 		setup_world(argc, argv, &game);
+	title_setup_screens(&game);
+	play_sound(game.app.sfx, SFX_INTRO, PLAY);
+
 	game.rt1 = texture_create(game.app.mlx, R_WIDTH, R_WIDTH);
 	game.rt0 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);
 	game.rt2 = texture_create(game.app.mlx, SCR_WIDTH, SCR_HEIGHT);

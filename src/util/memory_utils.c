@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 10:26:12 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:26:33 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -42,8 +42,10 @@ void	deallocate_list(t_list **raw_map_file)
 	{
 		temp = curr;
 		curr = curr->next;
-		free(temp->content);
-		free(temp);
+		if (temp->content != NULL)
+			free(temp->content);
+		if (temp != NULL)
+			free(temp);
 	}
 	*raw_map_file = NULL;
 }
@@ -58,14 +60,15 @@ t_list	*ft_lst_readfile(const char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-	first = ft_lstnew((void *)0);
+	first = ft_lstnew(malloc(sizeof(int)));
+	*((int *)first->content) = 0;
 	next = first;
 	line = get_next_line(fd);
 	while (line)
 	{
 		next->next = ft_lstnew(line);
 		next = next->next;
-		(first->content)++;
+		(*((int *)first->content))++;
 		line = get_next_line(fd);
 	}
 	close (fd);

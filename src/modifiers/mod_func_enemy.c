@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mod_func_enemy.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/30 20:47:41 by kmordaun          #+#    #+#             */
+/*   Updated: 2024/04/30 20:47:44 by kmordaun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
 #include "state.h"
 #include "vectorconv.h"
@@ -44,6 +56,7 @@ t_err	mod_gen_en(char *content, int index, t_world *world, t_map *map)
 	enemy->sprite_ref = &world->sprite[world->sp_amount++];
 	enemy->sprite_ref->uv = (t_uv){.offset = { .x = 0, .y = 0}, .scale = {.x = 1, .y = 1}};
 	enemy->sprite_ref->visible = true;
+	enemy->hear_steps = false;
 	world->enemy = enemy;
 	return (0);
 }

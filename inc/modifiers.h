@@ -62,7 +62,7 @@ typedef enum e_handle_result
 	TARGET_HANDLE_NONE,
 	TARGET_HANDLE_SUCCESS,
 	TARGET_HANDLE_FAILED,
-} t_handle_result;
+}	t_handle_result;
 
 typedef struct s_entity_2
 {
@@ -77,11 +77,10 @@ typedef struct s_entity_2
 	int					speed;
 	int					value;
 	// would be the door entity for instant or something else
-
 	union
 	{
 		struct
-		{		
+		{
 			struct s_entity_2	*target; // targets[0]
 			struct s_entity_2	*parent1; // targets[1]
 			struct s_entity_2	*parent2; // targets[2]
@@ -92,9 +91,7 @@ typedef struct s_entity_2
 			char				*target_names[EVENT_ENT_MAX_TARGETS]; // stores all target names
 		};
 	};
-	
 	t_handle_result		(*handle)(t_game *game, struct s_entity_2 *self, struct s_entity_2 *other);
-
 	t_entity			*entity; // Duct tape fix
 	bool				state_1;
 	bool				state_2;

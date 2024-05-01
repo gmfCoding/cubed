@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:00:20 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 17:23:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:32:43 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ t_err	map_init(t_map *map, char *map_str, t_game *game)
 	if (raw_map_file == NULL || (int64_t)raw_map_file->content <= 1)
 		return (deallocate_list(&raw_map_file), err(1, "File Invalid\n"));
 	remove_empty_lines(&raw_map_file);
-	replace_tabs(raw_map_file);
+	if (replace_tabs(raw_map_file))
+		return (deallocate_list(&raw_map_file), err(1, "buy more ram\n"));
 	curr = raw_map_file;
 	while (curr != NULL && map_starting_tile((char *)curr->content) == 0)
 		curr = curr->next;
@@ -105,8 +106,7 @@ t_err	map_init(t_map *map, char *map_str, t_game *game)
  * a default map but will need to change this if there
  * is map selection from splash/title screen and pass
  * the mapstr or a map number to this fuction
- */
-
+ *///TODO this fucntio can chanhe now that we have title screen
 t_err	map_parse(int argc, char **argv, t_game *game)
 {
 	char	*map_str;

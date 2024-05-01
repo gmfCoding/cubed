@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:43:28 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/11 21:16:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 20:35:40 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,50 +35,32 @@ int	map_starting_tile(char *content)
  * used to replace all taps with spaces to avoid error
  * when parsing the map and modifiers
  */
-void	replace_tabs(t_list *curr)
+int	replace_tabs(t_list *curr)
 {
-	int		i;
-	int		j;
+	size_t	new_size;
+	char	*new_line;
 	char	*line;
+	int		num_tabs;
+	int		i;
 
 	while (curr != NULL && curr->content != NULL)
 	{
 		line = (char *)curr->content;
-		i = 0;
-		while (line[i] != '\0')
-		{
+		num_tabs = 0;
+		i = -1;
+		while (line[++i] != '\0')
 			if (line[i] == '\t')
-			{
-				ft_memmove(&line[i + TAB_SIZE], \
-					&line[i + 1], ft_strlen(&line[i + 1]) + 1);
-				j = 0;
-				while (j < TAB_SIZE)
-					line[i + j++] = ' ';
-				i += TAB_SIZE;
-			}
-			else
-				i++;
-		}
+				++num_tabs;
+		new_size = ft_strlen(line) + (num_tabs * (TAB_SIZE - 1)) + 1;
+		new_line = malloc(new_size);
+		if (new_line == NULL)
+			return (1);
+		tabs_change_to_space(new_line, line);
+		free(line);
+		curr->content = new_line;
 		curr = curr->next;
 	}
-}
-
-/*
- * a small fucntion used to print the map in terminal
- * only useful for debugging not needed in release
- */
-void	map_print(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < (map->width * map->height))
-	{
-		if (i % map->width == 0)
-			printf("\n");
-		printf("%d", map->tiles[i].type);
-		i++;
-	}
+	return (0);
 }
 
 /*
@@ -95,6 +77,7 @@ void	remove_int_from_list(t_list **raw_map_file)
 		error_return("File Empty", 1, 1, NULL);
 	temp = *raw_map_file;
 	*raw_map_file = temp->next;
+	free(temp->content);
 	free(temp);
 }
 
@@ -130,17 +113,3 @@ void	remove_empty_lines(t_list **raw_map_file)
 			curr = curr->next;
 	}
 }
-/*
-int	map_skip_over_modifiers(char *content)
-{
-	int	i;
-
-	i = -1;
-	while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
-	{
-		if (ft_strncmp(g_mapsymbols[i], content, strlen_nl(g_mapsymbols[i])) == 0)
-			return (1);
-	}
-	return (0);
-}
-*/
