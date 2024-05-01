@@ -12,9 +12,9 @@
 
 #ifndef TITLE_H
 # define TITLE_H
-#include "sound.h"
+# include "sound.h"
 
-typedef enum	e_menu_state
+typedef enum e_menu_state
 {
 	TITLE,
 	SELECT_START,
@@ -28,16 +28,16 @@ typedef enum	e_menu_state
 	TO_TITLE,
 	TO_GAME,
 	TO_LOSE,
-}		t_menu_state;
+}				t_menu_state;
 
-typedef struct	s_title
+typedef struct s_title
 {
 	t_menu_state	state;
-	int		anim_frame;
-	int		anim_forward;
-	bool		in_title;
-	char		map_str[20][20];
-	int		map_str_amount;
+	int				anim_frame;
+	int				anim_forward;
+	bool			in_title;
+	char			map_str[20][20];
+	int				map_str_amount;
 }		t_title;
 
 void	title_animations(t_game *game);

@@ -15,11 +15,9 @@
 # include "entity.h"
 # include "sound.h"
 
-typedef struct	s_world t_world;
-typedef struct	s_map t_map;
-typedef void (*t_event_fn)(t_game *game, t_entity_2 *ent);
-
-
+typedef struct s_world	t_world;
+typedef struct s_map	t_map;
+typedef void			(*t_event_fn)(t_game *game, t_entity_2 *ent);
 
 void			event_player(t_game *game, bool force);
 void			event_interact(t_game *game);
@@ -39,11 +37,15 @@ void			event_five_lights_closed(t_game *game, t_entity_2 *ent);
 
 t_handle_result	entity_target_handle(t_game *game, t_entity_2 *ent);
 
-t_handle_result	target_handle_door(t_game *game, t_entity_2 *door, t_entity_2 *parent);
-t_handle_result	target_handle_five_lights(t_game *game, t_entity_2 *five_lights, \
-											t_entity_2 *parent);
-t_handle_result	target_handle_or(t_game *game, t_entity_2 *self, t_entity_2 *other);
-t_handle_result	target_handle_and(t_game *game, t_entity_2 *self, t_entity_2 *other);
-t_handle_result	target_handle_splitter(t_game *game, t_entity_2 *self, t_entity_2 *other);
+t_handle_result	target_handle_door(t_game *game, \
+t_entity_2 *door, t_entity_2 *parent);
+t_handle_result	target_handle_five_lights(t_game *game, \
+t_entity_2 *five_lights, t_entity_2 *parent);
+t_handle_result	target_handle_or(t_game *game, \
+t_entity_2 *self, t_entity_2 *other);
+t_handle_result	target_handle_and(t_game *game, \
+t_entity_2 *self, t_entity_2 *other);
+t_handle_result	target_handle_splitter(t_game *game, \
+t_entity_2 *self, t_entity_2 *other);
 
 #endif

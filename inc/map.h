@@ -47,7 +47,7 @@ typedef enum e_tiletype
 typedef struct s_tile
 {
 	t_tiletype	type;
-	int		tex;
+	int			tex;
 //	uint8_t		tex;
 	/// @brief -1: Nothing, 0: Opaque, 1: Transparent
 	int8_t		vis;
@@ -78,11 +78,10 @@ typedef struct s_world
 	t_entity_2	ent_2[MAX_ENT];
 	uint32_t	ent_count;
 	t_enemy		*enemy;
-
 	// content: t_entity*;
-	t_list		*entities; 
+	t_list		*entities;
 	t_sprite	sprite[MAX_ENT];
-	int16_t	indices[MAX_ENT]; // The indices of `sprite` in order of distance to player.
+	int16_t		indices[MAX_ENT];
 	uint8_t		sp_amount;
 	uint8_t		sp_id_next;
 }			t_world;
@@ -110,12 +109,10 @@ void		map_sprite_clear(t_map *map);
 void		sprite_update(t_map *map, t_sprite *const sprite, int index);
 void		sprite_update_all(t_world *game);
 void		sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir);
-void		sprite_order_distance(t_vec2 centre, t_sprite *array, int16_t *indices, int count);
+void		sprite_order_distance(t_vec2 centre, \
+	t_sprite *array, int16_t *indices, int count);
 // MAP PARSER //
 t_tiletype	get_tiletype(char c);
-
-
-//t_map		map_parse(int argc, char **argv, t_game *game);
 t_err		map_parse(int argc, char **argv, t_game *game);
 int			map_width_size(t_list *curr);
 int			map_height_size(t_list *curr);
@@ -134,15 +131,15 @@ void		deallocate_list(t_list **raw_map_file);
 void		free_str_array(char **str);
 
 	// MAP_UTILS //
-
-int		is_empty_line(const char *line);
-int		replace_tabs(t_list *curr);
-void	remove_empty_lines(t_list **raw_map_file);
-char	*ft_strcpy(char *s1, char *s2);
-char	*ft_strcat(char *dest, char *src);
-
-int			error_return(char *msg, int exit_code, int print_error, \
-				t_list **free_me);
+void		tabs_change_to_space(char *new_line, char *line);
+int			is_empty_line(const char *line);
+int			replace_tabs(t_list *curr);
+void		remove_empty_lines(t_list **raw_map_file);
+char		*ft_strcpy(char *s1, char *s2);
+char		*ft_strcat(char *dest, char *src);
+int			error_return(char *msg, int exit_code, \
+	int print_error, t_list **free_me);
 int			error_with(char *msg, int value, int print_error);
 void		deallocate_list(t_list **raw_map_file);
+
 #endif
