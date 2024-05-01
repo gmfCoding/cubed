@@ -22,8 +22,8 @@
 
 void	event_ent2_destroy(t_world *world)
 {
-	int	i;
-	int	j;
+	uint32_t	i;
+	int			j;
 
 	i = 0;
 	while (i < world->ent_count)

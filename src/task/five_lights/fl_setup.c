@@ -13,7 +13,7 @@
 #include "five_light.h"
 #include "state.h"
 
-void	fl_images_ass(t_game *game, int difficulty, void **i, void *x)
+void	fl_images_ass(int difficulty, void **i, void *x)
 {
 	int	w;
 	int	h;
@@ -40,7 +40,7 @@ void	fl_images_ass(t_game *game, int difficulty, void **i, void *x)
 		i[1] = mlx_xpm_file_to_image(x, "assets/fl/fl5_offa.xpm", &w, &h);
 }
 
-void	fl_images(t_game *game, int difficulty, t_mgame *l, void *x)
+void	fl_images(int difficulty, t_mgame *l, void *x)
 {
 	int	w;
 	int	h;
@@ -54,7 +54,7 @@ void	fl_images(t_game *game, int difficulty, t_mgame *l, void *x)
 	l->swit_img[5] = mlx_xpm_file_to_image(x, "assets/fl/fl_sgu.xpm", &w, &h);
 	l->swit_img[6] = mlx_xpm_file_to_image(x, "assets/fl/fl_sgd.xpm", &w, &h);
 	l->swit_img[7] = mlx_xpm_file_to_image(x, "assets/fl/fl_b.xpm", &w, &h);
-	fl_images_ass(game, difficulty, l->assistance_img, x);
+	fl_images_ass(difficulty, l->assistance_img, x);
 	l->win_img[0] = mlx_xpm_file_to_image(x, "assets/fl/fl_win_l.xpm", &w, &h);
 	l->win_img[1] = mlx_xpm_file_to_image(x, "assets/fl/fl_win_d.xpm", &w, &h);
 	l->reset_img = mlx_xpm_file_to_image(x, "assets/fl/fl_reset.xpm", &w, &h);
@@ -120,7 +120,7 @@ void	five_lights_setup(t_game *game, int difficulty)
 
 	i = -1;
 	game->five_light.difficulty = difficulty;
-	fl_images(game, difficulty, &game->five_light, game->app.mlx);
+	fl_images(difficulty, &game->five_light, game->app.mlx);
 	game->five_light.run_setup = true;
 	game->five_light.enabled = true;
 	game->five_light.broken = false;

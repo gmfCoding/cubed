@@ -19,13 +19,13 @@ static void	render_floor_row(t_game *game, int y, t_vec2 step, t_vec2 *floor)
 	int32_t	colour;
 	t_vec2i	cell;
 	t_vec2i	uv;
-	t_vec2	real;
+//	t_vec2	real;
 	int		x;
 
 	x = -1;
 	while (++x < R_WIDTH)
 	{
-		real = v2sub(*floor, game->player.pos); 
+//		real = v2sub(*floor, game->player.pos); 
 		cell = v2inew(floor->x, floor->y);
 		uv.x = (int)(WALL_TEX_SIZE * (floor->x - cell.x)) & (WALL_TEX_SIZE - 1);
 		uv.y = (int)(WALL_TEX_SIZE * (floor->y - cell.y)) & (WALL_TEX_SIZE - 1);

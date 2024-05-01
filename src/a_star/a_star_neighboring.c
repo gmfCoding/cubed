@@ -65,7 +65,7 @@ const static int	g_deltas[][2] = {
 void	star_check_cardinal_neighbors(t_game *game, \
 	t_star_node *curr, t_star_node **open, t_star_node **close)
 {
-	int			i;
+	size_t		i;
 	int			index;
 	t_vec2		pos;
 
@@ -149,7 +149,7 @@ void	star_get_neighbors(t_game *game, t_star_node *curr, \
 	t_star_node **open, t_star_node **close)
 {
 	int			index;
-	int			i;
+	size_t		i;
 	t_vec2		pos;
 
 	i = -1;

@@ -62,7 +62,7 @@ void	ft_errx(t_cerror err, char *file, int line)
 
 int	err(int res, char *str)
 {
-	static int first = 0;
+//	static int first = 0;
 	if (res && str)
 	{
 		//if (first)

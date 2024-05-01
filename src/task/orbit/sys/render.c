@@ -29,9 +29,9 @@ void	orbit_path_render(t_kep_path *path, t_texture *rt,
 	double		a;
 	t_kep_ang	ang;
 	t_vec3		pos[3];
-	int			i;
+//	int			i;
 
-	i = 0;
+//	i = 0;
 	a = 0;
 	ang = (t_kep_ang){0};
 	while (a < (2.0 * M_PI))

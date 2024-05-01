@@ -73,9 +73,7 @@ int	map_check_element_texture(char *str)
 {
 	int	texture_file;
 	int	syntax_check;
-	int	i;
 
-	i = 0;
 	syntax_check = 0;
 	str[ft_strlen(str) - 1] = '\0';
 	while (*str == ' ')

@@ -85,9 +85,7 @@ void	enemy_traverse_path(t_game *game, t_enemy *enemy)
 {
 	t_vec2	target;
 	double	dist;
-	int		i;
 
-	i = 0;
 	if (enemy_ispath_or_patrol(game, enemy))
 		return ;
 	if ((enemy_has_line_of_sight(game, \

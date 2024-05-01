@@ -76,11 +76,11 @@ void	title_win_screen(t_game *game, t_texture *t, t_title *title)
 	texture_blit(t[TEX_TITLE_SPACE_BACK], game->rt0, v2new(0, 0));
 	texture_blit(t[TEX_TITLE_MISSION_COMPLETED], game->rt0, v2new(40, 250));
 	texture_blit(t[TEX_TITLE_CREATED_CHRIS_KYLE], game->rt0, v2new(200, 900));
-	if ((input_keydown(&game->input, KEY_UARROW) \
-		|| input_keydown(&game->input, KEY_W)) && title->anim_frame--)
+	if (input_keydown(&game->input, KEY_UARROW) \
+		|| (input_keydown(&game->input, KEY_W) && title->anim_frame--))
 		play_sound(game->app.sfx, SFX_SELECTION, PLAY);
 	if (input_keydown(&game->input, KEY_DARROW) \
-		|| input_keydown(&game->input, KEY_S) && title->anim_frame++)
+		|| (input_keydown(&game->input, KEY_S) && title->anim_frame++))
 		play_sound(game->app.sfx, SFX_SELECTION, PLAY);
 	title->anim_frame = (title->anim_frame + 3) % 3;
 	if (title->anim_forward != title->map_str_amount)

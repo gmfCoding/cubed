@@ -26,11 +26,11 @@ double	v3cosa(t_vec3 a, t_vec3 b)
 double	orb_cart_to_ecc(t_orb_cart *cart, double u)
 {
 	t_vec3	h;
-	t_vec3	n;
+//	t_vec3	n;
 	t_vec3	e;
 
 	h = v3cross(cart->pos, cart->vel);
-	n = v3new(-h.y, h.x, 0);
+//	n = v3new(-h.y, h.x, 0);
 	e = v3sub(v3divs(v3cross(cart->vel, h), u), v3norm(cart->pos));
 	return (v3mag(e));
 }
@@ -38,11 +38,11 @@ double	orb_cart_to_ecc(t_orb_cart *cart, double u)
 t_vec3	orb_cart_ecv(t_orb_cart *cart, double u)
 {
 	t_vec3	h;
-	t_vec3	n;
+//	t_vec3	n;
 	t_vec3	e;
 
 	h = v3cross(cart->pos, cart->vel);
-	n = v3new(-h.y, h.x, 0);
+//	n = v3new(-h.y, h.x, 0);
 	e = v3sub(v3divs(v3cross(cart->vel, h), u), v3norm(cart->pos));
 	return (e);
 }
