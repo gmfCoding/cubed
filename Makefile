@@ -60,6 +60,7 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_minimap.c \
 		modifiers/mod_func_alert.c \
 		modifiers/mod_func_enemy.c \
+		modifiers/mod_func_wincon.c \
 		modifiers/mod_func_window.c \
 		modifiers/mod_func_window_line.c \
 		modifiers/mod_func_target_handles.c \

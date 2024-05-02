@@ -6,13 +6,22 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/30 17:13:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/02 22:07:45 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "events.h"
 #include "state.h"
+#include "title.h"
+
+t_handle_result	target_handle_wincon(t_game *game, t_entity_2 *wincon, t_entity_2 *parent)
+{
+	(void)game;
+	(void)parent;
+	game->title.state = WIN_SCREEN;
+	return (TARGET_HANDLE_SUCCESS);
+}
 
 t_handle_result	target_handle_five_lights(t_game *game, t_entity_2 *five_lights, t_entity_2 *parent)
 {

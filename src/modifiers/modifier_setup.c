@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 19:01:32 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/02 21:23:57 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static char *const	g_mapsymbols[] = {
 [MOD_ID_GA] = "GA", // And-Gate
 [MOD_ID_GM] = "GM", // Multi Gate Splitter
 [MOD_ID_TA] = "TA", // Trigger area
+[MOD_ID_VC] = "VC",
 };
 
 static const t_ex_action	g_mapfuncs[] = {
@@ -88,6 +89,7 @@ static const t_ex_action	g_mapfuncs[] = {
 [MOD_ID_GA] = &mod_gen_ga,
 [MOD_ID_GM] = &mod_gen_gm,
 [MOD_ID_TA] = &mod_gen_ta,
+[MOD_ID_VC] = &mod_gen_vc,
 };
 
 /*

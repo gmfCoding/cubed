@@ -8,7 +8,7 @@ C 223,20,0
 DR door01,/assets/debug.xpm,25,11,1,C,L
 DR door02,/assets/debug.xpm,20,1,1,C,L
 DR door03,/assets/debug.xpm,40,4,1,C,L
-DR door04,/assets/debug.xpm,16,17,1,C,L
+DR door04,/assets/debug.xpm,16,17,1,C,U
 
 DR door05,/assets/debug.xpm,30,11,1,C,U
 DR door06,/assets/debug.xpm,32,9,1,C,U
@@ -39,9 +39,9 @@ GM t_t05,al_task05,door04,NULL
 
 TA ta01,orbit01,O,12,17,101,P,E
 OB orbit01,gm_fin,C,1,17,E
-GM gm_fin,dr_fin,al_win,NULL
+GM gm_fin,dr_fin,al_win,you_win
 DR dr_fin,/assets/debug.xpm,1,14,1,C,L
-
+VC you_win,NULL
 WL 32,12,32,18
 WL 6,18,31,18
 WL 0,14,6,20
