@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 18:37:44 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/02 19:49:26 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -36,6 +36,8 @@ typedef struct s_mui_base
 	int			anim;
 	t_rect		rect;
 	bool		unlock;
+	int			sound;
+
 }	t_mui_base;
 
 typedef struct s_mui_dial
@@ -99,6 +101,7 @@ typedef struct s_game	t_game; // TODO: REMOVE
 typedef struct s_mui_context
 {
 	void			*ctx;
+	t_game			*game;
 	union
 	{
 		struct
@@ -126,6 +129,7 @@ typedef struct s_mui_context
 	t_vecd			oscale;
 	t_vecd			scale;
 	t_vec2			offset;
+
 }	t_mui_ctx;
 
 void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst);

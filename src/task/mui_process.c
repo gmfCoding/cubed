@@ -6,11 +6,12 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 18:38:03 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/02 20:12:30 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
 #include <math.h>
+#include "state.h"
 
 #include "vectorconv.h"
 #include "tasks/mui.h"
@@ -37,10 +38,24 @@ void	mui_hold_dial(t_mui_dial *curr, t_vec2 mouse)
 	curr->curr_angle = v2x2ang(dmpos);
 	curr->angle += angle_diff(curr->prev_angle, curr->curr_angle);
 }
+#include "sound.h"
 
-void	mui_hold_slider(t_mui_slider *curr, t_vec2 mouse)
+void	mui_hold_slider(t_app *app, t_mui_slider *curr, t_vec2 mouse)
 {
+	const double previous = curr->value;
+	static bool play = false;
+
 	curr->value = fmax(0, fmin(0.99, v2invlerp(curr->start, curr->end, mouse)));
+	if (play) 
+	{
+		if (curr->value > 0.5)
+			play_sound(app->sfx, SFX_ORBIT_THRUSTUP, PLAY);
+		else
+			play_sound(app->sfx, SFX_ORBIT_THRUSTDOWN, PLAY);
+		play = false;
+	}
+	play = (previous < 0.55 && curr->value > 0.55) || \
+		(previous > 0.45 && curr->value < 0.45);
 }
 
 /* Returns the mui component under the mouse cursor position. */
@@ -84,7 +99,7 @@ void	mui_process(t_mui_ctx *ctx, t_inputctx *in)
 	else if (base->type == MUI_DIAL && (key & 2))
 		mui_hold_dial((void *)base, in->mousef);
 	else if (base->type == MUI_SLIDE && (key & 2))
-		mui_hold_slider((void *)base, in->mousef);
+		mui_hold_slider(&ctx->game->app, (void *)base, in->mousef);
 	else if (base->type == MUI_SLIDE && ((t_mui_slider *)base)->elastic)
 		((t_mui_slider *)base)->value = ((t_mui_slider *)base)->rest;
 	return ;

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/30 20:54:04 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/02 20:28:21 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	setup_world(int argc, char **argv, t_game *game)
 	}
 	event_player(game, true);
 	nsew_textures(game);
+	set_sound_volume(game->app.sfx, SFX_GAME_01, 0.6);
 	play_sound(game->app.sfx, SFX_GAME_01, LOOP);
 }
 

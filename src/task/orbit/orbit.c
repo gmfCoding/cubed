@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 14:56:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/02 19:49:01 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -46,6 +46,7 @@ int	task_orbit_setup(t_game *game, t_task *base)
 	ft_memsetf64(task->mean, 0.0, T_ORBIT_MAX_MAN);
 	mui_orbit_setup(&game->app, &task->mui);
 	task->mui.ctx = task;
+	task->mui.game = game;
 	orbit_mui_control_action(&task->mui);
 	return (0);
 }

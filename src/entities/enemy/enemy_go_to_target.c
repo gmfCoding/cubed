@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:55:06 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/30 16:55:08 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/02 20:47:20 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,8 @@ void	enemy_adjust_step_volume(t_game *game, double dist)
 	int		i;
 	float	v_set;
 
-	v_set = 0.0;
 	i = SFX_ESTEP01;
-	if (dist < 8.0)
-	{
-		v_set = 0.4;
-		if (dist < 6.0)
-			v_set = 0.5;
-		if (dist < 5.0)
-			v_set = 0.6;
-		if (dist < 4.0)
-			v_set = 0.7;
-		if (dist < 3.0)
-			v_set = 0.8;
-	}
+	v_set = fclamp(0.0, 0.8, (0.1 * (dist < 8.0)) + 0.1 * (8.0 - dist));
 	while (i <= SFX_ESTEP03)
 		set_sound_volume(game->app.sfx, i++, v_set);
 }

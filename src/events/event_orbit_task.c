@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:28:44 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 19:37:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/02 20:15:14 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -27,11 +27,13 @@ void	event_task_orbit_open(t_game *game, t_entity_2 *ent)
 	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
+		play_sound(game->app.sfx, SFX_ORBIT, PLAY);
 		game->player.state = START_TASK;
 		task->show = true;
 	}
 	if (task && task->completed)
 	{
+		play_sound(game->app.sfx, SFX_TASK_COMPLETE, PLAY);
 		ent->type = ET_ORBIT_TASK_CLOSED;
 		game->player.state = DONE_TASK;
 		//task_destroy(task);
