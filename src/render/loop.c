@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 00:59:35 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 18:52:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,9 @@ void draw_debug_view_world_state(t_game *game)
 		curr = &game->world->sprite[i];
 		texture_draw_line(tex, v2muls(curr->s1, D_SCALE), v2muls(curr->s2, D_SCALE), R_RED | R_ALPHA);
 		texture_draw_line(tex, v2muls(curr->vs1, D_SCALE), v2muls(curr->vs2, D_SCALE), R_GREEN | R_ALPHA);
-		texture_draw_circle(&tex, v2tov2i(v2muls(curr->pos, D_SCALE)), 2, 0xFFFF33 | R_ALPHA);
-		texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs1, D_SCALE)), 2, 0x55FFFF | R_ALPHA);
-		texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs2, D_SCALE)), 2, 0xFF13FF | R_ALPHA);
+		texture_draw_circle(&tex, v2tov2i(v2muls(curr->pos, D_SCALE)), 2, 0xFFFF33 | R_ALPHA); // YELLOW-ORANGE
+		texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs1, D_SCALE)), 2, 0x55FFFF | R_ALPHA); // CYAN
+		texture_draw_circle(&tex, v2tov2i(v2muls(curr->vs2, D_SCALE)), 2, 0xFF13FF | R_ALPHA); // MAGENTA
 	}
 	t_list *ent_next = game->world->entities;
 	while (ent_next != NULL)
@@ -190,9 +190,6 @@ void draw_debug_view_world_state(t_game *game)
 
 void	game_update(t_game *game)
 {
-//	const t_texture    tex = texture_get_debug_view(game, 2);
-//	texture_clear(tex, 0 | R_ALPHA);
-	//mlx_mouse_hide(game->app.mlx, game->app.win);
 	entity_update(game);
 	enemy_routine(game, game->world->enemy);
 	sprite_order_distance(game->player.pos, game->world->sprite, game->world->indices, game->world->sp_amount);
@@ -203,9 +200,8 @@ void	game_update(t_game *game)
 	render_wall(game);
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 	mmap_draw(game);
-	if (game->tasks[0] && game->tasks[0]->show)
-		task_orbit_render(game, game->tasks[0]);
 	event_display_ui(game);
+	task_process(game);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	draw_debug_info(game);
 	static bool show_debug = false;
@@ -257,7 +253,6 @@ void	render(t_game *game)
 	event_display_ui(game);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	draw_debug_info(game);
-
 	static bool show_debug = false;
 	if (input_keydown(&game->input, KEY_TILDA))
 	{
@@ -273,7 +268,7 @@ void	render(t_game *game)
 		draw_debug_view_world_state(game);
 		texture_draw_debug_view(game, 2);
 	}
-	five_lights(game);
+	task_process(game);
 	input_process(&game->input);
 	game->fpsc++;
 }

@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:57:15 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 18:42:51 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:12:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	load_enemy_images_at_index(t_game *game)
 static const char	*g_image_paths[] = {
 [TEX_WINDOW] = "assets/window.xpm",
 [TEX_DOOR] = "assets/window.xpm",
-[TEX_FLOOR] = "assets/metal_walkway_acg.xpm",
-[TEX_CEILING] = "assets/metal_walkway_acg.xpm",
+[TEX_FLOOR] = "assets/floor.xpm",
+[TEX_CEILING] = "assets/floor.xpm",
 [TEX_TITLE_MISSION_COMPLETED] = "assets/menu/mission_competed.xpm",
 [TEX_TITLE_MISSION_FAILED] = "assets/menu/mission_failed.xpm",
 [TEX_TITLE_NEXT_LEVEL_0] = "assets/menu/next_level_0.xpm",
@@ -100,6 +100,7 @@ static const char	*g_image_paths[] = {
 [TEX_UI_INTERACT_DUL] = "assets/ui/interact_dal.xpm",
 [TEX_UI_DOOR_LOCKED] = "assets/ui/promt_door_locked.xpm",
 [TEX_UI_TASK_INACTIVE] = "assets/ui/inactive_task.xpm",
+[TEX_WALL_OB] = "assets/orbit/orbit_wall_task.xpm",
 };
 
 void	load_image_at_index(t_game *game)

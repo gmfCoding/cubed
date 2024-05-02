@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:44:22 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/30 20:44:24 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:57:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 # include <mlx.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include "config.h"
+# include "task.h"
+# include "app.h"
 
-# define SCR_WIDTH  960
-# define SCR_HEIGHT 960
 # define PANEL_SIZE_X 768
 # define PANEL_SIZE_Y 512
 # define PANEL_POS_X 96
@@ -62,7 +63,7 @@ int		fl_we_clicked(t_game *game, int x, int y);
 void	fl_reset_game(t_game *game);
 void	fl_leave_mgame(t_game *game);
 void	fl_assign_state(t_game *game, int click_state);
+
 void	five_lights_setup(t_game *game, int difficulty);
 void	five_lights_hardmode(t_game *game, t_mgame *five_lights);
-
 #endif

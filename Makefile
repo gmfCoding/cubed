@@ -9,6 +9,8 @@ SRCSF = $(TEST) \
 		vector/vector2_math_div.c \
 		vector/vector2_math.c \
 		vector/vector2_angle.c \
+		vector/vector2_dist.c \
+		vector/vector2_lerp.c \
 		vector/vector2.c \
 		vector/vector2i_math_extra.c \
 		vector/vector2i_math.c \
@@ -61,6 +63,7 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_window.c \
 		modifiers/mod_func_window_line.c \
 		modifiers/mod_func_target_handles.c \
+		modifiers/mod_func_trigger_area.c \
 		mini_map/mmap_draw.c \
 		mini_map/mmap_draw_anim.c \
 		mini_map/mmap_image_decider.c \
@@ -80,6 +83,7 @@ SRCSF = $(TEST) \
 		entities/enemy/enemy_img_setup.c \
 		entities/enemy/enemy_path_and_patrol.c \
 		entities/enemy/enemy_routines.c \
+		entities/models/orbit_task_model.c \
 		a_star/a_star_path_collect.c \
 		a_star/a_star_neighboring.c \
 		a_star/a_star_memory.c \
@@ -91,6 +95,7 @@ SRCSF = $(TEST) \
 		sound/sound_setup.c \
 		sound/sound_use.c \
 		task/task.c \
+		task/task_fl_wrapper/task_fl_wrapper.c \
 		task/five_lights/fl_setup.c \
 		task/five_lights/fl_state_manage.c \
 		task/five_lights/fl_state_modes.c \
@@ -142,7 +147,7 @@ $(info Compiling for OS:$(OS))
 NAME = cub3D
 
 DIRSRC = src
-DIROBJ = obj
+DIROBJ = obj/$(CONF)
 DIRINC = inc
 DIRLIB = lib
 
@@ -174,19 +179,27 @@ WFLAGS = #-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
 LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm -lpthread -ldl
-OPFLAG = -Ofast -flto -march=native -mtune=native -msse4.2 
+OPFLAG = -O3 -flto -march=native -mtune=native -msse4.2 
 
 OPTS = $(OPT)
 SAN = address 
 
+CONF = release
+CONF_TARGET = .target
+
+ifneq (,$(findstring debug,$(CONF)))
+OPTS = fsan,debug
+endif
+
 ifneq (,$(findstring none,$(OPTS)))
 OPFLAG = -O0
 endif
-ifneq (,$(findstring def,$(OPTS)))
-OPTS = fsan,debug
-endif
 ifneq (,$(findstring debug,$(OPTS)))
 	OPFLAG = -O0
+	DFLAGS += -g3
+endif
+ifneq (,$(findstring fdeb,$(OPTS)))
+	OPFLAG = -O1 -march=native
 	DFLAGS += -g3
 endif
 ifneq (,$(findstring fsan,$(OPTS)))
@@ -215,8 +228,19 @@ endif
 # RULES
 all: $(NAME)
 
+# EVALUATE:
+# 	grep -v -q $(CONF) $(CONF_TARGET) && echo $(CONF) > $(CONF_TARGET)
+
+
+# marker for the last built architecture
+BUILT_MARKER := $(CONF).built
+
+$(BUILT_MARKER):
+	@-rm -f *.built
+	@touch $(BUILT_MARKER)
+
 # OBJ TO PROJECT
-$(NAME): $(LIBS) $(OBJS)
+$(NAME): $(LIBS) $(OBJS) $(BUILT_MARKER)
 	-@printf "${BLUE}"
 	$(CC) $(PGFLAGS) $(OBJS) $(LDFLAGS) -o $@
 	-@printf "${NC}"

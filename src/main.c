@@ -71,30 +71,31 @@ t_err	world_preset(int argc, char **argv, t_game *game)
 
 void	nsew_textures(t_game *game)
 {
-	t_mod *const north = mod_get_mod(&game->world->map, MT_NORTH_TEXTURE, NULL);
-	t_mod *const south = mod_get_mod(&game->world->map, MT_SOUTH_TEXTURE, NULL);
-	t_mod *const east = mod_get_mod(&game->world->map, MT_EAST_TEXTURE, NULL);
-	t_mod *const west = mod_get_mod(&game->world->map, MT_WEST_TEXTURE, NULL);
+	t_mod *const	n = mod_get_mod(&game->world->map, MT_NORTH_TEXTURE, NULL);
+	t_mod *const	s = mod_get_mod(&game->world->map, MT_SOUTH_TEXTURE, NULL);
+	t_mod *const	e = mod_get_mod(&game->world->map, MT_EAST_TEXTURE, NULL);
+	t_mod *const	w = mod_get_mod(&game->world->map, MT_WEST_TEXTURE, NULL);
+	const char		*wall = "assets/wall.xpm";
 
-	if (north) 
-		game->textures[TEX_WALLN] = texture_load(game->app.mlx, north->content);
+	if (n)
+		game->textures[TEX_WALLN] = texture_load(game->app.mlx, n->content);
 	else
-		game->textures[TEX_WALLN] = texture_load(game->app.mlx, "assets/wall.xpm");
-	if (south)
-		game->textures[TEX_WALLS] = texture_load(game->app.mlx, south->content);
+		game->textures[TEX_WALLN] = texture_load(game->app.mlx, wall);
+	if (s)
+		game->textures[TEX_WALLS] = texture_load(game->app.mlx, s->content);
 	else
-		game->textures[TEX_WALLS] = texture_load(game->app.mlx, "assets/wall.xpm");
-	if (east) 
-		game->textures[TEX_WALLE] = texture_load(game->app.mlx, east->content);
+		game->textures[TEX_WALLS] = texture_load(game->app.mlx, wall);
+	if (e)
+		game->textures[TEX_WALLE] = texture_load(game->app.mlx, e->content);
 	else
-		game->textures[TEX_WALLE] = texture_load(game->app.mlx, "assets/wall.xpm");
-	if (west) 
-		game->textures[TEX_WALLW] = texture_load(game->app.mlx, west->content);
+		game->textures[TEX_WALLE] = texture_load(game->app.mlx, wall);
+	if (w)
+		game->textures[TEX_WALLW] = texture_load(game->app.mlx, w->content);
 	else
-		game->textures[TEX_WALLW] = texture_load(game->app.mlx, "assets/wall.xpm");
+		game->textures[TEX_WALLW] = texture_load(game->app.mlx, wall);
 }
 
-void generate_textures(t_game *game)
+void	generate_textures(t_game *game)
 {
 	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/sptiled960.xpm");
 //	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/new_skybox.xpm");
@@ -157,6 +158,8 @@ int	main(int argc, char **argv)
 	game.app.win = mlx_new_window(game.app.mlx, SCR_WIDTH, SCR_HEIGHT, "cub3d");
 	input_setup(game.app.mlx, game.app.win, &game.input);
 	shutdown_input_setup(&game);
+	event_player(&game, true);
+	//task_create_or_find(&game, "task_fl");
 	mlx_loop_hook(game.app.mlx, (void *)render, &game);
 	mlx_loop(game.app.mlx);
 }

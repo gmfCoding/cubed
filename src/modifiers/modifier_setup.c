@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modifier_setup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 17:21:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:01:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,44 +45,49 @@
  * //the rest of the map here//
  *
  */
-char *const			g_mapsymbols[] = {
-	"NO",
-	"SO",
-	"WE",
-	"EA",
-	"F ",
-	"C " ,
-	"DR",
-	"KE",
-	"AL",
-	"MM",
-	"EN",
-	"WN", // WINDOW
-	"WL", // WINDOW LINE (really box)
-	"FL",
-	"GO", // Or-Gate / Redirect
-	"GA", // And-Gate
-	"GM", // Multi Gate Splitter
+
+static char *const	g_mapsymbols[] = {
+[MOD_ID_NO] = "NO",
+[MOD_ID_SO] = "SO",
+[MOD_ID_WE] = "WE",
+[MOD_ID_EA] = "EA",
+[MOD_ID_F] = "F ",
+[MOD_ID_C] = "C ",
+[MOD_ID_DR] = "DR",
+[MOD_ID_KE] = "KE",
+[MOD_ID_AL] = "AL",
+[MOD_ID_MM] = "MM",
+[MOD_ID_EN] = "EN",
+[MOD_ID_WN] = "WN", // WINDOW
+[MOD_ID_WL] = "WL", // WINDOW LINE (really box)
+[MOD_ID_FL] = "FL", // Five lights
+[MOD_ID_OB] = "OB", // Orbit task
+[MOD_ID_GO] = "GO", // Or-Gate / Redirect
+[MOD_ID_GA] = "GA", // And-Gate
+[MOD_ID_GM] = "GM", // Multi Gate Splitter
+[MOD_ID_TA] = "TA", // Trigger area
 };
 
-t_ex_action const	g_mapfuncs[] = {
-	&mod_gen_no,
-	&mod_gen_so,
-	&mod_gen_we,
-	&mod_gen_ea,
-	&mod_gen_f,
-	&mod_gen_c,
-	&mod_gen_dr,
-	&mod_gen_ke,
-	&mod_gen_al,
-	&mod_gen_mm,
-	&mod_gen_en,
-	&mod_gen_wn,
-	&mod_gen_wl,
-	&mod_gen_fl,
-	&mod_gen_go,
-	&mod_gen_ga,
-	&mod_gen_gm,
+static const t_ex_action	g_mapfuncs[] = {
+[MOD_ID_NO] = &mod_gen_no,
+[MOD_ID_SO] = &mod_gen_so,
+[MOD_ID_WE] = &mod_gen_we,
+[MOD_ID_EA] = &mod_gen_ea,
+[MOD_ID_F] = &mod_gen_f,
+[MOD_ID_C] = &mod_gen_c,
+[MOD_ID_DR] = &mod_gen_dr,
+[MOD_ID_KE] = &mod_gen_ke,
+[MOD_ID_AL] = &mod_gen_al,
+[MOD_ID_MM] = &mod_gen_mm,
+[MOD_ID_EN] = &mod_gen_en,
+[MOD_ID_WN] = &mod_gen_wn,
+[MOD_ID_WL] = &mod_gen_wl,
+[MOD_ID_FL] = &mod_gen_fl,
+[MOD_ID_OB] = &mod_gen_ob,
+[MOD_ID_GO] = &mod_gen_go,
+[MOD_ID_GA] = &mod_gen_ga,
+[MOD_ID_GM] = &mod_gen_gm,
+[MOD_ID_TA] = &mod_gen_ta,
 };
 
 /*

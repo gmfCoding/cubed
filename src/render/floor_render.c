@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:31:56 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 17:44:20 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:20:59 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "vector2.h"
@@ -14,6 +14,8 @@
 #include "config.h"
 #include "state.h"
 
+
+/// @param y starts at half height and goes to R_WIDTH
 static void	render_floor_row(t_game *game, int y, t_vec2 step, t_vec2 *floor)
 {
 	int32_t	colour;
@@ -36,16 +38,13 @@ static void	render_floor_row(t_game *game, int y, t_vec2 step, t_vec2 *floor)
 			colour = game->world->map.color_ceiling;
 			if (!game->world->map.use_ceiling)
 				colour = pixel_get(game->textures[TEX_CEILING], uv.x, uv.y);
-			pixel_set(game->rt1, x, y, ((colour >> 1) & 8355711) | R_ALPHA);
+			pixel_set(game->rt1, x, y, ((colour >> 1) & 0x7F7F7F) | R_ALPHA);
 			colour = game->world->map.color_floor;
 			if (!game->world->map.use_floor)
 				colour = pixel_get(game->textures[TEX_FLOOR], uv.x, uv.y);
-			colour = (colour >> 1) & 0x7F7F7F;
-		//	if ((int)floor->x % 2 == 0)
-		//		colour = R_BLUE | R_ALPHA;
+			colour = ((colour >> 2) & 0x3F3F3F);
 			pixel_set(game->rt1, x, R_HEIGHT - y - 1, colour | R_ALPHA);
 		}
-	//	pixel_set(game->rt1, x, R_HEIGHT - y - 1, ((int)(real.y / (float)game->world->map.height * 255.0)) | R_ALPHA);
 		floor->x += step.x;
 		floor->y += step.y;
 	}

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:13:28 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/06 19:00:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:02:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_texture	texture_copy(void *mlx, t_texture tex, const t_vec2 reg[2], int scale)
 /* create a copy of 'tex' that has been rotated by 90-deg * 'rot' */
 t_texture	texture_rotate(void *mlx, t_texture tex, int rot);
 
-t_texture	texture_load(void *mlx, char *path);
+t_texture	texture_load(void *mlx, const char *const path);
 
 void		texture_destroy(void *mlx, t_texture *tex, \
 		t_texture **tex_ptr, bool use_free);

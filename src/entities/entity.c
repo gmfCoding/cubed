@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 18:16:15 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:04:18 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -14,28 +14,10 @@
 #include "state.h"
 #include "map.h"
 #include "clmath.h"
-typedef void (*t_fn_entity_update)(t_entity *entity, t_game *game);
 
-// void	ent_door_update(t_door *door, t_game *game)
-// {
-// 	t_vec2	pct;
-// 	bool	vert;
-// 	// if (door->closed)
-// 	// 	door->percent += door->speed;
-// 	// else
-// 	// 	door->percent -= door->speed;
-// 	// door->percent = fclamp(0.0, 1.0, door->percent);
-// 	door->percent = 0.5;
-// 	vert = map_get_tile_refv(&game->world->map, \
-// 	v2add(door->base.pos, v2new(1, 0)))->type == FLOOR;
-// 	door->base.sprite->pos = v2add(door->base.pos, v2new(0.5, 0));
-// 	pct = v2new(0.5 * door->percent, 0);
-// 	if (vert)
-// 		pct = v2new(0, door->percent);
-// 	door->base.sprite->s1 = v2add(door->base.sprite->pos, pct);
-// 	door->base.sprite->s2 = door->base.sprite->pos;
-// }
-
+// Function declarations
+void	ent_task_orbit_update(t_ent_task_orbit *orbit, t_game *game);
+void	ent_trigger_area_update(t_ent_trigger_area *area, t_game *game);
 
 /*					*PLAYER*
 		 |						   |
@@ -62,9 +44,16 @@ LL------ WL ------- DL DR -------  WR ------ RR
 
 */
 
-static void	door_model_update(t_game *game, t_door *d, t_door_model *m, bool vert)
+
+/*	@brief Calculates the door model from the given door.
+	@param game Game state reference
+	@param d door entity
+	@param m door model
+	@param v Is facing east / west instead of north / south
+*/
+static void	door_model_update(t_game *game, t_door *d, t_door_model *m, bool v)
 {
-	const t_vec2	tang = v2new(!vert, !!vert);
+	const t_vec2	tang = v2new(!v, !!v);
 	const t_vecd	pl = v2det(v2sub(v2sub(game->player.pos, \
 	v2new(0.5, 0.5)), d->base.pos), tang) > 0;
 	const t_vec2	face = v2muls(v2aclock(tang), 0.25 * ((pl * -1) + (!pl)));
@@ -85,37 +74,43 @@ static void	door_model_update(t_game *game, t_door *d, t_door_model *m, bool ver
 	m->far_right = v2add(m->door_right, v2muls(v2rev(face), 2));
 }
 
+/*	@brief Update the sprites for a given door entity.
+	@param game Game state reference
+	@param d door entity
+	@param vert Is facing east / west instead of north / south
+*/
 static void	door_update_vis(t_game *game, t_door *d, bool vert)
 {
 	t_door_model	m;
 
 	m = (t_door_model){0};
 	door_model_update(game, d, &m, vert);
-
 	d->sprites[0]->pos = m.door_left;
 	d->sprites[0]->s1 = m.door_left;
 	d->sprites[0]->s2 = m.left_left;
 	d->sprites[0]->vs1 = m.door_left;
 	d->sprites[0]->vs2 = m.wall_left;
-
 	d->sprites[2]->pos = m.door_right;
 	d->sprites[2]->s1 = m.door_right;
 	d->sprites[2]->s2 = m.right_right;
 	d->sprites[2]->vs1 = m.door_right;
 	d->sprites[2]->vs2 = m.wall_right;
-
 	d->sprites[1]->pos = d->sprites[0]->s1;
 	d->sprites[1]->s1 = d->sprites[0]->s1;
 	d->sprites[1]->s2 = m.far_left;
-
 	d->sprites[3]->pos = d->sprites[2]->s1;
 	d->sprites[3]->s1 = d->sprites[2]->s1;
 	d->sprites[3]->s2 = m.far_right;
-
 	d->sprites[3]->visible = d->percent < 1.0;
 	d->sprites[1]->visible = d->percent < 1.0;
 }
 
+/*	@brief Determins whether a door is facing east / west vs north / south
+	@param game Game state reference
+	@param d door entity
+	@returns Whether a door is facing 
+	east / west (`true`) vs north / south (`false`)
+*/
 bool	door_is_vertical(t_door *door, t_game *game)
 {
 	const static t_vec2	directions[4] = {
@@ -127,7 +122,6 @@ bool	door_is_vertical(t_door *door, t_game *game)
 	t_tile				*tile;
 
 	i = -1;
-
 	while (++i < 4)
 	{
 		tile = map_get_tile_refv(&game->world->map, \
@@ -151,13 +145,17 @@ void	ent_door_update(t_door *door, t_game *game)
 }
 
 static const t_fn_entity_update	g_entity_updates[] = {
-	[ENT_DOOR] = (void *)ent_door_update,
-	[ENT_ENEMY] = (void *)NULL,
+[ENT_DOOR] = (void *)ent_door_update,
+[ENT_ENEMY] = (void *) NULL,
+[ENT_TASK_ORBIT] = (void *)ent_task_orbit_update,
+[ENT_TRIGGER_AREA] = (void *)ent_trigger_area_update,
 };
 
 static const size_t	g_entity_sizes[] = {
-	[ENT_DOOR] = sizeof(t_door),
-	[ENT_ENEMY] = sizeof(t_enemy),
+[ENT_DOOR] = sizeof(t_door),
+[ENT_ENEMY] = sizeof(t_enemy),
+[ENT_TASK_ORBIT] = sizeof(t_ent_task_orbit),
+[ENT_TRIGGER_AREA] = sizeof(t_ent_trigger_area),
 };
 
 void	entity_update(t_game *game)
@@ -177,7 +175,7 @@ void	entity_update(t_game *game)
 
 t_entity	*entity_create(t_world *world, t_entity_type type)
 {
-	void	*const data = malloc(g_entity_sizes[type]);
+	void *const	data = malloc(g_entity_sizes[type]);
 
 	ft_lstadd_front(&world->entities, ft_lstnew(data));
 	*(t_entity *)data = (t_entity){.type = type, .pos = v2new(0, 0), 0};

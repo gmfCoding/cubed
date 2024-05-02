@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 19:01:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:56:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -18,29 +18,30 @@
 #include "state.h"
 
 static const t_orb_gen	g_orbgen = {
-	.sma = {.x = 0.5 * KM_AU, .y = 1.25 * KM_AU}, 
-	.ecc = {.x = 0.0001, .y = 0.8},
-	.inc = {.x = 0.0001, .y = 0.0001}, 
-	.aop = {.x = 0.0001, .y = M_TAU}, 
-	.lan = {.x = 0.0001, .y = 0.0001}
+	.sma = {0.5 * KM_AU, 1.25 * KM_AU}, .ecc = {0.0001, 0.8},
+	.inc = {0.0001, 0.0001}, .aop = {0.0001, M_TAU}, .lan = {0.0001, 0.0001}
 };
 
 int	task_orbit_setup(t_game *game, t_task *base)
 {
-
 	t_task_orbit *const	task = (t_task_orbit*)base;
+	const t_orb_body	sun = orb_body_create_rm(6.96340e8, 1.9891e30);
 
+	if (base->init)
+		return (0);
 	mrand(&game->task_rand);
-	task->rand = game->task_rand;
+	*task = (t_task_orbit)
+	{
+		.task = *base,
+		.rand = game->task_rand,
+		.start_ang = (t_kep_ang){0}, .target_path.sgp_u = sun.u,
+		.start_path = (t_kep_path){.sma = KM_AU, .ecc = 0.0001, .inc = 0.0001,
+		.lan = 0.0001, .aop = 0.0001, .sgp_u = sun.u},
+		.sun = sun, .maneuvers = 5, .active_path = 0,
+	};
+	base->init = true;
+	base->completed = false;
 	orb_generate(&task->target_path, &g_orbgen, &task->rand);
-	task->sun = orb_body_create_rm(6.96340e8, 1.9891e30);
-	task->target_path.sgp_u = task->sun.u;
-	task->start_path = (t_kep_path){
-		.sma = KM_AU, .ecc = 0.0001, .inc = 0.0001,
-		.lan = 0.0001, .aop = 0.0001, .sgp_u = task->sun.u};
-	task->start_ang = (t_kep_ang){0};
-	task->maneuvers = 5;
-	task->active_path = 0;
 	ft_memsetf64(task->delta, 1.0, T_ORBIT_MAX_MAN);
 	ft_memsetf64(task->mean, 0.0, T_ORBIT_MAX_MAN);
 	mui_orbit_setup(&game->app, &task->mui);
@@ -122,6 +123,8 @@ int	task_orbit_render(t_game *game, t_task *base)
 		rt = texture_create(game->app.mlx, 400, 400);
 		rtl = true;
 	}
+	if (base->show == false)
+		return (0);
 	//texture_blit_rect(&rt, scr, (t_rect){45, 37, 274, 266});
 	texture_blit(*scr, rt, v2new(0, 0));
 	texture_draw_circle(&rt, v2tov2i(task->scr_offset), \
