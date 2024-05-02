@@ -17,5 +17,6 @@ struct s_app
 {
 	void	*mlx;
 	void	*win;
+	void	*sfx;
 };
 #endif

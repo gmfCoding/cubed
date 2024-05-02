@@ -37,7 +37,8 @@ void	load_enemy_tex(t_game *game, char *b_path, char *file_type)
 		ft_strcat(path, index_str);
 		ft_strcat(path, file_type);
 		mlx_string_put(game->app.mlx, game->app.win, 400, 900, 0xffffff, path);
-		game->textures[game->loaded_index[0]] = texture_load(game->app.mlx, path);
+		game->textures[game->loaded_index[0]] = texture_load(game->app.mlx, \
+			path);
 	}
 }
 
@@ -114,7 +115,8 @@ void	load_image_at_index(t_game *game)
 				(char *)g_image_paths[game->loaded_index[0]]);
 		}
 	}
-	if (game->loaded_index[0] >= TEX_ENEMY_START && game->loaded_index[0] <= TEX_ENEMY_END)
+	if (game->loaded_index[0] >= TEX_ENEMY_START \
+			&& game->loaded_index[0] <= TEX_ENEMY_END)
 		load_enemy_images_at_index(game);
 	game->loaded_index[0]++;
 }

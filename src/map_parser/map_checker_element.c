@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:00:56 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 17:22:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:58:25 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,26 @@ int	map_check_element_colors(char *str)
 				syntax_check = error_with("nonDigit -", 1, 1);
 		free(rgb[i++]);
 	}
-	if (i != 3)
-		syntax_check = error_with("commaCount -", 1, 1);
 	free(rgb);
+	return (syntax_check);
+}
+
+int	map_check_element_comma(char *str)
+{
+	int	i;
+	int	comma_count;
+	int	syntax_check;
+
+	i = -1;
+	comma_count = 0;
+	syntax_check = map_check_element_colors(str);
+	while (str[++i])
+	{
+		if (str[i] == ',')
+			comma_count++;
+	}
+	if (comma_count != 2)
+		syntax_check = error_with("commaCount -", 1, 1);
 	return (syntax_check);
 }
 
@@ -56,9 +73,7 @@ int	map_check_element_texture(char *str)
 {
 	int	texture_file;
 	int	syntax_check;
-	int	i;
 
-	i = 0;
 	syntax_check = 0;
 	str[ft_strlen(str) - 1] = '\0';
 	while (*str == ' ')
@@ -90,7 +105,7 @@ int	map_check_elements(t_list *raw_map_files)
 		if (str[2] && str[1] != ' ' && str[2] != ' ')
 			return (1);
 		if (str[1] && (str[0] == 'C' || str[0] == 'F') && str[1] == ' ')
-			if (map_check_element_colors(str + 2) == 1)
+			if (map_check_element_comma(str + 2) == 1)
 				return (error_with("Color", 1, 0));
 		if (str[2] && (!ft_strncmp(str, "NO", 2) || !ft_strncmp(str, "SO", 2) \
 			|| !ft_strncmp(str, "WE", 2) || !ft_strncmp(str, "EA", 2)))

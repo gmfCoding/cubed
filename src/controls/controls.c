@@ -32,9 +32,32 @@ static void	rotate_player(t_player *player, double angle)
 	player->plane_end = v2add(v2rev(player->plane), player->pos);
 }
 
+void player_step_sound(t_game *game)
+{
+	int step_type = -1;
+	t_inputctx *const	i = &game->input;
+	
+	if (input_keydown(i, KEY_W) || input_keydown(i, KEY_S) \
+		|| input_keydown(i, KEY_A) || input_keydown(i, KEY_D))
+	{
+		step_type = SFX_PSTEP01 + (mrand(&game->rand) % 3);
+		play_sound(game->app.sfx, step_type, PLAY);
+	}
+	if (input_keyheld(i, KEY_W) || input_keyheld(i, KEY_S) \
+		|| input_keyheld(i, KEY_A) || input_keyheld(i, KEY_D))
+	{
+		if (game->fpsc % (int)35*game->player.move_speed == 0)
+		{
+			step_type = SFX_PSTEP01 + (mrand(&game->rand) % 3);
+			play_sound(game->app.sfx, step_type, PLAY);
+		}
+	}
+}
+
+
 static void	move_player(t_map *map, t_player *pl, t_vec2 dir)
 {
-	const t_vec2	vel = v2muls(dir, pl->moveSpeed);
+	const t_vec2	vel = v2muls(dir, pl->move_speed);
 	t_tile			*horz;
 	t_tile			*vert;
 
@@ -96,10 +119,12 @@ void	control_player_process(t_game *game)
 	if (input_keyheld(i, KEY_RARROW) || input_keyheld(i, KEY_LARROW))
 	{
 		if (input_keyheld(i, KEY_RARROW))
-			game->player.angle_offset -= pl->rotSpeed;
+			game->player.angle_offset -= pl->rot_speed;
 		if (input_keyheld(i, KEY_LARROW))
-			game->player.angle_offset += pl->rotSpeed;
+			game->player.angle_offset += pl->rot_speed;
 	}
+	player_step_sound(game);
+
 	pl->angle = (game->mouse_angle) - game->player.angle_offset;
 	rotate_player(pl, pl->angle);
 }

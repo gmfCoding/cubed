@@ -6,18 +6,18 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:43:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 19:40:39 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:57:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef EVENTS_H
 # define EVENTS_H
 # include "entity.h"
+# include "sound.h"
 
-typedef struct	s_world t_world;
-typedef struct	s_map t_map;
-typedef void (*t_event_fn)(t_game *game, t_entity_2 *ent);
-
-
+typedef struct s_world	t_world;
+typedef struct s_map	t_map;
+typedef void			(*t_event_fn)(t_game *game, t_entity_2 *ent);
 
 void			event_player(t_game *game, bool force);
 void			event_interact(t_game *game);

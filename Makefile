@@ -92,6 +92,8 @@ SRCSF = $(TEST) \
 		input/input_setup.c \
 		input/keys.c \
 		input/mouse.c \
+		sound/sound_setup.c \
+		sound/sound_use.c \
 		task/task.c \
 		task/task_fl_wrapper/task_fl_wrapper.c \
 		task/five_lights/fl_setup.c \
@@ -118,6 +120,7 @@ SRCSF = $(TEST) \
 		task/mui_process.c \
 		task/mui_process_extra.c \
 		task/mui_render.c \
+		title/title_animation.c \
 		title/title_end_screen.c \
 		title/title_load_map_screen.c \
 		title/title_options.c \
@@ -141,7 +144,7 @@ endif
 
 $(info Compiling for OS:$(OS))
 
-NAME = cubed
+NAME = cub3D
 
 DIRSRC = src
 DIROBJ = obj/$(CONF)
@@ -175,7 +178,7 @@ CC = cc
 WFLAGS = #-Wall -Werror -Wextra
 CPPFLAGS =-I$(DIRINC) $(LIB-I) -MMD -MP
 CFLAGS = $(OPFLAG) $(DFLAGS) $(XCFLAGS) $(WFLAGS)
-LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm 
+LDFLAGS = $(OPFLAG) $(DFLAGS) $(XLDFLAGS) $(LIB-L) $(LIB-l) -lz -lm -lpthread -ldl
 OPFLAG = -O3 -flto -march=native -mtune=native -msse4.2 
 
 OPTS = $(OPT)

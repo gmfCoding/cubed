@@ -96,7 +96,7 @@ static t_err	map_check_surrounded(t_map *map_temp, int pos)
  * checks content of the map to follow the rules of subject
  * Return 1 on error 0 on success
  */
-static t_err	 map_check_err(t_map *map_temp, t_list *temp, \
+static t_err	map_check_err(t_map *map_temp, t_list *temp, \
 		t_list *file, char *path)
 {
 	const t_list	*curr = temp;
@@ -112,7 +112,7 @@ static t_err	 map_check_err(t_map *map_temp, t_list *temp, \
 	{
 		e |= err(is_empty_line(**cstr) && (**cstr)[0] != ' ', ERR_LINE);
 		if (e)
-			break ;
+			return (e);
 		players += map_check_player(**cstr);
 		count_invalid_char += map_check_invalid_char(**cstr);
 		curr = curr->next;
@@ -121,8 +121,8 @@ static t_err	 map_check_err(t_map *map_temp, t_list *temp, \
 	e |= err(players != 1, ERR_BADPLAYER);
 	e |= err(count_invalid_char > 0, ERR_BADELEM);
 	e |= err(map_check_surrounded(map_temp, 0) == 1, ERR_BOARDER);
-	if (ft_strrchr(path, '.') != NULL)
-		e |= err(ft_strcmp(".cub", ft_strrchr(path, '.')) != 0, ERR_TYPE);
+	e |= err(ft_strrchr(path, '.') ==  NULL \
+	|| ft_strcmp(".cub", ft_strrchr(path, '.')) != 0, ERR_TYPE);
 	return (e);
 }
 

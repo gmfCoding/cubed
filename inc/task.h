@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   task.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/30 20:45:33 by clovell           #+#    #+#             */
+/*   Updated: 2024/05/02 18:59:14 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TASK_H
 # define TASK_H
 # include <stddef.h>
@@ -27,5 +39,6 @@ t_task	*task_find(t_game *game, char *name);
 t_task	*task_create_or_find(t_game *game, char *name);
 void	task_process(t_game *game);
 
-
+int    task_orbit_setup(t_game *game, t_task *task);
+int    task_orbit_render(t_game *game, t_task *task);
 #endif

@@ -59,7 +59,7 @@ void	texture_destroy(void *mlx, t_texture *tex, t_texture **tex_ptr, bool use_fr
 		tex = *tex_ptr;
 	if (tex == NULL)
 		return ;
-	if (tex != NULL)
+	if (tex != NULL && tex->img != NULL)
 		mlx_destroy_image(mlx, tex->img);
 	tex->img = NULL;
 	if (tex_ptr != NULL)

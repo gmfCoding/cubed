@@ -90,7 +90,47 @@ static const t_ex_action	g_mapfuncs[] = {
 [MOD_ID_TA] = &mod_gen_ta,
 };
 
+<<<<<<< HEAD
 t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
+=======
+/*
+t_err    modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
+{
+    t_list    *curr;
+    char    *str;
+    int        i;
+    int        index;
+
+    index = 0;
+    curr = raw_map_file;
+    while (curr != NULL && curr->content != NULL)
+    {
+        str = (char *)curr->content;
+        remove_spaces(str);
+        i = -1;
+        char content[2][100]; // [0] is MOD type [1] is the rest, eg [0] = "FL", [1] = "task01,door01,O,27,11"
+        int found = ft_sescanf(curr->content, "%N%s,%s\v", 100, &content[0], &content[1]);
+        printf("cu:%s\nc1:%s\nc2:%s\n\n", (char *)curr->content, content[0], content[1]);
+        while ((size_t)++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
+        {
+            if (ft_strncmp(g_mapsymbols[i], content[0], \
+                strlen_nl(g_mapsymbols[i])) == 0)
+                if ((g_mapfuncs[i])(content[1], index++, world, map))
+                    return (ft_putstr_fd(g_mapsymbols[i], STDERR_FILENO), 1);
+            // if (ft_strncmp(g_mapsymbols[i], str, \
+            // strlen_nl(g_mapsymbols[i])) == 0)
+            //     if ((g_mapfuncs[i])(str + (strlen_nl(g_mapsymbols[i]) \
+            //         + 1), index++, world, map))
+            //         return (ft_putstr_fd(g_mapsymbols[i], STDERR_FILENO), 1);
+        }
+        curr = curr->next;
+    }
+    return (0);
+}
+*/
+
+t_err modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
+>>>>>>> master
 {
 	t_list	*curr;
 	char	*str;
@@ -101,8 +141,8 @@ t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 	curr = raw_map_file;
 	while (curr != NULL && curr->content != NULL)
 	{
+		remove_spaces(curr->content);
 		str = (char *)curr->content;
-		remove_spaces(str);
 		i = -1;
 		while ((size_t)++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
 		{
@@ -139,13 +179,13 @@ void	modifier_after(t_game *game)
 	i = -1;
 	while ((size_t)++i < w->ent_count)
 	{
-		//printf("%s : %p\n", w->ent_2[i].name, &w->ent_2[i]);
 		j = -1;
-		while (j++ < EVENT_ENT_MAX_TARGETS)
+		while (++j < EVENT_ENT_MAX_TARGETS)
 		{
 			if (w->ent_2[i].target_names[j] && w->ent_2[i].target_names[j][0] && ft_strcmp(w->ent_2[i].target_names[j], "NULL") != 0)
 				w->ent_2[i].targets[j] = mod_search_name(w, w->ent_2[i].target_names[j]);
-			//printf("\t%d: %p / %s\n", j, w->ent_2[i].targets[j], w->ent_2[i].target_names[j]);
+			if (w->ent_2[i].target_names[j] != NULL)
+				free(w->ent_2[i].target_names[j]);
 		}
 		w->ent_2[i].ref_mm_tile = mmap_find_tile(game, w->ent_2[i].pos);
 	}

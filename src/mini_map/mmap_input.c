@@ -24,11 +24,13 @@ void	mmap_input(t_game *game, t_mmap *mmap)
 	{
 		if (mmap->mm_small == true)
 		{
+			play_sound(game->app.sfx, SFX_SELECT, PLAY);
 			mmap->mm_big = true;
 			mmap->mm_small = false;
 		}
 		else
 		{
+			play_sound(game->app.sfx, SFX_SELECTION, PLAY);
 			mmap->mm_big = false;
 			mmap->mm_small = true;
 		}

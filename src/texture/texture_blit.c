@@ -22,9 +22,9 @@ void	texture_blit_rect(t_texture *dst, t_texture *src, t_rect area)
 	int	j;
 	int	i;
 	int	max_j;
-	int	max_i;
+//	int	max_i;
 	max_j = MIN(area.max.y, MIN(src->height, dst->height));
-	max_i = MIN(area.max.x, MIN(src->width, dst->width));
+//	max_i = MIN(area.max.x, MIN(src->width, dst->width));
 	j = MIN(0, area.min.y) - 1;
 	while (++j < max_j)
 	{
