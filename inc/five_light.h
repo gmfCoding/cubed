@@ -63,5 +63,6 @@ void	fl_reset_game(t_game *game);
 void	fl_leave_mgame(t_game *game);
 void	fl_assign_state(t_game *game, int click_state);
 void	five_lights_setup(t_game *game, int difficulty);
+void	five_lights_hardmode(t_game *game, t_mgame *five_lights);
 
 #endif

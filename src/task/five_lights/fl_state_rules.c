@@ -50,3 +50,28 @@ void	fl_pass_state_rules(t_game *game, int click_state)
 	if (game->five_light.state[index] == 0)
 		fl_change_state(game, click_state, index);
 }
+
+void	five_lights_hardmode(t_game *game, t_mgame *five_lights)
+{
+	bool	used[10] = {false};
+	int 	r;
+	int		i;
+
+	i = -1;
+	while (++i < 10)
+	{
+		do
+			r = mrand(&game->rand) % 10;
+		while (used[r]);
+		game->five_light.state[r] = 0;
+		game->five_light.pos_x[r] = (PANEL_POS_X + 43) + (i * 69);
+		game->five_light.click_spot[r][0] = (PANEL_POS_X + 43) + (i * 71);
+		game->five_light.click_spot[r][1] = (PANEL_POS_X + 112) + (i * 71);
+		game->five_light.click_spot[r][2] = PANEL_POS_Y + 157;
+		game->five_light.click_spot[r][3] = PANEL_POS_Y + 232;
+		game->five_light.click_spot[r][4] = PANEL_POS_Y + 234;
+		game->five_light.click_spot[r][5] = PANEL_POS_Y + 304;
+		printf("%d\n", r);
+		used[r] = true;
+    }
+}

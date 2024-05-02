@@ -134,4 +134,6 @@ void	five_lights_setup(t_game *game, int difficulty)
 		game->five_light.pos_x[i] = (PANEL_POS_X + 43) + (i * 69);
 	}
 	fl_click_points(game);
+	if (difficulty > 5)
+		five_lights_hardmode(game, &game->five_light);
 }
