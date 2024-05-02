@@ -121,7 +121,7 @@ t_err    modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 }
 */
 
-t_err modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
+t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 {
 	t_list	*curr;
 	char	*str;

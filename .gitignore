@@ -1,4 +1,5 @@
 cub3d
+cub3D
 cubed
 **/*.swp
 **/*.swo
@@ -10,3 +11,4 @@ cubed
 **/_**/
 **/*.blend1
 **/*.blend2
+*.built
