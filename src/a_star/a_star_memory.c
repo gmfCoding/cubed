@@ -35,7 +35,7 @@ void	star_deallocate_node(t_star_node **node)
  * made to get to that location the allocated 
  * nodes a dealloacted with the above fucntion
  */
-void	star_insert_node(t_star_node **node, t_star_node *parent, t_vec2 pos)
+void	star_insert_node(t_star_node **node, t_star_node *parent, t_vec2i pos)
 {
 	t_star_node	*temp;
 
@@ -91,7 +91,7 @@ t_vec2	*star_construct_path(t_star_node *end_node, \
 	path[path_length].y = -1;
 	while (curr != NULL)
 	{
-		path[--path_length] = curr->pos;
+		path[--path_length] = v2new(curr->pos.x, curr->pos.y);
 		curr = curr->parent;
 	}
 	star_deallocate_node(open);

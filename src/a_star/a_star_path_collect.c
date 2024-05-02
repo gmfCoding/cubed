@@ -17,12 +17,12 @@
  * get the huristic which is just a fancy way of saying
  * it get the distance to the target pos from current node
  */
-int	star_get_huristic(t_star_node *node, t_vec2 target)
+int	star_get_huristic(t_star_node *node, t_vec2i target)
 {
-	t_vec2	diff;
+	t_vec2i	diff;
 
-	diff = v2sub(node->pos, target);
-	return (v2mag(diff) * 10);
+	diff = v2isub(node->pos, target);
+	return (v2imag(diff) * 10);
 }
 
 t_star_node	*star_change_to_close(t_star_node **open, \
@@ -42,7 +42,7 @@ t_star_node	*star_change_to_close(t_star_node **open, \
  * its also moving that node to close and calls the huristic function
  */
 t_star_node	*star_get_smallest_cost(t_star_node **open, \
-	t_star_node **close, t_vec2 target)
+	t_star_node **close, t_vec2i target)
 {
 	t_star_node	*btemp;
 	t_star_node	*temp;
@@ -106,12 +106,13 @@ t_vec2	*star_find_path(t_game *game, t_vec2 start, t_vec2 target)
 
 	open = NULL;
 	close = NULL;
-	star_insert_node(&open, NULL, start);
+	star_insert_node(&open, NULL, v2inew(start.x, start.y));
 	while (open != NULL)
 	{
-		smallest = star_get_smallest_cost(&open, &close, target);
-		if ((int)smallest->pos.x == (int)target.x \
-			&& (int)smallest->pos.y == (int)target.y)
+		smallest = star_get_smallest_cost(&open, &close, \
+			v2inew(target.x, target.y));
+		if (smallest->pos.x == (int)target.x \
+			&& smallest->pos.y == (int)target.y)
 			break ;
 		star_get_neighbors(game, smallest, &open, &close);
 	}

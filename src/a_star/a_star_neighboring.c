@@ -23,24 +23,24 @@
  * possibly combining both loops into 1 idk
  */
 int	star_not_in_list(t_star_node **open, \
-	t_star_node **close, t_vec2 pos, t_star_node *a)
+	t_star_node **close, t_vec2i pos, t_star_node *a)
 {
 	t_star_node	*c;
 
 	c = *close;
 	while (c != NULL)
 	{
-		if ((int)c->pos.x == (int)pos.x && (int)c->pos.y == (int)pos.y)
+		if (c->pos.x == pos.x && c->pos.y == pos.y)
 			return (0);
 		c = c->next;
 	}
 	c = *open;
 	while (c != NULL)
 	{
-		if ((int)c->pos.x == (int)pos.x && (int)c->pos.y == (int)pos.y)
+		if (c->pos.x == pos.x && c->pos.y == pos.y)
 		{
-			if (((int)c->pos.x == (int)a->pos.x || (int)c->pos.y \
-				== (int)a->pos.y) && c->g_cost > a->g_cost + 10)
+			if ((c->pos.x == a->pos.x || c->pos.y \
+				== a->pos.y) && c->g_cost > a->g_cost + 10)
 				c->g_cost = a->g_cost + 10;
 			else
 				if (c->g_cost > a->g_cost + 14)
@@ -67,14 +67,14 @@ void	star_check_cardinal_neighbors(t_game *game, \
 {
 	size_t		i;
 	int			index;
-	t_vec2		pos;
+	t_vec2i		pos;
 
 	i = -1;
 	while (++i < sizeof(g_deltas) / sizeof(g_deltas[0]))
 	{
 		pos.x = curr->pos.x + g_deltas[i][0];
 		pos.y = curr->pos.y + g_deltas[i][1];
-		index = (int)pos.y * game->world->map.width + (int)pos.x;
+		index = pos.y * game->world->map.width + pos.x;
 		if (pos.x >= 0 && pos.x < game->world->map.width \
 			&& pos.y >= 0 && pos.y < game->world->map.height \
 			&& game->world->map.tiles[index].vis == -1 \
@@ -83,7 +83,7 @@ void	star_check_cardinal_neighbors(t_game *game, \
 	}
 }
 
-int	star_are_not_walls(t_game *game, t_vec2	pos, int i)
+int	star_are_not_walls(t_game *game, t_vec2i pos, int i)
 {
 	t_tile	*t;
 	int		w;
@@ -112,7 +112,7 @@ void	star_check_diagonal_neighbors(t_game *game, t_star_node *curr, \
 	t_star_node **open, t_star_node **close)
 {
 	int		i;
-	t_vec2	pos;
+	t_vec2i	pos;
 
 	i = -1;
 	while (++i < 4)
@@ -150,14 +150,14 @@ void	star_get_neighbors(t_game *game, t_star_node *curr, \
 {
 	int			index;
 	size_t		i;
-	t_vec2		pos;
+	t_vec2i		pos;
 
 	i = -1;
 	while (++i < sizeof(g_deltas) / sizeof(g_deltas[0]))
 	{
 		pos.x = curr->pos.x + g_deltas[i][0];
 		pos.y = curr->pos.y + g_deltas[i][1];
-		index = (int)pos.y * game->world->map.width + (int)pos.x;
+		index = pos.y * game->world->map.width + pos.x;
 		if (pos.x >= 0 && pos.x < game->world->map.width \
 			&& pos.y >= 0 && pos.y < game->world->map.height \
 			&& game->world->map.tiles[index].vis == -1)
