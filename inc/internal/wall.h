@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:39:55 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/09 04:04:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:15:46 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef WALL_H
@@ -48,6 +48,8 @@ typedef struct s_column
 	int		tex_size;
 	int		shaded;
 	double	sample_dy;
+	double	uvys;
+	double	uvyo;
 	int		x;
 	int		height;
 	t_vec2	uv;

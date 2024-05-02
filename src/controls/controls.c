@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 17:23:51 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:45:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -104,7 +104,8 @@ void	control_player_process(t_game *game)
 {
 	t_player *const		pl = &game->player;
 	t_inputctx *const	i = &game->input;
-	game->mouse_angle = window_angle(i->mouse.x);
+
+	game->mouse_angle = window_angle(i->mouse.x) * MOUSE_SENSITIVITY;
 	if (!(can_move_player(game, pl)))
 		return ;
 	if (input_keyheld(i, KEY_W))
@@ -130,14 +131,22 @@ void	control_player_process(t_game *game)
 
 void	control_core_process(t_game *game)
 {
+	t_task	*task;
+
 	if (input_keyheld(&game->input, KEY_ESC))
 		game_destroy(game);
-	if(input_keydown(&game->input, KEY_T))
+
+	// TODO: Debug remove.
+	if (input_keydown(&game->input, KEY_T))
 	{
-		game->tasks[0] = malloc(sizeof(t_task_orbit));
-		*game->tasks[0] = *g_tasks[0];
-		task_orbit_setup(game, game->tasks[0]);
-		game->tasks[0]->show = true;
+		task = task_find(game, "task_orbit");
+		if (task)
+			task->show = true;
+		else
+		{
+			task = task_create_or_find(game, "task_orbit");
+			task->show = true;
+		}
 	}
 }
 

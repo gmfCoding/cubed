@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 01:10:30 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 14:58:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,22 @@
 
 
 // FORWARD DECLARE
-typedef struct s_task t_task;
-typedef struct s_game t_game;
+typedef struct s_task			t_task;
+typedef struct s_game			t_game;
 
-#define MAX_DEBUG_VIEWS 10
-typedef struct s_debug_texture t_debug_texture;
+# define MAX_DEBUG_VIEWS 10
+
+typedef struct s_debug_texture	t_debug_texture;
 struct s_debug_texture
 {
-	void *win;
-	t_texture rt;
+	void		*win;
+	t_texture	rt;
 };
 
-typedef struct s_inputctx t_inputctx;
+typedef struct s_inputctx		t_inputctx;
 
-typedef struct s_world t_world;
-typedef struct s_mmap t_mmap;
+typedef struct s_world			t_world;
+typedef struct s_mmap			t_mmap;
 
 # define TEX_WALLN 0
 # define TEX_WALLS 1
@@ -69,8 +70,6 @@ typedef struct s_mmap t_mmap;
 # define TEX_TITLE_START_1 24
 # define TEX_TITLE_BACKDROP 25
 
-
-
 # define TEX_TITLE_MISSION_COMPLETED 26
 # define TEX_TITLE_MISSION_FAILED 27
 # define TEX_TITLE_NEXT_LEVEL_0 28
@@ -87,12 +86,12 @@ typedef struct s_mmap t_mmap;
 # define TEX_UI_DOOR_LOCKED 39
 # define TEX_UI_TASK_INACTIVE 40
 
-# define TEX_ENEMY_START 41
-# define TEX_ENEMY_END 616
+# define TEX_WALL_OB 42
 
-# define TEX_ARRAY_SIZE 617
+# define TEX_ENEMY_START 43
+# define TEX_ENEMY_END 618
 
-
+# define TEX_ARRAY_SIZE 619
 
 typedef enum e_ui_state
 {
@@ -109,11 +108,11 @@ struct s_game
 	t_texture		rt1;
 	t_texture		rt2;
 
-	t_title		title;
-	int		loaded_index[3];
-	t_mgame 	five_light;
-	bool		run_fl;
-	t_vec2i		stored_mouse;
+	t_title			title;
+	int				loaded_index[3];
+	t_mgame			five_light;
+	bool			run_fl;
+	t_vec2i			stored_mouse;
 	double			mouse_angle;
 //	t_vec2			pos;
 
@@ -125,10 +124,10 @@ struct s_game
 	t_mmap			mmap;
 	t_entity_2		*events_active[9];
 	bool			events_on;
-	t_ui_state			display_ui;
+	t_ui_state		display_ui;
 	t_inputctx		input;
 	t_rayinfo		half;
-	t_task			*tasks[TASK_LEN];
+	t_list			*tasks;
 	t_rand			task_rand; // TODO: Use t_game::rand instead ?
 	t_rand			rand;
 	unsigned int	fpsc;
@@ -138,10 +137,10 @@ struct s_game
 
 
 
-void		texture_debug_view_blit(t_game *game, int view, 
+void		texture_debug_view_blit(t_game *game, int view,
 				t_texture tex, t_vec2 pos);
 void		texture_draw_debug_view(t_game *game, int view);
 t_texture	texture_get_debug_view(t_game *game, int view);
 void		control_process(t_game *game);
-void	control_core_process(t_game *game);
+void		control_core_process(t_game *game);
 #endif

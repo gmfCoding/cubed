@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 22:55:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/26 23:01:01 by clovell          ###   ########.fr       */
+/*   Updated: 2024/04/29 18:05:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "vector2.h"
@@ -27,12 +27,12 @@ t_vec2	two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2)
 {
 	const t_vecd	a = v2det(a1, b1);
 	const t_vecd	b = v2det(a2, b2);
-	const t_vecd	c = f4det(f4det(a1.x, 1, b1.x, 1), f4det(a1.y, 1, b1.y, 1), \
-	f4det(a2.x, 1, b2.x, 1), f4det(a2.y, 1, b2.y, 1));
+	const t_vecd	c = f2det(f2det(a1.x, 1, b1.x, 1), f2det(a1.y, 1, b1.y, 1), \
+	f2det(a2.x, 1, b2.x, 1), f2det(a2.y, 1, b2.y, 1));
 
 	if (c == 0)
 		return (v2new(0, 0));
 	return \
-	(v2new(f4det(a, f4det(a1.x, 1, b1.x, 1), b, f4det(a2.x, 1, b2.x, 1)) / c, \
-	f4det(a, f4det(a1.y, 1, b1.y, 1), b, f4det(a2.y, 1, b2.y, 1)) / c));
+	(v2new(f2det(a, f2det(a1.x, 1, b1.x, 1), b, f2det(a2.x, 1, b2.x, 1)) / c, \
+	f2det(a, f2det(a1.y, 1, b1.y, 1), b, f2det(a2.y, 1, b2.y, 1)) / c));
 }

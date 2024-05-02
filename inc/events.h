@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 09:43:53 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/30 20:44:09 by kmordaun         ###   ########.fr       */
+/*   Created: 2024/03/16 09:43:53 by clovell           #+#    #+#             */
+/*   Updated: 2024/05/02 18:57:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,23 @@ void			event_alert_off(t_game *game, t_entity_2 *ent);
 void			event_five_lights_open(t_game *game, t_entity_2 *ent);
 void			event_five_lights_closed(t_game *game, t_entity_2 *ent);
 
+void			event_task_orbit_open(t_game *game, t_entity_2 *ent);
+void			event_task_orbit_closed(t_game *game, t_entity_2 *ent);
+
 t_handle_result	entity_target_handle(t_game *game, t_entity_2 *ent);
 
-t_handle_result	target_handle_door(t_game *game, \
-t_entity_2 *door, t_entity_2 *parent);
-t_handle_result	target_handle_five_lights(t_game *game, \
-t_entity_2 *five_lights, t_entity_2 *parent);
-t_handle_result	target_handle_or(t_game *game, \
-t_entity_2 *self, t_entity_2 *other);
-t_handle_result	target_handle_and(t_game *game, \
-t_entity_2 *self, t_entity_2 *other);
-t_handle_result	target_handle_splitter(t_game *game, \
-t_entity_2 *self, t_entity_2 *other);
-
+t_handle_result	target_handle_door(t_game *game, t_entity_2 *door, \
+										t_entity_2 *parent);
+t_handle_result	target_handle_five_lights(t_game *game, t_entity_2 *fl, \
+										t_entity_2 *parent);
+t_handle_result	target_handle_orbit_task(t_game *game, t_entity_2 *orbit, \
+										t_entity_2 *parent);
+t_handle_result	target_handle_or(t_game *game, t_entity_2 *self, \
+										t_entity_2 *other);
+t_handle_result	target_handle_and(t_game *game, t_entity_2 *self, \
+										t_entity_2 *other);
+t_handle_result	target_handle_splitter(t_game *game, t_entity_2 *self, \
+										t_entity_2 *other);
+t_handle_result	target_handle_trigger_area(t_game *game, t_entity_2 *area, \
+										t_entity_2 *parent);
 #endif
