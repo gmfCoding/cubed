@@ -96,7 +96,8 @@ void	nsew_textures(t_game *game)
 
 void generate_textures(t_game *game)
 {
-	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/new_skybox.xpm");
+	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/sptiled960.xpm");
+//	game->textures[TEX_SKYBOX] = texture_load(game->app.mlx, "assets/new_skybox.xpm");
 //	game->textures[TEX_SKYBOX] = texture_create(game->app.mlx, 1000, 5000);
 	game->textures[TEX_WALL] = texture_load(game->app.mlx, "assets/wall.xpm");
 }
@@ -138,12 +139,12 @@ int	main(int argc, char **argv)
 	game.loaded_index[1] = 1;
 	game.loaded_index[2] = 0;
 	game.title.state = TITLE;
-	game.five_light.difficulty = 1;
-	game.five_light.run_game = false;
-	game.world->ent_count = 0;
-	game.world->sp_amount = 0;
+//	game.five_light.difficulty = 1;
+//	game.five_light.run_game = false;
+//	game.world->ent_count = 0;
+//	game.world->sp_amount = 0;
 	game.fpsc = 0;
-	game.display_ui = false;
+//	game.display_ui = false;
 	generate_textures(&game);
 	if (argc == 2)
 		setup_world(argc, argv, &game);

@@ -51,5 +51,6 @@ int	error_return(char *msg, int exit_code, int print_error, t_list **free_me)
 	}
 	if (msg)
 		fprintf(stderr, "- %s.", msg);
-	exit(exit_code);
+	//exit(exit_code);
+	return(exit_code);
 }

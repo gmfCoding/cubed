@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "texture.h"
 #include "state.h"
-/*
+
 void    render_skybox(t_vec2 dir, t_texture src, t_texture rt)
 {
     int            x;
@@ -19,7 +19,7 @@ void    render_skybox(t_vec2 dir, t_texture src, t_texture rt)
     int            col;
     int            x_offset;
 
-    x_offset = v2x2ang(dir) / 6.28 * src.width * 3.0;
+    x_offset = v2x2ang(dir) / 6.28 * src.width * 5.0;
     y = -1;
     while (++y < rt.height)
     {
@@ -31,7 +31,7 @@ void    render_skybox(t_vec2 dir, t_texture src, t_texture rt)
         }
     }
 }
-*/
+/*
 // Renders the skybox fitting it to the screen (bottom image)
 void    render_skybox(t_vec2 dir, t_texture src, t_texture rt)
 {
@@ -53,7 +53,7 @@ void    render_skybox(t_vec2 dir, t_texture src, t_texture rt)
         }
     }
 }
-
+*/
 /*
 void	render_skybox(t_vec2 dir, t_texture src, t_texture rt)
 {
