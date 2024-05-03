@@ -6,13 +6,15 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/02 21:23:57 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/04 03:39:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "state.h"
 #include "modifiers.h"
+#include "iter.h"
+
 /*
  * ADD MODIFIERS 
  * here is where you can add modifiers or anything addition to the game
@@ -92,48 +94,33 @@ static const t_ex_action	g_mapfuncs[] = {
 [MOD_ID_VC] = &mod_gen_vc,
 };
 
-/*
-t_err    modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
+t_err	modifier_seperate_content(char *content, char *type, char *data)
 {
-    t_list    *curr;
-    char    *str;
-    int        i;
-    int        index;
-
-    index = 0;
-    curr = raw_map_file;
-    while (curr != NULL && curr->content != NULL)
-    {
-        str = (char *)curr->content;
-        remove_spaces(str);
-        i = -1;
-        char content[2][100]; // [0] is MOD type [1] is the rest, eg [0] = "FL", [1] = "task01,door01,O,27,11"
-        int found = ft_sescanf(curr->content, "%N%s,%s\v", 100, &content[0], &content[1]);
-        printf("cu:%s\nc1:%s\nc2:%s\n\n", (char *)curr->content, content[0], content[1]);
-        while ((size_t)++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
-        {
-            if (ft_strncmp(g_mapsymbols[i], content[0], \
-                strlen_nl(g_mapsymbols[i])) == 0)
-                if ((g_mapfuncs[i])(content[1], index++, world, map))
-                    return (ft_putstr_fd(g_mapsymbols[i], STDERR_FILENO), 1);
-            // if (ft_strncmp(g_mapsymbols[i], str, \
-            // strlen_nl(g_mapsymbols[i])) == 0)
-            //     if ((g_mapfuncs[i])(str + (strlen_nl(g_mapsymbols[i]) \
-            //         + 1), index++, world, map))
-            //         return (ft_putstr_fd(g_mapsymbols[i], STDERR_FILENO), 1);
-        }
-        curr = curr->next;
-    }
-    return (0);
+	if (ft_sescanf(content, "%N%s\v%s", (size_t)512, type, data) != 3)
+		return (1);
+	return (0);
 }
-*/
+
+t_ex_action	modifier_get_func(char *type)
+{
+	size_t	i;
+
+	i = ITER_SIZET_START;
+	while (++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
+	{
+		if (ft_strncmp(g_mapsymbols[i], type, ft_strlen(type)) == 0)
+			return (g_mapfuncs[i]);
+	}
+	return (NULL);
+}
 
 t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 {
-	t_list	*curr;
-	char	*str;
-	int		i;
-	int		index;
+	t_list		*curr;
+	char		*str;
+	int			index;
+	char		mod[2][512];
+	t_ex_action	func;
 
 	index = 0;
 	curr = raw_map_file;
@@ -141,14 +128,13 @@ t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 	{
 		remove_spaces(curr->content);
 		str = (char *)curr->content;
-		i = -1;
-		while ((size_t)++i < (sizeof(g_mapsymbols) / sizeof(g_mapsymbols[0])))
+		if (ft_strlen(str) > 0)
 		{
-			if (ft_strncmp(g_mapsymbols[i], str, \
-			strlen_nl(g_mapsymbols[i])) == 0)
-				if ((g_mapfuncs[i])(str + (strlen_nl(g_mapsymbols[i]) \
-					+ 1), index++, world, map))
-					return (ft_putstr_fd(g_mapsymbols[i], STDERR_FILENO), 1);
+			if (modifier_seperate_content(str, mod[0], mod[1]))
+				return (ft_putstr_fd(str, STDERR_FILENO), 1);
+			func = modifier_get_func(mod[0]);
+			if (func && func(mod[1], index++, world, map))
+				return (ft_putstr_fd(mod[0], STDERR_FILENO), 1);
 		}
 		curr = curr->next;
 	}

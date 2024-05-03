@@ -13,13 +13,13 @@
 			"type": "lldb",
 			"request": "attach",
 			"name": "LLDB Attach",
-			"program": "${workspaceFolder}/cubed"
+			"program": "${workspaceFolder}/cub3D"
 		},
 		{
 			"type": "lldb",
 			"request": "launch",
 			"name": "LLDB Launch",
-			"program": "${workspaceFolder}/cubed",
+			"program": "${workspaceFolder}/cub3D",
 			"args": [],
 			"cwd": "${workspaceFolder}"
 		},
@@ -27,8 +27,8 @@
 			"name": "Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/cubed",
-			"args": ["assets/maps/map1.cub"],
+			"program": "${workspaceFolder}/cub3D",
+			"args": ["maps/map1.cub"],
 			"cwd": "${workspaceFolder}"
 		}
 	]
