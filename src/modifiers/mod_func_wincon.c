@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:47:31 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 13:25:07 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:59:47 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "vectorconv.h"
 #include "modifier_data.h"
 
+/*
+ * NAME,TARGET
+ */
 t_err	mod_gen_vc(char *content, int index, t_world *world, t_map *map)
 {
 	t_mod_wincon	mod;
