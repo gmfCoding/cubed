@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:41:22 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 14:53:23 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:00:34 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_hitpoint hit)
 	{
 		sp = &game->world->sprite[hit.sprite - 1];
 		col.type = C_SPRITE;
-		col.uv.x = (hit.minX * sp->uv.scale.x) + sp->uv.offset.x;
+		col.uv.x = (hit.min_x * sp->uv.scale.x) + sp->uv.offset.x;
 		col.texture = sp->tex;
 		col.tex_size = game->textures[sp->tex].width;
 		col.uvyo = sp->uv.offset.y;

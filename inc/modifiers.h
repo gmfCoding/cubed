@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 19:30:55 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:10:56 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ enum e_mod_id
 	MOD_ID_GA,
 	MOD_ID_GM,
 	MOD_ID_TA,
+	MOD_ID_VC,
 };
 
 typedef struct s_key
@@ -111,11 +112,14 @@ typedef struct s_entity_2
 		};
 		struct
 		{
-			struct s_entity_2	*targets[EVENT_ENT_MAX_TARGETS]; // stores all targets
-			char				*target_names[EVENT_ENT_MAX_TARGETS]; // stores all target names
+			struct s_entity_2	*targets[EVENT_ENT_MAX_TARGETS];
+			// stores all targets
+			char				*target_names[EVENT_ENT_MAX_TARGETS];
+			// stores all target names
 		};
 	};
-	t_handle_result		(*handle)(t_game *game, struct s_entity_2 *self, struct s_entity_2 *other);
+	t_handle_result		(*handle)(t_game * game, struct s_entity_2 * self, \
+													struct s_entity_2 * other);
 	t_entity			*entity; // Duct tape fix
 	bool				state_1;
 	bool				state_2;
@@ -142,6 +146,7 @@ t_err		mod_gen_go(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_ga(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_gm(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_ta(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_vc(char *content, int index, t_world *world, t_map *map);
 
 void		modifier_after(t_game *game);
 t_err		modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);

@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 23:08:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 19:12:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:12:02 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef enum e_modtype
 	MT_GATE_OR,
 	MT_GATE_SPLITTER
 }				t_modtype;
-
 
 typedef struct s_mod_door_data
 {
@@ -58,9 +57,8 @@ typedef struct s_mod_task_data
 	char		target[50];
 	char		active;
 	t_vec2i		pos;
-	char		dir; 
+	char		dir;
 }	t_mod_task_data;
-
 
 typedef t_mod_task_data	t_mod_fl_data;
 typedef t_mod_task_data	t_mod_ob_data;
@@ -76,7 +74,6 @@ typedef struct s_mod_trigger_area
 	unsigned int	radius;
 }	t_mod_trigger_area;
 
-
 typedef struct s_mod_alarm_data
 {
 	char		name[50];
@@ -85,6 +82,12 @@ typedef struct s_mod_alarm_data
 	t_vec2i		pos;
 	uint32_t	time;
 }	t_mod_alarmdata;
+
+typedef struct s_mod_wincon_data
+{
+	char		name[50];
+	char		target[50];
+}	t_mod_wincon;
 
 typedef struct s_mod_any
 {

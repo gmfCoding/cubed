@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 18:22:54 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:30:46 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -113,7 +113,6 @@ typedef struct s_wm_task_orbit
 
 	t_vec2		b1;
 	t_vec2		b2;
-
 
 	t_vec2		dir;
 }	t_wm_task_orbit;

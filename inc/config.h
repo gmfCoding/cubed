@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:27:18 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 01:25:26 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:35:53 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef CONFIG_H
@@ -20,13 +20,12 @@
 // Screen resolution Y
 # define SCR_HEIGHT 960
 
-#define R_SCALE 1
+# define R_SCALE 1
 
 // Render resolution X
 # define R_WIDTH (SCR_WIDTH/R_SCALE)
 // Render resolution Y
 # define R_HEIGHT (SCR_HEIGHT/R_SCALE)
-
 
 # define MOUSE_SENSITIVITY 2 
 
@@ -34,8 +33,8 @@
 # define RT0_HEIGHT SCR_HEIGHT
 
 // Wall texture resolution
-#define WALL_TEX_SIZE 512
-#define FLOOR_TEX_SIZE WALL_TEX_SIZE
+# define WALL_TEX_SIZE 512
+# define FLOOR_TEX_SIZE WALL_TEX_SIZE
 
 # define MAX_TEX_BF 4
 

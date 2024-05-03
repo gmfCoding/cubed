@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:55:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 16:43:28 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:29:49 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef UI_H
@@ -72,7 +72,6 @@ struct s_ui_context
 		t_text	texts[sizeof(struct s_texts) / sizeof(t_text)];
 	};
 };
-
 
 typedef struct s_inputctx	t_inputctx;
 void	ui_process_draw(t_ui_context *ctx, t_inputctx *in, t_texture target);

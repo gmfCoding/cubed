@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:50:37 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 18:32:13 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:39:37 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef RENDER_H
@@ -16,7 +16,7 @@
 # include "rect.h"
 # include "app.h"
 
-typedef struct s_game t_game;
+typedef struct s_game	t_game;
 
 /*** render_util.c ***/
 void	rect_draw(const t_rect *aabb, int colour, t_texture rt);
@@ -41,6 +41,6 @@ void	render_skybox(t_vec2 dir, t_texture src, t_texture rt);
 void	render(t_game *ctx);
 void	game_update(t_game *game);
 void	setup_world(int argc, char **argv, t_game *game);
-void generate_textures(t_game *game);
-void load_image_at_index(t_game *game);
+void	generate_textures(t_game *game);
+void	load_image_at_index(t_game *game);
 #endif

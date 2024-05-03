@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 00:25:03 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:29:03 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VECTOR3_H
@@ -55,7 +55,7 @@ t_vecd	v3mag(t_vec3 vec);
 t_vec3	v3norm(t_vec3 vec);
 
 /* Returns cross product of two vectors */
-t_vec3 v3cross(t_vec3 a, t_vec3 b);
+t_vec3	v3cross(t_vec3 a, t_vec3 b);
 
 /* Returns dpt product of two vectors */
 t_vecd	v3dot(t_vec3 a, t_vec3 b);

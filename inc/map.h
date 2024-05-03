@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/02 18:58:03 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:27:32 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -79,7 +79,7 @@ typedef struct s_world
 	uint32_t	ent_count;
 	t_enemy		*enemy;
 	// content: t_entity*;
-	t_list		*entities; 
+	t_list		*entities;
 
 	t_sprite	sprite[MAX_ENT * TILE_SP_MAX];
 	// The indices of `sprite` in order of distance to player.

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:10:21 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/26 22:44:35 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:28:02 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,6 @@
 # endif
 
 void		key_get_mapkey(const int **array, int *size);
-void        key_get_mapstr(const char *const **array, int *size, bool name);
-const char  *key_get_keystr(int key, bool name);
+void		key_get_mapstr(const char *const **array, int *size, bool name);
+const char	*key_get_keystr(int key, bool name);
 #endif
