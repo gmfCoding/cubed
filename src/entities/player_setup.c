@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/08 01:20:02 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/04 02:10:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 void	player_rot_setup(char rot, t_player *player)
 {
-	// TODO: Broke after new mouse look system, impl angle offsets instead.
 	player->angle_offset = 0;
 	if (rot == 'N')
 	{

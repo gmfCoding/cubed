@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/04 02:01:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/04 02:04:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -138,6 +138,5 @@ void	ent_door_update(t_door *door, t_game *game)
 	else
 		door->pct -= door->speed;
 	door->pct = fclamp(0.2, 1.0, door->pct);
-	printf("%d\n", door->closed);
 	door_update_vis(game, door, door_is_vertical(door, game));
 }

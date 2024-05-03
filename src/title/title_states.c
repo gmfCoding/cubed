@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:39:01 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 17:44:05 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/04 02:17:17 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,11 @@ void	game_screen_states(t_game *game)
 		while (game->loaded_index[0] < TEX_ARRAY_SIZE)
 			load_image_at_index(game);
 		game_update(game);
+		game->menu_reloaded = false;
 	}
 	else
 	{
+		game->menu_reloaded = true;
 		control_core_process(game);
 		game_title_states(game);
 		texture_draw(game->app, game->rt0, v2new(0, 0));
