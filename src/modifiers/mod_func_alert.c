@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:47:31 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/30 20:47:33 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:04:52 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "vectorconv.h"
 #include "modifier_data.h"
 
-t_handle_result target_handle_alert(t_game *game, t_entity_2 *self, t_entity_2 *parent)
+t_handle_result	target_handle_alert(t_game *game, t_entity_2 *self, \
+															t_entity_2 *parent)
 {
 	(void)parent;
 	if (self->type == ET_ALERT_HIGH)
@@ -44,7 +45,8 @@ t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map)
 	ft_strlcpy(world->ent_2[world->ent_count].name, mod.name, NAME_SIZE);
 	world->ent_2[world->ent_count].target_names[0] = ft_strdup(mod.target);
 	world->ent_2[world->ent_count].pos = v2itov2(mod.pos);
-	world->ent_2[world->ent_count].ref_tile = map_get_tile_ref(&world->map, mod.pos.x, mod.pos.y);
+	world->ent_2[world->ent_count].ref_tile = map_get_tile_ref(&world->map, \
+														mod.pos.x, mod.pos.y);
 	world->ent_2[world->ent_count].speed = mod.time;
 	world->ent_2[world->ent_count].type = ET_ALERT_OFF;
 	if (mod.type == 'H')
@@ -75,7 +77,8 @@ t_err	mod_gen_al(char *content, int index, t_world *world, t_map *map)
 		world->ent_2[world->ent_count].target =	mod_search_name(world, al[1]);
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	world->ent_2[world->ent_count].pos = v2new(x, y);
-	world->ent_2[world->ent_count].ref_tile = &map->tiles[y * (map->width + x) - 1];
+	world->ent_2[world->ent_count].ref_tile = 
+	&map->tiles[y * (map->width + x) - 1];
 		world->ent_2[world->ent_count].speed = ft_atoi(al[5]);
 	if (al[2][0] == 'H')
 		world->ent_2[world->ent_count].type = ET_ALERT_HIGH;

@@ -6,12 +6,11 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:29:40 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/12 22:58:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:57:12 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
 #include "clmath.h"
-
 
 /* Returns the signed angle difference between a and b. range: `[-PI, PI]`*/
 double	angle_diff(double a, double b)
@@ -23,7 +22,6 @@ double	flerp(double min, double max, double lerp)
 {
 	return ((lerp) * (max - min) + min);
 }
-
 
 double	fclamp(double min, double max, double value)
 {
@@ -59,4 +57,3 @@ double	facos(double x)
 		return (M_PI);
 	return (acos(x));
 }
-

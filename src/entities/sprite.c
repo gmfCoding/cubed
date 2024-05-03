@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:36:58 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 18:02:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 21:18:40 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -47,7 +47,7 @@ void	sprite_update_all(t_world *world)
 
 	map_sprite_clear(&world->map);
 	i = -1;
-	while (++i <world->sp_amount)
+	while (++i < world->sp_amount)
 	{
 		if (world->sprite[i].vsfb)
 		{
@@ -154,7 +154,8 @@ void	sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir)
 /* Orders the sprites from `arr` from closest to furthest from `cent`
  *	and stores the sorted indices into `ind`.
  */
-void	sprite_order_distance(t_vec2 cent, t_sprite *arr, int16_t *ind, int size)
+void	sprite_order_distance(t_vec2 cent, t_sprite *arr, int16_t *ind, \
+																	int size)
 {
 	int				i;
 	int				j;

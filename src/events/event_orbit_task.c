@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:28:44 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/02 20:15:14 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:15:12 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -19,6 +19,9 @@ void	event_task_orbit_closed(t_game *game, t_entity_2 *ent)
 	return ;
 }
 
+//task_destroy(task);
+//		if (entity_target_handle(game, ent) == TARGET_HANDLE_FAILED)
+//			printf("HANDLE ERROR!\n");// TODO: How handle error/exits?
 void	event_task_orbit_open(t_game *game, t_entity_2 *ent)
 {
 	t_task	*task;
@@ -36,10 +39,9 @@ void	event_task_orbit_open(t_game *game, t_entity_2 *ent)
 		play_sound(game->app.sfx, SFX_TASK_COMPLETE, PLAY);
 		ent->type = ET_ORBIT_TASK_CLOSED;
 		game->player.state = DONE_TASK;
-		//task_destroy(task);
 		task->completed = false;
 		task->init = false;
 		if (entity_target_handle(game, ent) == TARGET_HANDLE_FAILED)
-			printf("HANDLE ERROR!\n");// TODO: How handle error/exits?
+			printf("HANDLE ERROR!\n");
 	}
 }

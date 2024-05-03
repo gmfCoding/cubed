@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 19:53:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 14:57:32 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:30:59 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cubed.h"
@@ -23,15 +23,15 @@ t_vec3	orb_to_ndc(t_vec3 cart, t_vec3 offset, t_vecd scale)
 	return (dev);
 }
 
+//	int			i;
+//	i = 0;
 void	orbit_path_render(t_kep_path *path, t_texture *rt,
 	t_rect trans, int col)
 {
 	double		a;
 	t_kep_ang	ang;
 	t_vec3		pos[3];
-//	int			i;
 
-//	i = 0;
 	a = 0;
 	ang = (t_kep_ang){0};
 	while (a < (2.0 * M_PI))

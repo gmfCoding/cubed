@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 19:18:28 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 19:18:30 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:31:13 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,20 @@ void	fl_pass_state_rules(t_game *game, int click_state)
 
 void	five_lights_hardmode(t_game *game, t_mgame *five_lights)
 {
-	bool	used[10] = {false};
-	int 	r;
+	bool	used[10];
+	int		r;
 	int		i;
 
+	i = -1;
+	while (++i < 10)
+		used[i] = false;
 	i = -1;
 	while (++i < 10)
 	{
 		do
 			r = mrand(&game->rand) % 10;
-		while (used[r]);
+		while (used[r])
+			;
 		game->five_light.state[r] = 0;
 		game->five_light.pos_x[r] = (PANEL_POS_X + 43) + (i * 69);
 		game->five_light.click_spot[r][0] = (PANEL_POS_X + 43) + (i * 71);
@@ -71,7 +75,6 @@ void	five_lights_hardmode(t_game *game, t_mgame *five_lights)
 		game->five_light.click_spot[r][3] = PANEL_POS_Y + 232;
 		game->five_light.click_spot[r][4] = PANEL_POS_Y + 234;
 		game->five_light.click_spot[r][5] = PANEL_POS_Y + 304;
-		printf("%d\n", r);
 		used[r] = true;
-    }
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:01:10 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/03/16 06:39:01 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 21:06:17 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static t_err	map_check_err(t_map *map_temp, t_list *temp, \
 	e |= err(players != 1, ERR_BADPLAYER);
 	e |= err(count_invalid_char > 0, ERR_BADELEM);
 	e |= err(map_check_surrounded(map_temp, 0) == 1, ERR_BOARDER);
-	e |= err(ft_strrchr(path, '.') ==  NULL \
+	e |= err(ft_strrchr(path, '.') == NULL \
 	|| ft_strcmp(".cub", ft_strrchr(path, '.')) != 0, ERR_TYPE);
 	return (e);
 }

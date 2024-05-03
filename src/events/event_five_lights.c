@@ -6,7 +6,7 @@
 /*   By: kmordaun <kmordaun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:21 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/30 19:48:23 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 21:16:03 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	event_five_lights_closed(t_game *game, t_entity_2 *ent)
 	game->display_ui = UI_INACTIVE_TASK;
 }
 
+//			if (entity_target_handle(game, ent) == TARGET_HANDLE_FAILED)
+//				printf("HANDLE ERROR!\n");// TODO: How handle error/exits?
 void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 {
 	game->display_ui = UI_INTERACT;
@@ -37,7 +39,7 @@ void	event_five_lights_open(t_game *game, t_entity_2 *ent)
 			play_sound(game->app.sfx, SFX_HEARTBEAT, STOP);
 			ent->type = ET_FIVE_LIGHTS_CLOSED;
 			if (entity_target_handle(game, ent) == TARGET_HANDLE_FAILED)
-				printf("HANDLE ERROR!\n");// TODO: How handle error/exits?
+				printf("HANDLE ERROR!\n");
 		}
 		game->five_light.finished = false;
 	}

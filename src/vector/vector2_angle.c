@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:47:14 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/03 18:44:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:08:37 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -33,5 +33,5 @@ float	v2v2ang(t_vec2 a, t_vec2 b)
 {
 	a = v2norm(a);
 	b = v2norm(b);
-	return(acosf(v2dot(a, b)));
+	return (acosf(v2dot(a, b)));
 }

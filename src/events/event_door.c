@@ -6,14 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/23 20:14:45 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:16:48 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
 #include "state.h"
 #include "mini_map.h"
 
-void mmap_door_update(t_door *door, t_mmap *mmap)
+void	mmap_door_update(t_door *door, t_mmap *mmap)
 {
 	if (door->closed)
 	{
@@ -45,7 +45,6 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))
 	{
-
 		play_sound(game->app.sfx, SFX_DOOR, PLAY);
 		door->closed = true;
 		ent->type = ET_DOOR_UNLOCKED;
@@ -63,7 +62,7 @@ void	event_door_open(t_game *game, t_entity_2 *ent)
 void	event_door_unlocked(t_game *game, t_entity_2 *ent)
 {
 	t_door *const	door = (t_door *)ent->entity;
-	t_tile *tile;
+	t_tile			*tile;
 
 	game->display_ui = UI_INTERACT;
 	if (input_keydown(&game->input, KEY_E))

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:50:56 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 17:45:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:09:24 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "vector2.h"
@@ -24,7 +24,7 @@ t_vec2	v2new(t_vecd x, t_vecd y)
 
 bool	v2eq(t_vec2 a, t_vec2 b, t_vecd threshold)
 {
-return (v2sqrmag(v2sub(a, b)) < threshold * threshold);
+	return (v2sqrmag(v2sub(a, b)) < threshold * threshold);
 }
 
 t_vecd	v2sqrmag(t_vec2 vec)

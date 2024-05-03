@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 16:59:42 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 21:17:10 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	event_alert_off(t_game *game, t_entity_2 *ent)
 void	event_alert_medium(t_game *game, t_entity_2 *ent)
 {
 	(void)ent;
-
 	if (ent->state_3 == false)
 		return ;
 	play_sound(game->app.sfx, SFX_ALERT, PLAY);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 14:27:32 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:55:21 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -112,7 +112,7 @@ void		sprite_update(t_map *map, t_sprite *const sprite, int index);
 void		sprite_update_all(t_world *game);
 void		sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir);
 void		sprite_order_distance(t_vec2 centre, \
-	t_sprite *array, int16_t *indices, int count);
+								t_sprite *array, int16_t *indices, int count);
 // MAP PARSER //
 t_tiletype	get_tiletype(char c);
 t_err		map_parse(int argc, char **argv, t_game *game);
@@ -140,7 +140,7 @@ void		remove_empty_lines(t_list **raw_map_file);
 char		*ft_strcpy(char *s1, char *s2);
 char		*ft_strcat(char *dest, char *src);
 int			error_return(char *msg, int exit_code, \
-	int print_error, t_list **free_me);
+										int print_error, t_list **free_me);
 int			error_with(char *msg, int value, int print_error);
 void		deallocate_list(t_list **raw_map_file);
 

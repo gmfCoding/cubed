@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 18:22:35 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 21:01:19 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ struct s_mod_door {
 };
 
 struct s_mod_door door;
-int found = ft_sscanf("DR dooor01,./tex,10,25,6,C,L\n", "DR %s,%s,%u,%u,%u,%c,%c",
+int found = ft_sscanf("DR dooor01,./tex,10,25,6,C,L\n", 
+"DR %s,%s,%u,%u,%u,%c,%c",
     &door.name,
     &door.tex,
     &door.pos.x,
@@ -56,31 +57,8 @@ if (found != 7)
 
 */
 
-/*
- * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
- */
-t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
+void	door_var_extended(t_mod_door_data mod, t_door *door, t_entity_2 *ent2)
 {
-	t_mod_door_data		mod;
-	t_door				*door;
-	t_entity_2 *const	ent2 = &wld->ent_2[wld->ent_count];
-	const int			found = ft_sescanf(content, "%N%s,%s,%u,%u,%u,%c,%c\v",
-			sizeof(mod.name), &mod.name, &mod.tex,
-			&mod.pos.x, &mod.pos.y, &mod.speed,
-			&mod.closed, &mod.locked);
-	(void)index;
-	(void)wld;
-	(void)map;
-	if (found != 8 || mod.pos.x >= map->width \
-					|| mod.pos.y >= map->height)
-		return (1);
-	*map_get_tile_ref(map, mod.pos.x, mod.pos.y) = (t_tile){
-	.type = DOOR, .vis = -1 - (mod.closed == 'C'), .tex = TEX_DOOR};
-	ft_strlcpy(ent2->name, mod.name, NAME_SIZE);
-	ft_strcpy(ent2->ui_display_1, "PRESS 'E' TO INTERACT");
-	ft_strcpy(ent2->ui_display_2, "LOCKED");
-	ent2->ref_tile = map_get_tile_ref(map, mod.pos.x, mod.pos.y);
-	door = (t_door *)entity_create(wld, ENT_DOOR);
 	door->closed = mod.closed == 'C';
 	door->locked = mod.locked == 'L';
 	door->percent = door->closed;
@@ -101,12 +79,37 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	if (!door->closed)
 		ent2->type = ET_DOOR_OPEN;
 	ent2->entity = &door->base;
+}
+
+/*
+ * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
+ */
+t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
+{
+	t_mod_door_data		mod;
+	t_door				*door;
+	t_entity_2 *const	ent2 = &wld->ent_2[wld->ent_count];
+	const int			found = ft_sescanf(content, "%N%s,%s,%u,%u,%u,%c,%c\v",
+			sizeof(mod.name), &mod.name, &mod.tex,
+			&mod.pos.x, &mod.pos.y, &mod.speed,
+			&mod.closed, &mod.locked);
+
+	(void)index;
+	if (found != 8 || mod.pos.x >= map->width || mod.pos.y >= map->height)
+		return (1);
+	*map_get_tile_ref(map, mod.pos.x, mod.pos.y) = (t_tile){
+	.type = DOOR, .vis = -1 - (mod.closed == 'C'), .tex = TEX_DOOR};
+	ft_strlcpy(ent2->name, mod.name, NAME_SIZE);
+	ft_strcpy(ent2->ui_display_1, "PRESS 'E' TO INTERACT");
+	ft_strcpy(ent2->ui_display_2, "LOCKED");
+	ent2->ref_tile = map_get_tile_ref(map, mod.pos.x, mod.pos.y);
+	door = (t_door *)entity_create(wld, ENT_DOOR);
+	door_var_extended(mod, door, ent2);
 	door_setup_sprites(door, wld);
 	ent2->handle = target_handle_door;
 	wld->ent_count++;
 	return (0);
 }
-
 
 // t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 // {
@@ -114,26 +117,19 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 // 	char		str[CSV_LEN];
 // 	t_err		e;
 // 	t_vec2i		pos;
-
 // 	printf("mod door gen!\n");
 // 	e = csv_next('s', &content, &str);
-	
 // 	e |= csv_next('s', &content, &str);
 // 	e |= csv_next('u', &content, &pos.x);
 // 	e |= csv_next('u', &content, &pos.y);
-
-	
 // 	e |= csv_next('u', &content, &wld->ent_2[wld->ent_count].speed);
 // 	e |= csv_next('s', &content, &str);
-	
-	
 // 	return (0);
 // }
-
 /*
  * NAME,TEXTURE,ACCESSDOORNAMED,XPOS,YPOS,AUTOUNLOCKOPEN,GRABBEDBYPLAYER 
  */
-t_err mod_gen_ke(char *content, int index, t_world *wld, t_map *map)
+t_err	mod_gen_ke(char *content, int index, t_world *wld, t_map *map)
 {
 	static int	keys = 0;
 	char		str[CSV_LEN];
@@ -156,7 +152,6 @@ t_err mod_gen_ke(char *content, int index, t_world *wld, t_map *map)
 	keys++;
 	return (e);
 }
-
 /*
 	while (dr[0][++i] && i < NAME_SIZE)
 		wld->ent->doors[dr_count].name[i] = dr[0][i];

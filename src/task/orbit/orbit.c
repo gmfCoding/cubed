@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/02 19:49:01 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:29:11 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -111,6 +111,7 @@ void	render_paths(t_task_orbit *t, t_texture *rt, t_rect vis)
 	}
 }
 
+//texture_blit_rect(&rt, scr, (t_rect){45, 37, 274, 266});
 int	task_orbit_render(t_game *game, t_task *base)
 {
 	t_task_orbit *const	task = (t_task_orbit*)base;
@@ -126,10 +127,9 @@ int	task_orbit_render(t_game *game, t_task *base)
 	}
 	if (base->show == false)
 		return (0);
-	//texture_blit_rect(&rt, scr, (t_rect){45, 37, 274, 266});
 	texture_blit(*scr, rt, v2new(0, 0));
 	texture_draw_circle(&rt, v2tov2i(task->scr_offset), \
-									task->zoom * 1/10, ORB_PLANET | R_ALPHA);
+									task->zoom * 1 / 10, ORB_PLANET | R_ALPHA);
 	render_paths(task, &rt, (t_rect){.min = task->scr_offset, \
 									.max = {.x = task->zoom, .y = 0}});
 	texture_blit(*tex, rt, v2new(0, 0));

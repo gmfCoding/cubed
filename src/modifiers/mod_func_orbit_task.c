@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:20:00 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 19:40:17 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 20:37:57 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -57,7 +57,7 @@ t_err	mod_gen_ob(char *content, int index, t_world *world, t_map *map)
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	ent2->target_names[0] = ft_strdup(mod.target);
 	ent2->pos = v2itov2(mod.pos);
-	*map_get_tile_refv(map, ent2->pos) = (t_tile){ .type = FLOOR, .vis = -2 };
+	*map_get_tile_refv(map, ent2->pos) = (t_tile){.type = FLOOR, .vis = -2};
 	ent2->handle = &target_handle_orbit_task;
 	if (mod.active == 'O')
 		ent2->type = ET_ORBIT_TASK_OPEN;

@@ -6,20 +6,26 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 02:30:24 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 02:30:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:01:42 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
 
+// EVALUATE: REMOVE FUNCTION?
 void	debug_world_print_vis(t_world *world)
 {
-	// EVALUATE: REMOVE FUNCTION?
+	int		vis;
+	size_t	y;
+	size_t	x;
+
 	printf("\n");
-	for (size_t y = 0; y < world->map.height; y++)
+	x = -1;
+	y = -1;
+	while (++y < world->map.height)
 	{
-		for (size_t x = 0; x < world->map.width; x++)
+		while (++x < world->map.width)
 		{
-			int vis = map_get_tile(&world->map, x, y).vis;
+			vis = map_get_tile(&world->map, x, y).vis;
 			if (vis == -2)
 				printf("0");
 			else if (vis == -1)

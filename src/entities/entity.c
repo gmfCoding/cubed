@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 19:04:18 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 21:22:06 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -43,8 +43,6 @@ LL------ WL ------- DL DR -------  WR ------ RR
  WR wall_right, vs* assigned
 
 */
-
-
 /*	@brief Calculates the door model from the given door.
 	@param game Game state reference
 	@param d door entity
@@ -65,7 +63,7 @@ static void	door_model_update(t_game *game, t_door *d, t_door_model *m, bool v)
 	m->door_right = v2add(v2add(d->base.pos, v2add(v2clock(out), face)), tang);
 	out = v2muls(out, d->percent);
 	m->door_left = v2add(m->door_left, out);
-	m->left_left = v2sub(m->door_left , v2divs(tang, 2));
+	m->left_left = v2sub(m->door_left, v2divs(tang, 2));
 	m->wall_left = v2add(d->base.pos, v2add(p1, face));
 	m->door_right = v2sub(m->door_right, out);
 	m->right_right = v2add(m->door_right, v2divs(tang, 2));
@@ -151,7 +149,7 @@ static const t_fn_entity_update	g_entity_updates[] = {
 [ENT_TRIGGER_AREA] = (void *)ent_trigger_area_update,
 };
 
-static const size_t	g_entity_sizes[] = {
+static const size_t				g_entity_sizes[] = {
 [ENT_DOOR] = sizeof(t_door),
 [ENT_ENEMY] = sizeof(t_enemy),
 [ENT_TASK_ORBIT] = sizeof(t_ent_task_orbit),
