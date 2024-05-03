@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/04 01:51:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/04 02:01:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -27,7 +27,7 @@ static const t_fn_entity_update	g_entity_updates[] = {
 [ENT_TRIGGER_AREA] = (void *)ent_trigger_area_update,
 };
 
-static const size_t	g_entity_sizes[] = {
+static const size_t				g_entity_sizes[] = {
 [ENT_DOOR] = sizeof(t_door),
 [ENT_ENEMY] = sizeof(t_enemy),
 [ENT_TASK_ORBIT] = sizeof(t_ent_task_orbit),
