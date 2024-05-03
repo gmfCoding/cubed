@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:18:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 16:26:46 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:29:18 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef struct s_inputstate	t_inputstate;
 typedef struct s_inputctx	t_inputctx;
-
+typedef struct s_app		t_app;
 struct s_inputctx
 {
 	uint8_t	key_state[KEY_REG_MAX];
@@ -39,7 +39,6 @@ bool	input_keydown(t_inputctx *input, int key);
 bool	input_keyup(t_inputctx *input, int key);
 bool	input_keyheld(t_inputctx *input, int key);
 void	input_process(t_inputctx *input);
-typedef struct	s_app t_app;
 
 void	mouse_get_pos(t_app *app, int *x, int *y);
 uint8_t	*input_get_state(t_inputctx *input, int *key);

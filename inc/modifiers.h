@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/02 21:54:44 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:10:56 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,14 @@ typedef struct s_entity_2
 		};
 		struct
 		{
-			struct s_entity_2	*targets[EVENT_ENT_MAX_TARGETS]; // stores all targets
-			char				*target_names[EVENT_ENT_MAX_TARGETS]; // stores all target names
+			struct s_entity_2	*targets[EVENT_ENT_MAX_TARGETS];
+			// stores all targets
+			char				*target_names[EVENT_ENT_MAX_TARGETS];
+			// stores all target names
 		};
 	};
-	t_handle_result		(*handle)(t_game *game, struct s_entity_2 *self, struct s_entity_2 *other);
+	t_handle_result		(*handle)(t_game * game, struct s_entity_2 * self, \
+													struct s_entity_2 * other);
 	t_entity			*entity; // Duct tape fix
 	bool				state_1;
 	bool				state_2;

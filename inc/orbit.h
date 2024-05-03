@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:24:23 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/16 19:03:58 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:03:40 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ORBIT_H
@@ -37,7 +37,6 @@ enum e_angt
 	ANG_MEAN,
 	ANG_ECCA
 };
-
 
 /*** task/orbit/sys/kep_angle_util.c ***/
 double			orb_time_at_mean(t_kep_path *path, t_kep_ang *ang, double mna);
@@ -136,6 +135,6 @@ void			orb_generate(t_kep_path *path,
 					const t_orb_gen *gen, t_rand *rand);
 
 /*** task/orbit/sys/equality.c ***/
-double	orb_deviation(t_kep_path *a, t_kep_path *b);
+double			orb_deviation(t_kep_path *a, t_kep_path *b);
 
 #endif

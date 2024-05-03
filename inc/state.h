@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 14:58:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:38:28 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include "mini_map.h"
 # include "five_light.h"
 # include "title.h"
-
 
 // FORWARD DECLARE
 typedef struct s_task			t_task;
@@ -115,7 +114,6 @@ struct s_game
 	t_vec2i			stored_mouse;
 	double			mouse_angle;
 //	t_vec2			pos;
-
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;
 	t_player		player;
@@ -133,9 +131,6 @@ struct s_game
 	unsigned int	fpsc;
 	unsigned int	ray;
 };
-
-
-
 
 void		texture_debug_view_blit(t_game *game, int view,
 				t_texture tex, t_vec2 pos);

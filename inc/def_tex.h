@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:26 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/07 18:39:01 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:31:29 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef DEF_TEX_H
@@ -26,7 +26,7 @@ typedef struct s_def_tex
 	bool		loaded;
 	t_texture	*tex;
 }	t_def_tex;
-typedef struct s_def_node t_def_node;
+typedef struct s_def_node	t_def_node;
 
 struct s_def_node
 {

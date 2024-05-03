@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:43:16 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/30 18:31:33 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:58:57 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef RAY_H
@@ -25,7 +25,7 @@
  * 			
 */
 
-typedef enum e_hittype t_hittype;
+typedef enum e_hittype		t_hittype;
 enum e_hittype
 {
 	HT_NONE,
@@ -39,9 +39,8 @@ struct s_hitpoint
 {
 	float		depth;
 	float		dist;
-	float		minX;
-	float		minY;
-
+	float		min_x;
+	float		min_y;
 	// sprite index + 1
 	int			sprite;
 	int			x;
@@ -67,18 +66,17 @@ typedef struct s_dda
 	t_vec2	side;
 }			t_dda;
 
-typedef struct s_game t_game;
+typedef struct s_game		t_game;
 
 # define RAY_MASK_ALL 		0b11
 # define RAY_MASK_SPRITE	0b01
 # define RAY_MASK_WALL		0b10
 
-int		ccw(t_vec2 a, t_vec2 b, t_vec2 c);
-int		test_two_seg_intersect(t_vec2, t_vec2 b1, \
+int			ccw(t_vec2 a, t_vec2 b, t_vec2 c);
+int			test_two_seg_intersect(t_vec2, t_vec2 b1, \
 			t_vec2 a2, t_vec2 b2);
-t_vec2	two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2);
-
-t_vec2 ray_gethit(t_rayinfo *ray, int hit);
-t_rayinfo		raycast(t_game *game, t_vec2 start, t_vec2 dir, int exclude);
+t_vec2		two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2);
+t_vec2		ray_gethit(t_rayinfo *ray, int hit);
+t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir, int exclude);
 
 #endif

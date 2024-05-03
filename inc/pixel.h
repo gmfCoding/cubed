@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 03:27:42 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 21:07:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:03:09 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PIXEL_H
@@ -43,8 +43,10 @@
 # define OF_BLUE  0
 
 int		colour_blend(int first, int second);
-void	pixel_set_s(const t_texture data, const int x, const int y, const int color);
-void	pixel_set(const t_texture data, const int x, const int y, const int color);
+void	pixel_set_s(const t_texture data, const int x, const int y, \
+														const int color);
+void	pixel_set(const t_texture data, const int x, const int y, \
+														const int color);
 int		pixel_get_s(const t_texture data, const int x, const int y);
 int		pixel_get(const t_texture data, const int x, const int y);
 #endif
