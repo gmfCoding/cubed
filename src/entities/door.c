@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 08:56:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/04 01:58:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/04 02:01:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -75,34 +75,29 @@ static void	door_model_update(t_game *game, t_door *d, t_door_model *m, bool v)
 */
 static void	door_update_vis(t_game *game, t_door *d, bool vert)
 {
-	const t_vec2	dp = d->base.pos; 
+	const t_vec2	dp = d->base.pos;
 	t_door_model	m;
 
 	m = (t_door_model){0};
 	d->base.pos = v2add(d->base.pos, v2new(0.5, 0.5));
 	door_model_update(game, d, &m, vert);
 	d->base.pos = dp;
-
 	d->sprites[0]->s1 = m.door_left;
 	d->sprites[0]->s2 = m.left_left;
 	d->sprites[0]->pos = d->sprites[0]->s1;
 	d->sprites[0]->vs1 = d->sprites[0]->s1;
 	d->sprites[0]->vs2 = m.wall_left;
-
 	d->sprites[2]->s1 = m.door_right;
 	d->sprites[2]->s2 = m.right_right;
 	d->sprites[2]->pos = d->sprites[2]->s1;
 	d->sprites[2]->vs1 = d->sprites[2]->s1;
 	d->sprites[2]->vs2 = m.wall_right;
-
 	d->sprites[1]->s1 = m.inset_left;
 	d->sprites[1]->s2 = m.far_left;
 	d->sprites[1]->pos = d->sprites[1]->s1;
-
 	d->sprites[3]->s1 = m.inset_right;
 	d->sprites[3]->s2 = m.far_right;
 	d->sprites[3]->pos = d->sprites[3]->s1;
-
 	d->sprites[3]->visible = d->pct < 1.0;
 	d->sprites[1]->visible = d->pct < 1.0;
 }
