@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 21:31:24 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:56:52 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -186,11 +186,9 @@ void	control_core_process(t_game *game)
 //mouse_bounds_check(&game->app, &game->input);
 void	control_process(t_game *game)
 {
-	static bool	first_time = false;
-
-	if (!first_time)
+	if (!game->mouse_first_time)
 	{
-		first_time = true;
+		game->mouse_first_time = true;
 		mouse_get_pos(&game->app, &game->input.mouse.x, &game->input.mouse.y);
 		game->player.angle_offset \
 			+= window_angle(game->input.mouse.x) * MOUSE_SENSITIVITY;

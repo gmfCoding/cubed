@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 13:38:28 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:57:50 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ struct s_game
 	bool			run_fl;
 	t_vec2i			stored_mouse;
 	double			mouse_angle;
+	bool			mouse_first_time;
 //	t_vec2			pos;
 	t_debug_texture	views[MAX_DEBUG_VIEWS];
 	int				view_count;

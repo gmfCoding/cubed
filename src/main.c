@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 16:45:04 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:56:47 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	setup_world(int argc, char **argv, t_game *game)
 		game_destroy(game);
 		return ;
 	}
+	game->mouse_first_time = false;
 	map_print(&game->world->map);
 	modifier_after(game);
 	if (mod_get_mod(&game->world->map, MT_ENEMY, NULL) != NULL)
