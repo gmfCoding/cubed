@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:14:41 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 17:17:10 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:06:40 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	title_animations_display(t_game *game)
 
 void	title_animations(t_game *game)
 {
-	if (game->fpsc % 35 == 0)
+	if (game->fpsc % 10 == 0)
 	{
 		game->fpsc = 0;
 		if (game->title.anim_forward)
