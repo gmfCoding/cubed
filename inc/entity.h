@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 14:30:46 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/04 01:34:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -83,7 +83,7 @@ typedef struct s_door
 	t_entity	base;
 	char		name[NAME_SIZE];
 	float		speed;
-	float		percent;
+	float		pct;
 	bool		closed;
 	bool		locked;
 
@@ -93,11 +93,13 @@ typedef struct s_door
 typedef struct s_door_model
 {
 	t_vec2	wall_left;
+	t_vec2	inset_left;
 	t_vec2	left_left;
 	t_vec2	door_left;
 	t_vec2	far_left;
 
 	t_vec2	wall_right;
+	t_vec2	inset_right;
 	t_vec2	right_right;
 	t_vec2	door_right;
 	t_vec2	far_right;

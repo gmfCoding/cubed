@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:57:15 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 15:12:00 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/04 01:36:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	load_enemy_images_at_index(t_game *game)
 
 static const char	*g_image_paths[] = {
 [TEX_WINDOW] = "assets/window.xpm",
-[TEX_DOOR] = "assets/window.xpm",
+[TEX_DOOR] = "assets/door.xpm",
 [TEX_FLOOR] = "assets/floor.xpm",
 [TEX_CEILING] = "assets/floor.xpm",
 [TEX_TITLE_MISSION_COMPLETED] = "assets/menu/mission_competed.xpm",
