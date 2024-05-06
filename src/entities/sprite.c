@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:36:58 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 21:40:15 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 22:33:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -110,12 +110,12 @@ void	sprite_update(t_map *map, t_sprite *const sprite, int index)
 		i.x = min.x - (1 + 1);
 		while (++i.x <= min.x + 1)
 		{
-			rect = (t_rect){.v = {min.x, i.y, i.x + 1, i.y + 1}};
+			rect = (t_rect){.v = {i.x, i.y, i.x + 1, i.y + 1}};
 			comp = (t_vec4){.min = sprite->s1, .max = sprite->s2};
 			if (rect_contains_seg(rect, comp) && \
-			i.x >= 0 && i.y >= 0 && min.x < map->width && i.y < map->height)
+			i.x >= 0 && i.y >= 0 && i.x < map->width && i.y < map->height)
 			{
-				tile = map_get_tile_ref(map, min.x, i.y);
+				tile = map_get_tile_ref(map, i.x, i.y);
 				if (tile->sp_count < TILE_SP_MAX && tile->type != WALL)
 					tile->sprite[tile->sp_count++] = index;
 			}
