@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:56:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/04 03:07:36 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 21:35:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdbool.h>
@@ -54,11 +54,11 @@ static int	sesc_handle_s(t_sescanf_ctx *ctx)
 
 static int	sesc_handle_num(t_sescanf_ctx *ctx)
 {
-	void	*const	dest =  va_arg(*ctx->list, void*);
-	char *const		start = ctx->current;
-	char			*end;
-	int				base;
-	int64_t			value;
+	void *const	dest = va_arg(*ctx->list, void*);
+	char *const	start = ctx->current;
+	char		*end;
+	int			base;
+	int64_t		value;
 
 	base = 10;
 	if (*ctx->type == 'x' || *ctx->type == 'p')
@@ -66,15 +66,15 @@ static int	sesc_handle_num(t_sescanf_ctx *ctx)
 	value = ft_strtol(ctx->current, &end, base);
 	if (*ctx->type == 'p' || *ctx->type == 'D')
 		*(int64_t *)dest = value;
-	else if (*ctx->type  == 'A')
+	else if (*ctx->type == 'A')
 		*(int16_t *)dest = value;
-	else if (*ctx->type  == 'a')
+	else if (*ctx->type == 'a')
 		*(int8_t *)dest = value;
 	else
 		*(int32_t *)dest = value;
 	if ((*ctx->type == 'u' && value < 0) || \
-		(*ctx->type  == 'A' && value > INT16_MAX) || \
-		(*ctx->type  == 'a' && value > INT8_MAX)
+		(*ctx->type == 'A' && value > INT16_MAX) || \
+		(*ctx->type == 'a' && value > INT8_MAX)
 	)
 		return (-1);
 	ctx->current = end;
