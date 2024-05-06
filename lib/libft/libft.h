@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:41:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/06 20:45:30 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 22:43:39 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,15 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+
+// More char comparison
+int		ft_isupper(int c);
+int		ft_islower(int c);
+
+// Unsafe string functions
+
+char	*ft_strcat(char *dest, char *src);
+char	*ft_strcpy(char *s1, char *s2);
+int     ft_strcmp(char *s1, char *s2);
 #endif

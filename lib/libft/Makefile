@@ -27,6 +27,8 @@ SRCS = 	ft_strlen.c			\
 		ft_strtol.c			\
 		ft_sescanf.c		\
 		ft_sescanf_handle.c	\
+		ft_iscommon.c	\
+		ft_strcommon_unsafe.c	\
 		$(SRCS2)
 
 SRCS2 = ft_substr.c			\

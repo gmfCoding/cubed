@@ -6,40 +6,11 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:33:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 17:55:51 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:43:53 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
-
-char	*ft_strcat(char *dest, char *src)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (dest[i] != '\0')
-		i++;
-	j = 0;
-	while (src[j] != '\0')
-	{
-		dest[i + j] = src[j];
-		j++;
-	}
-	dest[i + j] = '\0';
-	return (dest);
-}
-
-char	*ft_strcpy(char *s1, char *s2)
-{
-	int	i;
-
-	i = -1;
-	while (s2[++i])
-		s1[i] = s2[i];
-	s1[i] = s2[i];
-	return (s1);
-}
 
 int	strlen_nl(const char *str)
 {
@@ -49,21 +20,6 @@ int	strlen_nl(const char *str)
 	while (str[i] != '\0' && str[i] != '\n')
 		i++;
 	return (i);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while ((s1[i] == s2[i]) && s1[i] && s2[i])
-		i++;
-	return (s1[i] - s2[i]);
-}
-
-int	ft_isupper(int c)
-{
-	return (c >= 'A' && c <= 'Z');
 }
 
 void	remove_spaces(char *new_str)
