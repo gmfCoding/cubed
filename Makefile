@@ -53,6 +53,7 @@ SRCSF = $(TEST) \
 		map_parser/map_default_map.c \
 		map_parser/map_utils.c \
 		modifiers/modifier_setup.c \
+		modifiers/modifier_after.c \
 		modifiers/modifier_utils.c \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_fivelights.c \

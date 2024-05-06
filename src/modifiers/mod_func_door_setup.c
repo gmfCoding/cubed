@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/06 20:45:00 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:35:15 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	door_setup_sprites(t_door *door, t_world *wld)
 	door->sprites[0]->visible = true;
 	*door->sprites[1] = *door->sprites[0];
 	*door->sprites[2] = *door->sprites[0];
-door->sprites[2]->uv = (t_uv){.offset.v = {.5, 0}, .scale.v = {-.5, .927}};
+	door->sprites[2]->uv = (t_uv){.offset.v = {.5, 0}, .scale.v = {-.5, .927}};
 	*door->sprites[3] = *door->sprites[0];
 	door->sprites[1]->uv = (t_uv){.offset.v = {.4, 10}, .scale.v = {.01, .8}};
 	door->sprites[1]->vsfb = true;
@@ -69,7 +69,6 @@ void	door_var_extended(t_mod_door_data mod, t_door *door, t_entity_2 *ent2)
  */
 t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 {
-
 	t_mod_door_data		mod;
 	t_door				*door;
 	t_entity_2 *const	ent2 = &wld->ent_2[wld->ent_count];
