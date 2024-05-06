@@ -6,13 +6,13 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:27:13 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 22:57:43 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 23:08:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef CLMATH_H
 # define CLMATH_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 # ifndef M_PI
 #  define M_PI 3.141592653589

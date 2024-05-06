@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:35:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 18:22:43 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 23:07:57 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -40,17 +40,6 @@ int	ft_line_longest(char *str)
 	}
 	return (max);
 }
-
-typedef enum e_iter_func_ctrl
-{
-	ITER_STOP,
-	ITER_CONTINUE,
-	ITER_SKIP_NEXT,
-	ITER_REPEAT,
-	ITER_ERR,
-}	t_iter_func_ctrl;
-
-typedef t_iter_func_ctrl	(*t_iter_func)(void *element, void *ctx);
 
 int	ft_split_func_iter(char **str, t_iter_func func, void *ctx)
 {
