@@ -6,13 +6,10 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:31:27 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 19:16:10 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 23:01:16 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* *************** */
-/*  prior: loop.c: */
-/* *************** */
 #include <stdbool.h>
 #include "vector2.h"
 #include "vector3.h"
@@ -20,40 +17,7 @@
 #include "state.h"
 #include "ray.h"
 #include "vectorconv.h"
-
-bool	inside(int x, int y, int maxX, int maxY)
-{
-	return (x >= 0 && y >= 0 && x < maxX && y < maxY);
-}
-
-t_dda	dda_calculate(t_vec2 start, t_vec2 dir)
-{
-	t_dda	dda;
-
-	dda = (t_dda){0};
-	dda.map = (t_vec2i){.v = {start.x, start.y}};
-	dda.delta.x = 1e30;
-	if (dda.delta.x != 0)
-		dda.delta.x = 1.0 / fabs(dir.x);
-	dda.delta.y = 1e30;
-	if (dda.delta.y != 0)
-		dda.delta.y = 1.0 / fabs(dir.y);
-	dda.step.x = 1;
-	dda.side.x = (dda.map.x + 1.0 - start.x) * dda.delta.x;
-	if (dir.x < 0)
-	{
-		dda.step.x = -1;
-		dda.side.x = (start.x - dda.map.x) * dda.delta.x;
-	}
-	dda.step.y = 1;
-	dda.side.y = (dda.map.y + 1.0 - start.y) * dda.delta.y;
-	if (dir.y < 0)
-	{
-		dda.step.y = -1;
-		dda.side.y = (start.y - dda.map.y) * dda.delta.y;
-	}
-	return (dda);
-}
+#include "clmath.h"
 
 void	raycast_hit_extend(t_hitpoint *hit, t_dda *dda)
 {
@@ -144,33 +108,6 @@ t_hittype	raycast_hit(t_game *game, t_hitpoint *hit, t_dda *dda)
 }
 */
 
-#ifdef DEBUG
-
-void	raycast_sprite_debug_extent(t_game *game, t_vec2 isect)
-{
-	t_texture	tex;
-
-	if (game->ray == R_WIDTH / 2)
-	{
-		tex = texture_get_debug_view(game, 2);
-		texture_draw_circle(&tex, \
-				v2inew(isect.x * 25, isect.y * 25), 2, R_GREEN | R_ALPHA);
-		texture_draw_circle(&tex, \
-			v2tov2i(v2muls(game->player.plane_start, 25)), 2, R_RED | R_ALPHA);
-		texture_draw_circle(&tex, \
-			2tov2i(v2muls(game->player.plane_end, 25)), 2, R_RED | R_ALPHA);
-	}
-}
-#else
-
-void	raycast_sprite_debug_extent(t_game *game, t_vec2 isect)
-{
-	(void)isect;
-	(void)game;
-}
-
-#endif
-
 void	raycast_sprite(t_game *game, t_rayinfo *ray, t_vec2i map)
 {
 	int				i;
@@ -188,11 +125,11 @@ void	raycast_sprite(t_game *game, t_rayinfo *ray, t_vec2i map)
 		if (test_two_seg_intersect(sp->vs2, sp->vs1, ray->start, v2))
 		{
 			isect = two_seg_intersect(sp->s2, sp->s1, ray->start, v2);
-			raycast_sprite_debug_extent(game, isect);
 			ray->depths[ray->hits].depth = v2dist(v2proj_line(isect, \
 				game->player.plane_start, game->player.plane_end), isect);
 			ray->depths[ray->hits].min_x = v2invlerp(sp->s1, sp->s2, \
-	v2add(game->player.pos, v2muls(ray->dir, ray->depths[ray->hits].depth)));
+			v2add(game->player.pos, v2muls(ray->dir, \
+				ray->depths[ray->hits].depth)));
 			ray->depths[ray->hits].sprite = tile->sprite[i] + 1;
 			ray->hits++;
 		}

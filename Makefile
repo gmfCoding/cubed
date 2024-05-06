@@ -25,6 +25,7 @@ SRCSF = $(TEST) \
 		vector/vector3_conv.c \
 		vector/rect.c \
 		render/render_util.c \
+		render/texture_debug.c \
 		render/loop.c \
 		render/floor_render.c \
 		render/column_render.c \
@@ -32,12 +33,14 @@ SRCSF = $(TEST) \
 		render/line.c \
 		render/rect_render.c \
 		render/intersect_test.c \
+		render/dda.c \
 		render/raycast.c \
 		render/skybox.c \
 		controls/controls.c \
 		controls/player_controls.c \
 		util/time.c \
 		util/math.c \
+		util/bounds.c \
 		util/random.c \
 		util/memory_utils.c \
 		util/debug_functions.c \

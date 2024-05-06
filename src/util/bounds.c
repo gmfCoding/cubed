@@ -1,31 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clmath.h                                           :+:      :+:    :+:   */
+/*   bounds.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 01:27:13 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 22:57:43 by clovell          ###   ########.fr       */
+/*   Created: 2024/02/05 17:29:40 by clovell           #+#    #+#             */
+/*   Updated: 2024/05/06 22:56:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef CLMATH_H
-# define CLMATH_H
-
 #include <stdbool.h>
 
-# ifndef M_PI
-#  define M_PI 3.141592653589
-# endif
-# ifndef M_TAU
-#  define M_TAU 6.2831853072
-# endif
-
-double	angle_diff(double a, double b);
-double	ft_atan2(double x, double y);
-double	facos(double x);
-double	flerp(double min, double max, double lerp);
-double	fclamp(double min, double max, double value);
-
-bool	inside(int x, int y, int max_x, int max_y);
-#endif
+bool	inside(int x, int y, int maxX, int maxY)
+{
+	return (x >= 0 && y >= 0 && x < maxX && y < maxY);
+}

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 01:43:16 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 13:58:57 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 23:03:42 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef RAY_H
@@ -14,6 +14,9 @@
 
 # include <inttypes.h>
 # include "config.h"
+# include "vector2.h"
+# include "vector2i.h"
+
 /**
  * @param depth Distance from the normal plane
  * @param dist Distance from the start
@@ -77,6 +80,7 @@ int			test_two_seg_intersect(t_vec2, t_vec2 b1, \
 			t_vec2 a2, t_vec2 b2);
 t_vec2		two_seg_intersect(t_vec2 a1, t_vec2 b1, t_vec2 a2, t_vec2 b2);
 t_vec2		ray_gethit(t_rayinfo *ray, int hit);
+t_dda		dda_calculate(t_vec2 start, t_vec2 dir);
 t_rayinfo	raycast(t_game *game, t_vec2 start, t_vec2 dir, int exclude);
 
 #endif
