@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:11:31 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:33:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 21:49:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "orbit.h"
@@ -18,7 +18,7 @@ double	orb_transform_x(t_kep_path *p, double x, double y)
 	double	tx;
 	double	ty;
 
-	ft_asrt(p == NULL, E_P E_F);
+	err(p == NULL, E_P E_F);
 	tx = cos(p->aop) * cos(p->lan) - sin(p->aop) * cos(p->inc) * sin(p->lan);
 	ty = sin(p->aop) * cos(p->lan) + cos(p->aop) * cos(p->inc) * sin(p->lan);
 	return (x * tx - y * ty);
@@ -29,7 +29,7 @@ double	orb_transform_y(t_kep_path *p, double x, double y)
 	double	tx;
 	double	ty;
 
-	ft_asrt(p == NULL, E_P E_F);
+	err(p == NULL, E_P E_F);
 	tx = cos(p->aop) * sin(p->lan) + sin(p->aop) * cos(p->inc) * cos(p->lan);
 	ty = cos(p->aop) * cos(p->inc) * cos(p->lan) - sin(p->aop) * sin(p->lan);
 	return (x * tx + y * ty);
@@ -40,7 +40,7 @@ double	orb_transform_z(t_kep_path *p, double x, double y)
 	double	tx;
 	double	ty;
 
-	ft_asrt(p == NULL, E_P E_F);
+	err(p == NULL, E_P E_F);
 	tx = sin(p->aop) * sin(p->inc);
 	ty = cos(p->aop) * sin(p->inc);
 	return (x * tx + y * ty);
@@ -51,7 +51,7 @@ void	orb_transform_cart(t_kep_path *path, t_orb_cart *cart)
 	t_vec3	pos;
 	t_vec3	vel;
 
-	ft_asrt(path == NULL || cart == NULL, E_P E_F);
+	err(path == NULL || cart == NULL, E_P E_F);
 	if (cart->ref == OCRF_IRF)
 		return ;
 	cart->ref = OCRF_IRF;

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 22:54:35 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/05 21:22:30 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 21:49:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -18,14 +18,14 @@ double	kep_mean_rate(t_kep_path *path)
 {
 	double	sma3;
 
-	ft_asrt(path == NULL, E_P E_F);
+	err(path == NULL, E_P E_F);
 	sma3 = path->sma * path->sma * path->sma;
 	return (sqrt((path->sgp_u) / (sma3)));
 }
 
 double	kep_mean(t_kep_path *path, t_kep_ang *ang)
 {
-	ft_asrt(path == NULL || ang == NULL, E_P E_F);
+	err(path == NULL || ang == NULL, E_P E_F);
 	return (ang->s_0.mna0 + kep_time(ang) * kep_mean_rate(path));
 }
 
@@ -34,7 +34,7 @@ double	kep_ta(t_kep_path *path, t_kep_ang *ang)
 	double	x;
 	double	y;
 
-	ft_asrt(path == NULL || ang == NULL, E_P E_F);
+	err(path == NULL || ang == NULL, E_P E_F);
 	x = sqrt(1.0 + path->ecc) * sin (ang->ea / 2.0);
 	y = sqrt(1.0 - path->ecc) * cos(ang->ea / 2);
 	return (2 * ft_atan2(x, y));
@@ -42,7 +42,7 @@ double	kep_ta(t_kep_path *path, t_kep_ang *ang)
 
 void	kep_ang_set(t_kep_path *path, t_kep_ang *ang, double v, t_angt t)
 {
-	ft_asrt(path == NULL || ang == NULL, E_P E_F);
+	err(path == NULL || ang == NULL, E_P E_F);
 	if (t == ANG_TIME)
 	{
 		ang->time = v;
@@ -65,7 +65,7 @@ double	kep_anom_e(t_kep_path *path, t_kep_ang *ang)
 	double	error;
 	int		i;
 
-	ft_asrt(path == NULL || ang == NULL, E_P E_F);
+	err(path == NULL || ang == NULL, E_P E_F);
 	ea1 = ang->mna;
 	if (path->ecc > 0.8)
 		ea1 = M_PI;

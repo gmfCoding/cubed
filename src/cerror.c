@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 00:33:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 16:48:38 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 21:52:45 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -16,6 +16,30 @@
 #include "cerror.h"
 #include "libft.h"
 #include <execinfo.h>
+
+// XXX FT_PUTBACKTRACE XXX
+// USE FIRST VARIANT FOR NON-EVAL PURPOSES
+// TODO COMMENT AND SWITCH TO SECOND VARIANT BEFORE EVAL
+
+//FIRST VARIANT 
+
+/*
+static void ft_putbacktrace(void)
+{
+ 	int nptrs;
+    void *buffer[128];
+	// XXX DEBUG FUNCTION, PLEASE USE SECOND VARIANT IN EVAL XXX
+	// XXX COMMENT THIS FUNCTION OUT WITH EXECINFO.H XXX
+    nptrs = backtrace(buffer, 128);
+	ft_putstr_fd("Backtrace: \n", STDERR_FILENO);
+    backtrace_symbols_fd(buffer, nptrs, STDOUT_FILENO);
+}
+*/
+// SECOND VARIANT
+static void	ft_putbacktrace(void)
+{
+	ft_putstr_fd("backtrace unavailable!\n", STDERR_FILENO);
+}
 
 char	*errormsg(t_cerror error)
 {
@@ -35,15 +59,6 @@ void	ft_assert(int cond, t_cerror error, char *file, int line)
 	if (cond)
 		ft_errx(error, file, line);
 }
-
-void	ft_asrt(int cond, char *error)
-{
-	if (!cond)
-		return ;
-	ft_putstr_fd(error, STDERR_FILENO);
-}
-
-static void	ft_putbacktrace(void);
 
 void	ft_errx(t_cerror err, char *file, int line)
 {
@@ -68,28 +83,4 @@ int	err(int res, char *str)
 		ft_putbacktrace();
 	}
 	return (res);
-}
-
-// XXX FT_PUTBACKTRACE XXX
-// USE FIRST VARIANT FOR NON-EVAL PURPOSES
-// TODO COMMENT AND SWITCH TO SECOND VARIANT BEFORE EVAL
-
-//FIRST VARIANT 
-
-/*
-static void ft_putbacktrace(void)
-{
- 	int nptrs;
-    void *buffer[128];
-	// XXX DEBUG FUNCTION, PLEASE USE SECOND VARIANT IN EVAL XXX
-	// XXX COMMENT THIS FUNCTION OUT WITH EXECINFO.H XXX
-    nptrs = backtrace(buffer, 128);
-	ft_putstr_fd("Backtrace: \n", STDERR_FILENO);
-    backtrace_symbols_fd(buffer, nptrs, STDOUT_FILENO);
-}
-*/
-// SECOND VARIANT
-static void	ft_putbacktrace(void)
-{
-	ft_putstr_fd("backtrace unavailable!\n", STDERR_FILENO);
 }

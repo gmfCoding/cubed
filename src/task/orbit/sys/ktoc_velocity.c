@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 23:36:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/02/13 00:34:12 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 21:49:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "orbit.h"
@@ -14,7 +14,7 @@
 
 double	orb_speed(t_kep_path *path, t_kep_ang *ang)
 {
-	ft_asrt(path == NULL || ang == NULL, E_P E_F);
+	err(path == NULL || ang == NULL, E_P E_F);
 	return (sqrt(path->sgp_u * path->sma) / orb_radius(path, ang));
 }
 
@@ -51,7 +51,7 @@ double	orb_max_delta(t_kep_path *path, t_kep_ang *ang)
 
 void	orb_cart_vel(t_kep_path *path, t_kep_ang *ang, t_orb_cart *cart)
 {
-	ft_asrt(path == NULL || ang == NULL || cart == NULL, E_P E_F);
+	err(path == NULL || ang == NULL || cart == NULL, E_P E_F);
 	cart->ref = OCRF_ORF;
 	orb_vel(path, ang, &cart->vel);
 }
