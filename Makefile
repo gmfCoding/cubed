@@ -21,7 +21,8 @@ SRCSF = $(TEST) \
 		vector/vector3.c \
 		vector/vector4_math.c \
 		vector/vtoa.c \
-		vector/vector_conv.c \
+		vector/vector2_conv.c \
+		vector/vector3_conv.c \
 		vector/rect.c \
 		render/render_util.c \
 		render/loop.c \
