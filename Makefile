@@ -79,6 +79,8 @@ SRCSF = $(TEST) \
 		events/event_handler.c \
 		events/event_orbit_task.c \
 		events/event_trigger_handlers.c \
+		events/event_trigger_handle_gates.c \
+		events/event_trigger_handle_tasks.c \
 		entities/player_setup.c \
 		entities/sprite.c \
 		entities/entity.c \

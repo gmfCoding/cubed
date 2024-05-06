@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:43:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/02 22:09:12 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:23:57 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void			event_task_orbit_open(t_game *game, t_entity_2 *ent);
 void			event_task_orbit_closed(t_game *game, t_entity_2 *ent);
 
 t_handle_result	entity_target_handle(t_game *game, t_entity_2 *ent);
+t_handle_result	entity_target_handle_a(t_game *game, t_entity_2 *ent, \
+										t_entity_2 *target);
+
 t_handle_result	target_handle_wincon(t_game *game, t_entity_2 *wincon, \
 										t_entity_2 *parent);
 t_handle_result	target_handle_door(t_game *game, t_entity_2 *door, \

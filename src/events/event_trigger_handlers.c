@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 21:14:13 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:21:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,6 @@ t_handle_result	target_handle_wincon(t_game *game, t_entity_2 *wincon, \
 	(void)game;
 	(void)parent;
 	game->title.state = WIN_SCREEN;
-	return (TARGET_HANDLE_SUCCESS);
-}
-
-t_handle_result	target_handle_five_lights(t_game *game, \
-									t_entity_2 *five_lights, t_entity_2 *parent)
-{
-	(void)game;
-	(void)parent;
-	five_lights->type = ET_FIVE_LIGHTS_OPEN;
-	return (TARGET_HANDLE_SUCCESS);
-}
-
-t_handle_result	target_handle_orbit_task(t_game *game, t_entity_2 *orbit, \
-															t_entity_2 *parent)
-{
-	(void)game;
-	(void)parent;
-	orbit->type = ET_ORBIT_TASK_OPEN;
 	return (TARGET_HANDLE_SUCCESS);
 }
 
@@ -80,61 +62,3 @@ t_handle_result	entity_target_handle(t_game *game, t_entity_2 *ent)
 		return (TARGET_HANDLE_NONE);
 	return (entity_target_handle_a(game, ent, NULL));
 }
-
-//if (self->parent1 == other || other == self->parent2)
-t_handle_result	target_handle_or(t_game *game, t_entity_2 *self, \
-															t_entity_2 *other)
-{
-	(void)game;
-	(void)other;
-	if (entity_target_handle(game, self) == TARGET_HANDLE_FAILED)
-		return (TARGET_HANDLE_FAILED);
-	return (TARGET_HANDLE_SUCCESS);
-}
-
-//	printf("GA: %p ==? %p %d %d\n", other, \
-//		self->parent2, self->state_1, self->state_2);
-t_handle_result	target_handle_and(t_game *game, t_entity_2 *self, \
-															t_entity_2 *other)
-{
-	if (self->parent1 == other)
-		self->state_1 = true;
-	if (self->parent2 == other)
-		self->state_2 = true;
-	if (self->state_1 == self->state_2)
-		if (entity_target_handle(game, self))
-			return (TARGET_HANDLE_FAILED);
-	return (TARGET_HANDLE_SUCCESS);
-}
-
-//	printf("handle door : from(%s) -> to(%s)", other->name, self->name);
-t_handle_result	target_handle_splitter(t_game *game, t_entity_2 *self, \
-														t_entity_2 *other)
-{
-	if (entity_target_handle_a(game, self, self->targets[0]) \
-													== TARGET_HANDLE_FAILED)
-		return (TARGET_HANDLE_FAILED);
-	if (entity_target_handle_a(game, self, self->targets[1]) \
-													== TARGET_HANDLE_FAILED)
-		return (TARGET_HANDLE_FAILED);
-	if (entity_target_handle_a(game, self, self->targets[2]) \
-													== TARGET_HANDLE_FAILED)
-		return (TARGET_HANDLE_FAILED);
-	return (TARGET_HANDLE_SUCCESS);
-}
-/*
-t_handle_result	target_handle_splitter(t_entity_2 *self, t_entity_2 *other)
-{
-	ssize_t i;
-
-	i = -1;
-	while (++i < sizeof(self->targets) / sizeof(*self->targets))
-	{
-		if (self->targets[i] == NULL)
-			continue;
-		if (entity_target_handle_a(self, 
-		self->targets[i]) == TARGET_HANDLE_FAILED)
-        	return (TARGET_HANDLE_FAILED);
-	}
-  return (TARGET_HANDLE_SUCCESS);
-}*/
