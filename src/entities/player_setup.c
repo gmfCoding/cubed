@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/04 02:10:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 20:30:36 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,11 @@ t_player	player_setup(t_list *curr)
 */
 void	player_setup(t_list *curr, t_game *game)
 {
-//	_player	player;
-
 	player_pos_setup(curr, &game->player);
 	game->player.state = CAN_MOVE;
 	game->player.oldp_x = game->player.pos.x;
 	game->player.oldp_y = game->player.pos.y;
-	game->player.plane = v2new(0.5,0);
+	game->player.plane = v2new(0.5, 0);
 	game->player.move_speed = (1.0 / R_TFR) * 2.0;
-	game->player.rot_speed =  (1.0 / R_TFR) * 1.0;
-//	return (player);
+	game->player.rot_speed = (1.0 / R_TFR) * 1.0;
 }

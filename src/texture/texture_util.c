@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:30:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/11 20:48:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:04:54 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "texture.h"
@@ -31,7 +31,8 @@ void	texture_clear(t_texture src, int colour)
 	}
 }
 
-t_texture	texture_copy(void *mlx, t_texture tex, const t_vec2 reg[2], int scale)
+t_texture	texture_copy(void *mlx, t_texture tex, \
+		const t_vec2 reg[2], int scale)
 {
 	t_texture	new;
 	t_vec2		size;
@@ -56,7 +57,6 @@ t_texture	texture_copy(void *mlx, t_texture tex, const t_vec2 reg[2], int scale)
 	}
 	return (new);
 }
-
 
 t_texture	texture_rotate(void *mlx, t_texture t, int rot)
 {

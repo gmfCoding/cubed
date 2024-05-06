@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 20:16:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/30 18:56:44 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:19:52 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -23,7 +23,6 @@ static const t_task *const	g_tasks[TASK_LEN] = {
 	.task.key = KEY_E,
 	.task.func = task_orbit_render,
 	.task.setup = task_orbit_setup},
-
 	// (t_task*)&(t_task_fl){.task.name = "task_fl",
 	// .task.size = sizeof(t_task_orbit),
 	// .task.key = KEY_E,

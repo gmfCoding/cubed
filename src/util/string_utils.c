@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:33:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 17:12:55 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:55:51 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	remove_spaces(char *new_str)
 	new_str[new_len] = '\0';
 	free(str);
 }
-/*
+/*//only good for removing spaces at the start of the line
 void	remove_spaces(char *str)
 {
 	int	i;

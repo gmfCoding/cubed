@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:34:17 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/19 01:05:29 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:11:17 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "rect.h"
@@ -43,7 +43,8 @@ t_rect	rect_offset(t_rect rect, t_vec2 offset)
 //     t_vec2 d = v2sub(line.max, line.min);
 //     float bDotDPerp = b.X * d.Y - b.Y * d.X;
 
-//     // if b dot d == 0, it means the lines are parallel so have infinite intersection points
+//     // if b dot d == 0, it means the lines are parallel so have 
+//     infinite intersection points
 //     if (bDotDPerp == 0)
 //         return false;
 
@@ -64,14 +65,14 @@ t_rect	rect_offset(t_rect rect, t_vec2 offset)
 static t_vecd	line_side(t_vec2 pos, t_vec4 line)
 {
 	return ((line.max.y - line.min.y) * pos.x + \
-	(line.min.x-line.max.x)* pos.y + v2det(line.max, line.min));
+	(line.min.x - line.max.x) * pos.y + v2det(line.max, line.min));
 }
 
 bool	rect_contains_seg(t_rect r, t_vec4 line)
 {
-	const t_vec2 omin = v2new(r.min.x, r.max.y);
-	const t_vec2 omax = v2new(r.max.x, r.min.y);
-	const int same = (line_side(r.min, line) > 0) + \
+	const t_vec2	omin = v2new(r.min.x, r.max.y);
+	const t_vec2	omax = v2new(r.max.x, r.min.y);
+	const int		same = (line_side(r.min, line) > 0) + \
 	(line_side(r.max, line) > 0) + (line_side(omin, line) > 0) + \
 	(line_side(omax, line) > 0);
 

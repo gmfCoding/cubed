@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 20:39:14 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 18:27:20 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:05:47 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -17,14 +17,15 @@
 #include <sys/param.h>
 
 /* Copies pixel data from one texture to another, minimally. */
+//	int	max_i;
+//	max_i = MIN(area.max.x, MIN(src->width, dst->width));
 void	texture_blit_rect(t_texture *dst, t_texture *src, t_rect area)
 {
 	int	j;
 	int	i;
 	int	max_j;
-//	int	max_i;
+
 	max_j = MIN(area.max.y, MIN(src->height, dst->height));
-//	max_i = MIN(area.max.x, MIN(src->width, dst->width));
 	j = MIN(0, area.min.y) - 1;
 	while (++j < max_j)
 	{

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:20:00 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/10 01:14:44 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 20:39:47 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -20,7 +20,7 @@
  */
 t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map)
 {
-	t_mod_fl_data	mod;
+	t_mod_fl_data		mod;
 	t_entity_2 *const	ent2 = &world->ent_2[world->ent_count];
 	const int			found = ft_sescanf(content, "%N%s,%s,%c,%u,%u\v",
 			sizeof(mod.name), &mod.name, &mod.target,
@@ -34,7 +34,7 @@ t_err	mod_gen_fl(char *content, int index, t_world *world, t_map *map)
 	ft_strlcpy(map->mods[index].content, content, MOD_CONTENT_MAX);
 	ent2->target_names[0] = ft_strdup(mod.target);
 	ent2->pos = v2itov2(mod.pos);
-	*map_get_tile_refv(map, ent2->pos) = (t_tile){ .type = WALL, .vis = 0,
+	*map_get_tile_refv(map, ent2->pos) = (t_tile){.type = WALL, .vis = 0,
 	.tex = TEX_FIVE_LIGHTS};
 	if (mod.active == 'O')
 		ent2->type = ET_FIVE_LIGHTS_OPEN;

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:35:50 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/04 20:00:24 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:22:43 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -93,5 +93,6 @@ void	task_tut_render(t_task_tutorial *tut, t_texture *rt)
 		tut->active = tut->tips_len - 1;
 	tip_size = 0;
 	ft_split_func_iter(tut->active_split, ft_iter_strlen, &tip_size);
-	texture_draw_square(*rt, v2sub(v2itov2(tut->pos), (t_vec2){tip_size, 0}), (t_vec2){tip_size, 0}, 0x00111111 | R_ALPHA);
+	texture_draw_square(*rt, v2sub(v2itov2(tut->pos), \
+		(t_vec2){tip_size, 0}), (t_vec2){tip_size, 0}, 0x00111111 | R_ALPHA);
 }

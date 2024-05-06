@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:31:42 by kmordaun          #+#    #+#             */
-/*   Updated: 2023/11/29 15:32:59 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:57:39 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,5 @@ int	error_return(char *msg, int exit_code, int print_error, t_list **free_me)
 	}
 	if (msg)
 		fprintf(stderr, "- %s.", msg);
-	//exit(exit_code);
-	return(exit_code);
+	return (exit_code);
 }

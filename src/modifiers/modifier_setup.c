@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/04 03:39:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 20:48:46 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
  *
  */
 
-static char *const	g_mapsymbols[] = {
+static char *const			g_mapsymbols[] = {
 [MOD_ID_NO] = "NO",
 [MOD_ID_SO] = "SO",
 [MOD_ID_WE] = "WE",
@@ -152,13 +152,28 @@ t_mm_tile	*mmap_find_tile(t_game *game, t_vec2 pos)
 	return (NULL);
 }
 
+static void	modifier_grab_mmap_ref(t_game *game)
+{
+	t_list			*ent_iter;
+	t_entity		*ent_curr;
+
+	ent_iter = game->world->entities;
+	while (ent_iter != NULL)
+	{
+		if (ent_iter->content != NULL)
+		{
+			ent_curr = (t_entity *)ent_iter->content;
+			ent_curr->mm_tile = mmap_find_tile(game, ent_curr->pos);
+		}
+		ent_iter = ent_iter->next;
+	}
+}
+
 void	modifier_after(t_game *game)
 {
 	t_world *const	w = game->world;
 	int				i;
 	int				j;
-	t_list			*ent_iter;
-	t_entity		*ent_curr;
 
 	i = -1;
 	while ((size_t)++i < w->ent_count)
@@ -166,21 +181,14 @@ void	modifier_after(t_game *game)
 		j = -1;
 		while (++j < EVENT_ENT_MAX_TARGETS)
 		{
-			if (w->ent_2[i].target_names[j] && w->ent_2[i].target_names[j][0] && ft_strcmp(w->ent_2[i].target_names[j], "NULL") != 0)
-				w->ent_2[i].targets[j] = mod_search_name(w, w->ent_2[i].target_names[j]);
+			if (w->ent_2[i].target_names[j] && w->ent_2[i].target_names[j][0] \
+						&& ft_strcmp(w->ent_2[i].target_names[j], "NULL") != 0)
+				w->ent_2[i].targets[j] = mod_search_name(w, \
+												w->ent_2[i].target_names[j]);
 			if (w->ent_2[i].target_names[j] != NULL)
 				free(w->ent_2[i].target_names[j]);
 		}
 		w->ent_2[i].ref_mm_tile = mmap_find_tile(game, w->ent_2[i].pos);
 	}
-	ent_iter = game->world->entities;
-	while (ent_iter != NULL)
-	{
-		if (ent_iter->content != NULL)
-		{
-			ent_curr = (t_entity *)ent_iter->content;
-			ent_curr->mm_tile = mmap_find_tile(game, ent_curr->pos);	
-		}
-		ent_iter = ent_iter->next;
-	}
+	modifier_grab_mmap_ref(game);
 }

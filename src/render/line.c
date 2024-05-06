@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 12:27:00 by clovell           #+#    #+#             */
-/*   Updated: 2023/12/01 00:09:17 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 20:00:49 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -29,7 +29,7 @@
 // 	if (end->y >= maxY)
 // 		end->y = maxY - 1;
 // }
-
+//bres_clip(&start, &end, data.width, data.height);
 static void	bres_line_low(t_texture dst, t_vec2 start, t_vec2 end, int colour)
 {
 	t_vec2	pos;
@@ -37,7 +37,6 @@ static void	bres_line_low(t_texture dst, t_vec2 start, t_vec2 end, int colour)
 	int		yi;
 	int		error;
 
-	//bres_clip(&start, &end, data.width, data.height);
 	dv = v2sub(end, start);
 	yi = 1;
 	if (dv.y < 0)
@@ -59,6 +58,7 @@ static void	bres_line_low(t_texture dst, t_vec2 start, t_vec2 end, int colour)
 	}
 }
 
+//bres_clip(&start, &end, data.width, data.height);
 static void	bres_line_high(t_texture dst, t_vec2 start, t_vec2 end, int colour)
 {
 	t_vec2	pos;
@@ -66,7 +66,6 @@ static void	bres_line_high(t_texture dst, t_vec2 start, t_vec2 end, int colour)
 	int		xi;
 	int		error;
 
-	//bres_clip(&start, &end, data.width, data.height);
 	dv = v2sub(end, start);
 	xi = 1;
 	if (dv.x < 0)

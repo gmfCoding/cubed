@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 16:34:56 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/07 18:29:59 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:08:07 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "texture.h"
@@ -33,13 +33,15 @@
 // }
 
 __attribute__((always_inline))
-inline void	pixel_set(const t_texture data, const int x, const int y, const int color)
+inline void	pixel_set(const t_texture data, const int x, const int y, \
+																const int color)
 {
 	data.data[x + y * data.width] = color;
 }
 
 __attribute__((always_inline))
-inline void	pixel_set_s(const t_texture data, const int x, const int y, const int color)
+inline void	pixel_set_s(const t_texture data, const int x, const int y, \
+																const int color)
 {
 	if (x < 0 || y < 0 || x >= data.width || y >= data.height)
 		return ;

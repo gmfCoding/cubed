@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:36:58 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 18:02:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 21:14:40 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -47,7 +47,7 @@ void	sprite_update_all(t_world *world)
 
 	map_sprite_clear(&world->map);
 	i = -1;
-	while (++i <world->sp_amount)
+	while (++i < world->sp_amount)
 	{
 		if (world->sprite[i].vsfb)
 		{
@@ -90,35 +90,34 @@ void	sprite_update_all(t_world *world)
  * Places the sprite `sprite` into the tiles of `map`
  *
  * Implementation notes:
- * Get the position of the center tile, min_x/y
+ * Get the position of the center tile, min.x/y
  * Loop in the 3x3 region surrounding it (inclusive)
  * Check if the sprite intersects any of those tiles, if it does.
  * insert the sprite into the tile.
  */
 void	sprite_update(t_map *map, t_sprite *const sprite, int index)
 {
-	const int	min_x = (int)floorf(sprite->pos.x);
-	const int	min_y = (int)floorf(sprite->pos.y);
-	int			i;
-	int			j;
-	t_tile		*tile;
+	const t_vec2i	min = {.x = (int)floorf(sprite->pos.x), \
+							.y = (int)floorf(sprite->pos.y)};
+	t_vec2i			i;
+	t_tile			*tile;
+	t_rect			rect;
+	t_vec4			comp;
 
-	j = (int)min_y - (1 + 1);
-	while (++j <= min_y + 1)
+	i.y = min.y - (1 + 1);
+	while (++i.y <= min.y + 1)
 	{
-		i = (int)min_x - (1 + 1);
-		while (++i <= min_x + 1)
+		i.x= min.x - (1 + 1);
+		while (++i.x<= minx.x + 1)
 		{
-			if (rect_contains_seg((t_rect){.v = {i, j, i + 1, j + 1}}, \
-			(t_vec4){.min = sprite->s1, .max = sprite->s2}) && \
-			i >= 0 && j >= 0 && i < map->width && j < map->height)
+			rect = (t_rect){ .v = {i, i.y, i.x+ 1, i.y + 1}};
+			comp = (t_vec4){.min = sprite->s1, .max = sprite->s2}
+			if (rect_contains_seg(rect, comp) && \
+			i.x>= 0 && i.y >= 0 && i < map->width && i.y < map->height)
 			{
-				tile = map_get_tile_ref(map, i, j);
+				tile = map_get_tile_ref(map, i, i.y);
 				if (tile->sp_count < TILE_SP_MAX && tile->type != WALL)
-				{
-					tile->sprite[tile->sp_count] = index;
-					tile->sp_count++;
-				}
+					tile->sprite[tile->sp_count++] = index;
 			}
 		}
 	}
@@ -154,7 +153,8 @@ void	sprite_rotate(t_game *game, t_sprite *curr, t_vec2 dir)
 /* Orders the sprites from `arr` from closest to furthest from `cent`
  *	and stores the sorted indices into `ind`.
  */
-void	sprite_order_distance(t_vec2 cent, t_sprite *arr, int16_t *ind, int size)
+void	sprite_order_distance(t_vec2 cent, t_sprite *arr, int16_t *ind, \
+																	int size)
 {
 	int				i;
 	int				j;

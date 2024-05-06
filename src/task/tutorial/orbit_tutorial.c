@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 18:17:13 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/04 19:26:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:24:09 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/tutorial.h"
@@ -16,7 +16,7 @@
 // 	{.content = "Welcome to the orbit task!\n"}
 // }
 
-static const t_task_tip g_orb_tips[] = {
+static const t_task_tip	g_orb_tips[] = {
 {
 	.content = "Welcome to the orbit task!\n"\
 	"Your goal is to modify your orbit by applying thrust at certain "\
@@ -52,7 +52,7 @@ static const t_task_tip g_orb_tips[] = {
 },
 };
 
-t_task_tutorial g_orbit_tutorial = {
+t_task_tutorial			g_orbit_tutorial = {
 	.tips = g_orb_tips,
 	.tips_len = sizeof(g_orb_tips) / sizeof(t_task_tip),
 	.active = 0

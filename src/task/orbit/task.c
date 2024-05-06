@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 19:06:51 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/18 16:52:46 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:27:23 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -17,13 +17,13 @@
 #include "vectorconv.h"
 #include "rect.h"
 
+// TODO: Remove?
 static void	l_draw_debug_info_active(t_task_orbit *task, char **str)
 {
-	t_vec3		pos;
-	t_vec3		vel;
+	t_vec3				pos;
+	t_vec3				vel;
 	t_kep_path *const	path = &task->paths[task->active_path];
 
-	// TODO: Remove?
 	orb_pos(path, &task->nodes[task->active_path], &pos);
 	orb_vel(path, &task->nodes[task->active_path], &vel);
 	pos.x = orb_transform_x(path, pos.x, pos.y);
@@ -81,11 +81,11 @@ static void	l_draw_debug_info(t_task_orbit *task)
 // 	}
 // }
 
+// TODO Forbidde usleep
 int	sa_task_orbit_process(t_task_orbit *task)
 {
 	input_process(&task->input);
 	l_draw_debug_info(task);
-	usleep(16666); // Forbidden
+	usleep(16666);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/06 19:28:06 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 20:45:00 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,8 @@ door->sprites[2]->uv = (t_uv){.offset.v = {.5, 0}, .scale.v = {-.5, .927}};
 	*door->sprites[3] = *door->sprites[1];
 }
 
-/*
- * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
- */
-t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
+void	door_var_extended(t_mod_door_data mod, t_door *door, t_entity_2 *ent2)
 {
-	t_mod_door_data		mod;
-	t_door				*door;
-	t_entity_2 *const	ent2 = &wld->ent_2[wld->ent_count];
-	const int			found = ft_sescanf(content, "%N%s,%s,%u,%u,%u,%c,%c\v",
-			sizeof(mod.name), &mod.name, &mod.tex,
-			&mod.pos.x, &mod.pos.y, &mod.speed,
-			&mod.closed, &mod.locked);
-	(void)index;
-	(void)wld;
-	(void)map;
-	if (found != 8 || mod.pos.x >= map->width \
-					|| mod.pos.y >= map->height)
-		return (1);
-	*map_get_tile_ref(map, mod.pos.x, mod.pos.y) = (t_tile){
-	.type = DOOR, .vis = -1 - (mod.closed == 'C'), .tex = TEX_DOOR};
-	ft_strlcpy(ent2->name, mod.name, NAME_SIZE);
-	ft_strcpy(ent2->ui_display_1, "PRESS 'E' TO INTERACT");
-	ft_strcpy(ent2->ui_display_2, "LOCKED");
-	ent2->ref_tile = map_get_tile_ref(map, mod.pos.x, mod.pos.y);
-	door = (t_door *)entity_create(wld, ENT_DOOR);
-	door->opaque = mod.tex[0] == 'T';
 	door->closed = mod.closed == 'C';
 	door->locked = mod.locked == 'L';
 	door->pct = door->closed;
@@ -86,6 +62,34 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	if (!door->closed)
 		ent2->type = ET_DOOR_OPEN;
 	ent2->entity = &door->base;
+}
+
+/*
+ * NAME,TEXTURE,XPOS,YPOS,SPEED,CLOSED,LOCKED
+ */
+t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
+{
+
+	t_mod_door_data		mod;
+	t_door				*door;
+	t_entity_2 *const	ent2 = &wld->ent_2[wld->ent_count];
+	const int			found = ft_sescanf(content, "%N%s,%s,%u,%u,%u,%c,%c\v",
+			sizeof(mod.name), &mod.name, &mod.tex,
+			&mod.pos.x, &mod.pos.y, &mod.speed,
+			&mod.closed, &mod.locked);
+
+	(void)index;
+	if (found != 8 || mod.pos.x >= map->width || mod.pos.y >= map->height)
+		return (1);
+	*map_get_tile_ref(map, mod.pos.x, mod.pos.y) = (t_tile){
+	.type = DOOR, .vis = -1 - (mod.closed == 'C'), .tex = TEX_DOOR};
+	ft_strlcpy(ent2->name, mod.name, NAME_SIZE);
+	ft_strcpy(ent2->ui_display_1, "PRESS 'E' TO INTERACT");
+	ft_strcpy(ent2->ui_display_2, "LOCKED");
+	ent2->ref_tile = map_get_tile_ref(map, mod.pos.x, mod.pos.y);
+	door = (t_door *)entity_create(wld, ENT_DOOR);
+	door->opaque = mod.tex[0] == 'T';
+	door_var_extended(mod, door, ent2);
 	door_setup_sprites(door, wld);
 	ent2->handle = target_handle_door;
 	wld->ent_count++;

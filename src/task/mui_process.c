@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/02 20:12:30 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:21:31 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -18,6 +18,7 @@
 #include "input.h"
 #include "rect.h"
 #include "clmath.h"
+#include "sound.h"
 
 void	mui_press_button(t_mui_button *curr, t_vec2 mouse)
 {
@@ -38,15 +39,14 @@ void	mui_hold_dial(t_mui_dial *curr, t_vec2 mouse)
 	curr->curr_angle = v2x2ang(dmpos);
 	curr->angle += angle_diff(curr->prev_angle, curr->curr_angle);
 }
-#include "sound.h"
 
 void	mui_hold_slider(t_app *app, t_mui_slider *curr, t_vec2 mouse)
 {
-	const double previous = curr->value;
-	static bool play = false;
+	const double	previous = curr->value;
+	static bool		play = false;
 
 	curr->value = fmax(0, fmin(0.99, v2invlerp(curr->start, curr->end, mouse)));
-	if (play) 
+	if (play)
 	{
 		if (curr->value > 0.5)
 			play_sound(app->sfx, SFX_ORBIT_THRUSTUP, PLAY);
@@ -79,7 +79,6 @@ t_mui_base	*mui_hover(t_mui_ctx *ctx, t_vec2 mouse)
 	}
 	return (NULL);
 }
-
 
 void	mui_process(t_mui_ctx *ctx, t_inputctx *in)
 {

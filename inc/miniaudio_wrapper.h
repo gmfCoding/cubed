@@ -14,7 +14,7 @@
 # define MINIAUDIO_WRAPPER_H
 
 # include "sound.h"
-# include "miniaudio.h"
+# include "../lib/mlx/miniaudio.h"
 
 typedef enum e_sound_state	t_sound_state;
 

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:11:47 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/29 15:02:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:07:28 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <mlx.h>
@@ -15,6 +15,7 @@
 #include "texture.h"
 
 #ifdef __linux__
+
 static void	texture_init(t_texture tex)
 {
 	int	x;
@@ -53,7 +54,8 @@ t_texture	texture_create(void *mlx, int width, int height)
 	return (t);
 }
 
-void	texture_destroy(void *mlx, t_texture *tex, t_texture **tex_ptr, bool use_free)
+void	texture_destroy(void *mlx, t_texture *tex, t_texture **tex_ptr, \
+	bool use_free)
 {
 	if (tex == NULL)
 		tex = *tex_ptr;
@@ -77,4 +79,3 @@ t_texture	texture_load(void *mlx, const char *const path)
 	texture_init(t);
 	return (t);
 }
-
