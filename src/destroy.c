@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:18:31 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 16:24:43 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:00:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -90,9 +90,4 @@ void	game_destroy(t_game *game)
 	if (game->app.win != NULL)
 		mlx_destroy_window(game->app.mlx, game->app.win);
 	exit(0);
-}
-
-void	shutdown_input_setup(t_game *game)
-{
-	mlx_hook(game->app.win, DESTROY, 0, (void *)game_destroy, game);
 }

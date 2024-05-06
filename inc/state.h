@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 20:25:12 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:18:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include "mini_map.h"
 # include "five_light.h"
 # include "title.h"
-
 
 // FORWARD DECLARE
 typedef struct s_task			t_task;
@@ -95,7 +94,7 @@ typedef struct s_mmap			t_mmap;
 // TEX_ARRAY_SIZE - 1
 # define TEX_ENEMY_END 629
 # define TEX_ENEMY_SIZE 576
- 
+
 # define TEX_ARRAY_SIZE 630
 
 typedef enum e_ui_state
@@ -142,6 +141,9 @@ struct s_game
 	unsigned int	ray;
 };
 
+void		control_player_process(t_game *game);
+double		window_angle(int x);
+void		nsew_textures(t_game *game);
 void		texture_debug_view_blit(t_game *game, int view,
 				t_texture tex, t_vec2 pos);
 void		texture_draw_debug_view(t_game *game, int view);

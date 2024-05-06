@@ -35,6 +35,7 @@ SRCSF = $(TEST) \
 		render/raycast.c \
 		render/skybox.c \
 		controls/controls.c \
+		controls/player_controls.c \
 		util/time.c \
 		util/math.c \
 		util/random.c \
@@ -131,6 +132,7 @@ SRCSF = $(TEST) \
 		title/title_states.c \
 		cerror.c \
 		image_loader.c \
+		setup_textures.c \
 		destroy.c \
 
 #		task/orbit/task2.c

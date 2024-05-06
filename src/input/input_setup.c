@@ -6,13 +6,15 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 00:52:55 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/08 01:02:03 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 22:16:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include "state.h"
 #include "input.h"
+#include "cubed.h"
+#include "destroy.h"
 
 #define KDOWN 2
 #define KUP 3
@@ -21,6 +23,11 @@
 #define MMOVE 6
 #define EXPOSE 12
 #define DESTROY 17
+
+void	shutdown_input_setup(t_game *game)
+{
+	mlx_hook(game->app.win, DESTROY, 0, (void *)game_destroy, game);
+}
 
 void	input_setup(void *mlx, void *win, t_inputctx *input)
 {
