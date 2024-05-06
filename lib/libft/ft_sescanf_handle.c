@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:56:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/04/06 20:42:26 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/04 03:07:36 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdbool.h>
@@ -28,7 +28,8 @@ static bool	sesc_should_stop(t_sescanf_ctx *ctx)
 	else if (sesc_nodelim_nextis(ctx, 'd') || sesc_nodelim_nextis(ctx, 'i'))
 		return (ft_isdigit(*data) || \
 		((*data == '-' || *data == '+') && ft_isdigit(data[1])));
-	else if (sesc_nodelim_nextis(ctx, 's') || sesc_nodelim_nextis(ctx, 'c'))
+	else if (sesc_nodelim_nextis(ctx, 's') || sesc_nodelim_nextis(ctx, 'c') || \
+		ctx->fmt[1] == '\v')
 		return (ft_isspace(*data));
 	else
 		return (*ctx->current == ctx->fmt[1]);

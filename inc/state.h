@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 21:57:50 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:25:12 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "mini_map.h"
 # include "five_light.h"
 # include "title.h"
+
 
 // FORWARD DECLARE
 typedef struct s_task			t_task;
@@ -86,11 +87,16 @@ typedef struct s_mmap			t_mmap;
 # define TEX_UI_TASK_INACTIVE 40
 
 # define TEX_WALL_OB 42
+# define TEX_DOOR2 43
 
-# define TEX_ENEMY_START 43
-# define TEX_ENEMY_END 618
+// TEX_ARRAY_SIZE - TEX_ENEMY_SIZE
+# define TEX_ENEMY_START 54
 
-# define TEX_ARRAY_SIZE 619
+// TEX_ARRAY_SIZE - 1
+# define TEX_ENEMY_END 629
+# define TEX_ENEMY_SIZE 576
+ 
+# define TEX_ARRAY_SIZE 630
 
 typedef enum e_ui_state
 {
@@ -129,6 +135,9 @@ struct s_game
 	t_list			*tasks;
 	t_rand			task_rand; // TODO: Use t_game::rand instead ?
 	t_rand			rand;
+
+	// Used to reset mouse input for starting angle.
+	bool			menu_reloaded;
 	unsigned int	fpsc;
 	unsigned int	ray;
 };

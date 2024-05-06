@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:55:52 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 21:20:17 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:30:36 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "clmath.h"
 #include "cubed.h"
 
-// TODO: Broke after new mouse look system, impl angle offsets instead.
 void	player_rot_setup(char rot, t_player *player)
 {
 	player->angle_offset = 0;

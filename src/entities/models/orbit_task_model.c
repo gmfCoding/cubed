@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   orbit_task_model.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 21:23:07 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 21:23:09 by kmordaun         ###   ########.fr       */
+/*   Created: 2024/05/04 02:02:13 by clovell           #+#    #+#             */
+/*   Updated: 2024/05/06 20:30:55 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "vector2.h"
 #include "state.h" 
 #include "entity.h"

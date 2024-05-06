@@ -2,13 +2,13 @@ NO ./assets/wall.xpm
 SO ./assets/wall.xpm
 WE ./assets/wall.xpm
 EA ./assets/wall.xpm
-F 225,100,0
-C 223,20,0
+C 100,100,100
+F 80,80,80
 
 DR door01,/assets/debug.xpm,25,11,1,C,L
-DR door02,/assets/debug.xpm,20,1,1,C,L
-DR door03,/assets/debug.xpm,40,4,1,C,L
-DR door04,/assets/debug.xpm,16,17,1,C,L
+DR door02,O,20,1,1,C,L
+DR door03,T,40,4,1,C,L
+DR door04,O,16,17,1,C,L
 
 DR door05,/assets/debug.xpm,30,11,1,C,U
 DR door06,/assets/debug.xpm,32,9,1,C,U

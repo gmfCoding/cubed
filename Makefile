@@ -80,6 +80,7 @@ SRCSF = $(TEST) \
 		entities/player_setup.c \
 		entities/sprite.c \
 		entities/entity.c \
+		entities/door.c \
 		entities/enemy/enemy_go_to_target.c \
 		entities/enemy/enemy_img_setup.c \
 		entities/enemy/enemy_path_and_patrol.c \
