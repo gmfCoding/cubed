@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:56:18 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/04 01:48:07 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 19:28:06 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ static void	door_setup_sprites(t_door *door, t_world *wld)
 	door->base.sprite = door->sprites[0];
 	door->sprites[0]->pos = door->base.pos;
 	door->sprites[0]->tex = TEX_DOOR;
+	if (door->opaque)
+		door->sprites[0]->tex = TEX_DOOR2;
 	door->sprites[0]->uv = (t_uv){.offset.v = {.5, 0}, .scale.v = {.5, .927}};
 	door->sprites[0]->visible = true;
 	*door->sprites[1] = *door->sprites[0];
 	*door->sprites[2] = *door->sprites[0];
-	door->sprites[2]->uv = (t_uv){.offset.v = {.5, 0}, .scale.v = {-.5, .927}};
+door->sprites[2]->uv = (t_uv){.offset.v = {.5, 0}, .scale.v = {-.5, .927}};
 	*door->sprites[3] = *door->sprites[0];
 	door->sprites[1]->uv = (t_uv){.offset.v = {.4, 10}, .scale.v = {.01, .8}};
 	door->sprites[1]->vsfb = true;
@@ -63,6 +65,7 @@ t_err	mod_gen_dr(char *content, int index, t_world *wld, t_map *map)
 	ft_strcpy(ent2->ui_display_2, "LOCKED");
 	ent2->ref_tile = map_get_tile_ref(map, mod.pos.x, mod.pos.y);
 	door = (t_door *)entity_create(wld, ENT_DOOR);
+	door->opaque = mod.tex[0] == 'T';
 	door->closed = mod.closed == 'C';
 	door->locked = mod.locked == 'L';
 	door->pct = door->closed;

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 06:52:39 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/04 01:34:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/06 19:26:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ENTITY_H
@@ -87,6 +87,8 @@ typedef struct s_door
 	bool		closed;
 	bool		locked;
 
+	bool		opaque;
+	
 	t_sprite	*sprites[4];
 }	t_door;
 
