@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 18:29:11 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/06 21:30:42 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -106,8 +106,8 @@ void	render_paths(t_task_orbit *t, t_texture *rt, t_rect vis)
 	while (++i < t->maneuvers)
 	{
 		ang = (t_kep_ang){0};
-		kep_ang_set(&t->paths[i], &ang, t->mean[i], ANG_MEAN);
-		orbit_obj_render(&t->paths[i], &ang, vis, rt);
+		kep_ang_set(&t->paths[i - 1], &ang, t->mean[i], ANG_MEAN);
+		orbit_obj_render(&t->paths[i - 1], &ang, vis, rt);
 	}
 }
 
