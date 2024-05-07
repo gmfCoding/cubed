@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:20:43 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 22:22:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/07 18:43:19 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,11 @@ t_handle_result	target_handle_image_place(t_game *game, t_entity_2 *self, \
 															t_entity_2 *parent)
 {
 	(void)parent;
-	while (self->state_3 == true)
+	(void)game;
+	if (self->state_3 == true)
 	{
-		control_core_process(game);
-		if (input_keyheld(&game->input, KEY_ENTER) \
-			|| input_keyheld(&game->input, KEY_SPACE) \
-			|| input_keyheld(&game->input, KEY_ENTER) \
-			|| input_keydown(&game->input, MB_LEFT))
-		{
-			play_sound(game->app.sfx, SFX_SELECTION, PLAY);
-			self->state_3 = false;
-		}
-		texture_blit(game->textures[self->value], game->rt0, self->pos);
-		texture_draw(game->app, game->rt0, v2new(0, 0));
-		input_process(&game->input);
+		game->show_img = true;
+		game->event_img = self;
 	}
 	return (TARGET_HANDLE_SUCCESS);
 }

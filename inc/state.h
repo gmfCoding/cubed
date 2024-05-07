@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 22:18:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/07 18:34:05 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ struct s_game
 	int				loaded_index[3];
 	t_mgame			five_light;
 	bool			run_fl;
+	bool			show_img;
+	t_entity_2		*event_img;
 	t_vec2i			stored_mouse;
 	double			mouse_angle;
 	bool			mouse_first_time;

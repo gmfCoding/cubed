@@ -37,7 +37,7 @@ GM t_d03,door03,al_task03,NULL
 GM t_t04,al_task04,task05,NULL
 GM t_t05,al_task05,door04,NULL
 PI welcome,NULL,24,30,13
-TA ta02,welcome,O,27,13,101,P,E
+TA ta02,welcome,O,27,16,101,P,E
 TA ta01,orbit01,O,12,17,101,P,E
 OB orbit01,gm_fin,C,1,17,E
 GM gm_fin,dr_fin,al_win,you_win
