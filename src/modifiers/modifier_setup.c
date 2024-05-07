@@ -69,6 +69,7 @@ static char *const			g_mapsymbols[] = {
 [MOD_ID_GM] = "GM", // Multi Gate Splitter
 [MOD_ID_TA] = "TA", // Trigger area
 [MOD_ID_VC] = "VC",
+[MOD_ID_PI] = "PI",
 };
 
 static const t_ex_action	g_mapfuncs[] = {
@@ -92,6 +93,7 @@ static const t_ex_action	g_mapfuncs[] = {
 [MOD_ID_GM] = &mod_gen_gm,
 [MOD_ID_TA] = &mod_gen_ta,
 [MOD_ID_VC] = &mod_gen_vc,
+[MOD_ID_PI] = &mod_gen_pi,
 };
 
 t_err	modifier_seperate_content(char *content, char *type, char *data)

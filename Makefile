@@ -61,6 +61,7 @@ SRCSF = $(TEST) \
 		modifiers/mod_func_cardinal_texture.c \
 		modifiers/mod_func_fivelights.c \
 		modifiers/mod_func_orbit_task.c \
+		modifiers/mod_func_place_img.c \
 		modifiers/mod_func_floor_ceiling_color.c \
 		modifiers/mod_func_door_setup.c \
 		modifiers/mod_func_minimap.c \

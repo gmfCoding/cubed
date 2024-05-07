@@ -9,7 +9,9 @@
 /*   Updated: 2024/05/06 22:22:40 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "state.h"
+#include "render.h"
 
 //if (self->parent1 == other || other == self->parent2)
 t_handle_result	target_handle_or(t_game *game, t_entity_2 *self, \
@@ -50,5 +52,27 @@ t_handle_result	target_handle_splitter(t_game *game, t_entity_2 *self, \
 	if (entity_target_handle_a(game, self, self->targets[2]) \
 													== TARGET_HANDLE_FAILED)
 		return (TARGET_HANDLE_FAILED);
+	return (TARGET_HANDLE_SUCCESS);
+}
+
+t_handle_result	target_handle_image_place(t_game *game, t_entity_2 *self, \
+															t_entity_2 *parent)
+{
+	(void)parent;
+	while (self->state_3 == true)
+	{
+		control_core_process(game);
+		if (input_keyheld(&game->input, KEY_ENTER) \
+			|| input_keyheld(&game->input, KEY_SPACE) \
+			|| input_keyheld(&game->input, KEY_ENTER) \
+			|| input_keydown(&game->input, MB_LEFT))
+		{
+			play_sound(game->app.sfx, SFX_SELECTION, PLAY);
+			self->state_3 = false;
+		}
+		texture_blit(game->textures[self->value], game->rt0, self->pos);
+		texture_draw(game->app, game->rt0, v2new(0, 0));
+		input_process(&game->input);
+	}
 	return (TARGET_HANDLE_SUCCESS);
 }

@@ -68,6 +68,7 @@ enum e_mod_id
 	MOD_ID_GM,
 	MOD_ID_TA,
 	MOD_ID_VC,
+	MOD_ID_PI,
 };
 
 typedef struct s_key
@@ -147,6 +148,7 @@ t_err		mod_gen_ga(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_gm(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_ta(char *content, int index, t_world *world, t_map *map);
 t_err		mod_gen_vc(char *content, int index, t_world *world, t_map *map);
+t_err		mod_gen_pi(char *content, int index, t_world *world, t_map *map);
 
 void		modifier_after(t_game *game);
 t_err		modifier_setup(t_list *raw_map_file, t_map *map, t_world *world);
