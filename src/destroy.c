@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:18:31 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 22:00:05 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/07 18:28:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -74,8 +74,19 @@ void	destroy_entity(void *ent)
 	free(ent);
 }
 
+void	destroy_task(void *ent)
+{
+	const t_task	*task = (t_task *)ent;
+
+	if (ft_strcmp(task->name, "task_orbit") == 0)
+		free(task);
+	else
+		free(task);
+}
+
 void	world_destroy(t_game *game)
 {
+	ft_lstclear(&game->world->tasks, destroy_entity);
 	ft_lstclear(&game->world->entities, destroy_entity);
 	free(game->world);
 }

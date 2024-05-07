@@ -125,6 +125,7 @@ SRCSF = $(TEST) \
 		task/orbit/sys/generate.c \
 		task/orbit/sys/equality.c \
 		task/orbit/orbit.c \
+		task/orbit/orbit_close.c \
 		task/orbit/mui/orbit_mui.c \
 		task/mui.c \
 		task/mui_process.c \
