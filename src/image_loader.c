@@ -106,7 +106,8 @@ static const char	*g_image_paths[] = {
 
 void	load_image_at_index(t_game *game)
 {
-	if (game->loaded_index[0] < TEX_ENEMY_START)
+	if (game->loaded_index[0] < TEX_ENEMY_START \
+	&& game->loaded_index[0] < sizeof(g_image_paths) / sizeof(g_image_paths[0]))
 	{
 		if (g_image_paths[game->loaded_index[0]] != NULL)
 		{

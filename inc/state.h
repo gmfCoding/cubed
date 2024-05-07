@@ -89,13 +89,13 @@ typedef struct s_mmap			t_mmap;
 # define TEX_DOOR2 43
 
 // TEX_ARRAY_SIZE - TEX_ENEMY_SIZE
-# define TEX_ENEMY_START 44
+# define TEX_ENEMY_START 54
 
 // TEX_ARRAY_SIZE - 1
-# define TEX_ENEMY_END 619
+# define TEX_ENEMY_END 629
 # define TEX_ENEMY_SIZE 576
 
-# define TEX_ARRAY_SIZE 620
+# define TEX_ARRAY_SIZE 630
 
 typedef enum e_ui_state
 {
