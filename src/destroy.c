@@ -6,11 +6,12 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:18:31 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 18:28:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/07 19:46:33 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
 #include "sound.h"
+#include "destroy.h"
 
 #define KDOWN 2
 #define KUP 3
@@ -59,36 +60,6 @@ void	textures_destroy(t_game *game)
 	}
 	if (game->five_light.run_game == true)
 		destroy_five_lights_images(game->app.mlx, &game->five_light);
-}
-
-void	destroy_entity(void *ent)
-{
-	const t_entity	*entity = (t_entity *)ent;
-	const t_enemy	*as_enemy = (t_enemy *)entity;
-
-	if (entity->type == ENT_ENEMY)
-	{
-		if (as_enemy->path != NULL)
-			free(as_enemy->path);
-	}
-	free(ent);
-}
-
-void	destroy_task(void *ent)
-{
-	const t_task	*task = (t_task *)ent;
-
-	if (ft_strcmp(task->name, "task_orbit") == 0)
-		free(task);
-	else
-		free(task);
-}
-
-void	world_destroy(t_game *game)
-{
-	ft_lstclear(&game->world->tasks, destroy_entity);
-	ft_lstclear(&game->world->entities, destroy_entity);
-	free(game->world);
 }
 
 //__lsan_do_leak_check();

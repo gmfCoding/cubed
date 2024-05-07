@@ -141,6 +141,7 @@ SRCSF = $(TEST) \
 		image_loader.c \
 		setup_textures.c \
 		destroy.c \
+		destroy_world.c \
 
 #		task/orbit/task2.c
 # TODO: Add other headers?
@@ -201,6 +202,10 @@ CONF_TARGET = .target
 
 ifneq (,$(findstring debug,$(CONF)))
 OPTS = fsan,debug
+endif
+
+ifneq (,$(findstring dsym,$(CONF)))
+OPTS = debug
 endif
 
 ifneq (,$(findstring none,$(OPTS)))
