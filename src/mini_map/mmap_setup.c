@@ -60,6 +60,7 @@ void	mmap_init(t_game *game)
 	game->mmap.mm_small = true;
 	game->mmap.alert_m = false;
 	game->mmap.alert_h = false;
+	game->mmap.has_pressed = false;
 	mmap_init_img_1(&game->mmap, game->app.mlx);
 	y = -1;
 	i = 0;

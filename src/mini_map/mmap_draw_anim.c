@@ -19,7 +19,8 @@
  */
 void	mmap_draw_case_anim(t_game *game, t_vec2 pos)
 {
-	if (game->mmap.alert_m == true || game->mmap.alert_h == true)
+	if ((game->mmap.alert_m == true || game->mmap.alert_h == true) \
+		&& game->mmap.has_pressed == false)
 	{
 		if (game->fpsc % 30 > 15)
 		{

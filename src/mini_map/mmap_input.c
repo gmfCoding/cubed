@@ -22,6 +22,7 @@ void	mmap_input(t_game *game, t_mmap *mmap)
 {
 	if (input_keydown(&game->input, KEY_M))
 	{
+		game->mmap.has_pressed = true;
 		if (mmap->mm_small == true)
 		{
 			play_sound(game->app.sfx, SFX_SELECT, PLAY);

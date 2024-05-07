@@ -57,6 +57,7 @@ typedef struct s_mmap
 	bool		mm_big;
 	bool		alert_m;
 	bool		alert_h;
+	bool		has_pressed;
 }			t_mmap;
 
 void	mmap_init(t_game *game);
