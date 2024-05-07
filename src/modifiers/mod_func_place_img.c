@@ -1,18 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mod_func_alert.c                                   :+:      :+:    :+:   */
+/*   mod_func_place_img.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:47:31 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 21:04:52 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/07 22:08:42 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "vectorconv.h"
 #include "modifier_data.h"
+#include "state.h"
+#include "input.h"
+
+void	display_placed_img(t_game *game)
+{
+	if (game->show_img == true)
+	{
+		texture_blit(game->textures[game->event_img->value], \
+								game->rt0, game->event_img->pos);
+		game->player.state = CANT_MOVE;
+		if (input_keydown(&game->input, KEY_ENTER) \
+			|| input_keydown(&game->input, KEY_E) \
+			|| input_keydown(&game->input, KEY_SPACE) \
+			|| input_keydown(&game->input, MB_LEFT))
+		{
+			game->show_img = false;
+			play_sound(game->app.sfx, SFX_SELECTION, PLAY);
+			game->event_img->state_3 = false;
+			game->event_img = NULL;
+			game->player.state = CAN_MOVE;
+		}
+		if (game->fpsc % 30 > 15)
+			texture_blit(game->textures[TEX_UI_INTERACT_BRIGHT], \
+								game->rt0, v2new(SCR_WIDTH / 2 - 60, 800));
+		else
+			texture_blit(game->textures[TEX_UI_INTERACT_DUL], \
+								game->rt0, v2new(SCR_WIDTH / 2 - 60, 800));
+	}
+}
+
+t_handle_result	target_handle_image_place(t_game *game, t_entity_2 *self, \
+															t_entity_2 *parent)
+{
+	(void)parent;
+	(void)game;
+	if (self->state_3 == true)
+	{
+		game->show_img = true;
+		game->event_img = self;
+	}
+	return (TARGET_HANDLE_SUCCESS);
+}
 
 /*
  * NAME,TARGET,IMAGE_INDEX,XPOS,YPOS
@@ -20,7 +62,7 @@
 t_err	mod_gen_pi(char *content, int index, t_world *world, t_map *map)
 {
 	t_mod_placeimg_data	mod;
-	const int		found = ft_sescanf(content, "%N%s,%s,%u,%u,%u\v",
+	const int			found = ft_sescanf(content, "%N%s,%s,%u,%u,%u\v",
 			sizeof(mod.name), &mod.name, &mod.target, &mod.img_i,
 			&mod.pos.x, &mod.pos.y);
 

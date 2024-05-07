@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:20:43 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 18:43:19 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/07 22:12:14 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,5 @@ t_handle_result	target_handle_splitter(t_game *game, t_entity_2 *self, \
 	if (entity_target_handle_a(game, self, self->targets[2]) \
 													== TARGET_HANDLE_FAILED)
 		return (TARGET_HANDLE_FAILED);
-	return (TARGET_HANDLE_SUCCESS);
-}
-
-t_handle_result	target_handle_image_place(t_game *game, t_entity_2 *self, \
-															t_entity_2 *parent)
-{
-	(void)parent;
-	(void)game;
-	if (self->state_3 == true)
-	{
-		game->show_img = true;
-		game->event_img = self;
-	}
 	return (TARGET_HANDLE_SUCCESS);
 }

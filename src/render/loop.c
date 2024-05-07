@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 18:43:55 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/07 22:07:59 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,25 +231,6 @@ void	show_game_debug(t_game *game)
 	}
 }
 
-void	display_placed_img(t_game *game)
-{
-	if (game->show_img == true)
-	{
-		texture_blit(game->textures[game->event_img->value], \
-								game->rt0, game->event_img->pos);
-		if (input_keyheld(&game->input, KEY_ENTER) \
-			|| input_keyheld(&game->input, KEY_SPACE) \
-			|| input_keyheld(&game->input, KEY_ENTER) \
-			|| input_keydown(&game->input, MB_LEFT))
-		{
-			game->show_img = false;
-			play_sound(game->app.sfx, SFX_SELECTION, PLAY);
-			game->event_img->state_3 = false;
-			game->event_img = NULL;
-		}
-	}
-}
-
 void	game_update(t_game *game)
 {
 	entity_update(game);
@@ -264,8 +245,8 @@ void	game_update(t_game *game)
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
 	mmap_draw(game);
 	event_display_ui(game);
-	task_process(game);
 	display_placed_img(game);
+	task_process(game);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	show_game_debug(game);
 	if (input_keydown(&game->input, KEY_Q))
