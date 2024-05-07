@@ -34,7 +34,7 @@ void	title_imgs_load(void *x, t_texture *t)
 	t[TEX_TITLE_START_0] = texture_load(x, "assets/menu/start_0.xpm");
 	t[TEX_TITLE_START_1] = texture_load(x, "assets/menu/start_1.xpm");
 }
-
+/*
 //using forbidden functions here
 int	load_map_str(t_game *game)
 {
@@ -60,6 +60,24 @@ int	load_map_str(t_game *game)
 		ent = readdir(dir);
 	}
 	return (closedir(dir));
+}
+*/
+
+int	load_map_str(t_game *game)
+{
+	ft_strcpy(game->title.map_str[game->title.map_str_amount++], \
+			MAP_STR1);
+	ft_strcpy(game->title.map_str[game->title.map_str_amount++], \
+			MAP_STR2);
+	ft_strcpy(game->title.map_str[game->title.map_str_amount++], \
+			MAP_STR3);
+	ft_strcpy(game->title.map_str[game->title.map_str_amount++], \
+			MAP_STR4);
+	ft_strcpy(game->title.map_str[game->title.map_str_amount++], \
+			MAP_STR5);
+	ft_strcpy(game->title.map_str[game->title.map_str_amount++], \
+			MAP_STR6);
+	return (0);
 }
 
 void	title_setup_screens(t_game *game)

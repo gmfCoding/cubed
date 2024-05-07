@@ -14,6 +14,13 @@
 # define TITLE_H
 # include "sound.h"
 
+# define MAP_STR1 "map1.cub"
+# define MAP_STR2 "map2.cub"
+# define MAP_STR3 "map3.cub"
+# define MAP_STR4 "map3.cub"
+# define MAP_STR5 "map3.cub"
+# define MAP_STR6 "map3.cub"
+
 typedef enum e_menu_state
 {
 	TITLE,
