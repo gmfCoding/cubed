@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 18:12:47 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:25:44 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -63,7 +63,7 @@ typedef struct s_sa_orbit_task
 
 	t_orb_cart		cart;
 	t_orb_body		sun;
-	t_mui_ctx		mui;
+	t_mui_ctx*		mui;
 	t_inputctx		input;
 	float			zoom;
 	float			brightness;

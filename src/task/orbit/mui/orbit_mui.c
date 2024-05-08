@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 18:41:18 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:35:10 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -262,14 +262,15 @@ static const t_mui_ctx		g_orbit_mui = {
 	.offset = {.x = 90.0, .y = 90.0}
 };
 
-void	mui_orbit_setup(t_app *app, t_mui_ctx *mui)
+void	mui_orbit_setup(t_app *app, t_mui_ctx **mui)
 {
 	const int	g_len_tex = sizeof(g_orb_textures) / sizeof(t_def_tex);
 
-	*mui = (t_mui_ctx){0};
-	mui_clone(&g_orbit_mui, mui);
+	if (*mui == NULL)
+		*mui = mui_create_prefab(&g_orbit_mui);
+	mui_clone(&g_orbit_mui, *mui);
 	def_tex_add(g_orb_textures, g_len_tex);
-	mui_def_preload(app, mui);
+	mui_def_preload(app, *mui);
 }
 
 //			printf("Orbit task completed\n");

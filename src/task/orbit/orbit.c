@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 18:30:45 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:32:04 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -33,6 +33,7 @@ int	task_orbit_setup(t_game *game, t_task *base)
 	*task = (t_task_orbit)
 	{
 		.task = *base,
+		.mui = ((t_task_orbit *)base)->mui,
 		.rand = game->world->task_rand,
 		.start_ang = (t_kep_ang){0}, .target_path.sgp_u = sun.u,
 		.start_path = (t_kep_path){.sma = KM_AU, .ecc = 0.0001, .inc = 0.0001,
@@ -45,8 +46,8 @@ int	task_orbit_setup(t_game *game, t_task *base)
 	ft_memsetf64(task->delta, 1.0, T_ORBIT_MAX_MAN);
 	ft_memsetf64(task->mean, 0.0, T_ORBIT_MAX_MAN);
 	mui_orbit_setup(&game->app, &task->mui);
-	task->mui.ctx = task;
-	task->mui.game = game;
+	task->mui->ctx = task;
+	task->mui->game = game;
 	orbit_mui_control_action(&task->mui);
 	return (0);
 }
