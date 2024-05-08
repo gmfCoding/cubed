@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:34:08 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 18:46:42 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 19:06:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -16,7 +16,7 @@ t_handle_result	target_handle_door_control(t_game *game, t_entity_2 *self, \
 															t_entity_2 *parent)
 {
 	t_door	*door;
- 
+
 	(void)parent;
 	(void)game;
 	if (self->target == NULL || self->target->entity == NULL \

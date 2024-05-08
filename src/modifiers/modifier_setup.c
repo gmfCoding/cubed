@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/08 17:56:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 19:06:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,10 @@ t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		if (ft_strlen(str) > 0)
 		{
 			if (modifier_seperate_content(str, mod[0], mod[1]))
-				return (ft_putstr_fd(str, STDERR_FILENO), 1);// TODO: remove pustr
+				return (1);
 			func = modifier_get_func(mod[0]);
 			if (func && func(mod[1], index++, world, map))
-				return (ft_putstr_fd(str, STDERR_FILENO), 1);// TODO: remove pust
+				return (1);
 		}
 		curr = curr->next;
 	}
