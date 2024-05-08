@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:28:44 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 21:15:12 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:38:12 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -15,6 +15,7 @@
 
 void	event_task_orbit_closed(t_game *game, t_entity_2 *ent)
 {
+	(void)ent;
 	game->display_ui = UI_INACTIVE_TASK;
 	return ;
 }

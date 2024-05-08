@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:22:55 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/29 15:45:49 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 13:37:25 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ t_err	mod_gen_f(char *content, int index, t_world *world, t_map *map)
 {
 	union u_colour	colour;
 
+	(void)world;
+	(void)index;
 	if (mod_get_colour(content, &colour))
 		return (1);
-	world->map.color_floor = colour.rgba;
-	world->map.use_floor = true;
+	map->color_floor = colour.rgba;
+	map->use_floor = true;
 	return (0);
 }
 
@@ -48,9 +50,11 @@ t_err	mod_gen_c(char *content, int index, t_world *world, t_map *map)
 {
 	union u_colour	colour;
 
+	(void)index;
+	(void)world;
 	if (mod_get_colour(content, &colour))
 		return (1);
-	world->map.color_ceiling = colour.rgba;
-	world->map.use_ceiling = true;
+	map->color_ceiling = colour.rgba;
+	map->use_ceiling = true;
 	return (0);
 }

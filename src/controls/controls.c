@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 16:47:11 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:53:21 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -22,24 +22,23 @@ double	window_angle(int x)
 	return (((double)x / SCR_WIDTH) * M_TAU);
 }
 
+// // TODO: Debug remove.
+// if (input_keydown(&game->input, KEY_T))
+// {
+// 	task = task_find(game, "task_orbit");
+// 	if (task)
+// 		task->show = true;
+// 	else
+// 	{
+// 		task = task_create_or_find(game, "task_orbit");
+// 		task->show = true;
+// 	}
+// }
+
 void	control_core_process(t_game *game)
 {
-	t_task	*task;
-
 	if (input_keyheld(&game->input, KEY_ESC))
 		game_destroy(game);
-	// TODO: Debug remove.
-	if (input_keydown(&game->input, KEY_T))
-	{
-		task = task_find(game, "task_orbit");
-		if (task)
-			task->show = true;
-		else
-		{
-			task = task_create_or_find(game, "task_orbit");
-			task->show = true;
-		}
-	}
 }
 // Doesn't work on wslg
 // void	mouse_bounds_check(t_app *app, t_inputctx *ctx)

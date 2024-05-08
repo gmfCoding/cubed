@@ -6,13 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 20:16:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 18:30:34 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:04:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
 #include "task.h"
 #include "tasks/task_orbit.h"
 #include "tasks/task_fl.h"
+#include "iter.h"
 
 int	task_orbit_setup(t_game *game, t_task *task);
 int	task_orbit_render(t_game *game, t_task *task);
@@ -67,7 +68,7 @@ void	task_process(t_game *game)
 t_task	*task_create_or_find(t_game *game, char *name)
 {
 	t_task	*task;
-	ssize_t	i;
+	size_t	i;
 
 	if (name == NULL)
 		return (NULL);
@@ -77,7 +78,7 @@ t_task	*task_create_or_find(t_game *game, char *name)
 	if (task)
 		return (task);
 	printf("Couldn't find task: %s\n", name);
-	i = -1;
+	i = ITER_SIZET_START;
 	while (++i < sizeof(g_tasks) / sizeof(*g_tasks))
 	{
 		if (!g_tasks[i]->name || ft_strcmp(g_tasks[i]->name, name) != 0)

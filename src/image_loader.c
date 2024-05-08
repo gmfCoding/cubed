@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:57:15 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/06 19:29:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:05:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ static const char	*g_image_paths[] = {
 void	load_image_at_index(t_game *game)
 {
 	if (game->loaded_index[0] < TEX_ENEMY_START \
-	&& game->loaded_index[0] < sizeof(g_image_paths) / sizeof(g_image_paths[0]))
+	&& game->loaded_index[0] < (int)(sizeof(g_image_paths) \
+								/ sizeof(g_image_paths[0])))
 	{
 		if (g_image_paths[game->loaded_index[0]] != NULL)
 		{

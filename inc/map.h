@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 18:30:13 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:29:38 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -83,7 +83,6 @@ typedef struct s_world
 	t_list		*entities;
 	t_list		*tasks;
 	t_rand		task_rand; // TODO: Use t_game::rand instead ?
-
 	t_sprite	sprite[MAX_ENT * TILE_SP_MAX];
 	// The indices of `sprite` in order of distance to player.
 	int16_t		indices[MAX_ENT * TILE_SP_MAX];

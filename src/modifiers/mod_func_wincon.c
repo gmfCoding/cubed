@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:47:31 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 14:59:47 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:32:14 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_err	mod_gen_vc(char *content, int index, t_world *world, t_map *map)
 	const int		found = ft_sescanf(content, "%N%s,%s\v",
 			sizeof(mod.name), &mod.name, &mod.target);
 
+	(void)map;
 	(void)index;
 	if (found != 3)
 		return (1);

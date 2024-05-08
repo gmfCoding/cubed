@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 15:32:04 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:37:21 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -18,8 +18,9 @@
 #include "state.h"
 
 static const t_orb_gen	g_orbgen = {
-	.sma = {0.5 * KM_AU, 1.25 * KM_AU}, .ecc = {0.0001, 0.8},
-	.inc = {0.0001, 0.0001}, .aop = {0.0001, M_TAU}, .lan = {0.0001, 0.0001}
+	.sma.v = {0.5 * KM_AU, 1.25 * KM_AU}, .ecc.v = {0.0001, 0.8},
+	.inc.v = {0.0001, 0.0001}, .aop.v = {0.0001, M_TAU},
+	.lan.v = {0.0001, 0.0001}
 };
 
 int	task_orbit_setup(t_game *game, t_task *base)

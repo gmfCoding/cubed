@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:20:00 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 20:35:43 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:37:42 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -56,6 +56,8 @@ void	ent_trigger_area_update(t_ent_trigger_area *area, t_game *game)
 		target_pos = game->player.pos;
 	else if (game->world->enemy != NULL)
 		target_pos = game->world->enemy->base.pos;
+	else
+		return ;
 	target_pos = v2sub(target_pos, v2new(0.5, 0.5));
 	if (area->manhattan)
 		distance = v2distm(area->base.pos, target_pos);
@@ -86,6 +88,7 @@ t_err	mod_gen_ta(char *content, int index, t_world *world, t_map *map)
 			&mod.active, &mod.pos.x, &mod.pos.y, &mod.radius, &mod.watch, \
 			&mod.dist_mode);
 
+	(void)index;
 	if (found != 9 || mod.pos.x >= map->width \
 					|| mod.pos.y >= map->height)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:16:39 by clovell           #+#    #+#             */
-/*   Updated: 2023/04/19 16:10:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:34:02 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	*gnl_memcpy(void *dst, const void *src, size_t size)
 }
 
 char	*gnl_strjoin(char const *s1, char const *s2)
-{	
+{
 	size_t	s1len;
 	size_t	s2len;
 	char	*dst;

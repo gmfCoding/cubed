@@ -6,14 +6,14 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:02:13 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 20:30:55 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:39:12 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "vector2.h"
 #include "state.h" 
 #include "entity.h"
 
-void	model_orbit_update(t_game *game, t_vec2 pos, t_wm_task_orbit *m)
+void	model_orbit_update(t_vec2 pos, t_wm_task_orbit *m)
 {
 	const t_vec2	centre = v2add(pos, v2new(0.5, 0.5));
 	const t_vec2	dir_s = v2muls(m->dir, 0.2);
@@ -31,8 +31,9 @@ void	ent_task_orbit_update(t_ent_task_orbit *orbit, t_game *game)
 {
 	t_wm_task_orbit	m;
 
+	(void)game;
 	m.dir = orbit->dir;
-	model_orbit_update(game, orbit->base.pos, &m);
+	model_orbit_update(orbit->base.pos, &m);
 	orbit->sprites[0]->pos = v2lerp(m.m1, m.o1, 0.5);
 	orbit->sprites[0]->s1 = m.m1;
 	orbit->sprites[0]->s2 = m.o1;

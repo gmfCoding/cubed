@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/06 22:21:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 13:38:28 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 t_handle_result	target_handle_wincon(t_game *game, t_entity_2 *wincon, \
 															t_entity_2 *parent)
 {
+	(void)wincon;
 	(void)game;
 	(void)parent;
 	game->title.state = WIN_SCREEN;

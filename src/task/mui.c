@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 15:34:39 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:37:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -24,7 +24,6 @@ void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
 	int			i;
 
 	*dst = *src;
-
 	j = -1;
 	while (++j < MUI_LEN_TYPES)
 	{

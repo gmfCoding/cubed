@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:20:43 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 22:12:14 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:37:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_handle_result	target_handle_and(t_game *game, t_entity_2 *self, \
 t_handle_result	target_handle_splitter(t_game *game, t_entity_2 *self, \
 														t_entity_2 *other)
 {
+	(void)other;
 	if (entity_target_handle_a(game, self, self->targets[0]) \
 													== TARGET_HANDLE_FAILED)
 		return (TARGET_HANDLE_FAILED);
