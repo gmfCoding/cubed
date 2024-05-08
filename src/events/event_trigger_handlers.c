@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 19:47:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/08 13:38:28 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:47:08 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_handle_result	target_handle_door(t_game *game, t_entity_2 *door, \
 
 //if (count >= TARGET_HANDLE_MAX_DEPTH)
 //		return (TARGET_HANDLE_FAILED); // Maybe game destroy here?
+//	printf("trigger: %s -> %s\n", ent->name, target->name);
 t_handle_result	entity_target_handle_a(t_game *game, t_entity_2 *ent, \
 															t_entity_2 *target)
 {
@@ -51,7 +52,6 @@ t_handle_result	entity_target_handle_a(t_game *game, t_entity_2 *ent, \
 		target = ent->target;
 	if (!target || !target->handle)
 		return (TARGET_HANDLE_NONE);
-	printf("trigger: %s -> %s\n", ent->name, target->name);
 	res = target->handle(game, target, ent);
 	count--;
 	return (res);

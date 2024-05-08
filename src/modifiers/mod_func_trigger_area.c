@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:20:00 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/08 18:14:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:48:49 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -58,13 +58,11 @@ void	ent_trigger_area_update(t_ent_trigger_area *area, t_game *game)
 		target_pos = game->world->enemy->base.pos;
 	else
 		return ;
-	printf("We here2?\n");
 	target_pos = v2sub(target_pos, v2new(0.5, 0.5));
 	if (area->manhattan)
 		distance = v2distm(area->base.pos, target_pos);
 	else
 		distance = v2dist(area->base.pos, target_pos);
-	printf("We here1 %f?\n", distance);
 	if (distance < area->radius)
 	{
 		area->enabled = false;

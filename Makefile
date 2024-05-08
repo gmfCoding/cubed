@@ -288,7 +288,7 @@ clean:
 	-rm -rf $(DIROBJ)
 	-@printf "${NC}"
 
-re: fclean all
+re: fclean lclean all
 
 # Dependencies
 -include $(DEPS)
