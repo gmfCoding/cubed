@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 19:18:28 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 19:31:13 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 14:28:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,21 @@ void	fl_pass_state_rules(t_game *game, int click_state)
 		fl_change_state(game, click_state, index);
 }
 
+static int	select_random_unactive(bool used[10], t_rand *rand)
+{
+	int	i;
+	int	r;
+
+	i = -1;
+	while (++i < 1000)
+	{
+		r = mrand(rand) % 10;
+		if (used[r] == false)
+			return (r);
+	}
+	return (0);
+}
+
 void	five_lights_hardmode(t_game *game, t_mgame *five_lights)
 {
 	bool	used[10];
@@ -63,18 +78,15 @@ void	five_lights_hardmode(t_game *game, t_mgame *five_lights)
 	i = -1;
 	while (++i < 10)
 	{
-		do
-			r = mrand(&game->rand) % 10;
-		while (used[r])
-			;
-		game->five_light.state[r] = 0;
-		game->five_light.pos_x[r] = (PANEL_POS_X + 43) + (i * 69);
-		game->five_light.click_spot[r][0] = (PANEL_POS_X + 43) + (i * 71);
-		game->five_light.click_spot[r][1] = (PANEL_POS_X + 112) + (i * 71);
-		game->five_light.click_spot[r][2] = PANEL_POS_Y + 157;
-		game->five_light.click_spot[r][3] = PANEL_POS_Y + 232;
-		game->five_light.click_spot[r][4] = PANEL_POS_Y + 234;
-		game->five_light.click_spot[r][5] = PANEL_POS_Y + 304;
+		r = select_random_unactive(used, &game->rand);
+		five_lights->state[r] = 0;
+		five_lights->pos_x[r] = (PANEL_POS_X + 43) + (i * 69);
+		five_lights->click_spot[r][0] = (PANEL_POS_X + 43) + (i * 71);
+		five_lights->click_spot[r][1] = (PANEL_POS_X + 112) + (i * 71);
+		five_lights->click_spot[r][2] = PANEL_POS_Y + 157;
+		five_lights->click_spot[r][3] = PANEL_POS_Y + 232;
+		five_lights->click_spot[r][4] = PANEL_POS_Y + 234;
+		five_lights->click_spot[r][5] = PANEL_POS_Y + 304;
 		used[r] = true;
 	}
 }

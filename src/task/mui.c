@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 21:12:33 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:29:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -24,17 +24,8 @@ void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
 
 	*dst = *src;
 	i = -1;
-	dst->all[0] = malloc(src->sizes[0] * src->lengths[0]);
-	dst->all[1] = malloc(src->sizes[1] * src->lengths[1]);
-	dst->all[2] = malloc(src->sizes[2] * src->lengths[2]);
-	dst->all[3] = malloc(src->sizes[3] * src->lengths[3]);
-
-	// while (++i < MUI_LEN_TYPES)
-	// {
-
-	// 	dst->all[i] = malloc(src->sizes[i] * src->lengths[i]);
-	// 	printf("[%d] = %p", i, dst->all[i]);
-	// }
+	while (++i < MUI_LEN_TYPES)
+		dst->all[i] = malloc(src->sizes[i] * src->lengths[i]);
 	j = -1;
 	while (++j < MUI_LEN_TYPES)
 	{

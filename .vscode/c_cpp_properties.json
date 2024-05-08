@@ -3,7 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/lib/libft"
+                "${workspaceFolder}/lib/libft",
                 "${workspaceFolder}/lib/mlx-linux",
                 "${workspaceFolder}/lib/gnl",
                 "${workspaceFolder}/lib/extra",

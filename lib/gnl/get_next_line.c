@@ -6,26 +6,19 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:34:27 by clovell           #+#    #+#             */
-/*   Updated: 2023/04/19 16:11:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 14:33:32 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
 #include <stdlib.h>
 
 #include "get_next_line.h"
+#include "get_next_line_int.h"
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 42
 #endif
 
-typedef struct s_state
-{
-	char	*store;
-	char	*prev;
-	int		prev_fd;
-	int		remaining;
-}			t_state;
-
-static char	*clear_state(t_state *state, int prev)
+static char	*clear_state(t_gnl_state *state, int prev)
 {
 	if (prev && state->prev)
 		free(state->prev);
@@ -50,7 +43,7 @@ static void	concat(char **dest, char *start, char *second)
 		free(old);
 }
 
-static char	*setup_state(t_state *state)
+static char	*setup_state(t_gnl_state *state)
 {
 	char	*nlloc;
 	int		i;
@@ -75,7 +68,7 @@ static char	*setup_state(t_state *state)
 	return (state->store);
 }
 
-static void	*read_state(int fd, int *success, ssize_t *size, t_state *state)
+static void	*read_state(int fd, int *success, ssize_t *size, t_gnl_state *state)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	char	*nlloc;
@@ -103,10 +96,10 @@ static void	*read_state(int fd, int *success, ssize_t *size, t_state *state)
 
 char	*get_next_line(int fd)
 {
-	static t_state	state;
-	ssize_t			size;
-	char			*nlloc;
-	int				success;
+	static t_gnl_state	state;
+	ssize_t				size;
+	char				*nlloc;
+	int					success;
 
 	success = 0;
 	nlloc = NULL;
