@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 16:53:21 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:01:16 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -63,6 +63,7 @@ void	control_process(t_game *game)
 			+= window_angle(game->input.mouse.x) * MOUSE_SENSITIVITY;
 	}
 	control_core_process(game);
+	game->mouse_angle = window_angle(game->input.mouse.x) * MOUSE_SENSITIVITY;
 	if (can_move_player(game, &game->player))
 		control_player_process(game);
 }

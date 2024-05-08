@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 16:44:21 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:58:48 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -50,7 +50,7 @@ void	player_step_sound(t_game *game)
 	}
 }
 
-static void	move_player(t_map *map, t_player *pl, t_vec2 dir, t_inputctx *i)
+static void	move_player(t_map *map, t_player *pl, t_vec2 dir)
 {
 	t_vec2	vel;
 	t_tile	*horz;
@@ -92,17 +92,16 @@ void	control_player_process(t_game *game)
 	t_player *const		pl = &game->player;
 	t_inputctx *const	i = &game->input;
 
-	game->mouse_angle = window_angle(i->mouse.x) * MOUSE_SENSITIVITY;
 	if (input_keyheld(i, KEY_LSHIFT))
 		pl->running = true;
 	if (input_keyheld(i, KEY_W))
-		move_player(&game->world->map, pl, pl->dir, i);
+		move_player(&game->world->map, pl, pl->dir);
 	if (input_keyheld(i, KEY_S))
-		move_player(&game->world->map, pl, v2rev(pl->dir), i);
+		move_player(&game->world->map, pl, v2rev(pl->dir));
 	if (input_keyheld(i, KEY_A))
-		move_player(&game->world->map, pl, v2new(pl->dir.y, -pl->dir.x), i);
+		move_player(&game->world->map, pl, v2new(pl->dir.y, -pl->dir.x));
 	if (input_keyheld(i, KEY_D))
-		move_player(&game->world->map, pl, v2new(-pl->dir.y, pl->dir.x), i);
+		move_player(&game->world->map, pl, v2new(-pl->dir.y, pl->dir.x));
 	if (input_keyheld(i, KEY_RARROW) || input_keyheld(i, KEY_LARROW))
 	{
 		if (input_keyheld(i, KEY_RARROW))
