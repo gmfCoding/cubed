@@ -84,9 +84,12 @@ typedef struct s_mmap			t_mmap;
 # define TEX_UI_INTERACT_DUL 38
 # define TEX_UI_DOOR_LOCKED 39
 # define TEX_UI_TASK_INACTIVE 40
-
 # define TEX_WALL_OB 42
 # define TEX_DOOR2 43
+# define TEX_PL_GOAL01 44
+# define TEX_PL_GOAL02 45
+# define TEX_PL_GOAL03 46
+# define TEX_PL_ORBIT_ASSIT 47
 
 // TEX_ARRAY_SIZE - TEX_ENEMY_SIZE
 # define TEX_ENEMY_START 54

@@ -102,6 +102,10 @@ static const char	*g_image_paths[] = {
 [TEX_UI_DOOR_LOCKED] = "assets/ui/promt_door_locked.xpm",
 [TEX_UI_TASK_INACTIVE] = "assets/ui/inactive_task.xpm",
 [TEX_WALL_OB] = "assets/orbit/orbit_wall_task.xpm",
+[TEX_PL_GOAL01] = "assets/goal_01.xpm",
+[TEX_PL_GOAL02] = "assets/goal_02.xpm",
+[TEX_PL_GOAL03] = "assets/goal_03.xpm",
+[TEX_PL_ORBIT_ASSIT] = "assets/orbit_assit.xpm",
 };
 
 void	load_image_at_index(t_game *game)
