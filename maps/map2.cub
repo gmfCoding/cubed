@@ -2,8 +2,6 @@ NO ./assets/wall.xpm
 SO ./assets/wall.xpm
 WE ./assets/wall.xpm
 EA ./assets/wall.xpm
-F 225,100,0
-C 223,20,0
 
 DR dr_fin,/assets/debug.xpm,23,0,1,C,L
 TA ta01,you_win,O,23,1,101,P,E

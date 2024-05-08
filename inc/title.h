@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:45:42 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/30 20:45:43 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:33:55 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # define MAP_STR1 "map1.cub"
 # define MAP_STR2 "map2.cub"
 # define MAP_STR3 "map3.cub"
-# define MAP_STR4 "map3.cub"
-# define MAP_STR5 "map3.cub"
+# define MAP_STR4 "map4.cub"
+# define MAP_STR5 "map5.cub"
 # define MAP_STR6 "map3.cub"
 
 typedef enum e_menu_state
