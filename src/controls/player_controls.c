@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 21:31:00 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 22:12:09 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:44:21 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <math.h>
@@ -50,18 +50,22 @@ void	player_step_sound(t_game *game)
 	}
 }
 
-static void	move_player(t_map *map, t_player *pl, t_vec2 dir)
+static void	move_player(t_map *map, t_player *pl, t_vec2 dir, t_inputctx *i)
 {
-	const t_vec2	vel = v2muls(dir, pl->move_speed);
-	t_tile			*horz;
-	t_tile			*vert;
+	t_vec2	vel;
+	t_tile	*horz;
+	t_tile	*vert;
 
+	vel = v2muls(dir, 0.045);
+	if (pl->running)
+		vel = v2muls(vel, 1.45);
 	horz = map_get_tile_ref(map, (int)(pl->pos.x + vel.x), (int)pl->pos.y);
 	vert = map_get_tile_ref(map, (int)pl->pos.x, (int)(pl->pos.y + vel.y));
 	if (horz->vis == -1)
 		pl->pos.x += vel.x;
 	if (vert->vis == -1)
 		pl->pos.y += vel.y;
+	pl->running = false;
 }
 
 int	can_move_player(t_game *game, t_player *pl)
@@ -89,16 +93,16 @@ void	control_player_process(t_game *game)
 	t_inputctx *const	i = &game->input;
 
 	game->mouse_angle = window_angle(i->mouse.x) * MOUSE_SENSITIVITY;
-	if (!(can_move_player(game, pl)))
-		return ;
+	if (input_keyheld(i, KEY_LSHIFT))
+		pl->running = true;
 	if (input_keyheld(i, KEY_W))
-		move_player(&game->world->map, pl, pl->dir);
+		move_player(&game->world->map, pl, pl->dir, i);
 	if (input_keyheld(i, KEY_S))
-		move_player(&game->world->map, pl, v2rev(pl->dir));
+		move_player(&game->world->map, pl, v2rev(pl->dir), i);
 	if (input_keyheld(i, KEY_A))
-		move_player(&game->world->map, pl, v2new(pl->dir.y, -pl->dir.x));
+		move_player(&game->world->map, pl, v2new(pl->dir.y, -pl->dir.x), i);
 	if (input_keyheld(i, KEY_D))
-		move_player(&game->world->map, pl, v2new(-pl->dir.y, pl->dir.x));
+		move_player(&game->world->map, pl, v2new(-pl->dir.y, pl->dir.x), i);
 	if (input_keyheld(i, KEY_RARROW) || input_keyheld(i, KEY_LARROW))
 	{
 		if (input_keyheld(i, KEY_RARROW))
