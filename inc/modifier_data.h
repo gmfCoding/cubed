@@ -83,6 +83,14 @@ typedef struct s_mod_alarm_data
 	uint32_t	time;
 }	t_mod_alarmdata;
 
+typedef struct s_mod_place_img_data
+{
+	char		name[50];
+	char		target[50];
+	uint32_t	img_i;
+	t_vec2i		pos;
+}	t_mod_placeimg_data;
+
 typedef struct s_mod_wincon_data
 {
 	char		name[50];

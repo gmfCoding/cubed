@@ -41,7 +41,8 @@ void			event_task_orbit_closed(t_game *game, t_entity_2 *ent);
 t_handle_result	entity_target_handle(t_game *game, t_entity_2 *ent);
 t_handle_result	entity_target_handle_a(t_game *game, t_entity_2 *ent, \
 										t_entity_2 *target);
-
+t_handle_result	target_handle_image_place(t_game *game, t_entity_2 *self, \
+										t_entity_2 *parent);
 t_handle_result	target_handle_wincon(t_game *game, t_entity_2 *wincon, \
 										t_entity_2 *parent);
 t_handle_result	target_handle_door(t_game *game, t_entity_2 *door, \

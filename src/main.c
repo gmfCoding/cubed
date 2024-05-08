@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:40:29 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 22:01:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/07 18:30:00 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	setup_world(int argc, char **argv, t_game *game)
 		game->world->enemy->patrol_target.x = \
 			game->world->enemy->old_pos[0].x + 0.5;
 	}
+	game->show_img = false;
 	event_player(game, true);
 	nsew_textures(game);
 	set_sound_volume(game->app.sfx, SFX_GAME_01, 0.6);

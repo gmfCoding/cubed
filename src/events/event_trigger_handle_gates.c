@@ -6,10 +6,12 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:20:43 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 22:22:40 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/07 22:12:14 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "state.h"
+#include "render.h"
 
 //if (self->parent1 == other || other == self->parent2)
 t_handle_result	target_handle_or(t_game *game, t_entity_2 *self, \
