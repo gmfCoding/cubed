@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:20:00 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/08 18:14:10 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:57:25 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "map.h"
@@ -31,6 +31,7 @@ static t_err	setup_entity(t_world *world, t_mod_trigger_area *data, \
 	area->manhattan = data->dist_mode == 'M';
 	area->radius = data->radius / 100.0f;
 	area->ent2 = ent;
+	ent->entity = (t_entity *)area;
 	return (0);
 }
 

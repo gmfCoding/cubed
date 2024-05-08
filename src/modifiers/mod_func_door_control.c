@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:34:08 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 18:24:54 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:46:42 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -22,7 +22,6 @@ t_handle_result	target_handle_door_control(t_game *game, t_entity_2 *self, \
 	if (self->target == NULL || self->target->entity == NULL \
 		|| self->target->entity->type != ENT_DOOR)
 		return (TARGET_HANDLE_SUCCESS);
-
 	door = (t_door *)self->target->entity;
 	door->closed = self->state_1;
 	event_door_modify(game, self->target, !door->closed);
