@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:45:11 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/30 20:45:13 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:58:03 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_player
 	double		angle;
 	double		angle_offset;
 	t_p_state	state;
+	bool		running;
 }				t_player;
 
 void	player_setup(t_list *curr, t_game *game);

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 16:43:36 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:54:40 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ struct s_game
 };
 
 void		control_player_process(t_game *game);
+int			can_move_player(t_game *game, t_player *pl);
 double		window_angle(int x);
 void		nsew_textures(t_game *game);
 void		texture_debug_view_blit(t_game *game, int view,

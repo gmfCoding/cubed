@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:22:15 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/18 17:55:31 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:34:50 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ int	load_map_str(t_game *game)
 			MAP_STR4);
 	ft_strcpy(game->title.map_str[game->title.map_str_amount++], \
 			MAP_STR5);
-	ft_strcpy(game->title.map_str[game->title.map_str_amount++], \
-			MAP_STR6);
 	return (0);
 }
 
