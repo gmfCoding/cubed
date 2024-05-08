@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:01:10 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 21:06:17 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:50:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static t_err	map_check_surrounded(t_map *map_temp, int pos)
 #define ERR_LINE ":Invalid Line In Map"
 #define ERR_BADELEM ":Invalid Element"
 #define ERR_BADPLAYER ":Invalid Player Count"
-#define ERR_BOARDER ":Invalid Player Count"
+#define ERR_BOARDER ":Invalid Border Count"
 #define ERR_TYPE ":Invalid File Type"
 /*
  * checks content of the map to follow the rules of subject

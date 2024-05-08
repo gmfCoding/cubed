@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:24:36 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/06 22:38:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:56:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static char *const			g_mapsymbols[] = {
 [MOD_ID_TA] = "TA", // Trigger area
 [MOD_ID_VC] = "VC",
 [MOD_ID_PI] = "PI",
+[MOD_ID_DC] = "DC",
 };
 
 static const t_ex_action	g_mapfuncs[] = {
@@ -94,6 +95,7 @@ static const t_ex_action	g_mapfuncs[] = {
 [MOD_ID_TA] = &mod_gen_ta,
 [MOD_ID_VC] = &mod_gen_vc,
 [MOD_ID_PI] = &mod_gen_pi,
+[MOD_ID_DC] = &mod_gen_dc,
 };
 
 t_err	modifier_seperate_content(char *content, char *type, char *data)
@@ -133,10 +135,10 @@ t_err	modifier_setup(t_list *raw_map_file, t_map *map, t_world *world)
 		if (ft_strlen(str) > 0)
 		{
 			if (modifier_seperate_content(str, mod[0], mod[1]))
-				return (ft_putstr_fd(str, STDERR_FILENO), 1);
+				return (ft_putstr_fd(str, STDERR_FILENO), 1);// TODO: remove pustr
 			func = modifier_get_func(mod[0]);
 			if (func && func(mod[1], index++, world, map))
-				return (ft_putstr_fd(mod[0], STDERR_FILENO), 1);
+				return (ft_putstr_fd(str, STDERR_FILENO), 1);// TODO: remove pust
 		}
 		curr = curr->next;
 	}

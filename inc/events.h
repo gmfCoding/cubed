@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:43:53 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/06 22:23:57 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:22:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void			event_player(t_game *game, bool force);
 void			event_interact(t_game *game);
 void			event_display_ui(t_game *game);
 
-void			event_door(t_door *door, t_game *game);
+void			event_door_modify(t_game *game, t_entity_2 *ent, bool open);
 
 void			event_door_unlocked(t_game *game, t_entity_2 *ent);
 void			event_door_open(t_game *game, t_entity_2 *ent);

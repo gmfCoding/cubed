@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 23:08:09 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/03 14:12:02 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:43:49 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,13 @@ typedef struct s_mod_wincon_data
 	char		target[50];
 }	t_mod_wincon;
 
+typedef struct s_mod_door_control
+{
+	char		name[50];
+	char		target[50];
+	char		action;
+}	t_mod_door_control;
+
 typedef struct s_mod_any
 {
 	union
@@ -106,7 +113,9 @@ typedef struct s_mod_any
 		t_vec2i				wn;
 		t_mod_alarmdata		al;
 		t_mod_fl_data		fl;
-		t_mod_ob_data		ob;
+		t_mod_placeimg_data	pi;
+		t_mod_wincon		vc;
+		t_mod_door_control	dc;
 	};
 }	t_mod_any;
 
