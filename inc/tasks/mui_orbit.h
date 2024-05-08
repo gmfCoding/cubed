@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 14:43:05 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:32:55 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_ORBIT_H
@@ -106,6 +106,6 @@
 # define ORB_THRTL_X 61
 # define ORB_THRTL_Y 298
 
-void	mui_orbit_setup(t_app *app, t_mui_ctx *mui);
+void	mui_orbit_setup(t_app *app, t_mui_ctx **mui);
 void	orbit_mui_control_action(t_mui_ctx *ctx);
 #endif

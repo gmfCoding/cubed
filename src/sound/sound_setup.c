@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:54:01 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/04/30 17:14:25 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:03:01 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 //#define MA_DEBUG_OUTPUT
 */
 #include "miniaudio_wrapper.h"
+
 #define SAMPLE_FORMAT   ma_format_f32
 #define CHANNEL_COUNT   2
 #define SAMPLE_RATE     48000
@@ -189,3 +190,9 @@ void	*sound_manager_init()
 	}
 	return (s_mgr);
 }
+/*//TODO:remove above code and enable this for eval
+void	*sound_manager_init()
+{
+	return (NULL);
+}
+*/

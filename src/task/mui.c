@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 14:29:08 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:37:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -14,6 +14,7 @@
 #include <stdint.h>
 #include "tasks/mui.h"
 #include "rect.h"
+#include "iter.h"
 
 void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
 {
@@ -23,9 +24,6 @@ void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
 	int			i;
 
 	*dst = *src;
-	i = -1;
-	while (++i < MUI_LEN_TYPES)
-		dst->all[i] = malloc(src->sizes[i] * src->lengths[i]);
 	j = -1;
 	while (++j < MUI_LEN_TYPES)
 	{
@@ -86,6 +84,21 @@ void	mui_def_preload(t_app *app, t_mui_ctx *ctx)
 			base = (void *)((char *)base + ctx->sizes[j]);
 		}
 	}
+}
+
+t_mui_ctx	*mui_create_prefab(t_mui_ctx* src)
+{
+	size_t				i;
+	t_mui_ctx	*const	mui = malloc(sizeof(t_mui_ctx));
+
+	*mui = (t_mui_ctx){0};
+	if (mui)
+	{
+		i = ITER_SIZET_START;
+		while (++i < MUI_LEN_TYPES)
+			mui->all[i] = malloc(src->sizes[i] * src->lengths[i]);
+	}
+	return (mui);
 }
 
 void	mui_destroy(t_mui_ctx *mui, t_mui_ctx **store)
