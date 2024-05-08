@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 18:26:58 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:25:08 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ struct s_game
 	t_ui_state		display_ui;
 	t_inputctx		input;
 	t_rayinfo		half;
+
+	bool			orbit_mui_init;
 
 	t_rand			rand;
 

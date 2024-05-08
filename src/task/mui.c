@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:01:30 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 15:37:52 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:30:12 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -23,15 +23,14 @@ void	mui_clone(const t_mui_ctx *src, t_mui_ctx *dst)
 	int			j;
 	int			i;
 
-	*dst = *src;
 	j = -1;
 	while (++j < MUI_LEN_TYPES)
 	{
-		i = -1;
 		src_iter = (void *)&src->all[j][0];
 		dst_iter = (void *)&dst->all[j][0];
 		dst->lengths[j] = src->lengths[j];
 		dst->sizes[j] = src->sizes[j];
+		i = -1;
 		while (++i < src->lengths[j])
 		{
 			ft_memcpy(dst_iter, src_iter, src->sizes[j]);
@@ -85,18 +84,21 @@ void	mui_def_preload(t_app *app, t_mui_ctx *ctx)
 		}
 	}
 }
-
-t_mui_ctx	*mui_create_prefab(t_mui_ctx* src)
+#include <stdio.h>
+t_mui_ctx	*mui_create_prefab(const t_mui_ctx *src)
 {
 	size_t				i;
 	t_mui_ctx	*const	mui = malloc(sizeof(t_mui_ctx));
 
-	*mui = (t_mui_ctx){0};
+	*mui = *src;
 	if (mui)
 	{
 		i = ITER_SIZET_START;
 		while (++i < MUI_LEN_TYPES)
+		{
+			printf("allocating: %zu \n", i);
 			mui->all[i] = malloc(src->sizes[i] * src->lengths[i]);
+		}
 	}
 	return (mui);
 }
@@ -107,6 +109,8 @@ void	mui_destroy(t_mui_ctx *mui, t_mui_ctx **store)
 	free(mui->buttons);
 	free(mui->dials);
 	free(mui->inds);
-	if (store != NULL)
-		*store = NULL;
+	if (store == NULL)
+		return ;
+	free(*store);
+	*store = NULL;
 }

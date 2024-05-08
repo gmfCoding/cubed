@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:44:11 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 15:37:38 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:29:46 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -32,7 +32,7 @@ void	destroy_task(void *ent)
 
 	if (ft_strcmp(task->name, "task_orbit") == 0)
 	{
-		mui_destroy(&((t_task_orbit *)task)->mui, NULL);
+		mui_destroy(((t_task_orbit *)task)->mui, &((t_task_orbit *)task)->mui);
 		free(ent);
 	}
 	else

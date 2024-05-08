@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:47:31 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/08 14:05:11 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:48:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_err	mod_gen_pi(char *content, int index, t_world *world, t_map *map)
 			sizeof(mod.name), &mod.name, &mod.target, &mod.img_i,
 			&mod.pos.x, &mod.pos.y);
 
+	(void)map;
 	(void)index;
 	if (found != 6)
 		return (1);
