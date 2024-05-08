@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 16:24:48 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:48:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -30,25 +30,21 @@ int	task_orbit_setup(t_game *game, t_task *base)
 
 	if (base->init)
 		return (0);
-	mrand(&game->world->task_rand);
 	*task = (t_task_orbit)
 	{
-		.task = *base,
-		.mui = ((t_task_orbit *)base)->mui,
-		.rand = game->world->task_rand,
+		.task = *base, .mui = game->orbit_mui, .rand = game->rand,
 		.start_ang = (t_kep_ang){0}, .target_path.sgp_u = sun.u,
 		.start_path = (t_kep_path){.sma = KM_AU, .ecc = 0.0001, .inc = 0.0001,
 		.lan = 0.0001, .aop = 0.0001, .sgp_u = sun.u},
 		.sun = sun, .maneuvers = 5, .active_path = 0,
 	};
-	if (!game->orbit_mui_init)
-		game->orbit_mui_init = NULL;
 	base->init = true;
 	base->completed = false;
 	orb_generate(&task->target_path, &g_orbgen, &task->rand);
 	ft_memsetf64(task->delta, 1.0, T_ORBIT_MAX_MAN);
 	ft_memsetf64(task->mean, 0.0, T_ORBIT_MAX_MAN);
 	mui_orbit_setup(&game->app, &task->mui);
+	game->orbit_mui = task->mui;
 	task->mui->ctx = task;
 	task->mui->game = game;
 	orbit_mui_control_action(task->mui);

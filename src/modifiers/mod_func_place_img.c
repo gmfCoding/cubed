@@ -6,7 +6,7 @@
 /*   By: kmordaun <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:47:31 by kmordaun          #+#    #+#             */
-/*   Updated: 2024/05/08 15:48:27 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:37:07 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	display_placed_img(t_game *game)
 	{
 		texture_blit(game->textures[game->event_img->value], \
 								game->rt0, game->event_img->pos);
-
 		game->player.state = CANT_MOVE;
 		if (input_keydown(&game->input, KEY_ENTER) \
 			|| input_keydown(&game->input, KEY_E) \
