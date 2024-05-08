@@ -13,7 +13,7 @@ WN 9,12
 WN 33,4
 WN 3,10
 MM F
-PI welcome,NULL,46,100,180
+PI welcome,NULL,47,100,180
 TA ta02,welcome,O,1,19,101,P,E
 
 VC you_win,NULL
