@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 18:58:32 by clovell           #+#    #+#             */
-/*   Updated: 2024/03/04 19:04:19 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/07 18:12:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef TASK_ORBIT_H
@@ -71,7 +71,8 @@ typedef struct s_sa_orbit_task
 	t_orb_gen		*gen;
 }	t_task_orbit;
 
-// TODO: Remove?
+// TODO: Remove
+void	handle_closing(t_game *game, t_task *task);
 void	orbit_control_action(t_button *btn, t_ui_context *ctx);
 void	update_paths(t_task_orbit *t);
 

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:52:41 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 17:55:21 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:30:13 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_H
@@ -24,6 +24,7 @@
 # include "string_utils.h"
 # include "modifiers.h"
 # include "events.h"
+# include "random.h"
 
 # define TAB_SIZE 4
 # define TILE_SP_MAX 7
@@ -80,6 +81,8 @@ typedef struct s_world
 	t_enemy		*enemy;
 	// content: t_entity*;
 	t_list		*entities;
+	t_list		*tasks;
+	t_rand		task_rand; // TODO: Use t_game::rand instead ?
 
 	t_sprite	sprite[MAX_ENT * TILE_SP_MAX];
 	// The indices of `sprite` in order of distance to player.

@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 20:16:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/03 18:19:52 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:30:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "state.h"
@@ -35,7 +35,7 @@ t_task	*task_find(t_game *game, char *name)
 	t_task	*task;
 	t_list	*curr;
 
-	curr = game->tasks;
+	curr = game->world->tasks;
 	while (curr != NULL)
 	{
 		task = (t_task *)curr->content;
@@ -54,7 +54,7 @@ void	task_process(t_game *game)
 	t_task	*task;
 	t_list	*curr;
 
-	curr = game->tasks;
+	curr = game->world->tasks;
 	while (curr != NULL)
 	{
 		task = (t_task *)curr->content;
@@ -84,7 +84,7 @@ t_task	*task_create_or_find(t_game *game, char *name)
 			continue ;
 		task = malloc(g_tasks[i]->size);
 		*task = *g_tasks[i];
-		ft_lstadd_front(&game->tasks, ft_lstnew(task));
+		ft_lstadd_front(&game->world->tasks, ft_lstnew(task));
 		printf("Creating task: %s\n", name);
 		return (task->setup(game, task), task);
 	}

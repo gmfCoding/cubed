@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/07 18:54:40 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:30:45 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -29,11 +29,11 @@ int	task_orbit_setup(t_game *game, t_task *base)
 
 	if (base->init)
 		return (0);
-	mrand(&game->task_rand);
+	mrand(&game->world->task_rand);
 	*task = (t_task_orbit)
 	{
 		.task = *base,
-		.rand = game->task_rand,
+		.rand = game->world->task_rand,
 		.start_ang = (t_kep_ang){0}, .target_path.sgp_u = sun.u,
 		.start_path = (t_kep_path){.sma = KM_AU, .ecc = 0.0001, .inc = 0.0001,
 		.lan = 0.0001, .aop = 0.0001, .sgp_u = sun.u},
@@ -125,6 +125,7 @@ int	task_orbit_render(t_game *game, t_task *base)
 		rt = texture_create(game->app.mlx, 400, 400);
 		rtl = true;
 	}
+	handle_closing(game, base);
 	if (base->show == false)
 		return (0);
 	texture_blit(*scr, rt, v2new(0, 0));
