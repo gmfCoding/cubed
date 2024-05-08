@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 19:42:59 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 19:07:22 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 19:10:01 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,6 @@ void	game_update(t_game *game)
 	display_placed_img(game);
 	task_process(game);
 	texture_draw(game->app, game->rt0, v2new(0, 0));
-	show_game_debug(game);
 	if (input_keydown(&game->input, KEY_Q))
 		game->title.state = BACK_TO_TITLE;
 	five_lights(game);
