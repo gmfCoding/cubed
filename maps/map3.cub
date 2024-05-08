@@ -5,6 +5,10 @@ EA ./assets/wall.xpm
 
 DR dr_fin,/assets/debug.xpm,16,6,1,C,L
 TA ta01,you_win,O,16,9,101,P,E
+
+PI welcome,NULL,44,100,180
+TA ta02,welcome,O,16,21,101,P,E
+
 VC you_win,NULL
 WN 16,10
 WN 18,9
