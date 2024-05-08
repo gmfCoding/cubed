@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:04 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 15:35:10 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:52:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "tasks/mui.h"
@@ -267,9 +267,11 @@ void	mui_orbit_setup(t_app *app, t_mui_ctx **mui)
 	const int	g_len_tex = sizeof(g_orb_textures) / sizeof(t_def_tex);
 
 	if (*mui == NULL)
+	{
 		*mui = mui_create_prefab(&g_orbit_mui);
+		def_tex_add(g_orb_textures, g_len_tex);
+	}
 	mui_clone(&g_orbit_mui, *mui);
-	def_tex_add(g_orb_textures, g_len_tex);
 	mui_def_preload(app, *mui);
 }
 

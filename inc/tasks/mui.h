@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:35:52 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 15:29:57 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:11:57 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MUI_H
@@ -131,7 +131,7 @@ typedef struct s_mui_context
 	t_vec2			offset;
 }	t_mui_ctx;
 
-t_mui_ctx	*mui_create_prefab(t_mui_ctx* src);
+t_mui_ctx	*mui_create_prefab(const t_mui_ctx *src);
 void		mui_clone(const t_mui_ctx *src, t_mui_ctx *dst);
 void		mui_destroy(t_mui_ctx *mui, t_mui_ctx **store);
 

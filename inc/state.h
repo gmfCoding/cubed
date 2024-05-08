@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:43:57 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 16:46:33 by kmordaun         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:54:40 by kmordaun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 // FORWARD DECLARE
 typedef struct s_task			t_task;
 typedef struct s_game			t_game;
+typedef struct s_mui_context	t_mui_ctx;
 
 # define MAX_DEBUG_VIEWS 10
 
@@ -137,6 +138,7 @@ struct s_game
 	t_inputctx		input;
 	t_rayinfo		half;
 
+	t_mui_ctx		*orbit_mui;
 	t_rand			rand;
 
 	// Used to reset mouse input for starting angle.

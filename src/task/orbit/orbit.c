@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 01:18:06 by clovell           #+#    #+#             */
-/*   Updated: 2024/05/08 15:37:21 by clovell          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:48:10 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -30,12 +30,9 @@ int	task_orbit_setup(t_game *game, t_task *base)
 
 	if (base->init)
 		return (0);
-	mrand(&game->world->task_rand);
 	*task = (t_task_orbit)
 	{
-		.task = *base,
-		.mui = ((t_task_orbit *)base)->mui,
-		.rand = game->world->task_rand,
+		.task = *base, .mui = game->orbit_mui, .rand = game->rand,
 		.start_ang = (t_kep_ang){0}, .target_path.sgp_u = sun.u,
 		.start_path = (t_kep_path){.sma = KM_AU, .ecc = 0.0001, .inc = 0.0001,
 		.lan = 0.0001, .aop = 0.0001, .sgp_u = sun.u},
@@ -47,9 +44,10 @@ int	task_orbit_setup(t_game *game, t_task *base)
 	ft_memsetf64(task->delta, 1.0, T_ORBIT_MAX_MAN);
 	ft_memsetf64(task->mean, 0.0, T_ORBIT_MAX_MAN);
 	mui_orbit_setup(&game->app, &task->mui);
+	game->orbit_mui = task->mui;
 	task->mui->ctx = task;
 	task->mui->game = game;
-	orbit_mui_control_action(&task->mui);
+	orbit_mui_control_action(task->mui);
 	return (0);
 }
 
@@ -136,9 +134,9 @@ int	task_orbit_render(t_game *game, t_task *base)
 	render_paths(task, &rt, (t_rect){.min = task->scr_offset, \
 									.max = {.x = task->zoom, .y = 0}});
 	texture_blit(*tex, rt, v2new(0, 0));
-	mui_render(&task->mui, &rt);
+	mui_render(task->mui, &rt);
 	texture_blit_s(rt, game->rt0, v2new(90, 90), 2);
-	orbit_mui_control_action(&task->mui);
-	mui_process(&task->mui, &game->input);
+	orbit_mui_control_action(task->mui);
+	mui_process(task->mui, &game->input);
 	return (0);
 }
