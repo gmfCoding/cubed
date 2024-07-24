@@ -82,7 +82,19 @@ struct s_map
 };
 */
 
+
+
 /* util/time.c */
+typedef struct s_time_debug_state
+{
+	int64_t start;
+	int64_t elapsed;
+	char *name;
+} t_timedebug;
+void time_debug_stop(t_timedebug *state);
+void time_debug_start(t_timedebug *state, char *name);
+
+int64_t	time_get_us(void);
 int64_t	time_get_ms(void);
 
 #endif

@@ -35,17 +35,17 @@
 // // 	time += time_get_ms() - timeprev;
 // // if (time > 4 * 1000)
 // // 	exit(0);
-// void	measure_frame_rate(t_app app)
-// {
-// 	static int64_t	timeprev = 0;
-// 	static char		*fps = NULL;
+void	measure_frame_rate(t_app app)
+{
+	static int64_t	timeprev = 0;
+	static char		*fps = NULL;
 
-// 	fps = ft_strfmt("fps:%d", \
-// 	(int)(1.0 / ((time_get_ms() - timeprev) / 1000.0)));
-// 	mlx_string_put(app.mlx, app.win, 0, 10, 0x00FF00, fps);
-// 	free(fps);
-// 	timeprev = time_get_ms();
-// }
+	fps = ft_strfmt("fps:%d", \
+	(int)(1.0 / ((time_get_ms() - timeprev) / 1000.0)));
+	mlx_string_put(app.mlx, app.win, 0, 10, 0x00FF00, fps);
+	free(fps);
+	timeprev = time_get_ms();
+}
 
 // void	draw_debug_info(t_game *game)
 // {
@@ -234,24 +234,72 @@ void	player_loop(t_game *game)
 
 void	game_update(t_game *game)
 {
+	static int first = 0;
+	static t_timedebug td = {.name = "other"};
+
+	if (first == 0)
+	{
+		first = 1;
+		td.start = time_get_us();
+	}
+	time_debug_stop(&td);
+	time_debug_start(&td, "entity_update");
 	entity_update(game);
+	time_debug_stop(&td);
+
+	time_debug_start(&td, "enemy_routine");
 	enemy_routine(game, game->world->enemy);
+	time_debug_stop(&td);
+
+	time_debug_start(&td, "sprite_various");
 	sprite_order_distance(game->player.pos, game->world->sprite, \
 		game->world->indices, game->world->sp_amount);
 	sprite_update_all(game->world);
+	time_debug_stop(&td);
+	
+	time_debug_start(&td, "player_loop");
 	player_loop(game);
+	time_debug_stop(&td);
+	
+	time_debug_start(&td, "render_skybox");
 	render_skybox(game->player.dir, game->textures[TEX_SKYBOX], game->rt1);
+	time_debug_stop(&td);
+	
+	time_debug_start(&td, "render_floor");
 	render_floor(game);
+	time_debug_stop(&td);
+	
+	time_debug_start(&td, "player_wall");
 	render_wall(game);
+	time_debug_stop(&td);
+	
+	
+	time_debug_start(&td, "rt1 - rt0 blit");
 	texture_blit_s(game->rt1, game->rt0, v2new(0, 0), R_SCALE);
+	time_debug_stop(&td);
+	
+	time_debug_start(&td, "mmap_draw");
 	mmap_draw(game);
+	time_debug_stop(&td);
+	
+	time_debug_start(&td, "event_display_ui");
 	event_display_ui(game);
+	time_debug_stop(&td);
+	
+	time_debug_start(&td, "display_placed_img");
 	display_placed_img(game);
+	time_debug_stop(&td);
+	
+	time_debug_start(&td, "task_process");
 	task_process(game);
+	time_debug_stop(&td);
+
+	printf("\n");
 	texture_draw(game->app, game->rt0, v2new(0, 0));
 	if (input_keydown(&game->input, KEY_Q))
 		game->title.state = BACK_TO_TITLE;
 	five_lights(game);
+	measure_frame_rate(game->app);
 }
 
 void	render(t_game *game)
