@@ -311,7 +311,40 @@ $(DIROBJ):
 	-mkdir -p $(DIROBJ)
 	-@printf "${NC}"
 
-.PHONY: all re fclean clean libclean
+.PHONY: all re fclean clean libclean web serve-web web-clean
+
+WEB_DIR = web
+WEB_SRC = $(DIRSRC)/web/main_wasm.c
+WEB_WASM = $(WEB_DIR)/cubed.wasm
+WEB_CC ?= clang
+WEB_CFLAGS = --target=wasm32-unknown-unknown -O3 -ffreestanding -fno-builtin -fvisibility=hidden
+WEB_LDFLAGS = -nostdlib \
+	-Wl,--no-entry \
+	-Wl,--export=init_game \
+	-Wl,--export=set_viewport \
+	-Wl,--export=update_game \
+	-Wl,--export=key_down \
+	-Wl,--export=key_up \
+	-Wl,--export=get_player_x \
+	-Wl,--export=get_player_y \
+	-Wl,--export=get_player_angle \
+	-Wl,--export=get_player_speed \
+	-Wl,--export-memory \
+	-Wl,--initial-memory=131072 \
+	-Wl,--max-memory=131072 \
+	-Wl,--stack-first \
+	-Wl,-z,stack-size=16384
+
+web: $(WEB_WASM)
+
+$(WEB_WASM): $(WEB_SRC)
+	$(WEB_CC) $(WEB_CFLAGS) $(WEB_LDFLAGS) $< -o $@
+
+serve-web: web
+	python3 -m http.server 8000 --directory .
+
+web-clean:
+	rm -f $(WEB_WASM)
 
 # COLORS
 export BGREEN = \033[1;32m

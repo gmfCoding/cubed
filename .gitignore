@@ -12,3 +12,4 @@ cubed
 **/*.blend1
 **/*.blend2
 **/*.built
+*.wasm
